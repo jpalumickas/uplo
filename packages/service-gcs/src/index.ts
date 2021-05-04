@@ -1,14 +1,21 @@
-import BaseService, { Blob } from '@uplo/service-base';
 import { Storage, GetSignedUrlConfig } from '@google-cloud/storage';
-import { contentDisposition } from '@uplo/utils';
+import BaseService, { Blob, Options as BaseOptions } from '@uplo/service-base';
+import { contentDisposition, ContentDispositionType } from '@uplo/utils';
+
+interface Options extends BaseOptions {
+  bucket: string;
+  credentialsPath: string;
+}
 
 class GCSService extends BaseService {
+  bucket: string;
   storage: Storage;
 
-  constructor(opts) {
+  constructor({ bucket, credentialsPath, ...opts }: Options) {
     super(opts);
+    this.bucket = bucket;
     this.storage = new Storage({
-      keyFilename: opts.credentialsPath,
+      keyFilename: credentialsPath,
     });
   }
 
@@ -23,49 +30,58 @@ class GCSService extends BaseService {
 
     // Get a v4 signed URL for uploading file
     const [url] = await this.storage
-      .bucket(this.options.bucket)
+      .bucket(this.bucket)
       .file(blob.key)
       .getSignedUrl(options);
 
     return url;
   }
 
-  directUploadHeaders(blob: Blob, { disposition } = {}) {
+  directUploadHeaders(
+    blob: Blob,
+    { disposition }: { disposition?: ContentDispositionType } = {}
+  ) {
     return {
       'Content-MD5': blob.checksum,
       'Content-Disposition': contentDisposition({
         type: disposition,
-        filename: blob.fileName,
+        fileName: blob.fileName,
       }),
     };
   }
 
-  async updateMetadata(key, { contentType, disposition, filename }: { contentType: string }) {
-    const metadata = {
+  async updateMetadata(
+    key: string,
+    {
       contentType,
-    };
+      disposition,
+      fileName,
+    }: { contentType?: string; disposition?: ContentDispositionType, fileName?: string }
+  ) {
+    const metadata: { contentType?: string; contentDisposition?: string } = {};
 
-    if (disposition && filename) {
-      metadata[contentDisposition] = contentDisposition({
+    if (contentType) {
+      metadata.contentType = contentType;
+    }
+
+    if (disposition && fileName) {
+      metadata.contentDisposition = contentDisposition({
         type: disposition,
-        filename,
+        fileName,
       });
     }
 
     return await this.storage
-      .bucket(this.options.bucket)
+      .bucket(this.bucket)
       .file(key)
       .setMetadata(metadata);
   }
 
-  async publicUrl(blob) {
-    return await this.storage
-      .bucket(this.options.bucket)
-      .file(blob.key)
-      .publicUrl();
+  async publicUrl(blob: Blob) {
+    return await this.storage.bucket(this.bucket).file(blob.key).publicUrl();
   }
 
-  async privateUrl(blob, { disposition, expiresIn = 300 } = {}) {
+  async privateUrl(blob: Blob, { disposition, expiresIn = 300 }: { disposition?: ContentDispositionType, expiresIn?: number } = {}) {
     const options: GetSignedUrlConfig = {
       action: 'read',
       version: 'v4',
@@ -73,21 +89,21 @@ class GCSService extends BaseService {
       responseType: blob.contentType,
       responseDisposition: contentDisposition({
         type: disposition,
-        filename: blob.filename,
+        fileName: blob.filename,
       }),
     };
 
     // Get a v4 signed URL for uploading file
     const [url] = await this.storage
-      .bucket(this.options.bucket)
+      .bucket(this.bucket)
       .file(blob.key)
       .getSignedUrl(options);
 
     return url;
   }
 
-  async protocolUrl(blob) {
-    return `gs://${this.options.bucket}/${blob.key}`;
+  async protocolUrl(blob: Blob) {
+    return `gs://${this.bucket}/${blob.key}`;
   }
 
   get defaultName() {

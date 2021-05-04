@@ -1,9 +1,7 @@
 import { contentDisposition as generate } from '@tinyhttp/content-disposition';
 
-type ContentDispositionType = 'attachment' | 'inline';
+export type ContentDispositionType = 'attachment' | 'inline';
 
-const contentDisposition = ({ filename, type = 'inline' }: { filename: string, type: ContentDispositionType }) => {
-  return generate(filename, { type });
+export const contentDisposition = ({ fileName, type = 'inline' }: { fileName: string, type?: ContentDispositionType }) => {
+  return generate(fileName, { type });
 };
-
-export default contentDisposition;

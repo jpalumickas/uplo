@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "main": "dist/uplo-service-base.cjs.js",
   "module": "dist/uplo-service-base.esm.js",
-  "typings": "dist/declarations/src/index.d.ts",
   "exports": {
     ".": {
       "require": "./dist/uplo-service-base.js",

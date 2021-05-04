@@ -1,1 +1,1 @@
-export { default as contentDisposition } from './contentDisposition';
+export * from './contentDisposition';

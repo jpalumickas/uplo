@@ -6,12 +6,17 @@ export interface Blob {
   key: string;
 }
 
+export interface Options {
+  isPublic?: boolean;
+  name?: string;
+}
+
 class BaseService {
   isPublic: boolean;
-  _name: string;
+  _name?: string;
   options: object;
 
-  constructor({ isPublic = false, name, ...options }: { isPublic: boolean, name: string }) {
+  constructor({ isPublic = false, name, ...options }: Options) {
     this._name = name;
     this.options = options;
     this.isPublic = isPublic;

@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "main": "dist/uplo-service-gcs.cjs.js",
   "module": "dist/uplo-service-gcs.esm.js",
-  "typings": "dist/typings.d.ts",
   "exports": {
     ".": {
       "require": "./dist/uplo-service-gcs.js",
