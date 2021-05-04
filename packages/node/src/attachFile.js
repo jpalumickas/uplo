@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { upperFirst, camelCase } from 'lodash';
 
 const attachFile = ({ service, prisma, signer }) => async ({
   signedId,
@@ -9,16 +9,16 @@ const attachFile = ({ service, prisma, signer }) => async ({
   strategy = 'append',
 }) => {
   const { blobId } = await signer.verify(signedId, 'blob');
-  const recordType = _.upperFirst(_.camelCase(modelName));
+  const recordType = upperFirst(camelCase(modelName));
 
-  const blob = await prisma.activeStorageBlob.findUnique({
+  const blob = await prisma.fileBlob.findUnique({
     where: { id: blobId },
   });
 
   await service.updateMetadata(blob.key, { contentType: blob.contentType });
 
   if (strategy === 'replace') {
-    await prisma.activeStorageAttachment.deleteMany({
+    await prisma.fileAttachment.deleteMany({
       where: {
         name,
         recordType,
@@ -27,7 +27,7 @@ const attachFile = ({ service, prisma, signer }) => async ({
     });
   }
 
-  const query = prisma.activeStorageAttachment.create({
+  const query = prisma.fileAttachment.create({
     data: {
       name,
       recordType,
