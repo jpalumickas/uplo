@@ -9,6 +9,20 @@ export interface CreateBlobParams {
   checksum: string;
 }
 
+export interface Blob {
+  id: string | number;
+  key: string;
+}
+
+export interface AttachBlobOptions {
+  blob: Blob;
+  attachmentName: string;
+  recordId: string;
+  recordType: string;
+  strategy: 'one' | 'many';
+  returnQuery: boolean;
+}
+
 // TODO: Make serviceName to get from uploader service
 const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
   const createBlob = async ({ params }: { params: CreateBlobParams }) => {
@@ -26,6 +40,40 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
 
     return blob;
   };
+
+  const findBlob = async (id: string | number) => {
+    return await prisma.fileBlob.findUnique({
+      where: { id },
+    });
+  }
+
+  const attachBlob = async ({ blob, attachmentName, recordId, recordType, strategy, returnQuery = false }: AttachBlobOptions) => {
+  if (strategy === 'one') {
+    await prisma.fileAttachment.deleteMany({
+      where: {
+        name: attachmentName,
+        recordType,
+        recordId,
+      },
+    });
+  }
+
+  const query = prisma.fileAttachment.create({
+    data: {
+      name: attachmentName,
+      recordType,
+      recordId,
+      blob: { connect: { id: blob.id } },
+    },
+  });
+
+  if (returnQuery) {
+    return { query };
+  }
+
+  return await query;
+
+  }
 
   return {
     prisma,

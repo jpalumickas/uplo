@@ -7,7 +7,7 @@ const defaultConfig = {
   signedIdExpiresIn: 60 * 60,
 };
 
-const uploader = ({ prisma, service, adapter, config: providedConfig }) => {
+const uploader = ({ service, adapter, config: providedConfig }) => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = Signer(config);
 
@@ -16,7 +16,7 @@ const uploader = ({ prisma, service, adapter, config: providedConfig }) => {
     adapter,
     service,
     generateBlobKey,
-    attachFile: attachFile({ service, prisma, signer }),
+    attachFile: attachFile({ service, adapter, signer }),
   };
 };
 
