@@ -13,7 +13,7 @@ const verifyAsync = (
   options?: VerifyOptions,
 ) => promisify(jwtVerify);
 
-export const signedId = (config: Config) => {
+export const signer = (config: Config) => {
   const generate = async (data: object, purpose: string) => {
     if (!config.privateKey) {
       throw new Error('Missing private key');
@@ -39,4 +39,4 @@ export const signedId = (config: Config) => {
   };
 };
 
-export default signedId;
+export default signer;
