@@ -5,8 +5,8 @@
   "module": "dist/uplo-service-gcs.esm.js",
   "exports": {
     ".": {
-      "require": "./dist/uplo-service-gcs.js",
-      "default": "./dist/uplo-service-gcs.modern.js"
+      "require": "./dist/uplo-service-gcs.cjs.js",
+      "default": "./dist/uplo-service-gcs.esm.js"
     }
   },
   "license": "MIT",

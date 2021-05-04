@@ -5,8 +5,8 @@
   "module": "dist/uplo-adapter-prisma.esm.js",
   "exports": {
     ".": {
-      "require": "./dist/uplo-adapter-prisma.js",
-      "default": "./dist/uplo-adapter-prisma.modern.js"
+      "require": "./dist/uplo-adapter-prisma.cjs.js",
+      "default": "./dist/uplo-adapter-prisma.esm.js"
     }
   },
   "license": "MIT",

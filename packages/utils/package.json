@@ -5,8 +5,8 @@
   "module": "dist/uplo-utils.esm.js",
   "exports": {
     ".": {
-      "require": "./dist/uplo-utils.js",
-      "default": "./dist/uplo-utils.modern.js"
+      "require": "./dist/uplo-utils.cjs.js",
+      "default": "./dist/uplo-utils.esm.js"
     }
   },
   "license": "MIT",
