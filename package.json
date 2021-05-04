@@ -15,7 +15,8 @@
   },
   "scripts": {
     "postinstall": "preconstruct dev",
-    "build": "preconstruct build"
+    "build": "preconstruct build",
+    "dev": "preconstruct dev"
   },
   "dependencies": {
     "@babel/core": "^7.14.0",
