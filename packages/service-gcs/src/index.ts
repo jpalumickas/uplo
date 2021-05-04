@@ -89,7 +89,7 @@ class GCSService extends BaseService {
       responseType: blob.contentType,
       responseDisposition: contentDisposition({
         type: disposition,
-        fileName: blob.filename,
+        fileName: blob.fileName,
       }),
     };
 
@@ -106,7 +106,7 @@ class GCSService extends BaseService {
     return `gs://${this.bucket}/${blob.key}`;
   }
 
-  get defaultName() {
+  defaultName(): string {
     return 'gcs';
   }
 }

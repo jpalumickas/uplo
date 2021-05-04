@@ -51,7 +51,7 @@ class BaseService {
     throw new Error('Not implemented');
   }
 
-  defaultName() {
+  defaultName(): string {
     throw new Error('Not implemented');
   }
 
