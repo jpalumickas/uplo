@@ -1,6 +1,6 @@
 {
   "name": "@uplo/service-gcs",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "main": "dist/uplo-service-gcs.cjs.js",
   "module": "dist/uplo-service-gcs.esm.js",
   "exports": {
@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "@google-cloud/storage": "^5.8.5",
-    "@uplo/service-base": "^0.2.1",
-    "@uplo/utils": "^0.2.1"
+    "@uplo/service-base": "^0.3.0",
+    "@uplo/utils": "^0.3.0"
   }
 }
