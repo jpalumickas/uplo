@@ -9,7 +9,7 @@ export interface AttachFileOptions {
   strategy: 'one' | 'many';
 }
 
-const attachFile = ({ service, adapter, signer }) => async ({
+const attachSignedFile = ({ service, adapter, signer }) => async ({
   signedId,
   modelName,
   modelId,
@@ -34,4 +34,4 @@ const attachFile = ({ service, adapter, signer }) => async ({
   });
 };
 
-export default attachFile;
+export default attachSignedFile;

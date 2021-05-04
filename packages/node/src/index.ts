@@ -1,5 +1,5 @@
 import Signer from './signer';
-import attachFile from './attachFile';
+import attachSignedFile from './attachSignedFile';
 import generateBlobKey from './generateBlobKey';
 import { Service, Adapter, Config } from './types';
 
@@ -25,7 +25,7 @@ const uploader = ({
     adapter,
     service,
     generateBlobKey,
-    attachFile: attachFile({ service, adapter, signer }),
+    attachSignedFile: attachSignedFile({ service, adapter, signer }),
   };
 };
 
