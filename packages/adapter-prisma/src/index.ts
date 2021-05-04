@@ -26,12 +26,12 @@ export interface AttachBlobOptions {
 // TODO: Make serviceName to get from uploader service
 const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
   const createBlob = async ({ params }: { params: CreateBlobParams }) => {
-    const blob = await prisma.activeStorageBlob.create({
+    const blob = await prisma.fileBlob.create({
       data: {
         key: params.key,
         filename: params.fileName,
         contentType: params.contentType,
-        byteSize: params.size,
+        size: params.size,
         metadata: JSON.stringify(params.metadata || {}),
         checksum: params.checksum,
         serviceName: 'google',
@@ -77,6 +77,8 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
 
   return {
     prisma,
+    findBlob,
+    attachBlob,
     createBlob,
   };
 };
