@@ -1,0 +1,25 @@
+{
+  "name": "@uplo/monorepo",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Justas Palumickas",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "preconstruct": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "scripts": {
+    "postinstall": "preconstruct dev",
+    "build": "preconstruct build"
+  },
+  "dependencies": {
+    "@babel/core": "^7.14.0",
+    "@babel/preset-env": "^7.14.1",
+    "@preconstruct/cli": "^2.0.7"
+  }
+}
