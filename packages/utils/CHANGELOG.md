@@ -1,5 +1,11 @@
 # @uplo/utils
 
+## 0.4.0
+
+### Minor Changes
+
+- Update minimum node version to v14
+
 ## 0.3.0
 
 ### Minor Changes

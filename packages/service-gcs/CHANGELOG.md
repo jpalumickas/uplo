@@ -1,5 +1,17 @@
 # @uplo/service-gcs
 
+## 0.4.0
+
+### Minor Changes
+
+- Update minimum node version to v14
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+  - @uplo/service-base@0.4.0
+  - @uplo/utils@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes
