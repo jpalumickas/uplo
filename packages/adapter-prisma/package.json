@@ -12,5 +12,8 @@
   "license": "MIT",
   "peerDependencies": {
     "@prisma/client": ">=2.19.0"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

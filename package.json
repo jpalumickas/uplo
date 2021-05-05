@@ -35,5 +35,8 @@
     "jsxSingleQuote": false,
     "arrowParens": "always",
     "trailingComma": "es5"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

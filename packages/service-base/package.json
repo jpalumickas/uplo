@@ -9,5 +9,8 @@
       "default": "./dist/uplo-service-base.esm.js"
     }
   },
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  }
 }

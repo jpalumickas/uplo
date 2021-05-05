@@ -14,5 +14,8 @@
     "@google-cloud/storage": "^5.8.5",
     "@uplo/service-base": "^0.3.0",
     "@uplo/utils": "^0.3.0"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

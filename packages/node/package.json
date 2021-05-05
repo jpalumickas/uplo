@@ -18,5 +18,8 @@
     "@types/jsonwebtoken": "^8.5.1",
     "@types/lodash": "^4.14.168",
     "@types/node": "^15.0.1"
+  },
+  "engines": {
+    "node": ">=14"
   }
 }

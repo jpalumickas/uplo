@@ -1,11 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["es2019"],
-    "target": "es2019",
+    "lib": ["es2020"],
+    "target": "es2020",
     "strict": true,
     "noEmit": true,
     "isolatedModules": true,
-    "resolveJsonModule": true,
-    "moduleResolution": "node"
+    "resolveJsonModule": true
   }
 }
