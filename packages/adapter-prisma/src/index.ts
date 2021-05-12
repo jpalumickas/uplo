@@ -47,6 +47,19 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
     });
   }
 
+  const findBlobByKey = async (key: string) => {
+    return await prisma.fileBlob.findUnique({
+      where: { key },
+    });
+  }
+
+  const updateBlobMetadata = async (key: string, metadata: object) => {
+    return await prisma.fileBlob.update({
+      where: { key },
+      data: { metadata }
+    });
+  }
+
   const attachBlob = async ({ blob, attachmentName, recordId, recordType, strategy, returnQuery = false }: AttachBlobOptions) => {
   if (strategy === 'one') {
     await prisma.fileAttachment.deleteMany({
@@ -78,8 +91,10 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
   return {
     prisma,
     findBlob,
+    findBlobByKey,
     attachBlob,
     createBlob,
+    updateBlobMetadata,
   };
 };
 
