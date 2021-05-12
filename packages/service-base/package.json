@@ -10,6 +10,9 @@
     }
   },
   "license": "MIT",
+  "dependencies": {
+    "tempy": "^1.0.1"
+  },
   "engines": {
     "node": ">=14"
   }

@@ -1,3 +1,5 @@
+import { file as tempyFile } from 'tempy';
+
 export interface Blob {
   fileName: string;
   size: number;
@@ -49,6 +51,19 @@ class BaseService {
 
   directUploadUrl(blob: Blob) {
     throw new Error('Not implemented');
+  }
+
+  download({ key, path }: { key: string, path: string }) {
+    throw new Error('Not implemented');
+  }
+
+  async downloadToTempfile({ key }: { key: string }, callback: (tmpPath: string) => void) {
+    return await tempyFile.task(
+      async (tmpPath) => {
+        await this.download({ key, path: tmpPath });
+        return await callback(tmpPath);
+      }
+    );
   }
 
   defaultName(): string {

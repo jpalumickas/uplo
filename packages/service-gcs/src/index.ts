@@ -102,6 +102,13 @@ class GCSService extends BaseService {
     return url;
   }
 
+  async download({ key, path }: { key: string, path: string }) {
+    return await this.storage
+      .bucket(this.bucket)
+      .file(key)
+      .download({ destination: path });
+  }
+
   async protocolUrl(blob: Blob) {
     return `gs://${this.bucket}/${blob.key}`;
   }
