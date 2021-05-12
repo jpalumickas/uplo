@@ -1,5 +1,16 @@
 # @uplo/service-gcs
 
+## 0.5.0
+
+### Minor Changes
+
+- Allow to download file
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+  - @uplo/service-base@0.5.0
+
 ## 0.4.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @uplo/adapter-prisma
 
+## 0.5.0
+
+### Minor Changes
+
+- Add more methods
+
 ## 0.4.0
 
 ### Minor Changes

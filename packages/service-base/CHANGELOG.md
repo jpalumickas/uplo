@@ -1,5 +1,11 @@
 # @uplo/service-base
 
+## 0.5.0
+
+### Minor Changes
+
+- Allow to download file
+
 ## 0.4.0
 
 ### Minor Changes
