@@ -1,7 +1,8 @@
+import { Service, Adapter, Analyzer, Config } from './types';
 import Signer from './signer';
 import attachSignedFile from './attachSignedFile';
 import generateBlobKey from './generateBlobKey';
-import { Service, Adapter, Config } from './types';
+import analyze from './analyze';
 
 const defaultConfig = {
   privateKey: process.env.UPLOADER_SECRET,
@@ -12,10 +13,12 @@ const uploader = ({
   service,
   adapter,
   config: providedConfig,
+  analyzers = [],
 }: {
   service: Service;
   adapter: Adapter;
   config: Config;
+  analyzers: Analyzer[];
 }) => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = Signer(config);
@@ -26,6 +29,7 @@ const uploader = ({
     service,
     generateBlobKey,
     attachSignedFile: attachSignedFile({ service, adapter, signer }),
+    analyze: analyze({ service, adapter, analyzers }),
   };
 };
 
