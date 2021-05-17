@@ -21,12 +21,14 @@ const analyze =
 
     let blob = await adapter.findBlobByKey(key);
     if (!blob) {
-      throw new Error(`Cannot find blob with key ${key}`);
+      throw new Error(`[Uplo] Cannot find blob with key ${key}`);
     }
 
-    const newMetadata = { analyzed: true };
+    const newMetadata = {};
 
     await service.downloadToTempfile({ key: blob.key }, async (filePath) => {
+      merge(newMetadata, { identified: true });
+
       for (const analyzer of analyzers) {
         try {
           const analyzerMetadata = await analyzer({ ...blob, filePath });
@@ -34,9 +36,11 @@ const analyze =
             merge(newMetadata, analyzerMetadata);
           }
         } catch (err) {
-          console.error(err);
+          console.error('[Uplo] Failed to run analyzer.', err);
         }
       }
+
+      merge(newMetadata, { analyzed: true });
     });
 
     blob = await adapter.findBlobByKey(key);

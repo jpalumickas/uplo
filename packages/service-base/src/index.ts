@@ -60,8 +60,13 @@ class BaseService {
   async downloadToTempfile({ key }: { key: string }, callback: (tmpPath: string) => void) {
     return await tempyFile.task(
       async (tmpPath) => {
-        await this.download({ key, path: tmpPath });
-        return await callback(tmpPath);
+        try {
+          await this.download({ key, path: tmpPath });
+          return await callback(tmpPath);
+        } catch(err) {
+          console.error('[Uplo] Failed to download blob.', err);
+          return null;
+        }
       }
     );
   }
