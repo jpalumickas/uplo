@@ -32,7 +32,7 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
         filename: params.fileName,
         contentType: params.contentType,
         size: params.size,
-        metadata: JSON.stringify(params.metadata || {}),
+        metadata: params.metadata || {},
         checksum: params.checksum,
         serviceName: 'google',
       },
@@ -53,7 +53,7 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
     });
   }
 
-  const updateBlobMetadata = async (key: string, metadata: object) => {
+  const updateBlobMetadata = async ({ key, metadata }: { key: string, metadata: object }) => {
     return await prisma.fileBlob.update({
       where: { key },
       data: { metadata }
