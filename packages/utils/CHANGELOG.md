@@ -1,5 +1,11 @@
 # @uplo/utils
 
+## 0.6.0
+
+### Minor Changes
+
+- Bugfixes
+
 ## 0.4.0
 
 ### Minor Changes

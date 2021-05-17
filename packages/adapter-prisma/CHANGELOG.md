@@ -1,5 +1,11 @@
 # @uplo/adapter-prisma
 
+## 0.6.0
+
+### Minor Changes
+
+- Bugfixes
+
 ## 0.5.0
 
 ### Minor Changes
