@@ -1,5 +1,11 @@
 # @uplo/utils
 
+## 0.7.0
+
+### Minor Changes
+
+- Add metadata analyzer
+
 ## 0.6.0
 
 ### Minor Changes
