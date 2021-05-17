@@ -1,5 +1,13 @@
 # @uplo/service-s3
 
+## 0.7.1
+
+### Patch Changes
+
+- Handle some download errors
+- Updated dependencies [undefined]
+  - @uplo/service-base@0.7.1
+
 ## 0.7.0
 
 ### Minor Changes

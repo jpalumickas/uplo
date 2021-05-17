@@ -1,5 +1,11 @@
 # @uplo/node
 
+## 0.7.1
+
+### Patch Changes
+
+- Handle some download errors
+
 ## 0.7.0
 
 ### Minor Changes
