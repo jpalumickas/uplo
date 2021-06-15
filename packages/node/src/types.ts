@@ -14,15 +14,21 @@ export interface Config {
 
 export type Analyzer = ({ key, filePath }: { key: string, filePath: string }) => object;
 
+export type Callbacks = {
+  beforeAttach?: ({ blobId }: { blobId: String | Number }) => void,
+  afterAttach?: ({ blob }: { blob: Blob }) => void,
+}
+
 export abstract class Service {
   constructor() { }
-  abstract updateMetadata(): any;
+  abstract updateMetadata(key: string): Promise<any>;
+  abstract name(): string;
   abstract downloadToTempfile({ key }: { key: string }, callback: (tmpPath: string) => void): any;
 }
 
 export abstract class Adapter {
   constructor() { }
-  abstract findBlob(): any;
+  abstract findBlob(blobId: string): any;
   abstract attachBlob(): any;
   abstract findBlobByKey(key: string): Blob;
   abstract updateBlobMetadata({ key, metadata }: { key: string, metadata: object }): Blob;

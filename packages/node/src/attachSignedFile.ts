@@ -1,5 +1,5 @@
 import { upperFirst, camelCase } from 'lodash';
-import { Service, Adapter } from './types';
+import { Service, Adapter, Callbacks } from './types';
 
 export interface AttachFileOptions {
   signedId: string;
@@ -9,7 +9,7 @@ export interface AttachFileOptions {
   strategy: 'one' | 'many';
 }
 
-const attachSignedFile = ({ service, adapter, signer }) => async ({
+const attachSignedFile = ({ service, adapter, signer, callbacks }: { service: Service, adapter: Adapter, callbacks: Callbacks }) => async ({
   signedId,
   modelName,
   modelId,
@@ -18,13 +18,17 @@ const attachSignedFile = ({ service, adapter, signer }) => async ({
   ...rest
 }: AttachFileOptions) => {
   const { blobId } = await signer.verify(signedId, 'blob');
+  if (callbacks.beforeAttach) {
+    await callbacks.beforeAttach({ blobId });
+  }
+
   const recordType = upperFirst(camelCase(modelName));
 
   const blob = await adapter.findBlob(blobId);
 
   await service.updateMetadata(blob.key, { contentType: blob.contentType });
 
-  return await adapter.attachBlob({
+  const newBlob = await adapter.attachBlob({
     blob,
     attachmentName,
     recordId: modelId,
@@ -32,6 +36,12 @@ const attachSignedFile = ({ service, adapter, signer }) => async ({
     strategy,
     ...rest,
   });
+
+  if (callbacks.afterAttach) {
+    await callbacks.afterAttach({ blob: newBlob });
+  }
+
+  return newBlob;
 };
 
 export default attachSignedFile;

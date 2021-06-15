@@ -13,6 +13,9 @@
   "peerDependencies": {
     "@prisma/client": ">=2.19.0"
   },
+  "devDependencies": {
+    "@uplo/node": "^0.7.1"
+  },
   "engines": {
     "node": ">=14"
   }

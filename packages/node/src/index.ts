@@ -1,4 +1,4 @@
-import { Service, Adapter, Analyzer, Config } from './types';
+import { Service, Adapter, Analyzer, Callbacks, Config } from './types';
 import Signer from './signer';
 import attachSignedFile from './attachSignedFile';
 import generateBlobKey from './generateBlobKey';
@@ -14,11 +14,13 @@ const uploader = ({
   adapter,
   config: providedConfig,
   analyzers = [],
+  callbacks = {},
 }: {
   service: Service;
   adapter: Adapter;
-  config: Config;
-  analyzers: Analyzer[];
+  config?: Config;
+  analyzers?: Analyzer[];
+  callbacks?: Callbacks;
 }) => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = Signer(config);
@@ -28,9 +30,14 @@ const uploader = ({
     adapter,
     service,
     generateBlobKey,
-    attachSignedFile: attachSignedFile({ service, adapter, signer }),
+    attachSignedFile: attachSignedFile({ service, adapter, signer, callbacks }),
     analyze: analyze({ service, adapter, analyzers }),
   };
 };
+
+export {
+  Service,
+  Adapter,
+}
 
 export default uploader;

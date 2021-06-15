@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { Service } from '@uplo/node';
 
 export interface CreateBlobParams {
   key: string;
@@ -25,7 +26,7 @@ export interface AttachBlobOptions {
 
 // TODO: Make serviceName to get from uploader service
 const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
-  const createBlob = async ({ params }: { params: CreateBlobParams }) => {
+  const createBlob = async ({ params, service }: { params: CreateBlobParams, service: Service }) => {
     const blob = await prisma.fileBlob.create({
       data: {
         key: params.key,
@@ -34,7 +35,7 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
         size: params.size,
         metadata: params.metadata || {},
         checksum: params.checksum,
-        serviceName: 'google',
+        serviceName: service.name()
       },
     });
 
@@ -61,31 +62,30 @@ const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
   }
 
   const attachBlob = async ({ blob, attachmentName, recordId, recordType, strategy, returnQuery = false }: AttachBlobOptions) => {
-  if (strategy === 'one') {
-    await prisma.fileAttachment.deleteMany({
-      where: {
+    if (strategy === 'one') {
+      await prisma.fileAttachment.deleteMany({
+        where: {
+          name: attachmentName,
+          recordType,
+          recordId,
+        },
+      });
+    }
+
+    const query = prisma.fileAttachment.create({
+      data: {
         name: attachmentName,
         recordType,
         recordId,
+        blob: { connect: { id: blob.id } },
       },
     });
-  }
 
-  const query = prisma.fileAttachment.create({
-    data: {
-      name: attachmentName,
-      recordType,
-      recordId,
-      blob: { connect: { id: blob.id } },
-    },
-  });
+    if (returnQuery) {
+      return { query };
+    }
 
-  if (returnQuery) {
-    return { query };
-  }
-
-  return await query;
-
+    return await query;
   }
 
   return {
