@@ -64,7 +64,7 @@ class BaseService {
           await this.download({ key, path: tmpPath });
           return await callback(tmpPath);
         } catch(err) {
-          console.error('[Uplo] Failed to download blob.', err);
+          console.error('[Uplo] Failed to download blob.', err.message);
           return null;
         }
       }
