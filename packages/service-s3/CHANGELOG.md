@@ -1,5 +1,16 @@
 # @uplo/service-s3
 
+## 0.8.0
+
+### Minor Changes
+
+- Add callbacks support
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+  - @uplo/service-base@0.8.0
+
 ## 0.7.1
 
 ### Patch Changes

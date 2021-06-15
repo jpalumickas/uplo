@@ -1,6 +1,6 @@
 {
   "name": "@uplo/utils",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "main": "dist/uplo-utils.cjs.js",
   "module": "dist/uplo-utils.esm.js",
   "exports": {

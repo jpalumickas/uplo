@@ -1,5 +1,11 @@
 # @uplo/adapter-prisma
 
+## 0.8.0
+
+### Minor Changes
+
+- Add callbacks support
+
 ## 0.7.1
 
 ### Patch Changes
