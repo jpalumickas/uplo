@@ -28,7 +28,7 @@ const attachSignedFile = ({ service, adapter, signer, callbacks }: { service: Se
 
   await service.updateMetadata(blob.key, { contentType: blob.contentType });
 
-  const newBlob = await adapter.attachBlob({
+  const result = await adapter.attachBlob({
     blob,
     attachmentName,
     recordId: modelId,
@@ -38,10 +38,10 @@ const attachSignedFile = ({ service, adapter, signer, callbacks }: { service: Se
   });
 
   if (callbacks.afterAttach) {
-    await callbacks.afterAttach({ blob: newBlob });
+    await callbacks.afterAttach({ blob });
   }
 
-  return newBlob;
+  return result;
 };
 
 export default attachSignedFile;
