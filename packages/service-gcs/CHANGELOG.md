@@ -1,5 +1,14 @@
 # @uplo/service-gcs
 
+## 0.8.1
+
+### Patch Changes
+
+- Remove correct blob in callback
+- Updated dependencies [undefined]
+  - @uplo/service-base@0.8.1
+  - @uplo/utils@0.8.1
+
 ## 0.8.0
 
 ### Minor Changes

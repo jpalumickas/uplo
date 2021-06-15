@@ -1,5 +1,11 @@
 # @uplo/utils
 
+## 0.8.1
+
+### Patch Changes
+
+- Remove correct blob in callback
+
 ## 0.8.0
 
 ### Minor Changes
