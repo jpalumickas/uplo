@@ -1,0 +1,40 @@
+# Prisma
+
+Define Prisma schema with following models
+
+```prisma
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model FileAttachment {
+  id         String   @id @default(dbgenerated("public.gen_random_uuid()")) @db.Uuid
+  name       String   @db.VarChar
+  recordType String   @db.VarChar
+  recordId   String   @unique @db.Uuid
+  blobId     String   @db.Uuid
+  createdAt  DateTime @default(now()) @db.Timestamp(6)
+  blob       FileBlob @relation(fields: [blobId], references: [id])
+
+  @@unique([recordType, recordId, name, blobId])
+  @@index([blobId])
+}
+
+model FileBlob {
+  id            String           @id @default(dbgenerated("public.gen_random_uuid()")) @db.Uuid
+  key           String           @unique @db.VarChar
+  filename      String           @db.VarChar
+  contentType   String?          @db.VarChar
+  size          BigInt
+  checksum      String           @db.VarChar
+  createdAt     DateTime         @default(now()) @db.Timestamp(6)
+  serviceName   String           @db.VarChar
+  metadata      Json             @default("{}")
+  attachments   FileAttachment[]
+}
+```
