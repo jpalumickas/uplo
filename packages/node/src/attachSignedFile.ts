@@ -1,5 +1,5 @@
 import { upperFirst, camelCase } from 'lodash';
-import { Service, Adapter, Callbacks } from './types';
+import { Service, Adapter, Callbacks, SignerResult } from './types';
 
 export interface AttachFileOptions {
   signedId: string;
@@ -9,7 +9,14 @@ export interface AttachFileOptions {
   strategy: 'one' | 'many';
 }
 
-const attachSignedFile = ({ service, adapter, signer, callbacks }: { service: Service, adapter: Adapter, callbacks: Callbacks }) => async ({
+interface AttachSignedFile {
+  service: Service;
+  adapter: Adapter;
+  callbacks: Callbacks;
+  signer: SignerResult;
+}
+
+const attachSignedFile = ({ service, adapter, signer, callbacks }: AttachSignedFile) => async ({
   signedId,
   modelName,
   modelId,

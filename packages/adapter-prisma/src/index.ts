@@ -24,7 +24,6 @@ export interface AttachBlobOptions {
   returnQuery: boolean;
 }
 
-// TODO: Make serviceName to get from uploader service
 const prismaAdapter = ({ prisma }: { prisma: PrismaClient }) => {
   const createBlob = async ({ params, service }: { params: CreateBlobParams, service: Service }) => {
     const blob = await prisma.fileBlob.create({

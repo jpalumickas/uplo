@@ -1,3 +1,5 @@
+import { JwtPayload } from 'jsonwebtoken';
+
 export interface Blob {
   fileName: string;
   size: number;
@@ -32,4 +34,13 @@ export abstract class Adapter {
   abstract attachBlob(): any;
   abstract findBlobByKey(key: string): Blob;
   abstract updateBlobMetadata({ key, metadata }: { key: string, metadata: object }): Blob;
+}
+
+export interface SignerResult {
+  generate: (data: object, purpose: string) => Promise<string | undefined>;
+  verify: (token: string, purpose: string) => Promise<JwtPayload | undefined>;
+}
+
+export interface Signer {
+  (config: Config): SignerResult;
 }
