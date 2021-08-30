@@ -1,0 +1,16 @@
+{
+  "name": "@uplo/types",
+  "version": "0.8.1",
+  "main": "dist/uplo-types.cjs.js",
+  "module": "dist/uplo-types.esm.js",
+  "exports": {
+    ".": {
+      "require": "./dist/uplo-types.cjs.js",
+      "default": "./dist/uplo-types.esm.js"
+    }
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  }
+}
