@@ -1,5 +1,6 @@
 import { upperFirst, camelCase } from 'lodash';
-import { Service, Adapter, Callbacks, SignerResult } from './types';
+import { Service, Adapter } from '@uplo/types';
+import { Callbacks, SignerResult } from './types';
 
 export interface AttachFileOptions {
   signedId: string;

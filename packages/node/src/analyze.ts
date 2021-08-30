@@ -1,5 +1,6 @@
 import { isEmpty, merge } from 'lodash';
-import { Service, Adapter, Config, Blob, Analyzer } from './types';
+import { Service, Adapter, Blob } from '@uplo/types';
+import { Config, Analyzer } from './types';
 
 const analyze =
   ({

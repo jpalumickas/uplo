@@ -1,5 +1,6 @@
-import { Service, Adapter, Analyzer, Callbacks, Config } from './types';
-import Signer from './signer';
+import { Service, Adapter } from '@uplo/types';
+import { Analyzer, Callbacks, Config } from './types';
+import createSigner from './signer';
 import attachSignedFile from './attachSignedFile';
 import generateBlobKey from './generateBlobKey';
 import analyze from './analyze';
@@ -23,7 +24,7 @@ const uploader = ({
   callbacks?: Callbacks;
 }) => {
   const config = Object.assign({}, defaultConfig, providedConfig);
-  const signer = Signer(config);
+  const signer = createSigner(config);
 
   return {
     signer,
