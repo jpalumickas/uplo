@@ -1,5 +1,5 @@
 import { Service, Adapter, Analyzer } from '@uplo/types';
-import { Callbacks, Config, UploOptions, CreateDirectUploadParams } from './types';
+import { Callbacks, Config, UploOptions, CreateDirectUploadParams, UploInstance } from './types';
 import createSigner from './signer';
 import attachSignedFile from './attachSignedFile';
 import generateBlobKey from './generateBlobKey';
@@ -18,7 +18,7 @@ const uploader = ({
   analyzers = [],
   callbacks = {},
 }: UploOptions
-) => {
+): UploInstance => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = createSigner(config);
 

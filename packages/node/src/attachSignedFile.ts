@@ -1,30 +1,22 @@
 import { upperFirst, camelCase } from 'lodash';
 import { Service, Adapter } from '@uplo/types';
-import { Callbacks, SignerResult } from './types';
+import { Callbacks, SignerResult, AttachSignedFileOptions } from './types';
 
-export interface AttachFileOptions {
-  signedId: string;
-  modelName: string;
-  modelId: string;
-  attachmentName: string;
-  strategy: 'one' | 'many';
-}
-
-interface AttachSignedFile {
+interface Options {
   service: Service;
   adapter: Adapter;
   callbacks: Callbacks;
   signer: SignerResult;
 }
 
-const attachSignedFile = ({ service, adapter, signer, callbacks }: AttachSignedFile) => async ({
+const attachSignedFile = ({ service, adapter, signer, callbacks }: Options) => async ({
   signedId,
   modelName,
   modelId,
   attachmentName,
   strategy = 'many',
   ...rest
-}: AttachFileOptions) => {
+}: AttachSignedFileOptions) => {
   const data = await signer.verify(signedId, 'blob');
   if (!data || !data.blobId) {
     throw new Error(`[Uplo] Cannot verify signed id for blob: ${signedId}`);

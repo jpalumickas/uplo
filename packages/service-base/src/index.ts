@@ -38,6 +38,10 @@ class BaseService implements Service {
     throw new Error('Not implemented');
   }
 
+  async protocolUrl(blob: Blob): Promise<string> {
+    throw new Error('Not implemented');
+  }
+
   directUploadHeaders(blob: Blob) {
     return {};
   }

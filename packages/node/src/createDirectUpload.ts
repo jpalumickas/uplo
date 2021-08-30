@@ -31,6 +31,10 @@ const createDirectUpload = async  ({ params, signer, adapter, service }: Options
     'blob'
   );
 
+  if (!signedId) {
+    throw new Error(`[Uplo] failed to create signed id for direct upload`);
+  }
+
   return {
     signedId: signedId,
     upload: uploadData,
