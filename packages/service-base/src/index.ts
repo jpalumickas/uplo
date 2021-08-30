@@ -1,3 +1,4 @@
+import { Service } from '@uplo/types';
 import { file as tempyFile } from 'tempy';
 
 export interface Blob {
@@ -13,7 +14,11 @@ export interface Options {
   name?: string;
 }
 
-class BaseService {
+export {
+  Service,
+}
+
+class BaseService implements Service {
   isPublic: boolean;
   _name?: string;
   options: object;
@@ -64,7 +69,12 @@ class BaseService {
           await this.download({ key, path: tmpPath });
           return await callback(tmpPath);
         } catch(err) {
-          console.error('[Uplo] Failed to download blob.', err.message);
+          if (err instanceof Error) {
+            console.error('[Uplo] Failed to download blob.', err.message);
+          } else {
+            console.error('[Uplo] Failed to download blob.');
+          }
+
           return null;
         }
       }

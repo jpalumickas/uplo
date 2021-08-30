@@ -25,7 +25,12 @@ const attachSignedFile = ({ service, adapter, signer, callbacks }: AttachSignedF
   strategy = 'many',
   ...rest
 }: AttachFileOptions) => {
-  const { blobId } = await signer.verify(signedId, 'blob');
+  const data = await signer.verify(signedId, 'blob');
+  if (!data || !data.blobId) {
+    throw new Error(`[Uplo] Cannot verify signed id for blob: ${signedId}`);
+  }
+  const { blobId } = data;
+
   if (callbacks.beforeAttach) {
     await callbacks.beforeAttach({ blobId });
   }
@@ -33,6 +38,10 @@ const attachSignedFile = ({ service, adapter, signer, callbacks }: AttachSignedF
   const recordType = upperFirst(camelCase(modelName));
 
   const blob = await adapter.findBlob(blobId);
+
+  if (!blob) {
+    throw new Error(`[Uplo] Cannot find blob with id ${blobId}`);
+  }
 
   await service.updateMetadata(blob.key, { contentType: blob.contentType });
 

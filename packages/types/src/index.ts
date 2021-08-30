@@ -1,3 +1,5 @@
+import { ContentDispositionType } from '@uplo/utils';
+
 export type ID = string | number;
 
 export interface Blob {
@@ -10,9 +12,17 @@ export interface Blob {
   [property: string]: any;
 }
 
+// Service
+
+export interface UpdateMetadataOptions {
+  contentType?: string;
+  disposition?: ContentDispositionType;
+  fileName?: string
+}
+
 export abstract class Service {
   constructor() { }
-  abstract updateMetadata(key: string): Promise<any>;
+  abstract updateMetadata(key: string, options: UpdateMetadataOptions): Promise<any>;
   abstract name(): string;
   abstract downloadToTempfile({ key }: { key: string }, callback: (tmpPath: string) => void): any;
 }
@@ -52,3 +62,12 @@ export abstract class Adapter {
   abstract createBlob(options: CreateBlobOptions): Promise<Blob>;
   abstract updateBlobMetadata({ key, metadata }: { key: string, metadata: object }): Promise<Blob | null>;
 }
+
+// Analyzer
+
+export interface AnalyzerOptions {
+  key: string;
+  filePath: string;
+}
+
+export type Analyzer = ({ key, filePath }: AnalyzerOptions) => object;

@@ -1,5 +1,5 @@
-import { Service, Adapter } from '@uplo/types';
-import { Analyzer, Callbacks, Config } from './types';
+import { Service, Adapter, Analyzer } from '@uplo/types';
+import { Callbacks, Config } from './types';
 import createSigner from './signer';
 import attachSignedFile from './attachSignedFile';
 import generateBlobKey from './generateBlobKey';
@@ -36,9 +36,5 @@ const uploader = ({
   };
 };
 
-export {
-  Service,
-  Adapter,
-}
-
+export * from '@uplo/types';
 export default uploader;

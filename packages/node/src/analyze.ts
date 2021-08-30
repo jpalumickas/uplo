@@ -1,6 +1,6 @@
 import { isEmpty, merge } from 'lodash';
-import { Service, Adapter, Blob } from '@uplo/types';
-import { Config, Analyzer } from './types';
+import { Service, Adapter, Blob, Analyzer } from '@uplo/types';
+import { Config } from './types';
 
 const analyze =
   ({
@@ -32,9 +32,11 @@ const analyze =
 
       for (const analyzer of analyzers) {
         try {
-          const analyzerMetadata = await analyzer({ ...blob, filePath });
-          if (!isEmpty(analyzerMetadata)) {
-            merge(newMetadata, analyzerMetadata);
+          if (blob) {
+            const analyzerMetadata = await analyzer({ key: blob.key, filePath });
+            if (!isEmpty(analyzerMetadata)) {
+              merge(newMetadata, analyzerMetadata);
+            }
           }
         } catch (err) {
           console.error('[Uplo] Failed to run analyzer.', err);
@@ -45,8 +47,10 @@ const analyze =
     });
 
     blob = await adapter.findBlobByKey(key);
-    const metadata = { ...blob.metadata, ...newMetadata };
-    await adapter.updateBlobMetadata({ key, metadata });
+    if (blob) {
+      const metadata = { ...blob.metadata, ...newMetadata };
+      await adapter.updateBlobMetadata({ key, metadata });
+    }
 
     return newMetadata;
   };

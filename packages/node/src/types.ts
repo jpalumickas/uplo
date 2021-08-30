@@ -1,22 +1,29 @@
 import { JwtPayload } from 'jsonwebtoken';
-import { Blob } from '@uplo/types';
+import { Blob, ID } from '@uplo/types';
 
 export interface Config {
   privateKey?: string;
   signedIdExpiresIn?: number;
 }
 
-export type Analyzer = ({ key, filePath }: { key: string, filePath: string }) => object;
+export type BeforeAttachCallback = ({ blobId }: { blobId: String | Number }) => void;
+export type AfterAttachCallback = ({ blob }: { blob: Blob }) => void;
 
 export type Callbacks = {
-  beforeAttach?: ({ blobId }: { blobId: String | Number }) => void,
-  afterAttach?: ({ blob }: { blob: Blob }) => void,
+  beforeAttach?: BeforeAttachCallback;
+  afterAttach?: AfterAttachCallback;
 }
 
+export type SignerData = {
+  blobId?: ID;
+  [key: string]: string | number | undefined;
+}
+
+export type SignerPurpose = 'blob';
 
 export interface SignerResult {
-  generate: (data: object, purpose: string) => Promise<string | undefined>;
-  verify: (token: string, purpose: string) => Promise<JwtPayload | undefined>;
+  generate: (data: SignerData, purpose: SignerPurpose) => Promise<string | undefined>;
+  verify: (token: string, purpose: SignerPurpose) => Promise<(JwtPayload & SignerData) | undefined>;
 }
 
 export interface Signer {

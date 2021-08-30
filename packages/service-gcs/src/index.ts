@@ -1,5 +1,5 @@
 import { Storage, GetSignedUrlConfig } from '@google-cloud/storage';
-import BaseService, { Blob, Options as BaseOptions } from '@uplo/service-base';
+import BaseService, { Service, Blob, Options as BaseOptions } from '@uplo/service-base';
 import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 
 interface Options extends BaseOptions {
@@ -51,12 +51,12 @@ class GCSService extends BaseService {
   }
 
   async updateMetadata(
-    key: string,
+    key,
     {
       contentType,
       disposition,
       fileName,
-    }: { contentType?: string; disposition?: ContentDispositionType, fileName?: string }
+    }
   ) {
     const metadata: { contentType?: string; contentDisposition?: string } = {};
 
