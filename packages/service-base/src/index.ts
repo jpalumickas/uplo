@@ -17,7 +17,7 @@ class BaseService implements Service {
     this.isPublic = isPublic;
   }
 
-  async url(blob: Blob ) {
+  async url(blob: Blob ): Promise<string> {
     return this.isPublic ? this.publicUrl(blob) : this.privateUrl(blob);
   }
 
@@ -30,11 +30,11 @@ class BaseService implements Service {
 
   async updateMetadata(key: string, options: ServiceUpdateMetadataOptions): Promise<any> {}
 
-  publicUrl(blob: Blob) {
+  async publicUrl(blob: Blob): Promise<string> {
     throw new Error('Not implemented');
   }
 
-  privateUrl(blob: Blob) {
+  async privateUrl(blob: Blob): Promise<string> {
     throw new Error('Not implemented');
   }
 
@@ -42,7 +42,7 @@ class BaseService implements Service {
     return {};
   }
 
-  directUploadUrl(blob: Blob) {
+  async directUploadUrl(blob: Blob): Promise<string> {
     throw new Error('Not implemented');
   }
 
@@ -73,7 +73,7 @@ class BaseService implements Service {
     throw new Error('Not implemented');
   }
 
-  name() {
+  name(): string {
     return this._name || this.defaultName();
   }
 }

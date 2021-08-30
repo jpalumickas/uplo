@@ -1,9 +1,10 @@
 import { Service, Adapter, Analyzer } from '@uplo/types';
-import { Callbacks, Config } from './types';
+import { Callbacks, Config, UploOptions, CreateDirectUploadParams } from './types';
 import createSigner from './signer';
 import attachSignedFile from './attachSignedFile';
 import generateBlobKey from './generateBlobKey';
 import analyze from './analyze';
+import createDirectUpload from './createDirectUpload';
 
 const defaultConfig = {
   privateKey: process.env.UPLOADER_SECRET,
@@ -16,13 +17,8 @@ const uploader = ({
   config: providedConfig,
   analyzers = [],
   callbacks = {},
-}: {
-  service: Service;
-  adapter: Adapter;
-  config?: Config;
-  analyzers?: Analyzer[];
-  callbacks?: Callbacks;
-}) => {
+}: UploOptions
+) => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = createSigner(config);
 
@@ -33,6 +29,7 @@ const uploader = ({
     generateBlobKey,
     attachSignedFile: attachSignedFile({ service, adapter, signer, callbacks }),
     analyze: analyze({ service, adapter, analyzers }),
+    createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) => createDirectUpload({ params, signer, adapter, service }),
   };
 };
 

@@ -20,11 +20,21 @@ export interface ServiceUpdateMetadataOptions {
   fileName?: string
 }
 
+interface DirectUploadData {
+  url: string;
+  headers: object;
+}
+
 export abstract class Service {
   constructor() { }
   abstract updateMetadata(key: string, options: ServiceUpdateMetadataOptions): Promise<any>;
   abstract name(): string;
   abstract downloadToTempfile({ key }: { key: string }, callback: (tmpPath: string) => void): any;
+  abstract directUploadData(blob: Blob): Promise<DirectUploadData>;
+  abstract directUploadUrl(blob: Blob): Promise<string>;
+  abstract publicUrl(blob: Blob): Promise<string>;
+  abstract privateUrl(blob: Blob, options: object): Promise<string>;
+  abstract protocolUrl(blob: Blob): Promise<string>;
 }
 
 // Adapter
