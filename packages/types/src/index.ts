@@ -14,7 +14,7 @@ export interface Blob {
 
 // Service
 
-export interface UpdateMetadataOptions {
+export interface ServiceUpdateMetadataOptions {
   contentType?: string;
   disposition?: ContentDispositionType;
   fileName?: string
@@ -22,7 +22,7 @@ export interface UpdateMetadataOptions {
 
 export abstract class Service {
   constructor() { }
-  abstract updateMetadata(key: string, options: UpdateMetadataOptions): Promise<any>;
+  abstract updateMetadata(key: string, options: ServiceUpdateMetadataOptions): Promise<any>;
   abstract name(): string;
   abstract downloadToTempfile({ key }: { key: string }, callback: (tmpPath: string) => void): any;
 }

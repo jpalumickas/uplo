@@ -1,10 +1,11 @@
-import BaseService, { Blob, Options as BaseOptions } from '@uplo/service-base';
+import BaseService, { Options as BaseOptions } from '@uplo/service-base';
 import {
   S3Client,
   GetObjectCommand,
   PutObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
+import { Blob } from '@uplo/types';
 
 interface Options extends BaseOptions {
   bucket: string;

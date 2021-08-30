@@ -1,21 +1,9 @@
-import { Service } from '@uplo/types';
+import { Blob, Service, ServiceUpdateMetadataOptions } from '@uplo/types';
 import { file as tempyFile } from 'tempy';
-
-export interface Blob {
-  fileName: string;
-  size: number;
-  contentType: string;
-  checksum: string;
-  key: string;
-}
 
 export interface Options {
   isPublic?: boolean;
   name?: string;
-}
-
-export {
-  Service,
 }
 
 class BaseService implements Service {
@@ -40,7 +28,7 @@ class BaseService implements Service {
     };
   }
 
-  async updateMetadata() {}
+  async updateMetadata(key: string, options: ServiceUpdateMetadataOptions): Promise<any> {}
 
   publicUrl(blob: Blob) {
     throw new Error('Not implemented');
