@@ -5,7 +5,6 @@ import { Config, Signer } from './types';
 const signAsync = promisify<string | object | Buffer, Secret, SignOptions>(jwtSign);
 const verifyAsync = promisify<string, Secret | GetPublicKeyOrSecret,VerifyOptions>(jwtVerify);
 
-
 export const signer: Signer = (config) => {
   const generate = async (data: object, purpose: string) => {
     if (!config.privateKey) {
@@ -16,6 +15,11 @@ export const signer: Signer = (config) => {
       audience: purpose,
       expiresIn: config.signedIdExpiresIn,
     }) as string | undefined;
+
+    if (!token) {
+      throw new Error('Failed to generate signed token');
+    }
+
     return token;
   };
 

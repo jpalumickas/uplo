@@ -10,7 +10,7 @@ export type SignerData = {
 export type SignerPurpose = 'blob';
 
 export interface SignerResult {
-  generate: (data: SignerData, purpose: SignerPurpose) => Promise<string | undefined>;
+  generate: (data: SignerData, purpose: SignerPurpose) => Promise<string>;
   verify: (token: string, purpose: SignerPurpose) => Promise<(JwtPayload & SignerData) | undefined>;
 }
 
