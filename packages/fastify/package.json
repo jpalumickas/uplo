@@ -1,0 +1,19 @@
+{
+  "name": "@uplo/fastify",
+  "version": "0.10.0",
+  "main": "dist/uplo-fastify.cjs.js",
+  "module": "dist/uplo-fastify.esm.js",
+  "exports": {
+    ".": {
+      "require": "./dist/uplo-fastify.cjs.js",
+      "default": "./dist/uplo-fasitfy.esm.js"
+    }
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "fastify": ">=3"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
