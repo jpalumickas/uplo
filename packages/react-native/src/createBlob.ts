@@ -12,8 +12,6 @@ const createBlob = async (file: File, { host, mountPath = '/uploads' }: Options)
   const filePath = file.localUri || file.uri;
   const fileData = await getFileInfo(filePath);
 
-  console.log(fileData);
-
   if (!fileData) return { data: null, error: 'Cannot get data from file' };
 
   const fileName = file.filename || filePath.replace(/^.*[\\\/]/, '');
@@ -30,19 +28,23 @@ const createBlob = async (file: File, { host, mountPath = '/uploads' }: Options)
   };
 
   try {
-    const response = await fetch(`${host}${mountPath}/create-direct`, {
+    const response = await fetch(`${host}${mountPath}/create-direct-upload`, {
       method: 'POST',
       body: JSON.stringify(requestData),
       headers: { 'Content-Type': 'application/json' },
     });
 
-    const data = await response.json();
-
-    return {
-      data,
+    if (response.ok) {
+      const data = await response.json();
+      return {
+        data,
+        error: null
+      }
+    } else {
+      return { data: null, error: 'Failed to create direct upload blob' }
     }
   } catch(err) {
-    let error;
+    let error = null;
 
     if (typeof err === 'string') {
       error = err;

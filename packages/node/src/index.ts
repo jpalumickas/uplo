@@ -34,4 +34,5 @@ const uploader = ({
 };
 
 export * from '@uplo/types';
+export * from './types';
 export default uploader;

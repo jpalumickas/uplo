@@ -1,4 +1,4 @@
-import { Blob, ID, Service, Analyzer, Adapter } from '@uplo/types';
+import { Blob, Service, Analyzer, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
 import { SignerResult } from './signer';
 

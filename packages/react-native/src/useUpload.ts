@@ -2,23 +2,15 @@ import { useState, useMemo, useCallback } from 'react';
 import { uploadAsync } from 'expo-file-system';
 import useConfig from './useConfig';
 import createBlob from './createBlob';
-import { File } from './types';
+import { Upload, File, UseUploadOptions } from './types';
 
-interface Upload {
-  id: string;
-  file: File;
-  signedId: null | string;
-  uploading: boolean;
-  error?: string;
-}
-
-const useUpload = () => {
+const useUpload = ({ multiple = false }: UseUploadOptions = {}) => {
   const [uploads, setUploads] = useState<Upload[]>([]);
   const { host, mountPath } = useConfig();
 
   const addUpload = useCallback((upload: Upload) => {
-    setUploads((prev) => [...prev, upload]);
-  }, []);
+    setUploads((prev) => multiple ? [...prev, upload] : [upload]);
+  }, [multiple]);
 
   const clear = useCallback(() => setUploads([]), []);
   const uploading = useMemo(() => uploads.some((it) => it.uploading === true), [
@@ -40,7 +32,7 @@ const useUpload = () => {
   }, []);
 
   const uploadFile = useCallback(
-    async (file) => {
+    async (file: File) => {
       const id = file.id || Date.now().toString();
 
       let upload: Upload = {

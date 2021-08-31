@@ -19,7 +19,6 @@ const getFileInfo = async (filePath: string): Promise<FileInfo | null> => {
       size: result.size,
     }
   } catch (err) {
-    console.log('a');
     return null;
   }
 }
