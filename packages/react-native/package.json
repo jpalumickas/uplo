@@ -1,6 +1,6 @@
 {
   "name": "@uplo/react-native",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "dist/uplo-react-native.cjs.js",
   "module": "dist/uplo-react-native.esm.js",
   "exports": {

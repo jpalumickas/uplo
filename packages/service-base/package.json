@@ -1,6 +1,6 @@
 {
   "name": "@uplo/service-base",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "main": "dist/uplo-service-base.cjs.js",
   "module": "dist/uplo-service-base.esm.js",
   "exports": {
