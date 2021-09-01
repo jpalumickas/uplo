@@ -9,6 +9,9 @@
       "default": "./dist/uplo-utils.esm.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "dependencies": {
     "@tinyhttp/content-disposition": "^2.0.0"

@@ -9,6 +9,9 @@
       "default": "./dist/uplo-service-s3.esm.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.19.0",

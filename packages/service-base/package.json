@@ -9,6 +9,9 @@
       "default": "./dist/uplo-service-base.esm.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "dependencies": {
     "tempy": "^1.0.1"

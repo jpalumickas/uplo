@@ -9,6 +9,9 @@
       "default": "./dist/uplo-fasitfy.esm.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "peerDependencies": {
     "fastify": ">=3"

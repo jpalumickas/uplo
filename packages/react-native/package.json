@@ -9,6 +9,9 @@
       "default": "./dist/uplo-react-native.esm.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
   "dependencies": {
     "abab": "^2.0.5",
