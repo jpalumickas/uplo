@@ -13,6 +13,12 @@
   "peerDependencies": {
     "fastify": ">=3"
   },
+  "devDependencies": {
+    "fastify": "^3.20.2"
+  },
+  "devDependencies": {
+    "@uplo/node": "0.10.0"
+  },
   "engines": {
     "node": ">=14"
   }

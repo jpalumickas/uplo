@@ -6,7 +6,7 @@ export interface UploPluginOptions {
   uplo: UploInstance;
 }
 
-const opts = {
+const createDirectUploadOptions = {
   schema: {
     body: {
       type: 'object',
@@ -33,7 +33,9 @@ interface CreateDirectUploadBody {
 }
 
 const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, { uplo, mountPath = '/uploads' }) => {
-  fastify.post<{ Body: CreateDirectUploadBody}>(`${mountPath}/create-direct-upload`, opts, async (request, reply) => {
+  fastify.decorate('uplo', uplo);
+
+  fastify.post<{ Body: CreateDirectUploadBody}>(`${mountPath}/create-direct-upload`, createDirectUploadOptions, async (request, reply) => {
 
     const params = {
       fileName: request.body['fileName'],
