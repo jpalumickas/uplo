@@ -33,7 +33,8 @@ export abstract class Service {
   abstract directUploadData(blob: Blob): Promise<DirectUploadData>;
   abstract directUploadUrl(blob: Blob): Promise<string>;
   abstract publicUrl(blob: Blob): Promise<string>;
-  abstract privateUrl(blob: Blob, options: object): Promise<string>;
+  abstract privateUrl(blob: Blob, options?: object): Promise<string>;
+  abstract url(blob: Blob, options?: object): Promise<string>;
   abstract protocolUrl(blob: Blob): Promise<string>;
 }
 

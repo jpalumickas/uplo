@@ -31,7 +31,7 @@ class S3Service extends BaseService {
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       // ContentDisposition: `attachment; filename="${fileName}"`,
-      ContentLength: blob.size,
+      ContentLength: Number(blob.size),
       ContentType: blob.contentType,
       ContentMD5: blob.checksum,
       ACL: this.isPublic ? 'public-read' : 'private',

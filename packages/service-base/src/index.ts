@@ -17,8 +17,8 @@ class BaseService implements Service {
     this.isPublic = isPublic;
   }
 
-  async url(blob: Blob ): Promise<string> {
-    return this.isPublic ? this.publicUrl(blob) : this.privateUrl(blob);
+  async url(blob: Blob, options?: object): Promise<string> {
+    return this.isPublic ? this.publicUrl(blob) : this.privateUrl(blob, options);
   }
 
   async directUploadData(blob: Blob) {
@@ -28,29 +28,29 @@ class BaseService implements Service {
     };
   }
 
-  async updateMetadata(key: string, options: ServiceUpdateMetadataOptions): Promise<any> {}
+  async updateMetadata(_key: string, _options: ServiceUpdateMetadataOptions): Promise<any> {}
 
-  async publicUrl(blob: Blob): Promise<string> {
+  async publicUrl(_blob: Blob): Promise<string> {
     throw new Error('Not implemented');
   }
 
-  async privateUrl(blob: Blob): Promise<string> {
+  async privateUrl(_blob: Blob, _options?: object): Promise<string> {
     throw new Error('Not implemented');
   }
 
-  async protocolUrl(blob: Blob): Promise<string> {
+  async protocolUrl(_blob: Blob): Promise<string> {
     throw new Error('Not implemented');
   }
 
-  directUploadHeaders(blob: Blob) {
+  directUploadHeaders(_blob: Blob) {
     return {};
   }
 
-  async directUploadUrl(blob: Blob): Promise<string> {
+  async directUploadUrl(_blob: Blob): Promise<string> {
     throw new Error('Not implemented');
   }
 
-  download({ key, path }: { key: string, path: string }) {
+  download(_options: { key: string, path: string }) {
     throw new Error('Not implemented');
   }
 
