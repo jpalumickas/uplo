@@ -1,6 +1,6 @@
 {
   "name": "@uplo/node",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "main": "dist/uplo-node.cjs.js",
   "module": "dist/uplo-node.esm.js",
   "exports": {
@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@uplo/types": "^0.12.0",
+    "@uplo/types": "^0.12.1",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21"
   },

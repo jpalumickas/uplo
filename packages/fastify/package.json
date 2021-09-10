@@ -1,6 +1,6 @@
 {
   "name": "@uplo/fastify",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "main": "dist/uplo-fastify.cjs.js",
   "module": "dist/uplo-fastify.esm.js",
   "exports": {
@@ -17,7 +17,7 @@
     "fastify": ">=3"
   },
   "devDependencies": {
-    "@uplo/node": "^0.12.0"
+    "@uplo/node": "^0.12.1"
   },
   "engines": {
     "node": ">=14"
