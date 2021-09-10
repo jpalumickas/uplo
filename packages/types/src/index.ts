@@ -4,7 +4,7 @@ export type ID = string | number;
 
 export interface Blob {
   fileName: string;
-  size: number;
+  size: number | bigint;
   contentType: string;
   checksum: string;
   key: string;

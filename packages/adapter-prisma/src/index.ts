@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { CreateBlobOptions, AttachBlobOptions, Adapter, Blob, Service } from '@uplo/types';
+import { CreateBlobOptions, AttachBlobOptions, Adapter, Blob } from '@uplo/types';
 
 class PrismaAdapter extends Adapter {
   prisma: PrismaClient;
@@ -13,7 +13,7 @@ class PrismaAdapter extends Adapter {
     const blob = await this.prisma.fileBlob.create({
       data: {
         key: params.key,
-        filename: params.fileName,
+        fileName: params.fileName,
         contentType: params.contentType,
         size: params.size,
         metadata: params.metadata || {},

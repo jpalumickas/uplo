@@ -28,7 +28,7 @@ model FileAttachment {
 model FileBlob {
   id            String           @id @default(dbgenerated("public.gen_random_uuid()")) @db.Uuid
   key           String           @unique @db.VarChar
-  filename      String           @db.VarChar
+  fileName      String           @db.VarChar
   contentType   String?          @db.VarChar
   size          BigInt
   checksum      String           @db.VarChar
