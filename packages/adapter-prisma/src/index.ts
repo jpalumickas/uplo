@@ -46,7 +46,7 @@ class PrismaAdapter extends Adapter {
     });
   }
 
-  async attachBlob({ blob, attachmentName, recordId, recordType, strategy, returnQuery = false }: AttachBlobOptions) {
+  async attachBlob({ blob, attachmentName, recordId, recordType, strategy, returnPromise = false }: AttachBlobOptions) {
     if (strategy === 'one') {
       await this.prisma.fileAttachment.deleteMany({
         where: {
@@ -57,7 +57,7 @@ class PrismaAdapter extends Adapter {
       });
     }
 
-    const query = this.prisma.fileAttachment.create({
+    const promise = this.prisma.fileAttachment.create({
       data: {
         name: attachmentName,
         recordType,
@@ -66,11 +66,11 @@ class PrismaAdapter extends Adapter {
       },
     });
 
-    if (returnQuery) {
-      return { query };
+    if (returnPromise) {
+      return { promise };
     }
 
-    return await query;
+    return await promise;
   }
 };
 

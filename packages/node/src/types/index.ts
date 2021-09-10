@@ -46,4 +46,5 @@ export interface AttachSignedFileOptions {
   modelId: string;
   attachmentName: string;
   strategy: 'one' | 'many';
+  [k: string]: any;
 }
