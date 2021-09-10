@@ -20,7 +20,7 @@ export interface ServiceUpdateMetadataOptions {
   fileName?: string
 }
 
-interface DirectUploadData {
+export interface DirectUploadData {
   url: string;
   headers: object;
 }
