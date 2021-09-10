@@ -4,7 +4,7 @@ import useConfig from './useConfig';
 import createBlob from './createBlob';
 import { Upload, File, UseUploadOptions } from './types';
 
-const useUpload = ({ multiple = false }: UseUploadOptions = {}) => {
+const useDirectUpload = ({ multiple = false }: UseUploadOptions = {}) => {
   const [uploads, setUploads] = useState<Upload[]>([]);
   const { host, mountPath } = useConfig();
 
@@ -98,4 +98,4 @@ const useUpload = ({ multiple = false }: UseUploadOptions = {}) => {
   };
 };
 
-export default useUpload;
+export default useDirectUpload;

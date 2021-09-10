@@ -9,22 +9,30 @@ interface Options {
 }
 
 const createBlob = async (file: File, { host, mountPath = '/uploads' }: Options) => {
+  if (file.contentType && !file.contentType.match(/.+\/.+/)) {
+    return { data: null, error: 'Invalid content type' };
+  }
+
   const filePath = file.localUri || file.uri;
   const fileData = await getFileInfo(filePath);
 
   if (!fileData) return { data: null, error: 'Cannot get data from file' };
 
-  const fileName = file.filename || filePath.replace(/^.*[\\\/]/, '');
+  const fileName = file.fileName || filePath.replace(/^.*[\\\/]/, '');
+
+  const metadata = {
+    ...file.metadata,
+  }
+
+  if (file.width) { metadata.width = file.width }
+  if (file.height) { metadata.height = file.height }
 
   const requestData = {
     checksum: await checksum(fileData.md5),
     size: fileData.size,
     fileName,
-    contentType: file.type || mime.getType(fileName),
-    metadata: {
-      width: file.width,
-      height: file.height,
-    },
+    contentType: file.contentType || mime.getType(fileName),
+    metadata,
   };
 
   try {

@@ -2,10 +2,13 @@ export interface File {
   id?: string;
   localUri?: string;
   uri: string;
-  filename?: string;
-  type?: string;
+  fileName?: string;
+  contentType?: string;
   width?: number;
   height?: number;
+  metadata?: {
+    [key: string]: string | number;
+  };
 }
 
 export interface Upload {
