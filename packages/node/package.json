@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.5",
-    "@types/lodash": "^4.14.170",
-    "@types/node": "^15.12.5"
+    "@types/lodash": "^4.14.175",
+    "@types/node": "^16.11.1"
   },
   "engines": {
     "node": ">=14"
