@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@tinyhttp/content-disposition": "^2.0.4"
+    "@tinyhttp/content-disposition": "~1"
   },
   "engines": {
     "node": ">=14"
