@@ -1,6 +1,7 @@
 import { Adapter, Service } from '@uplo/types';
-import generateBlobKey from './generateBlobKey';
+import { generateKey } from '@uplo/utils';
 import { SignerResult, CreateDirectUploadParams } from './types';
+import { UploError } from './errors';
 
 type Options = {
   params: CreateDirectUploadParams;
@@ -11,7 +12,7 @@ type Options = {
 
 const createDirectUpload = async  ({ params, signer, adapter, service }: Options) => {
   const blobParams = {
-    key: generateBlobKey(),
+    key: generateKey(),
     fileName: params.fileName,
     contentType: params.contentType,
     size: params.size,
@@ -32,7 +33,7 @@ const createDirectUpload = async  ({ params, signer, adapter, service }: Options
   );
 
   if (!signedId) {
-    throw new Error(`[Uplo] failed to create signed id for direct upload`);
+    throw new UploError(`Failed to create Signed ID for direct upload`);
   }
 
   return {
