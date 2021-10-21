@@ -8,7 +8,7 @@ interface Options {
   mountPath?: string;
 }
 
-const createBlob = async (file: File, { host, mountPath = '/uploads' }: Options) => {
+const createBlob = async (attachmentName: string, file: File, { host, mountPath = '/uploads' }: Options) => {
   if (file.contentType && !file.contentType.match(/.+\/.+/)) {
     return { data: null, error: 'Invalid content type' };
   }
@@ -28,6 +28,7 @@ const createBlob = async (file: File, { host, mountPath = '/uploads' }: Options)
   if (file.height) { metadata.height = file.height }
 
   const requestData = {
+    attachmentName,
     checksum: await checksum(fileData.md5),
     size: fileData.size,
     fileName,

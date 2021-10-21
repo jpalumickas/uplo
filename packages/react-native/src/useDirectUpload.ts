@@ -4,7 +4,7 @@ import useConfig from './useConfig';
 import createBlob from './createBlob';
 import { Upload, File, UseUploadOptions } from './types';
 
-const useDirectUpload = ({ multiple = false }: UseUploadOptions = {}) => {
+const useDirectUpload = (attachmentName: string, { multiple = false }: UseUploadOptions = {}) => {
   const [uploads, setUploads] = useState<Upload[]>([]);
   const { host, mountPath } = useConfig();
 
@@ -45,7 +45,7 @@ const useDirectUpload = ({ multiple = false }: UseUploadOptions = {}) => {
       addUpload(upload);
 
       try {
-        const result = await createBlob(file, { host, mountPath });
+        const result = await createBlob(attachmentName, file, { host, mountPath });
         if (result.error) {
           upload.error = result.error;
           updateUpload(id, { error: upload.error });

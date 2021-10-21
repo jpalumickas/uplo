@@ -12,6 +12,7 @@ const createDirectUploadOptions = {
       type: 'object',
       required: ['fileName', 'contentType', 'checksum', 'size'],
       properties: {
+        attachmentName: { type: 'string' },
         fileName: { type: 'string' },
         contentType: { type: 'string' },
         checksum: { type: 'string' },
@@ -23,6 +24,7 @@ const createDirectUploadOptions = {
 }
 
 interface CreateDirectUploadBody {
+  attachmentName: string;
   fileName: string;
   contentType: string;
   size: number;
@@ -38,6 +40,7 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, { u
   fastify.post<{ Body: CreateDirectUploadBody}>(`${mountPath}/create-direct-upload`, createDirectUploadOptions, async (request, reply) => {
 
     const params = {
+      attachmentName: request.body['attachmentName'],
       fileName: request.body['fileName'],
       contentType: request.body['contentType'],
       size: request.body['size'],
