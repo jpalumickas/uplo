@@ -1,6 +1,6 @@
 {
   "name": "@uplo/types",
-  "version": "0.15.0",
+  "version": "0.15.1",
   "main": "dist/uplo-types.cjs.js",
   "module": "dist/uplo-types.esm.js",
   "exports": {
