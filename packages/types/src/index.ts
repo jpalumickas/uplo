@@ -77,8 +77,8 @@ export abstract class Adapter {
 // Analyzer
 
 export interface AnalyzerOptions {
-  key: string;
+  blob: Blob;
   filePath: string;
 }
 
-export type Analyzer = ({ key, filePath }: AnalyzerOptions) => object;
+export type Analyzer = ({ blob, filePath }: AnalyzerOptions) => object;

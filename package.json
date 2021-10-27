@@ -1,6 +1,6 @@
 {
   "name": "@uplo/monorepo",
-  "version": "0.10.0",
+  "version": "0.0.0",
   "main": "index.js",
   "author": "Justas Palumickas",
   "license": "MIT",

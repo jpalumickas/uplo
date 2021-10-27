@@ -1,6 +1,5 @@
 import { isEmpty, merge } from 'lodash';
 import { Service, Adapter, Blob, Analyzer } from '@uplo/types';
-import { Config } from './types';
 
 const analyze =
   ({
@@ -33,7 +32,7 @@ const analyze =
       for (const analyzer of analyzers) {
         try {
           if (blob) {
-            const analyzerMetadata = await analyzer({ key: blob.key, filePath });
+            const analyzerMetadata = await analyzer({ filePath, blob });
             if (!isEmpty(analyzerMetadata)) {
               merge(newMetadata, analyzerMetadata);
             }
