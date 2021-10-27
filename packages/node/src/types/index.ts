@@ -22,7 +22,6 @@ export interface UploInstance {
   signer: SignerResult;
   adapter: Adapter;
   service: Service;
-  generateBlobKey: () => string;
   attachSignedFile: (options: AttachSignedFileOptions) => Promise<void>;
   analyze: (blob: Blob) => Promise<object>;
   createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) => Promise<object>
