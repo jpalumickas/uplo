@@ -6,8 +6,9 @@
   "exports": {
     ".": {
       "require": "./dist/uplo-react-native.cjs.js",
-      "default": "./dist/uplo-react-native.esm.js"
-    }
+      "import": "./dist/uplo-react-native.esm.js"
+    },
+    "./package.json": "./package.json"
   },
   "publishConfig": {
     "access": "public"
