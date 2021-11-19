@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/storage": "^5.15.3",
+    "@google-cloud/storage": "^5.16.0",
     "@uplo/service-base": "^0.15.2",
     "@uplo/types": "^0.15.2",
     "@uplo/utils": "^0.15.2"

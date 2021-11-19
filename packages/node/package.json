@@ -20,9 +20,9 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^8.5.5",
-    "@types/lodash": "^4.14.175",
-    "@types/node": "^16.11.1"
+    "@types/jsonwebtoken": "^8.5.6",
+    "@types/lodash": "^4.14.177",
+    "@types/node": "^16.11.9"
   },
   "engines": {
     "node": ">=14"
