@@ -28,7 +28,7 @@ class PrismaAdapter extends Adapter {
   async findBlob (id: string | number): Promise<Blob | null> {
     return await this.prisma.fileBlob.findUnique({
       where: { id },
-    });
+    }) as Blob | null;
   }
 
   async findBlobByKey(key: string) {
@@ -46,7 +46,7 @@ class PrismaAdapter extends Adapter {
     });
   }
 
-  async attachBlob({ blob, attachmentName, recordId, recordType, strategy, returnPromise = false }: AttachBlobOptions) {
+  async attachBlob({ blob, attachmentName, recordId, recordType, strategy }: AttachBlobOptions) {
     if (strategy === 'one') {
       await this.prisma.fileAttachment.deleteMany({
         where: {
@@ -57,7 +57,7 @@ class PrismaAdapter extends Adapter {
       });
     }
 
-    const promise = this.prisma.fileAttachment.create({
+   return this.prisma.fileAttachment.create({
       data: {
         name: attachmentName,
         recordType,
@@ -65,12 +65,6 @@ class PrismaAdapter extends Adapter {
         blob: { connect: { id: blob.id } },
       },
     });
-
-    if (returnPromise) {
-      return { promise };
-    }
-
-    return await promise;
   }
 };
 

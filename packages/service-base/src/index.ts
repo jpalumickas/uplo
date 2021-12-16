@@ -28,6 +28,10 @@ class BaseService implements Service {
     };
   }
 
+  async delete(_blob: Blob): Promise<boolean> {
+    throw new Error('Not implemented');
+  }
+
   async updateMetadata(_key: string, _options: ServiceUpdateMetadataOptions): Promise<any> {}
 
   async publicUrl(_blob: Blob): Promise<string> {

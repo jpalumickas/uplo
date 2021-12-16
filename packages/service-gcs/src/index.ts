@@ -110,6 +110,11 @@ class GCSService extends BaseService implements Service {
       .download({ destination: path });
   }
 
+  async delete({ key }: Blob) {
+    await this.storage.bucket(this.bucket).file(key).delete();
+    return true;
+  }
+
   async protocolUrl(blob: Blob) {
     return `gs://${this.bucket}/${blob.key}`;
   }
