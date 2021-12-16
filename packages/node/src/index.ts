@@ -48,8 +48,6 @@ const uploader = ({
         result[modelName] = _.reduce<any, { [attachmentName: string]: Attachment }>(modelAttachments, (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
           const options = attachmentOptions === true ? {} : attachmentOptions;
 
-          console.log('aa', attachmentName);
-
           r[attachmentName] = new ModelAttachment({
             modelName,
             attachmentName,
