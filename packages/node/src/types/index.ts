@@ -10,12 +10,28 @@ export interface Config {
   signedIdExpiresIn?: number;
 }
 
+export interface UploOptionsAttachment {
+  multiple?: boolean;
+  service?: string;
+}
+
 export interface UploOptions {
   service: Service;
   adapter: Adapter;
   config?: Config;
   analyzers?: Analyzer[];
   callbacks?: Callbacks;
+  attachments: {
+    [modelName: string]: {
+      [attachmentName: string]: UploOptionsAttachment | true
+    }
+  }
+}
+
+export interface Attachment {
+  modelName: string;
+  multiple: boolean;
+  service: Service;
 }
 
 export interface UploInstance {
@@ -25,6 +41,11 @@ export interface UploInstance {
   attachSignedFile: (options: AttachSignedFileOptions) => Promise<void>;
   analyze: (blob: Blob) => Promise<object>;
   createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) => Promise<object>
+  attachments: {
+    [modelName: string]: {
+      [attachmentName: string]: Attachment
+    }
+  }
 }
 
 export interface CreateDirectUploadParamsMetadata {
