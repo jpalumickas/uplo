@@ -1,4 +1,5 @@
 import BaseService, { Options as BaseOptions } from '@uplo/service-base';
+import { Upload } from '@aws-sdk/lib-storage';
 import {
   S3Client,
   GetObjectCommand,
@@ -41,6 +42,28 @@ class S3Service extends BaseService {
     return await getSignedUrl(this.s3Client, command, { expiresIn: 300 });
   }
 
+  async upload({ key, file, size, contentType, checksum }) {
+    const parallelUploads3 = new Upload({
+      client: this.s3Client,
+      partSize: 5242880, // 5MB
+      leavePartsOnError: false, // optional manually handle dropped parts
+      params: {
+        Bucket: this.bucket,
+        Body: file,
+        Key: key,
+        ContentLength: Number(size),
+        ContentType: contentType,
+        ContentMD5: checksum,
+      },
+    });
+
+    parallelUploads3.on('httpUploadProgress', (progress) => {
+      console.log(progress);
+    });
+
+    await parallelUploads3.done();
+  }
+
   directUploadHeaders(blob: Blob) {
     return {
       'Content-Type': blob.contentType,
@@ -52,7 +75,10 @@ class S3Service extends BaseService {
     return `https://${this.bucket}.s3.${this.region}.amazonaws.com/${key}`;
   }
 
-  async privateUrl({ key }: Blob, { expiresIn = 300 }: { expiresIn?: number } = {}) {
+  async privateUrl(
+    { key }: Blob,
+    { expiresIn = 300 }: { expiresIn?: number } = {}
+  ) {
     const command = new GetObjectCommand({
       Bucket: this.bucket,
       Key: key,
