@@ -16,7 +16,8 @@ interface ModelAttachmentOptions {
 }
 
 interface AttachFileOptions {
-  file: string;
+  filePath?: string;
+  content?: string | Buffer;
   fileName?: string;
   contentType?: string;
   size?: number;
@@ -47,8 +48,14 @@ class ModelAttachment {
     this.callbacks = options.callbacks;
   }
 
-  async attachFile(modelId: string, { file, ...params }: AttachFileOptions) {
-    const data = await blobDataFromFileInput(file);
+  async attachFile(modelId: string, { filePath, content: contentInput, ...params }: AttachFileOptions) {
+    const content = filePath ? fs.createReadStream(filePath) : contentInput;
+
+    if (!content) {
+      throw new Error('Provide filePath or content');
+    }
+
+    const data = await blobDataFromFileInput(content);
 
     const blobParams = {
       key: generateKey(),
@@ -69,7 +76,7 @@ class ModelAttachment {
     });
 
     this.service.upload({
-      content: fs.createReadStream(file),
+      content,
       ...blob,
     });
 

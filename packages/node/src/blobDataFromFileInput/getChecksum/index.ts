@@ -19,8 +19,9 @@ const checksumFromReadStream = (input: fs.ReadStream): Promise<string> => {
 
 export const getChecksum = async (input: any): Promise<string | undefined> => {
   if (typeof input === 'string') {
-    const fileStream = fs.createReadStream(input);
-    return checksumFromReadStream(fileStream);
+    return getChecksum(Buffer.from(input, 'utf-8'));
+  } else if (input instanceof fs.ReadStream) {
+    return checksumFromReadStream(input);
   } else if (input instanceof Buffer || input instanceof Uint8Array) {
     return crypto.createHash('md5').update(input).digest('base64');
   }

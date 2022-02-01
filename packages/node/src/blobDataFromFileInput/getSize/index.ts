@@ -5,7 +5,7 @@ export const getSize = (input: any): number | undefined => {
     return 0;
   }
 
-  if (typeof input === "string" || typeof input.path === "string") {
+  if (typeof input.path === "string") {
     try {
       return lstatSync(input.path || input).size;
     } catch (error) {

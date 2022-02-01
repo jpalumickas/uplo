@@ -2,9 +2,9 @@ import _ from 'lodash';
 import {
   UploOptions,
   CreateDirectUploadParams,
-  UploInstance,
-  Attachment,
-  UploOptionsAttachment
+  // UploInstance,
+  // Attachment,
+  UploOptionsAttachment,
 } from './types';
 import createSigner from './signer';
 import attachSignedFile from './attachSignedFile';
@@ -24,10 +24,9 @@ const uploader = ({
   analyzers = [],
   callbacks = {},
   attachments = {},
-}: UploOptions): UploInstance => {
+}: UploOptions) => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = createSigner(config);
-  console.log('bb');
 
   return {
     signer,
@@ -39,26 +38,37 @@ const uploader = ({
       createDirectUpload({ params, signer, adapter, service }),
     attachments: _.reduce<
       any,
-      { [modelName: keyof typeof attachments]: { [attachmentName: string]: Attachment } }
+      {
+        [modelName: keyof typeof attachments]: {
+          [attachmentName: string]: ModelAttachment;
+        };
+      }
     >(
       attachments,
       (result, modelAttachments, modelName) => {
         console.log({ modelAttachments, modelName });
 
-        result[modelName] = _.reduce<any, { [attachmentName: string]: Attachment }>(modelAttachments, (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
-          const options = attachmentOptions === true ? {} : attachmentOptions;
+        result[modelName] = _.reduce<
+          any,
+          { [attachmentName: string]: ModelAttachment }
+        >(
+          modelAttachments,
+          (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
+            const options = attachmentOptions === true ? {} : attachmentOptions;
 
-          r[attachmentName] = new ModelAttachment({
-            modelName,
-            attachmentName,
-            multiple: options.multiple ?? false,
-            service,
-            adapter,
-            signer,
-            callbacks,
-          })
-          return r;
-        }, {});
+            r[attachmentName] = new ModelAttachment({
+              modelName,
+              attachmentName,
+              multiple: options.multiple ?? false,
+              service,
+              adapter,
+              signer,
+              callbacks,
+            });
+            return r;
+          },
+          {}
+        );
         console.log({ result });
         return result;
       },
