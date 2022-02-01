@@ -16,9 +16,9 @@ model FileAttachment {
   id         String   @id @default(dbgenerated("public.gen_random_uuid()")) @db.Uuid
   name       String   @db.VarChar
   recordType String   @db.VarChar
-  recordId   String   @unique @db.Uuid
+  recordId   String   @db.Uuid
   blobId     String   @db.Uuid
-  createdAt  DateTime @default(now()) @db.Timestamp(6)
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
   blob       FileBlob @relation(fields: [blobId], references: [id])
 
   @@unique([recordType, recordId, name, blobId])
@@ -32,7 +32,7 @@ model FileBlob {
   contentType   String?          @db.VarChar
   size          BigInt
   checksum      String           @db.VarChar
-  createdAt     DateTime         @default(now()) @db.Timestamp(6)
+  createdAt     DateTime         @default(now()) @db.Timestamptz(6)
   serviceName   String           @db.VarChar
   metadata      Json             @default("{}")
   attachments   FileAttachment[]

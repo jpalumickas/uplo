@@ -32,6 +32,7 @@ export interface Attachment {
   modelName: string;
   multiple: boolean;
   service: Service;
+  attachFile: (modelId: string, options: { file: string }) => void;
 }
 
 export interface UploInstance {

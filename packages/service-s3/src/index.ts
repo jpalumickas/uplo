@@ -45,14 +45,14 @@ class S3Service extends BaseService {
     return await getSignedUrl(this.s3Client, command, { expiresIn: 300 });
   }
 
-  async upload({ key, input, size, contentType, checksum }: Pick<Blob, 'key' | 'size' | 'contentType' | 'checksum'>) {
+  async upload({ key, content, size, contentType, checksum }: Pick<Blob, 'key' | 'size' | 'contentType' | 'checksum'>) {
     const parallelUploads3 = new Upload({
       client: this.s3Client,
       partSize: 5242880, // 5MB
       leavePartsOnError: false, // optional manually handle dropped parts
       params: {
         Bucket: this.bucket,
-        Body: input,
+        Body: content,
         Key: key,
         ContentLength: Number(size),
         ContentType: contentType,

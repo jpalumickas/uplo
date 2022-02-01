@@ -11,7 +11,7 @@ const analyze =
     adapter: Adapter;
     analyzers: Analyzer[];
   }) =>
-  async ({ key }: Blob): Promise<object> => {
+  async ({ key }: Blob): Promise<Blob['metadata']> => {
     if (isEmpty(analyzers)) {
       console.warn(
         `[Uplo] No analyzers provided. Skipping analyze for Blob ${key}`

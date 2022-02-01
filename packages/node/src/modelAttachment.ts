@@ -1,8 +1,9 @@
 import { upperFirst, camelCase } from 'lodash';
+import fs from 'fs';
 import { Service, Blob, Adapter } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { SignerResult, Callbacks } from './types';
-import blobDataFromFile from './blobDataFromFile';
+import { blobDataFromFileInput } from './blobDataFromFileInput';
 
 interface ModelAttachmentOptions {
   modelName: string;
@@ -12,6 +13,17 @@ interface ModelAttachmentOptions {
   multiple: boolean;
   signer: SignerResult;
   callbacks: Callbacks;
+}
+
+interface AttachFileOptions {
+  file: string;
+  fileName?: string;
+  contentType?: string;
+  size?: number;
+  checksum?: string;
+  metadata: {
+    [key: string]: string | number | null;
+  }
 }
 
 class ModelAttachment {
@@ -35,22 +47,31 @@ class ModelAttachment {
     this.callbacks = options.callbacks;
   }
 
-  async attachFile(modelId, { file }) {
-    return blobDataFromFile(file);
+  async attachFile(modelId: string, { file, ...params }: AttachFileOptions) {
+    const data = await blobDataFromFileInput(file);
 
     const blobParams = {
       key: generateKey(),
-      fileName: params.fileName,
-      contentType: params.contentType,
-      size: params.size,
-      checksum: params.checksum,
+      fileName: params.fileName || data.fileName,
+      contentType: params.contentType || data.contentType,
+      size: params.size || data.size,
+      checksum: params.checksum || data.checksum,
       metadata: params.metadata,
     };
 
-  const blob = await this.adapter.createBlob({
-    params: blobParams,
-    service: this.service,
-  });
+    if (!blobParams.fileName) {
+      throw new Error('Missing data');
+    }
+
+    const blob = await this.adapter.createBlob({
+      params: blobParams,
+      service: this.service,
+    });
+
+    this.service.upload({
+      content: fs.createReadStream(file),
+      ...blob,
+    });
 
     const result = this.attachBlob(modelId, blob);
     return result;
@@ -62,7 +83,6 @@ class ModelAttachment {
       throw new Error(`[Uplo] Cannot verify signed id for blob: ${signedId}`);
     }
     const { blobId } = data;
-
 
     const blob = await this.adapter.findBlob(blobId);
 
