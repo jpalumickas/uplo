@@ -24,7 +24,7 @@ interface AttachFileOptions {
   checksum?: string;
   metadata?: {
     [key: string]: string | number | null;
-  }
+  };
 }
 
 class ModelAttachment {
@@ -48,7 +48,10 @@ class ModelAttachment {
     this.callbacks = options.callbacks;
   }
 
-  async attachFile(modelId: string, { filePath, content: contentInput, ...params }: AttachFileOptions) {
+  async attachFile(
+    modelId: string,
+    { filePath, content: contentInput, ...params }: AttachFileOptions
+  ) {
     const content = filePath ? fs.createReadStream(filePath) : contentInput;
 
     if (!content) {
@@ -63,15 +66,27 @@ class ModelAttachment {
       contentType: params.contentType || data.contentType,
       size: params.size || data.size,
       checksum: params.checksum || data.checksum,
-      metadata: params.metadata,
+      metadata: params.metadata || {},
     };
 
-    if (!blobParams.fileName) {
+    if (
+      !blobParams.fileName ||
+      !blobParams.contentType ||
+      !blobParams.size ||
+      !blobParams.checksum
+    ) {
       throw new Error('Missing data');
     }
 
     const blob = await this.adapter.createBlob({
-      params: blobParams,
+      params: {
+        key: blobParams.key,
+        fileName: blobParams.fileName,
+        contentType: blobParams.contentType,
+        size: blobParams.size,
+        checksum: blobParams.checksum,
+        metadata: blobParams.metadata,
+      },
       service: this.service,
     });
 
