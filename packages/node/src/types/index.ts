@@ -1,6 +1,7 @@
 import { Blob, Service, Analyzer, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
 import { SignerResult } from './signer';
+import ModelAttachment from '../modelAttachment';
 
 export * from './callbacks';
 export * from './signer';
@@ -23,9 +24,9 @@ export interface UploOptions {
   callbacks?: Callbacks;
   attachments: {
     [modelName: string]: {
-      [attachmentName: string]: UploOptionsAttachment | true
-    }
-  }
+      [attachmentName: string]: UploOptionsAttachment | true;
+    };
+  };
 }
 
 export interface Attachment {
@@ -41,12 +42,17 @@ export interface UploInstance {
   service: Service;
   attachSignedFile: (options: AttachSignedFileOptions) => Promise<void>;
   analyze: (blob: Blob) => Promise<object>;
-  createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) => Promise<object>
+  createDirectUpload: ({
+    params,
+  }: {
+    params: CreateDirectUploadParams;
+  }) => Promise<object>;
+  findAttachmentByName: (name: `${string}.${string}`) => ModelAttachment | null;
   attachments: {
     [modelName: string]: {
-      [attachmentName: string]: Attachment
-    }
-  }
+      [attachmentName: string]: Attachment;
+    };
+  };
 }
 
 export interface CreateDirectUploadParamsMetadata {

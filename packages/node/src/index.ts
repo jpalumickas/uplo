@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import { getDeepValue } from '@uplo/utils';
 import {
   UploOptions,
   CreateDirectUploadParams,
@@ -28,15 +29,7 @@ const uploader = ({
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = createSigner(config);
 
-  return {
-    signer,
-    adapter,
-    service,
-    attachSignedFile: attachSignedFile({ service, adapter, signer, callbacks }),
-    analyze: analyze({ service, adapter, analyzers }),
-    createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) =>
-      createDirectUpload({ params, signer, adapter, service }),
-    attachments: _.reduce<
+  const modelAttachments = _.reduce<
       any,
       {
         [modelName: keyof typeof attachments]: {
@@ -71,7 +64,18 @@ const uploader = ({
         return result;
       },
       {}
-    ),
+    )
+
+  return {
+    signer,
+    adapter,
+    service,
+    attachSignedFile: attachSignedFile({ service, adapter, signer, callbacks }),
+    analyze: analyze({ service, adapter, analyzers }),
+    createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) =>
+      createDirectUpload({ params, signer, adapter, service }),
+    findAttachmentByName: (name: `${string}.${string}`) => getDeepValue(modelAttachments, name, null),
+    attachments: modelAttachments,
   };
 };
 
