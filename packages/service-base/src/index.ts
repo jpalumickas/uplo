@@ -1,4 +1,4 @@
-import { Blob, Service, ServiceUpdateMetadataOptions } from '@uplo/types';
+import { Blob, Service, ServiceUpdateMetadataOptions, ServiceUploadParams } from '@uplo/types';
 import { file as tempyFile } from 'tempy';
 import { Options } from './types';
 
@@ -24,7 +24,7 @@ abstract class BaseService implements Service {
     };
   }
 
-  async upload(_params) {
+  async upload(_params: ServiceUploadParams) {
     throw new Error('Not implemented');
   }
 
