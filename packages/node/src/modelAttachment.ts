@@ -22,7 +22,7 @@ interface AttachFileOptions {
   contentType?: string;
   size?: number;
   checksum?: string;
-  metadata: {
+  metadata?: {
     [key: string]: string | number | null;
   }
 }

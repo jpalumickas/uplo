@@ -1,13 +1,9 @@
 import { Blob, Service, ServiceUpdateMetadataOptions } from '@uplo/types';
 import { file as tempyFile } from 'tempy';
+import { Options } from './types';
 
-export interface Options {
-  isPublic?: boolean;
-  name?: string;
-}
-
-class BaseService implements Service {
-  isPublic: boolean;
+abstract class BaseService implements Service {
+  public isPublic: boolean;
   _name?: string;
   options: object;
 
@@ -26,6 +22,10 @@ class BaseService implements Service {
       url: await this.directUploadUrl(blob),
       headers: await this.directUploadHeaders(blob),
     };
+  }
+
+  async upload(_params) {
+    throw new Error('Not implemented');
   }
 
   async delete(_blob: Blob): Promise<boolean> {
@@ -85,5 +85,7 @@ class BaseService implements Service {
     return this._name || this.defaultName();
   }
 }
+
+export * from './types';
 
 export default BaseService;

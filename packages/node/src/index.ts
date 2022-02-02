@@ -46,8 +46,6 @@ const uploader = ({
     >(
       attachments,
       (result, modelAttachments, modelName) => {
-        console.log({ modelAttachments, modelName });
-
         result[modelName] = _.reduce<
           any,
           { [attachmentName: string]: ModelAttachment }
@@ -69,7 +67,7 @@ const uploader = ({
           },
           {}
         );
-        console.log({ result });
+
         return result;
       },
       {}

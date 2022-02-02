@@ -1,5 +1,6 @@
 import { isEmpty, merge } from 'lodash';
 import { Service, Adapter, Blob, Analyzer } from '@uplo/types';
+import { AnalyzeError } from './errors';
 
 const analyze =
   ({
@@ -21,7 +22,7 @@ const analyze =
 
     let blob = await adapter.findBlobByKey(key);
     if (!blob) {
-      throw new Error(`[Uplo] Cannot find blob with key ${key}`);
+      throw new AnalyzeError(`Cannot find blob with key ${key}`);
     }
 
     const newMetadata = {};
@@ -38,7 +39,11 @@ const analyze =
             }
           }
         } catch (err) {
-          console.error('[Uplo] Failed to run analyzer.', err);
+          if (err instanceof Error) {
+            throw new AnalyzeError(err.message);
+          } else {
+            throw err
+          }
         }
       }
 

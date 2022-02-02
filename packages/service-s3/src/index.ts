@@ -9,7 +9,7 @@ import {
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Blob } from '@uplo/types';
+import { Service, Blob, ServiceUploadParams } from '@uplo/types';
 
 interface Options extends BaseOptions {
   bucket: string;
@@ -18,7 +18,7 @@ interface Options extends BaseOptions {
   secretAccessKey: string;
 }
 
-class S3Service extends BaseService {
+class S3Service extends BaseService implements Service {
   bucket: string;
   region: string;
   s3Client: S3Client;
@@ -45,7 +45,7 @@ class S3Service extends BaseService {
     return await getSignedUrl(this.s3Client, command, { expiresIn: 300 });
   }
 
-  async upload({ key, content, size, contentType, checksum }: Pick<Blob, 'key' | 'size' | 'contentType' | 'checksum'>) {
+  async upload({ key, content, size, contentType, checksum }: ServiceUploadParams) {
     const parallelUploads3 = new Upload({
       client: this.s3Client,
       partSize: 5242880, // 5MB
