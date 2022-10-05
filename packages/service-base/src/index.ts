@@ -25,11 +25,11 @@ abstract class BaseService implements Service {
   }
 
   async upload(_params: ServiceUploadParams) {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented: upload');
   }
 
   async delete(_blob: Blob): Promise<boolean> {
-    throw new Error('Not implemented');
+    throw new Error('Not implemented: delete');
   }
 
   async updateMetadata(_key: string, _options: ServiceUpdateMetadataOptions): Promise<any> {}

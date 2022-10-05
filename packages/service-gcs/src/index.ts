@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import { Storage, GetSignedUrlConfig } from '@google-cloud/storage';
 import BaseService, { Options as BaseOptions } from '@uplo/service-base';
 import { Service, Blob } from '@uplo/types';
@@ -57,7 +58,11 @@ class GCSService extends BaseService implements Service {
       contentType,
       disposition,
       fileName,
-    }: { contentType: string, disposition: ContentDispositionType, fileName: string  }
+    }: {
+      contentType: string;
+      disposition: ContentDispositionType;
+      fileName: string;
+    }
   ) {
     const metadata: { contentType?: string; contentDisposition?: string } = {};
 
@@ -82,7 +87,13 @@ class GCSService extends BaseService implements Service {
     return await this.storage.bucket(this.bucket).file(blob.key).publicUrl();
   }
 
-  async privateUrl(blob: Blob, { disposition, expiresIn = 300 }: { disposition?: ContentDispositionType, expiresIn?: number } = {}) {
+  async privateUrl(
+    blob: Blob,
+    {
+      disposition,
+      expiresIn = 300,
+    }: { disposition?: ContentDispositionType; expiresIn?: number } = {}
+  ) {
     const options: GetSignedUrlConfig = {
       action: 'read',
       version: 'v4',
@@ -103,7 +114,28 @@ class GCSService extends BaseService implements Service {
     return url;
   }
 
-  async download({ key, path }: { key: string, path: string }) {
+  async upload({ key, content, contentType }) {
+    if (content instanceof fs.ReadStream) {
+      const file = this.storage.bucket(this.bucket).file(key);
+
+      return new Promise((resolve, reject) => {
+        content
+          .pipe(
+            file.createWriteStream({
+              metadata: { contentType },
+            })
+          )
+          .on('error', (err) => {
+            reject(err);
+          })
+          .on('finish', resolve);
+      });
+    }
+
+    return await this.storage.bucket(this.bucket).file(key).save(content);
+  }
+
+  async download({ key, path }: { key: string; path: string }) {
     return await this.storage
       .bucket(this.bucket)
       .file(key)

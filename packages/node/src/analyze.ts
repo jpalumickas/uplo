@@ -50,11 +50,7 @@ const analyze =
       merge(newMetadata, { analyzed: true });
     });
 
-    blob = await adapter.findBlobByKey(key);
-    if (blob) {
-      const metadata = { ...blob.metadata, ...newMetadata };
-      await adapter.updateBlobMetadata({ key, metadata });
-    }
+    await adapter.updateBlobMetadata({ key, metadata: newMetadata });
 
     return newMetadata;
   };

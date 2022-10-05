@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { CreateBlobOptions, AttachBlobOptions, Adapter, Blob } from '@uplo/types';
+import { CreateBlobOptions, AttachBlobOptions, Adapter, Blob, ID } from '@uplo/types';
 import { BlobNotFoundError } from '@uplo/node';
 
 class PrismaAdapter extends Adapter {
@@ -8,6 +8,36 @@ class PrismaAdapter extends Adapter {
   constructor({ prisma }: { prisma: PrismaClient }) {
     super();
     this.prisma = prisma;
+  }
+
+  async findAttachments({ recordId, recordType, name }: { recordId: string | number, recordType: string, name: string }): Promise<Blob | null> {
+    return await this.prisma.fileAttachment.findMany({
+      where: {
+        recordId,
+        recordType,
+        name,
+      },
+      orderBy: { createdAt: 'asc' },
+      include: { blob: true }
+    });
+  }
+
+  async deleteAttachment(id: ID): Promise<Blob | null> {
+    return await this.prisma.fileAttachment.delete({
+      where: {
+        id
+      },
+    });
+  }
+
+  async deleteAttachments({ recordId, recordType, name }: { recordId: string | number, recordType: string, name: string }): Promise<Blob | null> {
+    return await this.prisma.fileAttachment.deleteMany({
+      where: {
+        recordId,
+        recordType,
+        name,
+      },
+    });
   }
 
   async createBlob({ params, service }: CreateBlobOptions): Promise<Blob> {
@@ -21,7 +51,7 @@ class PrismaAdapter extends Adapter {
         checksum: params.checksum,
         serviceName: service.name()
       },
-    });
+    }) as Blob;
 
     return blob;
   };
@@ -32,7 +62,7 @@ class PrismaAdapter extends Adapter {
     }) as Blob | null;
   }
 
-  async findBlobByKey(key: string) {
+  async findBlobByKey(key: Blob['key']) {
     const blob = await this.prisma.fileBlob.findUnique({
       where: { key },
     }) as Blob | null;
@@ -40,7 +70,7 @@ class PrismaAdapter extends Adapter {
     return blob;
   }
 
-  async updateBlobMetadata({ key, metadata }: { key: string, metadata: object }) {
+  async updateBlobMetadata({ key, metadata }: { key: Blob['key'], metadata: object }) {
     return this.prisma.$transaction(async (prisma) => {
       const blob = await prisma.fileBlob.findUnique({
         where: { key },
@@ -55,7 +85,7 @@ class PrismaAdapter extends Adapter {
       return await prisma.fileBlob.update({
         where: { key },
         data: { metadata: newMetadata }
-      });
+      }) as Blob;
     });
   }
 

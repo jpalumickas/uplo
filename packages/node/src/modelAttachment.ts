@@ -2,7 +2,8 @@ import { upperFirst, camelCase } from 'lodash';
 import fs from 'fs';
 import { Service, Blob, Adapter } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
-import { SignerResult, Callbacks } from './types';
+import { UploError, BlobNotFoundError } from './errors';
+import { SignerResult, Callbacks, ID } from './types';
 import { blobDataFromFileInput } from './blobDataFromFileInput';
 
 export interface ModelAttachmentOptions {
@@ -35,6 +36,7 @@ interface AttachFileOptions {
 
 class ModelAttachment {
   public modelName: string;
+  public recordType: string;
   public attachmentName: string;
   public adapter: Adapter;
   public service: Service;
@@ -50,6 +52,56 @@ class ModelAttachment {
     this.signer = params.signer;
     this.callbacks = params.callbacks;
     this.options = params.options;
+
+    this.recordType = upperFirst(camelCase(this.modelName));
+  }
+
+  async findOne(modelId: string) {
+    if (this.options.multiple) {
+      throw new UploError('Use findMany for multiple attachments');
+    }
+
+    const attachments = await this.adapter.findAttachments({
+      recordId: modelId,
+      recordType: this.recordType,
+      name: this.attachmentName,
+    });
+
+    return attachments[0];
+  }
+
+  async findMany(modelId: string) {
+    if (!this.options.multiple) {
+      throw new UploError('Use findOne for single attachment');
+    }
+
+    return this.adapter.findAttachments({
+      recordId: modelId,
+      recordType: this.recordType,
+      name: this.attachmentName,
+    });
+  }
+
+  async detach(modelId: ID, attachmentId?: ID) {
+    if (this.options.multiple) {
+      if (!attachmentId) {
+        throw new UploError('Provide attachment ID when detaching attachment in multiple');
+      }
+      await this.adapter.deleteAttachment(attachmentId);
+      return true;
+    }
+
+    await this.detachMany(modelId);
+
+    return true;
+  }
+
+  async detachMany(modelId: ID) {
+    return this.adapter.deleteAttachments({
+      recordId: modelId,
+      recordType: this.recordType,
+      name: this.attachmentName,
+    });
   }
 
   async attachFile(
@@ -59,7 +111,7 @@ class ModelAttachment {
     const content = filePath ? fs.createReadStream(filePath) : contentInput;
 
     if (!content) {
-      throw new Error('Provide filePath or content');
+      throw new UploError('Provide filePath or content when attacing a file');
     }
 
     const data = await blobDataFromFileInput(content);
@@ -79,7 +131,7 @@ class ModelAttachment {
       !blobParams.size ||
       !blobParams.checksum
     ) {
-      throw new Error('Missing data');
+      throw new UploError('Missing data when attaching a file');
     }
 
     const blob = await this.adapter.createBlob({
@@ -106,14 +158,14 @@ class ModelAttachment {
   async attachSignedFile(modelId: string, signedId: string) {
     const data = await this.signer.verify(signedId, 'blob');
     if (!data || !data.blobId) {
-      throw new Error(`[Uplo] Cannot verify signed id for blob: ${signedId}`);
+      throw new UploError(`Cannot verify signed ID for blob: ${signedId}`);
     }
     const { blobId } = data;
 
     const blob = await this.adapter.findBlob(blobId);
 
     if (!blob) {
-      throw new Error(`[Uplo] Cannot find blob with id ${blobId}`);
+      throw new BlobNotFoundError(`Cannot find blob with ID ${blobId}`);
     }
 
     await this.service.updateMetadata(blob.key, {
@@ -130,13 +182,11 @@ class ModelAttachment {
   }
 
   private async attachBlob(modelId: string, blob: Blob) {
-    const recordType = upperFirst(camelCase(this.modelName));
-
     const result = await this.adapter.attachBlob({
       blob,
       attachmentName: this.attachmentName,
       recordId: modelId,
-      recordType,
+      recordType: this.recordType,
       strategy: this.options.multiple ? 'many' : 'one',
     });
 
