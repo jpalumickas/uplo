@@ -1,6 +1,6 @@
 import { promisify } from 'util';
 import { sign as jwtSign, verify as jwtVerify, Secret, SignOptions, VerifyOptions, GetPublicKeyOrSecret, JwtPayload } from 'jsonwebtoken';
-import { Config, Signer } from './types';
+import { Signer } from './types';
 
 const signAsync = promisify<string | object | Buffer, Secret, SignOptions>(jwtSign);
 const verifyAsync = promisify<string, Secret | GetPublicKeyOrSecret,VerifyOptions>(jwtVerify);

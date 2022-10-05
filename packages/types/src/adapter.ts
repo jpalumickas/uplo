@@ -1,5 +1,6 @@
 import { Service } from './service';
-import { Blob, ID } from './index';
+import { ID } from './general';
+import { AttachmentData, BlobData } from './attachment';
 
 export interface CreateBlobParams {
   key: string;
@@ -17,7 +18,7 @@ export interface CreateBlobOptions {
 }
 
 export interface AttachBlobOptions {
-  blob: Blob;
+  blob: BlobData;
   attachmentName: string;
   recordId: string;
   recordType: string;
@@ -28,9 +29,9 @@ export interface AttachBlobOptions {
 
 export abstract class Adapter {
   constructor() { }
-  abstract findBlob(id: ID): Promise<Blob | null>;
-  abstract findBlobByKey(key: string): Promise<Blob | null>;
-  abstract attachBlob(options: AttachBlobOptions): any;
-  abstract createBlob(options: CreateBlobOptions): Promise<Blob>;
-  abstract updateBlobMetadata({ key, metadata }: { key: string, metadata: object }): Promise<Blob | null>;
+  abstract findBlob(id: ID): Promise<BlobData | null>;
+  abstract findBlobByKey(key: string): Promise<BlobData | null>;
+  abstract attachBlob(options: AttachBlobOptions): AttachmentData;
+  abstract createBlob(options: CreateBlobOptions): Promise<BlobData>;
+  abstract updateBlobMetadata({ key, metadata }: { key: BlobData['key'], metadata: BlobData['metadata'] }): Promise<BlobData | null>;
 }

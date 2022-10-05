@@ -1,6 +1,6 @@
 import { upperFirst, camelCase } from 'lodash';
 import fs from 'fs';
-import { Service, Blob, Adapter, ID } from '@uplo/types';
+import { Analyzer, Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { UploError, BlobNotFoundError } from './errors';
 import { SignerResult, Callbacks } from './types';
@@ -9,6 +9,7 @@ import { Attachment } from './Attachment';
 
 export interface ModelAttachmentOptions {
   multiple: boolean;
+  service: string;
   contentType?: string | string[] | RegExp;
   directUpload?: boolean
 }
@@ -20,6 +21,7 @@ interface ModelAttachmentParams {
   adapter: Adapter;
   signer: SignerResult;
   callbacks: Callbacks;
+  analyzers: Analyzer[];
   options: ModelAttachmentOptions
 }
 
@@ -43,6 +45,7 @@ class ModelAttachment {
   public service: Service;
   public signer: SignerResult;
   public callbacks: Callbacks;
+  public analyzers: Analyzer[];
   public options: ModelAttachmentOptions;
 
   constructor(params: ModelAttachmentParams) {
@@ -52,6 +55,7 @@ class ModelAttachment {
     this.service = params.service;
     this.signer = params.signer;
     this.callbacks = params.callbacks;
+    this.analyzers = params.analyzers;
     this.options = params.options;
 
     this.recordType = upperFirst(camelCase(this.modelName));
@@ -68,7 +72,11 @@ class ModelAttachment {
       name: this.attachmentName,
     });
 
-    return Attachment({ data: attachments[0], adapter: this.adapter, service: this.service });
+    return this.getAttachment(attachments[0]);
+  }
+
+  getAttachment(data: AttachmentData) {
+    return Attachment({ data, adapter: this.adapter, service: this.service, analyzers: this.analyzers });
   }
 
   async findMany(modelId: string) {
@@ -183,7 +191,8 @@ class ModelAttachment {
     return result;
   }
 
-  private async attachBlob(modelId: string, blob: Blob) {
+
+  private async attachBlob(modelId: string, blob: BlobData) {
     const result = await this.adapter.attachBlob({
       blob,
       attachmentName: this.attachmentName,
@@ -192,10 +201,10 @@ class ModelAttachment {
       strategy: this.options.multiple ? 'many' : 'one',
     });
 
-    const attachment = Attachment(result);
+    const attachment = this.getAttachment(result);
 
     if (this.callbacks.afterAttach) {
-      await this.callbacks.afterAttach({ blob });
+      await this.callbacks.afterAttach({ blob: attachment.blob });
     }
 
     return attachment;

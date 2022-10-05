@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import { getDeepValue } from '@uplo/utils';
+import { ID } from '@uplo/types';
 import {
   UploOptions,
   CreateDirectUploadParams,
@@ -12,6 +13,7 @@ import attachSignedFile from './attachSignedFile';
 import analyze from './analyze';
 import createDirectUpload from './createDirectUpload';
 import ModelAttachment from './modelAttachment';
+import { Blob } from './Blob';
 
 const defaultConfig = {
   privateKey: process.env.UPLOADER_SECRET,
@@ -19,7 +21,7 @@ const defaultConfig = {
 };
 
 const uploader = ({
-  service,
+  services,
   adapter,
   config: providedConfig,
   analyzers = [],
@@ -28,6 +30,14 @@ const uploader = ({
 }: UploOptions) => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = createSigner(config);
+
+  const findBlob = async (blobId: ID) => {
+    const blobData = await adapter.findBlob(blobId);
+    if (!blobData) return null;
+
+    const service = services[blobData.service];
+    return Blob({ data: blobData, adapter: adapter, service, analyzers });
+  }
 
   const modelAttachments = _.reduce<
       any,
@@ -46,6 +56,7 @@ const uploader = ({
           modelAttachments,
           (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
             const options = attachmentOptions === true ? {} : attachmentOptions;
+            const serviceName = options.service ? options.service : Object.keys(services)[0];
 
             r[attachmentName] = new ModelAttachment({
               modelName,
@@ -54,11 +65,13 @@ const uploader = ({
                 ...options,
                 multiple: options.multiple ?? false,
                 directUpload: options.directUpload ?? true,
+                service: serviceName,
               },
-              service,
+              service: services[serviceName],
               adapter,
               signer,
               callbacks,
+              analyzers,
             });
             return r;
           },
@@ -73,11 +86,12 @@ const uploader = ({
   return {
     signer,
     adapter,
-    service,
-    attachSignedFile: attachSignedFile({ service, adapter, signer, callbacks }),
-    analyze: analyze({ service, adapter, analyzers }),
-    createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) =>
-      createDirectUpload({ params, signer, adapter, service }),
+    services,
+    findBlob,
+    // attachSignedFile: attachSignedFile({ service, adapter, signer, callbacks }),
+    // analyze: analyze({ service, adapter, analyzers }),
+    // createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) =>
+    //   createDirectUpload({ params, signer, adapter, service }),
     findAttachmentByName: (name: `${string}.${string}`) => getDeepValue(modelAttachments, name, null),
     attachments: modelAttachments,
   };
