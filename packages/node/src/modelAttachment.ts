@@ -5,14 +5,20 @@ import { generateKey } from '@uplo/utils';
 import { SignerResult, Callbacks } from './types';
 import { blobDataFromFileInput } from './blobDataFromFileInput';
 
-interface ModelAttachmentOptions {
+export interface ModelAttachmentOptions {
+  multiple: boolean;
+  contentType?: string | string[] | RegExp;
+  directUpload?: boolean
+}
+
+interface ModelAttachmentParams {
   modelName: string;
   attachmentName: string;
   service: Service;
   adapter: Adapter;
-  multiple: boolean;
   signer: SignerResult;
   callbacks: Callbacks;
+  options: ModelAttachmentOptions
 }
 
 interface AttachFileOptions {
@@ -28,24 +34,22 @@ interface AttachFileOptions {
 }
 
 class ModelAttachment {
-  public options: ModelAttachmentOptions;
   public modelName: string;
   public attachmentName: string;
-  public multiple: boolean;
   public adapter: Adapter;
   public service: Service;
   public signer: SignerResult;
   public callbacks: Callbacks;
+  public options: ModelAttachmentOptions;
 
-  constructor(options: ModelAttachmentOptions) {
-    this.options = options;
-    this.modelName = options.modelName;
-    this.attachmentName = options.attachmentName;
-    this.multiple = options.multiple;
-    this.adapter = options.adapter;
-    this.service = options.service;
-    this.signer = options.signer;
-    this.callbacks = options.callbacks;
+  constructor(params: ModelAttachmentParams) {
+    this.modelName = params.modelName;
+    this.attachmentName = params.attachmentName;
+    this.adapter = params.adapter;
+    this.service = params.service;
+    this.signer = params.signer;
+    this.callbacks = params.callbacks;
+    this.options = params.options;
   }
 
   async attachFile(
@@ -133,7 +137,7 @@ class ModelAttachment {
       attachmentName: this.attachmentName,
       recordId: modelId,
       recordType,
-      strategy: this.multiple ? 'many' : 'one',
+      strategy: this.options.multiple ? 'many' : 'one',
     });
 
     return result;

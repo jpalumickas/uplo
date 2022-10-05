@@ -14,6 +14,8 @@ export interface Config {
 export interface UploOptionsAttachment {
   multiple?: boolean;
   service?: string;
+  directUpload?: boolean;
+  contentType?: string | string[] | RegExp;
 }
 
 export interface UploOptions {
@@ -27,13 +29,6 @@ export interface UploOptions {
       [attachmentName: string]: UploOptionsAttachment | true;
     };
   };
-}
-
-export interface Attachment {
-  modelName: string;
-  multiple: boolean;
-  service: Service;
-  attachFile: (modelId: string, options: { file: string }) => void;
 }
 
 export interface UploInstance {
@@ -50,7 +45,7 @@ export interface UploInstance {
   findAttachmentByName: (name: `${string}.${string}`) => ModelAttachment | null;
   attachments: {
     [modelName: string]: {
-      [attachmentName: string]: Attachment;
+      [attachmentName: string]: ModelAttachment;
     };
   };
 }

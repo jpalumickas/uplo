@@ -50,7 +50,11 @@ const uploader = ({
             r[attachmentName] = new ModelAttachment({
               modelName,
               attachmentName,
-              multiple: options.multiple ?? false,
+              options: {
+                ...options,
+                multiple: options.multiple ?? false,
+                directUpload: options.directUpload ?? true,
+              },
               service,
               adapter,
               signer,
