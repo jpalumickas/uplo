@@ -1,10 +1,11 @@
 import { upperFirst, camelCase } from 'lodash';
 import fs from 'fs';
-import { Service, Blob, Adapter } from '@uplo/types';
+import { Service, Blob, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { UploError, BlobNotFoundError } from './errors';
-import { SignerResult, Callbacks, ID } from './types';
+import { SignerResult, Callbacks } from './types';
 import { blobDataFromFileInput } from './blobDataFromFileInput';
+import { Attachment } from './Attachment';
 
 export interface ModelAttachmentOptions {
   multiple: boolean;
@@ -67,7 +68,7 @@ class ModelAttachment {
       name: this.attachmentName,
     });
 
-    return attachments[0];
+    return Attachment({ data: attachments[0], adapter: this.adapter, service: this.service });
   }
 
   async findMany(modelId: string) {
@@ -75,11 +76,13 @@ class ModelAttachment {
       throw new UploError('Use findOne for single attachment');
     }
 
-    return this.adapter.findAttachments({
+    const results = await this.adapter.findAttachments({
       recordId: modelId,
       recordType: this.recordType,
       name: this.attachmentName,
     });
+
+    return results.map(result => Attachment({ data: result, adapter: this.adapter, service: this.service }));
   }
 
   async detach(modelId: ID, attachmentId?: ID) {
@@ -97,11 +100,13 @@ class ModelAttachment {
   }
 
   async detachMany(modelId: ID) {
-    return this.adapter.deleteAttachments({
+    await this.adapter.deleteAttachments({
       recordId: modelId,
       recordType: this.recordType,
       name: this.attachmentName,
     });
+
+    return true;
   }
 
   async attachFile(
@@ -151,7 +156,8 @@ class ModelAttachment {
       ...blob,
     });
 
-    const result = this.attachBlob(modelId, blob);
+    const result = await this.attachBlob(modelId, blob);
+
     return result;
   }
 
@@ -174,10 +180,6 @@ class ModelAttachment {
 
     const result = this.attachBlob(modelId, blob);
 
-    if (this.callbacks.afterAttach) {
-      await this.callbacks.afterAttach({ blob });
-    }
-
     return result;
   }
 
@@ -190,7 +192,13 @@ class ModelAttachment {
       strategy: this.options.multiple ? 'many' : 'one',
     });
 
-    return result;
+    const attachment = Attachment(result);
+
+    if (this.callbacks.afterAttach) {
+      await this.callbacks.afterAttach({ blob });
+    }
+
+    return attachment;
   }
 }
 

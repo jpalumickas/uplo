@@ -1,5 +1,5 @@
 import { isEmpty, merge } from 'lodash';
-import { Service, Adapter, Blob, Analyzer } from '@uplo/types';
+import { Service, Adapter, BlobData, Analyzer } from '@uplo/types';
 import { AnalyzeError } from './errors';
 
 const analyze =
@@ -12,7 +12,7 @@ const analyze =
     adapter: Adapter;
     analyzers: Analyzer[];
   }) =>
-  async ({ key }: Blob): Promise<Blob['metadata']> => {
+  async ({ key }: { key: BlobData['key'] }): Promise<BlobData['metadata']> => {
     if (isEmpty(analyzers)) {
       console.warn(
         `[Uplo] No analyzers provided. Skipping analyze for Blob ${key}`
