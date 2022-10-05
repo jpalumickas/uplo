@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { CreateBlobOptions, AttachBlobOptions, Adapter, Blob } from '@uplo/types';
+import { BlobNotFoundError } from '@uplo/node';
 
 class PrismaAdapter extends Adapter {
   prisma: PrismaClient;
@@ -40,9 +41,21 @@ class PrismaAdapter extends Adapter {
   }
 
   async updateBlobMetadata({ key, metadata }: { key: string, metadata: object }) {
-    return await this.prisma.fileBlob.update({
-      where: { key },
-      data: { metadata }
+    return this.prisma.$transaction(async (prisma) => {
+      const blob = await prisma.fileBlob.findUnique({
+        where: { key },
+      });
+
+      if (!blob) {
+        throw new BlobNotFoundError(`Blob not found with key ${key}`);
+      }
+
+      const newMetadata = { ...blob.metadata, ...metadata };
+
+      return await prisma.fileBlob.update({
+        where: { key },
+        data: { metadata: newMetadata }
+      });
     });
   }
 
