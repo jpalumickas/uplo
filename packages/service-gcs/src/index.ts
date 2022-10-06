@@ -114,25 +114,35 @@ class GCSService extends BaseService implements Service {
     return url;
   }
 
-  async upload({ key, content, contentType }) {
-    if (content instanceof fs.ReadStream) {
-      const file = this.storage.bucket(this.bucket).file(key);
+  async upload({ key, filePath, content, contentType }) {
+    const file = this.storage.bucket(this.bucket).file(key);
+
+    if (filePath) {
+      const stream = fs.createReadStream(filePath);
+      // console.log(content);
 
       return new Promise((resolve, reject) => {
-        content
-          .pipe(
-            file.createWriteStream({
-              metadata: { contentType },
-            })
-          )
+        stream
+          .on('open', () => {
+            console.log('on open');
+          })
+            .pipe(
+              file.createWriteStream({
+                resumable: false,
+                metadata: { contentType },
+              })
+            )
           .on('error', (err) => {
             reject(err);
           })
-          .on('finish', resolve);
+          .on('finish', (e) => {
+            console.log('finish')
+            resolve(e)
+          });
       });
     }
 
-    return await this.storage.bucket(this.bucket).file(key).save(content);
+    return await file.save(content);
   }
 
   async download({ key, path }: { key: string; path: string }) {

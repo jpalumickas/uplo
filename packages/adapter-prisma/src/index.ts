@@ -40,7 +40,7 @@ class PrismaAdapter extends Adapter {
     });
   }
 
-  async createBlob({ params, service }: CreateBlobOptions): Promise<BlobData> {
+  async createBlob({ params }: CreateBlobOptions): Promise<BlobData> {
     const blob = await this.prisma.fileBlob.create({
       data: {
         key: params.key,
@@ -49,7 +49,7 @@ class PrismaAdapter extends Adapter {
         size: params.size,
         metadata: params.metadata || {},
         checksum: params.checksum,
-        serviceName: service.name()
+        serviceName: params.serviceName,
       },
     }) as BlobData;
 

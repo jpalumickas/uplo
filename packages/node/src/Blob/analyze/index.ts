@@ -16,8 +16,8 @@ const analyze =
     adapter: Adapter;
     analyzers: Analyzer[];
   }): Promise<BlobData['metadata']> => {
-    const blob = Blob({ data: blobData, service, adapter });
-    const downloadToTempfile = downloadToTempfileFn({ key: blobData.key, service });
+    const blob = Blob({ data: blobData, service, adapter, analyzers });
+    const downloadToTempfile = downloadToTempfileFn({ key: blobData.key, fileName: blobData.fileName, service });
 
     if (isEmpty(analyzers)) {
       console.warn(
@@ -34,6 +34,7 @@ const analyze =
       for (const analyzer of analyzers) {
         try {
           const analyzerMetadata = await analyzer({ filePath, blob });
+
           if (!isEmpty(analyzerMetadata)) {
             merge(newMetadata, analyzerMetadata);
           }

@@ -1,4 +1,3 @@
-import { Service } from './service';
 import { ID } from './general';
 import { AttachmentData, BlobData } from './attachment';
 
@@ -9,12 +8,12 @@ export interface CreateBlobParams {
   size: number;
   metadata?: object;
   checksum: string;
+  serviceName: string;
   [property: string]: any;
 }
 
 export interface CreateBlobOptions {
   params: CreateBlobParams;
-  service: Service;
 }
 
 export interface AttachBlobOptions {

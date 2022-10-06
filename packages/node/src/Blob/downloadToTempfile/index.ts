@@ -2,7 +2,7 @@ import { file as tempyFile } from 'tempy';
 import { Service } from '@uplo/types';
 import { UploError } from '../../errors';
 
-export const downloadToTempfile = ({ key, service }: { key: string, service: Service }) => async (callback: (tmpPath: string) => void) => {
+export const downloadToTempfile = ({ key, fileName, service }: { key: string, fileName: string, service: Service }) => async (callback: (tmpPath: string) => void) => {
     return await tempyFile.task(
       async (tmpPath) => {
         try {
@@ -19,6 +19,9 @@ export const downloadToTempfile = ({ key, service }: { key: string, service: Ser
 
           return;
         }
+      },
+      {
+        name: fileName,
       }
     );
   }

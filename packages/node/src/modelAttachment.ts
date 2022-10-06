@@ -155,12 +155,13 @@ class ModelAttachment {
         size: blobParams.size,
         checksum: blobParams.checksum,
         metadata: blobParams.metadata,
+        serviceName: this.options.service,
       },
-      service: this.service,
     });
 
-    this.service.upload({
-      content,
+    await this.service.upload({
+      filePath,
+      content: contentInput,
       ...blob,
     });
 
