@@ -114,15 +114,14 @@ class GCSService extends BaseService implements Service {
     return url;
   }
 
-  async upload({ key, filePath, content, contentType }) {
+  async upload({ key, content, contentType }) {
     const file = this.storage.bucket(this.bucket).file(key);
 
-    if (filePath) {
-      const stream = fs.createReadStream(filePath);
+    if (content instanceof fs.ReadStream) {
       // console.log(content);
 
       return new Promise((resolve, reject) => {
-        stream
+        content
           .on('open', () => {
             console.log('on open');
           })

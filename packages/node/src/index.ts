@@ -9,8 +9,6 @@ import {
   UploOptionsAttachment,
 } from './types';
 import createSigner from './signer';
-import attachSignedFile from './attachSignedFile';
-import analyze from './analyze';
 import createDirectUpload from './createDirectUpload';
 import ModelAttachment from './modelAttachment';
 import { Blob } from './Blob';
@@ -88,8 +86,6 @@ const uploader = ({
     adapter,
     services,
     findBlob,
-    // attachSignedFile: attachSignedFile({ service, adapter, signer, callbacks }),
-    // analyze: analyze({ service, adapter, analyzers }),
     // createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) =>
     //   createDirectUpload({ params, signer, adapter, service }),
     findAttachmentByName: (name: `${string}.${string}`) => getDeepValue(modelAttachments, name, null),

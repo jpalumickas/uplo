@@ -2,15 +2,15 @@ import { PrismaClient } from '@prisma/client';
 import { CreateBlobOptions, AttachBlobOptions, Adapter, Blob, BlobData, ID, AttachmentData } from '@uplo/types';
 import { BlobNotFoundError } from '@uplo/node';
 
-class PrismaAdapter extends Adapter {
+class PrismaAdapter implements Adapter {
   prisma: PrismaClient;
 
   constructor({ prisma }: { prisma: PrismaClient }) {
-    super();
     this.prisma = prisma;
   }
 
   async findAttachments({ recordId, recordType, name }: { recordId: string | number, recordType: string, name: string }): Promise<AttachmentData[]> {
+    // TODO: Add dataloader
     return await this.prisma.fileAttachment.findMany({
       where: {
         recordId,

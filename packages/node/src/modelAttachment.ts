@@ -17,7 +17,7 @@ export interface ModelAttachmentOptions {
 interface ModelAttachmentParams {
   modelName: string;
   attachmentName: string;
-  service: Service;
+  services: Record<string, Service>;
   adapter: Adapter;
   signer: SignerResult;
   callbacks: Callbacks;
@@ -42,7 +42,7 @@ class ModelAttachment {
   public recordType: string;
   public attachmentName: string;
   public adapter: Adapter;
-  public service: Service;
+  public services: Record<string, Service>;
   public signer: SignerResult;
   public callbacks: Callbacks;
   public analyzers: Analyzer[];
@@ -52,7 +52,7 @@ class ModelAttachment {
     this.modelName = params.modelName;
     this.attachmentName = params.attachmentName;
     this.adapter = params.adapter;
-    this.service = params.service;
+    this.services = params.services;
     this.signer = params.signer;
     this.callbacks = params.callbacks;
     this.analyzers = params.analyzers;
@@ -75,10 +75,6 @@ class ModelAttachment {
     return this.getAttachment(attachments[0]);
   }
 
-  getAttachment(data: AttachmentData) {
-    return Attachment({ data, adapter: this.adapter, service: this.service, analyzers: this.analyzers });
-  }
-
   async findMany(modelId: string) {
     if (!this.options.multiple) {
       throw new UploError('Use findOne for single attachment');
@@ -90,7 +86,7 @@ class ModelAttachment {
       name: this.attachmentName,
     });
 
-    return results.map(result => Attachment({ data: result, adapter: this.adapter, service: this.service }));
+    return results.map(result => this.getAttachment(result));
   }
 
   async detach(modelId: ID, attachmentId?: ID) {
@@ -121,12 +117,11 @@ class ModelAttachment {
     modelId: string,
     { filePath, content: contentInput, ...params }: AttachFileOptions
   ) {
-    const content = filePath ? fs.createReadStream(filePath) : contentInput;
-
-    if (!content) {
+    if (!contentInput && !filePath) {
       throw new UploError('Provide filePath or content when attacing a file');
     }
 
+    const content = filePath ? fs.createReadStream(filePath) : contentInput;
     const data = await blobDataFromFileInput(content);
 
     const blobParams = {
@@ -159,10 +154,14 @@ class ModelAttachment {
       },
     });
 
-    await this.service.upload({
+    await this.getService(blob.service).upload({
       filePath,
-      content: contentInput,
+      content: filePath ? fs.createReadStream(filePath) : contentInput,
       ...blob,
+    });
+
+    await this.getService(blob.service).updateMetadata(blob.key, {
+      contentType: blob.contentType,
     });
 
     const result = await this.attachBlob(modelId, blob);
@@ -177,21 +176,24 @@ class ModelAttachment {
     }
     const { blobId } = data;
 
+    if (this.callbacks.beforeAttach) {
+      await this.callbacks.beforeAttach({ blobId });
+    }
+
     const blob = await this.adapter.findBlob(blobId);
 
     if (!blob) {
       throw new BlobNotFoundError(`Cannot find blob with ID ${blobId}`);
     }
 
-    await this.service.updateMetadata(blob.key, {
+    await this.getService(blob.service).updateMetadata(blob.key, {
       contentType: blob.contentType,
     });
 
-    const result = this.attachBlob(modelId, blob);
+    const result = await this.attachBlob(modelId, blob);
 
     return result;
   }
-
 
   private async attachBlob(modelId: string, blob: BlobData) {
     const result = await this.adapter.attachBlob({
@@ -209,6 +211,20 @@ class ModelAttachment {
     }
 
     return attachment;
+  }
+
+  private getAttachment(data: AttachmentData) {
+    return Attachment({ data, adapter: this.adapter, services: this.services, analyzers: this.analyzers });
+  }
+
+  private getService(serviceName: string) {
+    const service = this.services[serviceName];
+
+    if (!service) {
+      throw new UploError(`Cannot find service with name ${serviceName}`);
+    }
+
+    return service;
   }
 }
 

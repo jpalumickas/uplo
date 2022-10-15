@@ -26,11 +26,11 @@ export interface AttachBlobOptions {
   [property: string]: any;
 }
 
-export abstract class Adapter {
-  constructor() { }
-  abstract findBlob(id: ID): Promise<BlobData | null>;
-  abstract findBlobByKey(key: string): Promise<BlobData | null>;
-  abstract attachBlob(options: AttachBlobOptions): AttachmentData;
-  abstract createBlob(options: CreateBlobOptions): Promise<BlobData>;
-  abstract updateBlobMetadata({ key, metadata }: { key: BlobData['key'], metadata: BlobData['metadata'] }): Promise<BlobData | null>;
+export interface dapter {
+  findBlob(id: ID): Promise<BlobData | null>;
+  findBlobByKey(key: string): Promise<BlobData | null>;
+  attachBlob(options: AttachBlobOptions): AttachmentData;
+  createBlob(options: CreateBlobOptions): Promise<BlobData>;
+  updateBlobMetadata({ key, metadata }: { key: BlobData['key'], metadata: BlobData['metadata'] }): Promise<BlobData | null>;
+  findAttachments(options: { recordId: AttachmentData['recordId'], recordType: AttachmentData['recordType'], name: AttachmentData['name'] }): Promise<AttachmentData[]>;
 }
