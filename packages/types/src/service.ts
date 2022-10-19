@@ -22,9 +22,8 @@ export interface ServiceUploadParams {
 }
 
 export interface Service {
-  updateMetadata(key: string, options: ServiceUpdateMetadataOptions): Promise<any>;
-  name(): string;
-  download(options: { key: string, path: string }): any;
+  updateMetadata(key: BlobData['key'], options: ServiceUpdateMetadataOptions): Promise<any>;
+  download(options: { key: BlobData['key'], path: string }): any;
   directUploadHeaders(blob: BlobData): Promise<Record<string, any>> | undefined;
   directUploadUrl(blob: BlobData): Promise<string>;
   delete({ key }: Pick<BlobData, 'key'>): Promise<boolean>;
@@ -33,4 +32,5 @@ export interface Service {
   privateUrl(blob: BlobData, options?: object): Promise<string>;
   url(blob: BlobData, options?: object): Promise<string>;
   protocolUrl(blob: BlobData): Promise<string>;
+  isPublic: boolean;
 }

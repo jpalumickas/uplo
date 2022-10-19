@@ -16,7 +16,7 @@ export const Blob = ({
   analyzers,
 }: Params): TBlob => {
   const { service: serviceName, ...data } = blobData;
-  const downloadToTempfile = downloadToTempfileFn({ key: data.key, service });
+  const downloadToTempfile = downloadToTempfileFn({ key: data.key, fileName: data.fileName, service });
 
   return {
     ...data,

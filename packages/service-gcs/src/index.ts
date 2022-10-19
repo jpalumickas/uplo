@@ -21,7 +21,7 @@ class GCSService extends BaseService implements Service {
     });
   }
 
-  async directUploadUrl(blob: Blob) {
+  async directUploadUrl(blob: BlobData) {
     const options: GetSignedUrlConfig = {
       version: 'v4',
       action: 'write',
@@ -118,25 +118,19 @@ class GCSService extends BaseService implements Service {
     const file = this.storage.bucket(this.bucket).file(key);
 
     if (content instanceof fs.ReadStream) {
-      // console.log(content);
-
       return new Promise((resolve, reject) => {
         content
-          .on('open', () => {
-            console.log('on open');
-          })
-            .pipe(
-              file.createWriteStream({
-                resumable: false,
-                metadata: { contentType },
-              })
-            )
+          .pipe(
+            file.createWriteStream({
+              resumable: false,
+              metadata: { contentType },
+            })
+          )
           .on('error', (err) => {
             reject(err);
           })
-          .on('finish', (e) => {
-            console.log('finish')
-            resolve(e)
+          .on('finish', (e: any) => {
+            resolve(e);
           });
       });
     }
@@ -144,19 +138,19 @@ class GCSService extends BaseService implements Service {
     return await file.save(content);
   }
 
-  async download({ key, path }: { key: string; path: string }) {
+  async download({ key, path }: { key: BlobData['key']; path: string }) {
     return await this.storage
       .bucket(this.bucket)
       .file(key)
       .download({ destination: path });
   }
 
-  async delete({ key }: Blob) {
+  async delete({ key }: { key: BlobData['key'] }) {
     await this.storage.bucket(this.bucket).file(key).delete();
     return true;
   }
 
-  async protocolUrl(blob: Blob) {
+  async protocolUrl(blob: BlobData) {
     return `gs://${this.bucket}/${blob.key}`;
   }
 

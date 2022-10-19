@@ -1,5 +1,4 @@
 import { Blob, Service, ServiceUpdateMetadataOptions, ServiceUploadParams } from '@uplo/types';
-import { file as tempyFile } from 'tempy';
 import { Options } from './types';
 
 abstract class BaseService implements Service {
