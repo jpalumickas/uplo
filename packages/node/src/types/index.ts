@@ -7,7 +7,7 @@ import { GenericAttachment }  from '../GenericAttachment';
 export * from './callbacks';
 export * from './signer';
 
-export interface Config {
+export interface UploConfig {
   privateKey?: string;
   signedIdExpiresIn?: number;
 }
@@ -24,7 +24,7 @@ export interface UploOptions {
     [serviceName: string]: Service;
   };
   adapter: Adapter;
-  config?: Config;
+  config?: UploConfig;
   analyzers?: Analyzer[];
   callbacks?: Callbacks;
   attachments: {
@@ -57,13 +57,4 @@ export interface CreateDirectUploadParams {
   size: number;
   checksum: string;
   metadata?: CreateDirectUploadParamsMetadata;
-}
-
-export interface AttachSignedFileOptions {
-  signedId: string;
-  modelName: string;
-  modelId: string;
-  attachmentName: string;
-  strategy: 'one' | 'many';
-  [k: string]: any;
 }

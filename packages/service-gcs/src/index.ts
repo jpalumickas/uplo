@@ -1,20 +1,21 @@
 import fs from 'node:fs';
 import { Storage, GetSignedUrlConfig } from '@google-cloud/storage';
-import BaseService, { Options as BaseOptions } from '@uplo/service-base';
-import { Service, Blob, BlobData } from '@uplo/types';
+import { Service, BlobData } from '@uplo/types';
 import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 
-interface Options extends BaseOptions {
+interface Options {
+  isPublic?: boolean;
   bucket: string;
   credentialsPath: string;
 }
 
-class GCSService extends BaseService implements Service {
+class GCSService implements Service {
+  isPublic: boolean;
   bucket: string;
   storage: Storage;
 
-  constructor({ bucket, credentialsPath, ...opts }: Options) {
-    super(opts);
+  constructor({ bucket, credentialsPath }: Options) {
+    this.isPublic = false;
     this.bucket = bucket;
     this.storage = new Storage({
       keyFilename: credentialsPath,
@@ -39,8 +40,8 @@ class GCSService extends BaseService implements Service {
     return url;
   }
 
-  directUploadHeaders(
-    blob: Blob,
+  async directUploadHeaders(
+    blob: BlobData,
     { disposition }: { disposition?: ContentDispositionType } = {}
   ) {
     return {
