@@ -1,6 +1,5 @@
 import { createWriteStream } from 'fs';
 import { Readable } from 'stream';
-import BaseService, { Options as BaseOptions } from '@uplo/service-base';
 import { Upload } from '@aws-sdk/lib-storage';
 import {
   S3Client,
@@ -9,29 +8,31 @@ import {
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Service, Blob, ServiceUploadParams } from '@uplo/types';
+import { Service, BlobData, ServiceUploadParams } from '@uplo/types';
 
-interface Options extends BaseOptions {
+interface Options {
+  isPublic?: boolean;
   bucket: string;
   region: string;
   accessKeyId: string;
   secretAccessKey: string;
 }
 
-class S3Service extends BaseService implements Service {
+class S3Service implements Service {
+  isPublic: boolean;
   bucket: string;
   region: string;
   s3Client: S3Client;
   options!: Options;
 
-  constructor({ bucket, region, ...opts }: Options) {
-    super(opts);
+  constructor({ bucket, region, isPublic = false }: Options) {
+    this.isPublic = isPublic;
     this.bucket = bucket;
     this.region = region;
     this.s3Client = new S3Client(this.s3Config());
   }
 
-  async directUploadUrl(blob: Blob) {
+  async directUploadUrl(blob: BlobData) {
     const command = new PutObjectCommand({
       Bucket: this.bucket,
       // ContentDisposition: `attachment; filename="${fileName}"`,
@@ -63,7 +64,7 @@ class S3Service extends BaseService implements Service {
     await parallelUploads3.done();
   }
 
-  async delete({ key }: Pick<Blob, 'key'>) {
+  async delete({ key }: Pick<BlobData, 'key'>) {
     await this.s3Client.send(
       new DeleteObjectCommand({ Bucket: this.bucket, Key: key })
     );
@@ -71,7 +72,7 @@ class S3Service extends BaseService implements Service {
     return true;
   }
 
-  async download({ key, path }: { key: string, path: string }) {
+  async download({ key, path }: { key: BlobData['key'], path: string }) {
     const command = new GetObjectCommand({ Bucket: this.bucket, Key: key });
     const s3Item = await this.s3Client.send(command);
     if (s3Item.Body) {
@@ -79,19 +80,19 @@ class S3Service extends BaseService implements Service {
     }
   }
 
-  directUploadHeaders(blob: Blob) {
+  async directUploadHeaders(blob: BlobData) {
     return {
       'Content-Type': blob.contentType,
       'Content-MD5': blob.checksum,
     };
   }
 
-  async publicUrl({ key }: Pick<Blob, 'key'>) {
+  async publicUrl({ key }: Pick<BlobData, 'key'>) {
     return `https://${this.bucket}.s3.${this.region}.amazonaws.com/${key}`;
   }
 
   async privateUrl(
-    { key }: Blob,
+    { key }: BlobData,
     { expiresIn = 300 }: { expiresIn?: number } = {}
   ) {
     const command = new GetObjectCommand({
@@ -102,12 +103,8 @@ class S3Service extends BaseService implements Service {
     return await getSignedUrl(this.s3Client, command, { expiresIn });
   }
 
-  async protocolUrl(blob: Blob) {
+  async protocolUrl(blob: BlobData) {
     return `s3://${this.bucket}/${blob.key}`;
-  }
-
-  defaultName(): string {
-    return 's3';
   }
 
   s3Config() {

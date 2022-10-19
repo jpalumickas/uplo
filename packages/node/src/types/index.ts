@@ -1,7 +1,7 @@
 import { ID, Blob, Service, Analyzer, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
-import { SignerResult } from './signer';
-import ModelAttachment from '../modelAttachment';
+import { Signer } from './signer';
+import ModelAttachment from '../ModelAttachment';
 import { GenericAttachment }  from '../GenericAttachment';
 
 export * from './callbacks';
@@ -35,7 +35,7 @@ export interface UploOptions {
 }
 
 export interface Uplo {
-  signer: SignerResult;
+  signer: Signer;
   adapter: Adapter;
   $services: Record<string, Service>;
   $findBlob: (id: ID) => Promise<Blob | null>;

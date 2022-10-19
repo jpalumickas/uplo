@@ -1,11 +1,11 @@
+import fs from 'node:fs';
 import { upperFirst, camelCase } from 'lodash';
-import fs from 'fs';
 import { Analyzer, Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
-import { UploError, BlobNotFoundError } from './errors';
-import { SignerResult, Callbacks } from './types';
+import { UploError, BlobNotFoundError } from '../errors';
+import { Signer, Callbacks } from '../types';
+import { Attachment } from '../Attachment';
 import { blobDataFromFileInput } from './blobDataFromFileInput';
-import { Attachment } from './Attachment';
 
 export interface ModelAttachmentOptions {
   multiple: boolean;
@@ -19,7 +19,7 @@ interface ModelAttachmentParams {
   attachmentName: string;
   services: Record<string, Service>;
   adapter: Adapter;
-  signer: SignerResult;
+  signer: Signer;
   callbacks: Callbacks;
   analyzers: Analyzer[];
   options: ModelAttachmentOptions
@@ -43,7 +43,7 @@ class ModelAttachment {
   public attachmentName: string;
   public adapter: Adapter;
   public services: Record<string, Service>;
-  public signer: SignerResult;
+  public signer: Signer;
   public callbacks: Callbacks;
   public analyzers: Analyzer[];
   public options: ModelAttachmentOptions;
@@ -160,9 +160,13 @@ class ModelAttachment {
       ...blob,
     });
 
-    await this.getService(blob.service).updateMetadata(blob.key, {
-      contentType: blob.contentType,
-    });
+    const updateMetadataFn = this.getService(blob.service).updateMetadata;
+
+    if (updateMetadataFn) {
+      await updateMetadataFn(blob.key, {
+        contentType: blob.contentType,
+      });
+    }
 
     const result = await this.attachBlob(modelId, blob);
 
@@ -186,9 +190,13 @@ class ModelAttachment {
       throw new BlobNotFoundError(`Cannot find blob with ID ${blobId}`);
     }
 
-    await this.getService(blob.service).updateMetadata(blob.key, {
-      contentType: blob.contentType,
-    });
+    const updateMetadataFn = this.getService(blob.service).updateMetadata;
+
+    if (updateMetadataFn) {
+      await updateMetadataFn(blob.key, {
+        contentType: blob.contentType,
+      });
+    }
 
     const result = await this.attachBlob(modelId, blob);
 
@@ -201,7 +209,7 @@ class ModelAttachment {
       attachmentName: this.attachmentName,
       recordId: modelId,
       recordType: this.recordType,
-      strategy: this.options.multiple ? 'many' : 'one',
+      append: this.options.multiple,
     });
 
     const attachment = this.getAttachment(result);

@@ -1,6 +1,6 @@
 import { Service, Adapter } from '@uplo/types';
 import { createDirectUpload } from './createDirectUpload';
-import { SignerResult, CreateDirectUploadParams } from '../types';
+import { Signer, CreateDirectUploadParams } from '../types';
 
 interface Options {
   multiple: boolean;
@@ -13,7 +13,7 @@ interface GenericAttachmentParams {
   adapter: Adapter;
   options: Options;
   services: Record<string, Service>;
-  signer: SignerResult;
+  signer: Signer;
 }
 
 export const GenericAttachment = ({

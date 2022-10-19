@@ -22,9 +22,9 @@ export interface ServiceUploadParams {
 }
 
 export interface Service {
-  updateMetadata(key: BlobData['key'], options: ServiceUpdateMetadataOptions): Promise<any>;
+  updateMetadata?(key: BlobData['key'], options: ServiceUpdateMetadataOptions): Promise<any>;
   download(options: { key: BlobData['key'], path: string }): any;
-  directUploadHeaders(blob: BlobData): Promise<Record<string, any>> | undefined;
+  directUploadHeaders?(blob: BlobData): Promise<Record<string, any>> | undefined;
   directUploadUrl(blob: BlobData): Promise<string>;
   delete({ key }: Pick<BlobData, 'key'>): Promise<boolean>;
   upload(params: ServiceUploadParams): Promise<any>;

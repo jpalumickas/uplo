@@ -7,8 +7,8 @@ import {
   UploOptionsAttachment,
 } from './types';
 import { AttachmentNotFoundError } from './errors';
-import createSigner from './signer';
-import ModelAttachment from './modelAttachment';
+import { Signer } from './signer';
+import ModelAttachment from './ModelAttachment';
 import { Blob } from './Blob';
 import { GenericAttachment } from './GenericAttachment';
 import { formatAttachmentOptions } from './lib/formatAttachmentOptions';
@@ -27,7 +27,7 @@ const uploader = ({
   attachments = {},
 }: UploOptions): Uplo => {
   const config = Object.assign({}, defaultConfig, providedConfig);
-  const signer = createSigner(config);
+  const signer = Signer(config);
 
   const findBlob = async (blobId: ID) => {
     const blobData = await adapter.findBlob(blobId);

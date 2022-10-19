@@ -21,7 +21,7 @@ export interface AttachBlobOptions {
   attachmentName: string;
   recordId: string;
   recordType: string;
-  strategy: 'one' | 'many';
+  append?: boolean;
   returnQuery?: boolean;
   [property: string]: any;
 }

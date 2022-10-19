@@ -89,8 +89,8 @@ class PrismaAdapter implements Adapter {
     });
   }
 
-  async attachBlob({ blob, attachmentName, recordId, recordType, strategy }: AttachBlobOptions) {
-    if (strategy === 'one') {
+  async attachBlob({ blob, attachmentName, recordId, recordType, append = false }: AttachBlobOptions) {
+    if (!append) {
       await this.prisma.fileAttachment.deleteMany({
         where: {
           name: attachmentName,

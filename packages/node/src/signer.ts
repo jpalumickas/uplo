@@ -1,12 +1,12 @@
-import { promisify } from 'util';
+import { promisify } from 'node:util';
 import { sign as jwtSign, verify as jwtVerify, Secret, SignOptions, VerifyOptions, GetPublicKeyOrSecret, JwtPayload } from 'jsonwebtoken';
-import { Signer } from './types';
+import { Signer as TSigner, UploConfig } from './types';
 import { SignerError } from './errors';
 
 const signAsync = promisify<string | object | Buffer, Secret, SignOptions>(jwtSign);
 const verifyAsync = promisify<string, Secret | GetPublicKeyOrSecret,VerifyOptions>(jwtVerify);
 
-export const signer: Signer = (config) => {
+export const Signer = (config: UploConfig): TSigner => {
   const generate = async (data: object, purpose: string) => {
     if (!config.privateKey) {
       throw new SignerError('Missing private key');
@@ -38,5 +38,3 @@ export const signer: Signer = (config) => {
     verify,
   };
 };
-
-export default signer;
