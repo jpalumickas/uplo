@@ -25,8 +25,7 @@ export interface Service {
   updateMetadata(key: string, options: ServiceUpdateMetadataOptions): Promise<any>;
   name(): string;
   download(options: { key: string, path: string }): any;
-  downloadToTempfile({ key }: { key: string }, callback: (tmpPath: string) => void): any;
-  directUploadData(blob: BlobData): Promise<ServiceDirectUploadData>;
+  directUploadHeaders(blob: BlobData): Promise<Record<string, any>> | undefined;
   directUploadUrl(blob: BlobData): Promise<string>;
   delete({ key }: Pick<BlobData, 'key'>): Promise<boolean>;
   upload(params: ServiceUploadParams): Promise<any>;

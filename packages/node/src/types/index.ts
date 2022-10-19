@@ -1,7 +1,8 @@
-import { Blob, Service, Analyzer, Adapter } from '@uplo/types';
+import { ID, Blob, Service, Analyzer, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
 import { SignerResult } from './signer';
 import ModelAttachment from '../modelAttachment';
+import { GenericAttachment }  from '../GenericAttachment';
 
 export * from './callbacks';
 export * from './signer';
@@ -33,16 +34,12 @@ export interface UploOptions {
   };
 }
 
-export interface UploInstance {
+export interface Uplo {
   signer: SignerResult;
   adapter: Adapter;
-  service: Service;
-  createDirectUpload: ({
-    params,
-  }: {
-    params: CreateDirectUploadParams;
-  }) => Promise<object>;
-  findAttachmentByName: (name: `${string}.${string}`) => ModelAttachment | null;
+  $services: Record<string, Service>;
+  $findBlob: (id: ID) => Promise<Blob | null>;
+  $findGenericAttachment: (name: `${string}.${string}`) => ReturnType<typeof GenericAttachment>;
   attachments: {
     [modelName: string]: {
       [attachmentName: string]: ModelAttachment;

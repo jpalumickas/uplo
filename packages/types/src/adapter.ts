@@ -26,7 +26,7 @@ export interface AttachBlobOptions {
   [property: string]: any;
 }
 
-export interface dapter {
+export interface Adapter {
   findBlob(id: ID): Promise<BlobData | null>;
   findBlobByKey(key: string): Promise<BlobData | null>;
   attachBlob(options: AttachBlobOptions): AttachmentData;

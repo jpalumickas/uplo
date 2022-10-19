@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import { Storage, GetSignedUrlConfig } from '@google-cloud/storage';
 import BaseService, { Options as BaseOptions } from '@uplo/service-base';
-import { Service, Blob } from '@uplo/types';
+import { Service, Blob, BlobData } from '@uplo/types';
 import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 
 interface Options extends BaseOptions {
@@ -83,12 +83,12 @@ class GCSService extends BaseService implements Service {
       .setMetadata(metadata);
   }
 
-  async publicUrl(blob: Blob) {
+  async publicUrl(blob: BlobData) {
     return await this.storage.bucket(this.bucket).file(blob.key).publicUrl();
   }
 
   async privateUrl(
-    blob: Blob,
+    blob: BlobData,
     {
       disposition,
       expiresIn = 300,

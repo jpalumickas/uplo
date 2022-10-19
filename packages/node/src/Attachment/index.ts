@@ -5,8 +5,8 @@ import {
   AttachmentData,
   Analyzer,
 } from '@uplo/types';
-import { Blob } from './Blob';
-import { UploError } from './errors';
+import { Blob } from '../Blob';
+import { UploError } from '../errors';
 
 export interface AttachmentOptions {
   data: AttachmentData;

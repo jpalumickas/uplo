@@ -1,9 +1,9 @@
 import { FastifyPluginAsync } from 'fastify';
-import { UploInstance } from '@uplo/node';
+import { Uplo } from '@uplo/node';
 
 export interface UploPluginOptions {
   mountPath?: string;
-  uplo: UploInstance;
+  uplo: Uplo;
 }
 
 const createDirectUploadOptions = {
@@ -39,7 +39,7 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, { u
 
   fastify.post<{ Body: CreateDirectUploadBody}>(`${mountPath}/create-direct-upload`, createDirectUploadOptions, async (request, reply) => {
     const attachmentName = request.body['attachmentName'];
-    const attachment = uplo.findAttachmentByName(attachmentName);
+    const attachment = uplo.$findGenericAttachment(attachmentName);
 
     if (!attachment) {
       reply.send({ error: { message: `Cannot find attachment ${attachmentName}`} }).status(422);
@@ -54,7 +54,7 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, { u
       metadata: request.body['metadata'],
     };
 
-    const data = await uplo.createDirectUpload({ params });
+    const data = await attachment.createDirectUpload({ params });
 
     reply.send(data).status(201);
   })

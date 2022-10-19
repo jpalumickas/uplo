@@ -3,15 +3,15 @@ import { getDeepValue } from '@uplo/utils';
 import { ID } from '@uplo/types';
 import {
   UploOptions,
-  CreateDirectUploadParams,
-  // UploInstance,
-  // Attachment,
+  Uplo,
   UploOptionsAttachment,
 } from './types';
+import { AttachmentNotFoundError } from './errors';
 import createSigner from './signer';
-import createDirectUpload from './createDirectUpload';
 import ModelAttachment from './modelAttachment';
 import { Blob } from './Blob';
+import { GenericAttachment } from './GenericAttachment';
+import { formatAttachmentOptions } from './lib/formatAttachmentOptions';
 
 const defaultConfig = {
   privateKey: process.env.UPLOADER_SECRET,
@@ -25,7 +25,7 @@ const uploader = ({
   analyzers = [],
   callbacks = {},
   attachments = {},
-}: UploOptions) => {
+}: UploOptions): Uplo => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = createSigner(config);
 
@@ -53,19 +53,11 @@ const uploader = ({
         >(
           modelAttachments,
           (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
-            const options = attachmentOptions === true ? {} : attachmentOptions;
-            const serviceName = options.service ? options.service : Object.keys(services)[0];
-
             r[attachmentName] = new ModelAttachment({
               modelName,
               attachmentName,
-              options: {
-                ...options,
-                multiple: options.multiple ?? false,
-                directUpload: options.directUpload ?? true,
-                service: serviceName,
-              },
-              service: services[serviceName],
+              options: formatAttachmentOptions(attachmentOptions, services),
+              services,
               adapter,
               signer,
               callbacks,
@@ -84,11 +76,20 @@ const uploader = ({
   return {
     signer,
     adapter,
-    services,
-    findBlob,
-    // createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) =>
-    //   createDirectUpload({ params, signer, adapter, service }),
-    findAttachmentByName: (name: `${string}.${string}`) => getDeepValue(modelAttachments, name, null),
+    $services: services,
+    $findBlob: findBlob,
+    $findGenericAttachment: (name: `${string}.${string}`) => {
+      const attachmentOptions = getDeepValue(attachments, name, null)
+      if (!attachmentOptions) {
+        throw new AttachmentNotFoundError(`Attachment with name ${name} not found`);
+      }
+      return GenericAttachment({
+        signer,
+        adapter,
+        services,
+        options: formatAttachmentOptions(attachmentOptions, services),
+      });
+    },
     attachments: modelAttachments,
   };
 };

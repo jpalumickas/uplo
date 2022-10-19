@@ -9,7 +9,7 @@ import { Attachment } from './Attachment';
 
 export interface ModelAttachmentOptions {
   multiple: boolean;
-  service: string;
+  serviceName: string;
   contentType?: string | string[] | RegExp;
   directUpload?: boolean
 }
@@ -150,7 +150,7 @@ class ModelAttachment {
         size: blobParams.size,
         checksum: blobParams.checksum,
         metadata: blobParams.metadata,
-        serviceName: this.options.service,
+        serviceName: this.options.serviceName,
       },
     });
 
