@@ -3,29 +3,25 @@ import { getDeepValue } from '@uplo/utils';
 import { ID } from '@uplo/types';
 import {
   UploOptions,
-  Uplo,
+  Uplo as TUplo,
   UploOptionsAttachment,
 } from './types';
 import { AttachmentNotFoundError } from './errors';
 import { Signer } from './signer';
-import ModelAttachment from './ModelAttachment';
+import { ModelAttachment } from './ModelAttachment';
 import { Blob } from './Blob';
 import { GenericAttachment } from './GenericAttachment';
 import { formatAttachmentOptions } from './lib/formatAttachmentOptions';
+import { defaultConfig } from './lib/defaultConfig';
 
-const defaultConfig = {
-  privateKey: process.env.UPLOADER_SECRET,
-  signedIdExpiresIn: 60 * 60,
-};
-
-const uploader = ({
+const Uplo = ({
   services,
   adapter,
   config: providedConfig,
   analyzers = [],
   callbacks = {},
   attachments = {},
-}: UploOptions): Uplo => {
+}: UploOptions): TUplo => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = Signer(config);
 
@@ -98,4 +94,4 @@ export * from '@uplo/types';
 export * from './types';
 export * from './errors';
 
-export default uploader;
+export default Uplo;

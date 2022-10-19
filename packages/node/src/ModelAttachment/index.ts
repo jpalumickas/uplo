@@ -37,7 +37,7 @@ interface AttachFileOptions {
   };
 }
 
-class ModelAttachment {
+export class ModelAttachment {
   public modelName: string;
   public recordType: string;
   public attachmentName: string;
@@ -235,5 +235,3 @@ class ModelAttachment {
     return service;
   }
 }
-
-export default ModelAttachment;

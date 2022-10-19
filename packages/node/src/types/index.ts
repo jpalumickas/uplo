@@ -1,7 +1,7 @@
 import { ID, Blob, Service, Analyzer, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
 import { Signer } from './signer';
-import ModelAttachment from '../ModelAttachment';
+import { ModelAttachment } from '../ModelAttachment';
 import { GenericAttachment }  from '../GenericAttachment';
 
 export * from './callbacks';
