@@ -48,16 +48,13 @@ jobs:
           static_site_generator: next
 
       - name: Install dependencies
-        run: |
-          yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
       - name: Build with Next.js
-        run: |
-          yarn next build
+        run: yarn next build
 
       - name: Static HTML export with Next.js
-        run: |
-          yarn next export
+        run: yarn next export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
