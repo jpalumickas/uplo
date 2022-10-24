@@ -21,8 +21,8 @@ yarn add @uplo/node
 
 Define uplo instance
 
-```jsx
-import uplo from '@uplo/node';
+```ts
+import Uplo from '@uplo/node';
 import PrismaAdapter from '@uplo/adapter-prisma';
 import GCSService from '@uplo/service-gcs';
 
@@ -31,15 +31,17 @@ const config = {
   signedIdExpiresIn: 60 * 60, // Time how much signed id is valid
 };
 
-const uploader = uplo({
+const uplo = Uplo({
   adapter: new PrismaAdapter({ prisma }),
-  service: new GCSService({
-    credentialsPath: path.resolve(
-      __dirname,
-      '../../config/gcp-credentials.json'
-    ),
-    bucket: process.env.GCS_BUCKET,
-  }),
+  services: {
+    google: new GCSService({
+      credentialsPath: path.resolve(
+        __dirname,
+        '../../config/gcp-credentials.json'
+      ),
+      bucket: process.env.GCS_BUCKET,
+    }),
+  },
   config,
 });
 ```

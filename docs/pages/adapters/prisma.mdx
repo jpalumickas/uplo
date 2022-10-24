@@ -1,5 +1,25 @@
 # Prisma
 
+## Installation
+
+Install package
+
+```sh
+yarn add @uplo/adapter-prisma
+```
+
+Add adapter to Uplo
+
+```ts
+import PrismaAdapter from '@uplo/adapter-prisma';
+
+const uplo = Uplo({
+  adapter: new PrismaAdapter({ prisma }),
+})
+```
+
+## Prisma Schema
+
 Define Prisma schema with following models
 
 ```prisma
