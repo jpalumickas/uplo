@@ -1,1 +1,28 @@
 # Google Cloud Storage
+
+## Installation
+
+Install package
+
+```sh
+yarn add @uplo/service-gcs
+```
+
+Add service to Uplo
+
+```ts
+import GCSService from '@uplo/service-gcs'
+
+const uplo = Uplo({
+  services: {
+    google: new GCSService({
+      isPublic: false,
+      credentialsPath: path.resolve(
+        __dirname,
+        './config/gcp-credentials.json'
+      ),
+      bucket: process.env.GCS_BUCKET,
+    }),
+  },
+})
+```

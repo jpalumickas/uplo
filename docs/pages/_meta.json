@@ -1,5 +1,6 @@
 {
   "index": "Introduction",
   "adapters": "Adapters",
-  "services": "Services"
+  "services": "Services",
+  "client": "Client"
 }

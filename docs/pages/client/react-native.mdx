@@ -1,0 +1,61 @@
+# React Native
+
+## Installation
+
+Install for Expo
+
+```sh
+yarn add @uplo/react-native expo-file-system
+```
+
+## Usage
+
+Add provider
+
+```jsx
+```
+
+Use direct upload
+
+```jsx
+import { useDirectUpload } from '@uplo/react-native'
+
+export const Screen = () => {
+  const {
+    uploads,
+    uploadFile,
+    uploading,
+    error,
+    signedIds,
+    clear: clearUploads,
+  } = useDirectUpload('post.images', { multiple: true });
+
+  const onAvatarSelect = () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      try {
+        const uploadData = await uploadFile(result);
+
+        if (uploadData.signedId) {
+          await updateCurrentUser({ avatarSignedId: uploadData.signedId });
+        }
+      } catch (e) {
+        // Capture exception
+      }
+    }
+  }
+
+  return (
+    <View>
+      <Pressable onPress={onAvatarSelect}>
+        <View><Text>Select avatar</Text></View>
+      </Pressable>
+    </View>
+
+  )
+}
