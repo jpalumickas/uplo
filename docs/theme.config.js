@@ -17,7 +17,7 @@ const themeConfig = {
   },
   logo: <div style={{ display: 'flex', alignItems: 'center' }}>
     <span style={{ fontWeight: 'bold', fontSize: '1.5rem', marginRight: 20 }}>Uplo</span>
-    <span style={{ marginTop: '4px' }}>Uploader for Node.js</span>
+    <span style={{ marginTop: '4px' }}>Modular uploader for Node.js</span>
   </div>,
   head: <>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

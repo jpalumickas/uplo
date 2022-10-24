@@ -13,6 +13,17 @@ yarn add @uplo/react-native expo-file-system
 Add provider
 
 ```jsx
+// App.js
+
+import { UploProvider } from '@uplo/react-native';
+
+export const App = ({ children }) => {
+  return (
+    <UploProvider host={process.env.API_URL}>
+      {children}
+    </UploProvider>
+  )
+}
 ```
 
 Use direct upload
