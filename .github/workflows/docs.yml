@@ -19,6 +19,11 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+defaults:
+  run:
+    shell: bash
+    working-directory: docs
+
 jobs:
   # Build job
   build:
@@ -43,19 +48,16 @@ jobs:
           static_site_generator: next
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+          yarn install --frozen-lockfile
 
       - name: Build with Next.js
         run: |
-          cd docs
           yarn next build
-          cd ..
 
       - name: Static HTML export with Next.js
         run: |
-          cd docs
           yarn next export
-          cd ..
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
