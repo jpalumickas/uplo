@@ -1,6 +1,6 @@
 {
   "name": "@uplo/service-s3",
-  "version": "0.15.2",
+  "version": "0.16.0",
   "main": "dist/uplo-service-s3.cjs.js",
   "module": "dist/uplo-service-s3.esm.js",
   "exports": {
@@ -17,8 +17,8 @@
     "@aws-sdk/client-s3": "^3.194.0",
     "@aws-sdk/lib-storage": "^3.194.0",
     "@aws-sdk/s3-request-presigner": "^3.194.0",
-    "@uplo/service-base": "^0.15.2",
-    "@uplo/types": "^0.15.2"
+    "@uplo/service-base": "^0.16.0",
+    "@uplo/types": "^0.16.0"
   },
   "engines": {
     "node": ">=14"
