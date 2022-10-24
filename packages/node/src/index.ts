@@ -30,7 +30,7 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
     const blobData = await adapter.findBlob(blobId);
     if (!blobData) return null;
 
-    const service = services[blobData.service];
+    const service = services[blobData.serviceName];
     return Blob({ data: blobData, adapter: adapter, service, analyzers });
   }
 
