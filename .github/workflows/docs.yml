@@ -1,8 +1,4 @@
-# Sample workflow for building and deploying a Next.js site to GitHub Pages
-#
-# To get started with Next.js see: https://nextjs.org/docs/getting-started
-#
-name: Deploy Next.js site to Pages
+name: Deploy Docs to Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -26,6 +22,7 @@ concurrency:
 jobs:
   # Build job
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -75,7 +72,7 @@ jobs:
       - name: Build with Next.js
         run: |
           cd docs
-          yarn build
+          yarn next build
           cd ..
       - name: Static HTML export with Next.js
         run: |
@@ -89,6 +86,7 @@ jobs:
 
   # Deployment job
   deploy:
+    name: Deploy
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
