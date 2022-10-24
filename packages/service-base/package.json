@@ -13,9 +13,7 @@
     "access": "public"
   },
   "license": "MIT",
-  "dependencies": {
-    "tempy": "^1.0.1"
-  },
+  "dependencies": {},
   "engines": {
     "node": ">=14"
   }

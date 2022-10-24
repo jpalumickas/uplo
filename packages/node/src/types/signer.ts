@@ -1,6 +1,5 @@
 import { JwtPayload } from 'jsonwebtoken';
 import { ID } from '@uplo/types';
-import { Config } from '../types';
 
 export type SignerData = {
   blobId?: ID;
@@ -9,11 +8,7 @@ export type SignerData = {
 
 export type SignerPurpose = 'blob';
 
-export interface SignerResult {
+export interface Signer {
   generate: (data: SignerData, purpose: SignerPurpose) => Promise<string>;
   verify: (token: string, purpose: SignerPurpose) => Promise<(JwtPayload & SignerData) | undefined>;
-}
-
-export interface Signer {
-  (config: Config): SignerResult;
 }

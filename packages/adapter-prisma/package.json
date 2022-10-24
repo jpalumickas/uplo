@@ -14,10 +14,14 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@prisma/client": ">=2.19.0"
+    "@prisma/client": ">=2.19.0",
+    "@uplo/node": "^0.15.2"
   },
   "dependencies": {
     "@uplo/types": "^0.15.2"
+  },
+  "devDependencies": {
+    "@uplo/node": "^0.15.2"
   },
   "engines": {
     "node": ">=14"

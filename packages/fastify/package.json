@@ -14,10 +14,12 @@
   },
   "license": "MIT",
   "peerDependencies": {
+    "@uplo/node": "^0.15.2",
     "fastify": ">=3"
   },
   "devDependencies": {
-    "@uplo/node": "^0.15.2"
+    "@uplo/node": "^0.15.2",
+    "fastify": "^3.27.0"
   },
   "engines": {
     "node": ">=14"

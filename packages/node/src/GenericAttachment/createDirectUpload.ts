@@ -1,16 +1,17 @@
 import { Adapter, Service } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
-import { SignerResult, CreateDirectUploadParams } from './types';
-import { UploError } from './errors';
+import { UploError } from '../errors';
+import { SignerResult, CreateDirectUploadParams } from '../types';
 
 type Options = {
   params: CreateDirectUploadParams;
   signer: SignerResult;
   adapter: Adapter;
   service: Service;
+  serviceName: string;
 }
 
-const createDirectUpload = async  ({ params, signer, adapter, service }: Options) => {
+export const createDirectUpload = async  ({ params, signer, adapter, service, serviceName }: Options) => {
   const blobParams = {
     key: generateKey(),
     fileName: params.fileName,
@@ -21,11 +22,16 @@ const createDirectUpload = async  ({ params, signer, adapter, service }: Options
   };
 
   const blob = await adapter.createBlob({
-    params: blobParams,
-    service: service,
+    params: {
+      ...blobParams,
+      serviceName,
+    },
   });
 
-  const uploadData = await service.directUploadData(blob);
+  const uploadData = {
+    url: await service.directUploadUrl(blob),
+    headers: service.directUploadHeaders ? await service.directUploadHeaders(blob) : {},
+  }
 
   const signedId = await signer.generate(
     { blobId: blob.id },
@@ -41,5 +47,3 @@ const createDirectUpload = async  ({ params, signer, adapter, service }: Options
     upload: uploadData,
   };
 }
-
-export default createDirectUpload;

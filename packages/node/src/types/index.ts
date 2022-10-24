@@ -1,30 +1,51 @@
-import { Blob, Service, Analyzer, Adapter } from '@uplo/types';
+import { ID, Blob, Service, Analyzer, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
-import { SignerResult } from './signer';
+import { Signer } from './signer';
+import { ModelAttachment } from '../ModelAttachment';
+import { GenericAttachment }  from '../GenericAttachment';
 
 export * from './callbacks';
 export * from './signer';
 
-export interface Config {
+export interface UploConfig {
   privateKey?: string;
   signedIdExpiresIn?: number;
 }
 
-export interface UploOptions {
-  service: Service;
-  adapter: Adapter;
-  config?: Config;
-  analyzers?: Analyzer[];
-  callbacks?: Callbacks;
+export interface UploOptionsAttachment {
+  multiple?: boolean;
+  service?: string;
+  directUpload?: boolean;
+  contentType?: string | string[] | RegExp;
 }
 
-export interface UploInstance {
-  signer: SignerResult;
+export type UploOptionsAttachments = Partial<Record<string, Record<string, UploOptionsAttachment | true>>>;
+
+export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
+  services: {
+    [serviceName: string]: Service;
+  };
   adapter: Adapter;
-  service: Service;
-  attachSignedFile: (options: AttachSignedFileOptions) => Promise<void>;
-  analyze: (blob: Blob) => Promise<object>;
-  createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) => Promise<object>
+  config?: UploConfig;
+  analyzers?: Analyzer[];
+  callbacks?: Callbacks;
+  attachments: AttachmentsList
+}
+
+export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
+  signer: Signer;
+  adapter: Adapter;
+  $services: Record<string, Service>;
+  $findBlob: (id: ID) => Promise<Blob | null>;
+  $findGenericAttachment: (name: `${string}.${string}`) => ReturnType<typeof GenericAttachment>;
+
+  // attachments: Record<ModelNames, Record<string, ModelAttachment>>
+
+  attachments: {
+    [ModelName in keyof AttachmentsList]: (id: ID) => {
+      [AttachmentName in keyof AttachmentsList[ModelName]]: ModelAttachment;
+    };
+  }
 }
 
 export interface CreateDirectUploadParamsMetadata {
@@ -37,13 +58,4 @@ export interface CreateDirectUploadParams {
   size: number;
   checksum: string;
   metadata?: CreateDirectUploadParamsMetadata;
-}
-
-export interface AttachSignedFileOptions {
-  signedId: string;
-  modelName: string;
-  modelId: string;
-  attachmentName: string;
-  strategy: 'one' | 'many';
-  [k: string]: any;
 }
