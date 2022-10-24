@@ -19,7 +19,9 @@ export interface UploOptionsAttachment {
   contentType?: string | string[] | RegExp;
 }
 
-export interface UploOptions {
+export type UploOptionsAttachments = Partial<Record<string, Record<string, UploOptionsAttachment | true>>>;
+
+export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
   services: {
     [serviceName: string]: Service;
   };
@@ -27,24 +29,23 @@ export interface UploOptions {
   config?: UploConfig;
   analyzers?: Analyzer[];
   callbacks?: Callbacks;
-  attachments: {
-    [modelName: string]: {
-      [attachmentName: string]: UploOptionsAttachment | true;
-    };
-  };
+  attachments: AttachmentsList
 }
 
-export interface Uplo {
+export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
   signer: Signer;
   adapter: Adapter;
   $services: Record<string, Service>;
   $findBlob: (id: ID) => Promise<Blob | null>;
   $findGenericAttachment: (name: `${string}.${string}`) => ReturnType<typeof GenericAttachment>;
+
+  // attachments: Record<ModelNames, Record<string, ModelAttachment>>
+
   attachments: {
-    [modelName: string]: {
-      [attachmentName: string]: ModelAttachment;
+    [ModelName in keyof AttachmentsList]: (id: ID) => {
+      [AttachmentName in keyof AttachmentsList[ModelName]]: ModelAttachment;
     };
-  };
+  }
 }
 
 export interface CreateDirectUploadParamsMetadata {

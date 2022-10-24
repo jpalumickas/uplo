@@ -9,7 +9,7 @@ export interface BlobData {
   checksum: string;
   key: string;
   metadata: object;
-  service: string;
+  serviceName: string;
   // [property: string]: any;
 }
 

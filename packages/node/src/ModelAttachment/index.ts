@@ -15,6 +15,7 @@ export interface ModelAttachmentOptions {
 }
 
 interface ModelAttachmentParams {
+  modelId: ID;
   modelName: string;
   attachmentName: string;
   services: Record<string, Service>;
@@ -38,6 +39,7 @@ interface AttachFileOptions {
 }
 
 export class ModelAttachment {
+  public modelId: ID;
   public modelName: string;
   public recordType: string;
   public attachmentName: string;
@@ -49,6 +51,7 @@ export class ModelAttachment {
   public options: ModelAttachmentOptions;
 
   constructor(params: ModelAttachmentParams) {
+    this.modelId = params.modelId;
     this.modelName = params.modelName;
     this.attachmentName = params.attachmentName;
     this.adapter = params.adapter;
@@ -61,13 +64,13 @@ export class ModelAttachment {
     this.recordType = upperFirst(camelCase(this.modelName));
   }
 
-  async findOne(modelId: string) {
+  async findOne() {
     if (this.options.multiple) {
       throw new UploError('Use findMany for multiple attachments');
     }
 
     const attachments = await this.adapter.findAttachments({
-      recordId: modelId,
+      recordId: this.modelId,
       recordType: this.recordType,
       name: this.attachmentName,
     });
@@ -75,13 +78,13 @@ export class ModelAttachment {
     return this.getAttachment(attachments[0]);
   }
 
-  async findMany(modelId: string) {
+  async findMany() {
     if (!this.options.multiple) {
       throw new UploError('Use findOne for single attachment');
     }
 
     const results = await this.adapter.findAttachments({
-      recordId: modelId,
+      recordId: this.modelId,
       recordType: this.recordType,
       name: this.attachmentName,
     });
@@ -89,7 +92,7 @@ export class ModelAttachment {
     return results.map(result => this.getAttachment(result));
   }
 
-  async detach(modelId: ID, attachmentId?: ID) {
+  async detach(attachmentId?: ID) {
     if (this.options.multiple) {
       if (!attachmentId) {
         throw new UploError('Provide attachment ID when detaching attachment in multiple');
@@ -98,14 +101,14 @@ export class ModelAttachment {
       return true;
     }
 
-    await this.detachMany(modelId);
+    await this.detachMany();
 
     return true;
   }
 
-  async detachMany(modelId: ID) {
+  async detachMany() {
     await this.adapter.deleteAttachments({
-      recordId: modelId,
+      recordId: this.modelId,
       recordType: this.recordType,
       name: this.attachmentName,
     });
@@ -114,7 +117,6 @@ export class ModelAttachment {
   }
 
   async attachFile(
-    modelId: string,
     { filePath, content: contentInput, ...params }: AttachFileOptions
   ) {
     if (!contentInput && !filePath) {
@@ -154,13 +156,13 @@ export class ModelAttachment {
       },
     });
 
-    await this.getService(blob.service).upload({
+    await this.getService(blob.serviceName).upload({
       filePath,
       content: filePath ? fs.createReadStream(filePath) : contentInput,
       ...blob,
     });
 
-    const updateMetadataFn = this.getService(blob.service).updateMetadata;
+    const updateMetadataFn = this.getService(blob.serviceName).updateMetadata;
 
     if (updateMetadataFn) {
       await updateMetadataFn(blob.key, {
@@ -168,12 +170,12 @@ export class ModelAttachment {
       });
     }
 
-    const result = await this.attachBlob(modelId, blob);
+    const result = await this.attachBlob(blob);
 
     return result;
   }
 
-  async attachSignedFile(modelId: string, signedId: string) {
+  async attachSignedFile(signedId: string) {
     const data = await this.signer.verify(signedId, 'blob');
     if (!data || !data.blobId) {
       throw new UploError(`Cannot verify signed ID for blob: ${signedId}`);
@@ -190,7 +192,7 @@ export class ModelAttachment {
       throw new BlobNotFoundError(`Cannot find blob with ID ${blobId}`);
     }
 
-    const updateMetadataFn = this.getService(blob.service).updateMetadata;
+    const updateMetadataFn = this.getService(blob.serviceName).updateMetadata;
 
     if (updateMetadataFn) {
       await updateMetadataFn(blob.key, {
@@ -198,16 +200,16 @@ export class ModelAttachment {
       });
     }
 
-    const result = await this.attachBlob(modelId, blob);
+    const result = await this.attachBlob(blob);
 
     return result;
   }
 
-  private async attachBlob(modelId: string, blob: BlobData) {
+  private async attachBlob(blob: BlobData) {
     const result = await this.adapter.attachBlob({
       blob,
       attachmentName: this.attachmentName,
-      recordId: modelId,
+      recordId: this.modelId,
       recordType: this.recordType,
       append: this.options.multiple,
     });

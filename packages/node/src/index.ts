@@ -4,6 +4,7 @@ import { ID } from '@uplo/types';
 import {
   UploOptions,
   Uplo as TUplo,
+  UploOptionsAttachments,
   UploOptionsAttachment,
 } from './types';
 import { AttachmentNotFoundError } from './errors';
@@ -14,14 +15,14 @@ import { GenericAttachment } from './GenericAttachment';
 import { formatAttachmentOptions } from './lib/formatAttachmentOptions';
 import { defaultConfig } from './lib/defaultConfig';
 
-const Uplo = ({
+const Uplo = <AttachmentsList extends UploOptionsAttachments>({
   services,
   adapter,
   config: providedConfig,
   analyzers = [],
   callbacks = {},
-  attachments = {},
-}: UploOptions): TUplo => {
+  attachments,
+}: UploOptions<AttachmentsList>): TUplo<AttachmentsList> => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = Signer(config);
 
@@ -33,23 +34,15 @@ const Uplo = ({
     return Blob({ data: blobData, adapter: adapter, service, analyzers });
   }
 
-  const modelAttachments = _.reduce<
-      any,
-      {
-        [modelName: keyof typeof attachments]: {
-          [attachmentName: string]: ModelAttachment;
-        };
-      }
-    >(
+  const modelAttachments = _.reduce(
       attachments,
       (result, modelAttachments, modelName) => {
-        result[modelName] = _.reduce<
-          any,
-          { [attachmentName: string]: ModelAttachment }
-        >(
+        result[modelName] = (modelId: ID) => _.reduce
+        (
           modelAttachments,
           (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
             r[attachmentName] = new ModelAttachment({
+              modelId,
               modelName,
               attachmentName,
               options: formatAttachmentOptions(attachmentOptions, services),

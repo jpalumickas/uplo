@@ -20,13 +20,15 @@ class GCSService implements Service {
     this.storage = new Storage({
       keyFilename: credentialsPath,
     });
+
+    this.updateMetadata = this.updateMetadata.bind(this);
   }
 
-  async directUploadUrl(blob: BlobData) {
+  async directUploadUrl(blob: BlobData, { expiresIn = 5 * 60 * 1000 } = {}) {
     const options: GetSignedUrlConfig = {
       version: 'v4',
       action: 'write',
-      expires: Date.now() + 5 * 60 * 1000, // 5 minutes
+      expires: Date.now() + expiresIn,
       contentMd5: blob.checksum,
       contentType: 'application/octet-stream',
     };
@@ -61,8 +63,8 @@ class GCSService implements Service {
       fileName,
     }: {
       contentType: string;
-      disposition: ContentDispositionType;
-      fileName: string;
+      disposition?: ContentDispositionType;
+      fileName?: string;
     }
   ) {
     const metadata: { contentType?: string; contentDisposition?: string } = {};

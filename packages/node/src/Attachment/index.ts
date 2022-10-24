@@ -21,10 +21,10 @@ export const Attachment = ({
   services,
   analyzers,
 }: AttachmentOptions): TAttachment => {
-  const service = services[data.blob.service];
+  const service = services[data.blob.serviceName];
 
   if (!service) {
-    throw new UploError(`Cannot find service with name ${data.blob.service}`);
+    throw new UploError(`Cannot find service with name ${data.blob.serviceName}`);
   }
 
   const blob = Blob({
