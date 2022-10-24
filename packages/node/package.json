@@ -25,7 +25,7 @@
     "@types/jsonwebtoken": "^8.5.9",
     "@types/lodash": "^4.14.186",
     "@types/mime": "^3.0.1",
-    "@types/node": "^18.11.2"
+    "@types/node": "^18.11.4"
   },
   "engines": {
     "node": ">=14"
