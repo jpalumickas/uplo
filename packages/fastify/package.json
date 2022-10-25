@@ -14,7 +14,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "@uplo/node": "^0.16.0",
+    "@uplo/node": "^0.16.2",
     "fastify": ">=3"
   },
   "devDependencies": {

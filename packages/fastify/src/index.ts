@@ -10,7 +10,7 @@ const createDirectUploadOptions = {
   schema: {
     body: {
       type: 'object',
-      required: ['fileName', 'contentType', 'checksum', 'size'],
+      required: ['attachmentName', 'fileName', 'contentType', 'checksum', 'size'],
       properties: {
         attachmentName: { type: 'string' },
         fileName: { type: 'string' },

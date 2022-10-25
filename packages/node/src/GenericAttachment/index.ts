@@ -26,7 +26,7 @@ export const GenericAttachment = ({
 
   return {
     service,
-    createDirectUpload: (params: CreateDirectUploadParams) =>
+    createDirectUpload: ({ params }: { params: CreateDirectUploadParams }) =>
       createDirectUpload({
         params,
         service,
