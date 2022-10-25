@@ -5,7 +5,7 @@
 Install package
 
 ```sh
-yarn add @uplo/adapter-prisma
+yarn add @uplo/adapter-prisma dataloader
 ```
 
 Add adapter to Uplo
@@ -42,6 +42,7 @@ model FileAttachment {
   blob       FileBlob @relation(fields: [blobId], references: [id])
 
   @@unique([recordType, recordId, name, blobId])
+  @@index([recordType recordId name])
   @@index([blobId])
 }
 

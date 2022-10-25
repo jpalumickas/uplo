@@ -75,7 +75,7 @@ export class ModelAttachment {
       name: this.attachmentName,
     });
 
-    return this.getAttachment(attachments[0]);
+    return attachments[0] ? this.buildAttachment(attachments[0]) : null;
   }
 
   async findMany() {
@@ -89,7 +89,7 @@ export class ModelAttachment {
       name: this.attachmentName,
     });
 
-    return results.map(result => this.getAttachment(result));
+    return results.map(result => this.buildAttachment(result));
   }
 
   async detach(attachmentId?: ID) {
@@ -214,7 +214,7 @@ export class ModelAttachment {
       append: this.options.multiple,
     });
 
-    const attachment = this.getAttachment(result);
+    const attachment = this.buildAttachment(result);
 
     if (this.callbacks.afterAttach) {
       await this.callbacks.afterAttach({ blob: attachment.blob });
@@ -223,7 +223,7 @@ export class ModelAttachment {
     return attachment;
   }
 
-  private getAttachment(data: AttachmentData) {
+  private buildAttachment(data: AttachmentData) {
     return Attachment({ data, adapter: this.adapter, services: this.services, analyzers: this.analyzers });
   }
 

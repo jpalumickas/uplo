@@ -25,7 +25,13 @@ export const Blob = ({
     serviceName,
     downloadToTempfile,
     protocolUrl: () => service.protocolUrl(blobData),
-    url: () => service.url(blobData),
+    url: async () => {
+      if (service.isPublic) {
+        return service.publicUrl(blobData)
+      } else {
+        return service.privateUrl(blobData)
+      }
+    },
     analyze: () => analyze({ blobData, service, adapter, analyzers }),
   }
 }

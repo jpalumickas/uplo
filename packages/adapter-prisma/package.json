@@ -15,13 +15,15 @@
   "license": "MIT",
   "peerDependencies": {
     "@prisma/client": ">=2.19.0",
-    "@uplo/node": "^0.15.2"
+    "@uplo/node": "^0.16.2",
+    "dataloader": ">=2.0.0"
   },
   "dependencies": {
     "@uplo/types": "^0.16.2"
   },
   "devDependencies": {
-    "@uplo/node": "^0.16.2"
+    "@uplo/node": "^0.16.2",
+    "dataloader": "^2.1.0"
   },
   "engines": {
     "node": ">=14"
