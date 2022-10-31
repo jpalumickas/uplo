@@ -1,4 +1,4 @@
-# Amazon S3
+# DigitalOcean Spaces
 
 ## Installation
 
@@ -15,10 +15,11 @@ import S3Service from '@uplo/service-s3'
 
 const uplo = Uplo({
   services: {
-    s3: S3Service({
+    digitalocean: S3Service({
       isPublic: false,
-      region: process.env.AWS_REGION,
-      bucket: process.env.AWS_BUCKET,
+      endpoint: 'https://nyc3.digitaloceanspaces.com',
+      forcePathStyle: true,
+      bucket: 'your-bucket',
       accessKeyId: '*****',
       secretAccessKey: '*****',
     }),

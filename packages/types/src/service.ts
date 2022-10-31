@@ -30,7 +30,6 @@ export interface Service {
   upload(params: ServiceUploadParams): Promise<any>;
   publicUrl(blob: BlobData): Promise<string>;
   privateUrl(blob: BlobData, options?: object): Promise<string>;
-  url(blob: BlobData, options?: object): Promise<string>;
   protocolUrl(blob: BlobData): Promise<string>;
   isPublic: boolean;
 }
