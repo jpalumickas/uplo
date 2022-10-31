@@ -44,4 +44,7 @@ export interface AttachmentData {
 
 export interface Attachment extends Omit<AttachmentData, 'blob'> {
   blob: Blob;
+  url: Blob['url'];
+  protocolUrl: Blob['protocolUrl'];
+  downloadToTempfile: Blob['downloadToTempfile'];
 }

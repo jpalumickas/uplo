@@ -1,0 +1,103 @@
+# Attachments
+
+## Getting started
+
+Add your first attachments to Uplo. For example we will add `avatar` for `User` and
+multiple `images` for `Post`
+
+```ts
+const uplo = Uplo({
+  // ... other Uplo config
+  attachments: {
+    user: {
+      avatar: true, // You can pass true if you use default options.
+    },
+    post: {
+      images: { multiple: true }
+    }
+  }
+})
+```
+
+## Options
+
+* `multiple = false` (*optional*): Specify if supports multiple attachments on single record.
+* `serviceName` (*optional*): You can provide custom service
+* `directUpload = true` (*optional*): You can disable direct uploads for
+    specific attachments if needed
+
+
+## Find attachment
+
+We can find our attachment by specifying `User` ID.
+
+### Single
+
+```ts
+const attachment = await uplo.attachments.user(123).avatar.findOne()
+
+console.log(attachment.blob.url());
+```
+
+### Multiple
+
+```ts
+const attachments = await uplo.attachments.post(123).images.findMany()
+```
+
+## Detach attachment
+
+You can detach attachment from record
+
+### Single
+
+```ts
+const attachment = await uplo.attachments.user(123).avatar.detach()
+```
+
+### Multiple
+
+Detach one attachment
+
+```ts
+const attachments = await uplo.attachments.post(postId).images.detach(attachmentId)
+```
+
+Detach all attachments
+
+```ts
+const attachments = await uplo.attachments.post(postId).images.detachMany()
+```
+
+## Attach file
+
+Attach file from file path
+
+```ts
+const attachment = await uplo.attachments.user(123).avatar.attachFile({
+  filePath: '/home/images/image.png',
+  contentType: 'image/png',
+})
+```
+
+Attach file with content
+
+```ts
+const content = 'This is my file' // Can be string, Buffer
+
+const attachment = await uplo.attachments.user(123).avatar.attachFile({
+  content,
+  contentType: 'text/plain',
+  fileName: 'text.txt',
+})
+```
+
+## Attach signed file
+
+When you use Direct Upload, you get Signed ID. Then you need manually to attach
+signed ID to your record. How to get Signed ID, please view Client documentation
+
+```ts
+const signedId = req.params['signedId']
+const attachment = await uplo.attachments.user(123).avatar.attachSignedFile(signedId)
+```

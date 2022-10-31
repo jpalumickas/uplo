@@ -7,7 +7,7 @@ export const formatAttachmentOptions = (attachmentOptions: true | UploOptionsAtt
   }
 
   const options = attachmentOptions === true ? {} : attachmentOptions;
-  const serviceName = options.service ? options.service : Object.keys(services)[0];
+  const serviceName = options.serviceName ? options.serviceName : Object.keys(services)[0];
 
   return {
     multiple: options.multiple ?? false,

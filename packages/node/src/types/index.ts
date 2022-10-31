@@ -14,7 +14,7 @@ export interface UploConfig {
 
 export interface UploOptionsAttachment {
   multiple?: boolean;
-  service?: string;
+  serviceName?: string;
   directUpload?: boolean;
   contentType?: string | string[] | RegExp;
 }
