@@ -13,6 +13,7 @@
     "access": "public"
   },
   "license": "MIT",
+  "repository": "jpalumickas/uplo",
   "dependencies": {
     "@google-cloud/storage": "^6.6.0",
     "@uplo/service-base": "^0.16.3",
@@ -21,5 +22,12 @@
   },
   "engines": {
     "node": ">=14"
-  }
+  },
+  "keywords": [
+    "google",
+    "gcs",
+    "bucket",
+    "upload",
+    "uploads"
+  ]
 }

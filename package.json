@@ -4,6 +4,7 @@
   "main": "index.js",
   "author": "Justas Palumickas",
   "license": "MIT",
+  "repository": "jpalumickas/uplo",
   "private": true,
   "workspaces": [
     "packages/*"

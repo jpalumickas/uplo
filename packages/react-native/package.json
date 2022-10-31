@@ -14,6 +14,7 @@
     "access": "public"
   },
   "license": "MIT",
+  "repository": "jpalumickas/uplo",
   "dependencies": {
     "abab": "^2.0.6",
     "mime": "^3.0.0"
@@ -30,5 +31,11 @@
   },
   "engines": {
     "node": ">=14"
-  }
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "upload",
+    "uploads"
+  ]
 }

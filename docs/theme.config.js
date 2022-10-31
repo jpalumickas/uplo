@@ -23,7 +23,13 @@ const themeConfig = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="og:title" content="Uplo - modular uploader for Node.js" />
-  </>
+  </>,
+  getNextSeoProps() {
+    return {
+      description: 'Uplo can Handle file uploads to different storage services like Amazon S3, Google Cloud or etc. It also supports different type of ORM adapters, like Prisma.',
+      titleTemplate: '%s - Uplo',
+    }
+  },
 }
 
 export default themeConfig;

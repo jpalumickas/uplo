@@ -13,6 +13,7 @@
     "access": "public"
   },
   "license": "MIT",
+  "repository": "jpalumickas/uplo",
   "peerDependencies": {
     "@uplo/node": "^0.16.2",
     "fastify": ">=3"
@@ -23,5 +24,11 @@
   },
   "engines": {
     "node": ">=14"
-  }
+  },
+  "keywords": [
+    "fastify",
+    "upload",
+    "uploads",
+    "direct upload"
+  ]
 }

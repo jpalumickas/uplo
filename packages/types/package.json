@@ -13,6 +13,7 @@
     "access": "public"
   },
   "license": "MIT",
+  "repository": "jpalumickas/uplo",
   "dependencies": {
     "@uplo/utils": "^0.16.3"
   },

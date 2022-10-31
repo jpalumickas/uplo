@@ -13,6 +13,7 @@
     "access": "public"
   },
   "license": "MIT",
+  "repository": "jpalumickas/uplo",
   "peerDependencies": {
     "@prisma/client": ">=2.19.0",
     "@uplo/node": "^0.16.2",
@@ -27,5 +28,10 @@
   },
   "engines": {
     "node": ">=14"
-  }
+  },
+  "keywords": [
+    "prisma",
+    "upload",
+    "uploads"
+  ]
 }
