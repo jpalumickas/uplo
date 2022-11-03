@@ -1,6 +1,6 @@
 {
   "name": "@uplo/adapter-prisma",
-  "version": "0.16.3",
+  "version": "0.17.0",
   "main": "dist/uplo-adapter-prisma.cjs.js",
   "module": "dist/uplo-adapter-prisma.esm.js",
   "exports": {
@@ -20,10 +20,10 @@
     "dataloader": ">=2.0.0"
   },
   "dependencies": {
-    "@uplo/types": "^0.16.3"
+    "@uplo/types": "^0.17.0"
   },
   "devDependencies": {
-    "@uplo/node": "^0.16.3",
+    "@uplo/node": "^0.17.0",
     "dataloader": "^2.1.0"
   },
   "engines": {

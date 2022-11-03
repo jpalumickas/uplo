@@ -1,6 +1,6 @@
 {
   "name": "@uplo/service-base",
-  "version": "0.16.3",
+  "version": "0.17.0",
   "main": "dist/uplo-service-base.cjs.js",
   "module": "dist/uplo-service-base.esm.js",
   "exports": {
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "dependencies": {
-    "@uplo/types": "^0.16.3"
+    "@uplo/types": "^0.17.0"
   },
   "engines": {
     "node": ">=14"

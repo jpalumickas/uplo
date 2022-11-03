@@ -1,6 +1,6 @@
 {
   "name": "@uplo/types",
-  "version": "0.16.3",
+  "version": "0.17.0",
   "main": "dist/uplo-types.cjs.js",
   "module": "dist/uplo-types.esm.js",
   "exports": {
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "dependencies": {
-    "@uplo/utils": "^0.16.3"
+    "@uplo/utils": "^0.17.0"
   },
   "engines": {
     "node": ">=14"
