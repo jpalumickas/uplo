@@ -30,7 +30,7 @@ class GCSService implements Service {
       action: 'write',
       expires: Date.now() + expiresIn,
       contentMd5: blob.checksum,
-      contentType: 'application/octet-stream',
+      contentType: blob.contentType, //'application/octet-stream',
     };
 
     // Get a v4 signed URL for uploading file
@@ -47,6 +47,7 @@ class GCSService implements Service {
     { disposition }: { disposition?: ContentDispositionType } = {}
   ) {
     return {
+      'Content-Type': blob.contentType,
       'Content-MD5': blob.checksum,
       'Content-Disposition': contentDisposition({
         type: disposition,

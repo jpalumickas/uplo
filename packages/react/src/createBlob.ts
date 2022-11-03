@@ -1,4 +1,4 @@
-import mime from 'mime/lite';
+// import mime from 'mime/lite';
 import { checksum } from './checksum';
 import { Metadata } from './types';
 
@@ -17,7 +17,7 @@ const createBlob = async (attachmentName: string, { file, metadata }: { file: Fi
     checksum: await checksum(file),
     size: file.size,
     fileName: file.name,
-    contentType: file.type || mime.getType(file.name),
+    contentType: file.type || 'application/octet-stream', //mime.getType(file.name),
     metadata,
   };
 

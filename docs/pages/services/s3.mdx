@@ -36,3 +36,32 @@ const uplo = Uplo({
 * `region = 'us-east-1`: Provide your service region
 * `isPublic = false`: Specify bucket ACL
 * `endpoint`: You can provide custom endpoint if you have different service
+
+## Direct Upload
+
+### CORS
+
+This is example CORS configuration for direct uploads.
+
+```json
+[
+  {
+    "AllowedHeaders": [
+      "*"
+    ],
+    "AllowedMethods": [
+      "PUT"
+    ],
+    "AllowedOrigins": [
+      "https://www.example.com"
+    ],
+    "ExposeHeaders": [
+      "Origin",
+      "Content-Type",
+      "Content-MD5",
+      "Content-Disposition"
+    ],
+    "MaxAgeSeconds": 3600
+  }
+]
+```
