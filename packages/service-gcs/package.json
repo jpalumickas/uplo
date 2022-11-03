@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "dependencies": {
-    "@google-cloud/storage": "^6.6.0",
+    "@google-cloud/storage": "^6.7.0",
     "@uplo/service-base": "^0.16.3",
     "@uplo/types": "^0.16.3",
     "@uplo/utils": "^0.16.3"
