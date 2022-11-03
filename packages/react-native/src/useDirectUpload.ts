@@ -4,7 +4,7 @@ import useConfig from './useConfig';
 import createBlob from './createBlob';
 import { Upload, File, UseUploadOptions } from './types';
 
-const useDirectUpload = (attachmentName: string, { multiple = false }: UseUploadOptions = {}) => {
+export const useDirectUpload = (attachmentName: string, { multiple = false }: UseUploadOptions = {}) => {
   const [uploads, setUploads] = useState<Upload[]>([]);
   const { host, mountPath } = useConfig();
 
@@ -22,7 +22,7 @@ const useDirectUpload = (attachmentName: string, { multiple = false }: UseUpload
   );
   const error = useMemo(() => uploads.find((it) => it.error)?.error, [uploads]);
 
-  const updateUpload = useCallback((id, upload) => {
+  const updateUpload = useCallback((id: string, upload: Partial<Upload>) => {
     setUploads((prev) => {
       return prev.map((item) => {
         if (item.id !== id) return item;
@@ -97,5 +97,3 @@ const useDirectUpload = (attachmentName: string, { multiple = false }: UseUpload
     clear,
   };
 };
-
-export default useDirectUpload;

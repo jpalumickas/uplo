@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import Context from './Context';
+import { Context } from './Context';
 
 const useConfig = () => {
   const config = useContext(Context);

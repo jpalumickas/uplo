@@ -1,13 +1,12 @@
 import React from 'react';
 import { Provider } from './Context';
 
-type Props = {
+export interface UploProviderProps {
+  children: React.ReactNode;
   host: string;
   mountPath?: string;
 }
 
-const UploProvider: React.FC<Props> = ({ host, mountPath, children }) => (
+export const UploProvider: React.FC<UploProviderProps> = ({ host, mountPath, children }) => (
   <Provider value={{ host, mountPath }}>{children}</Provider>
 );
-
-export default UploProvider;

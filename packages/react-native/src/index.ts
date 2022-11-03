@@ -1,4 +1,4 @@
-export { default as Context } from './Context';
-export { default as UploProvider } from './UploProvider';
-export { default as useDirectUpload } from './useDirectUpload';
+export { Context } from './Context';
+export * from './UploProvider';
+export * from './useDirectUpload';
 export * from './types';

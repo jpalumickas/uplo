@@ -12,5 +12,3 @@ const defaultContext = {
 
 export const Context = createContext<ContextType>(defaultContext);
 export const { Consumer, Provider } = Context;
-
-export default Context;

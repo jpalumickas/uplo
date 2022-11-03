@@ -16,7 +16,7 @@ export interface Upload {
   file: File;
   signedId: null | string;
   uploading: boolean;
-  error?: string;
+  error?: string | any;
 }
 
 export interface UseUploadOptions {
