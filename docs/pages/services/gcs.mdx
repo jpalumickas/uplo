@@ -26,3 +26,21 @@ const uplo = Uplo({
   },
 })
 ```
+
+## Direct Upload
+
+### CORS
+
+This is example CORS configuration for direct uploads. Read how to configure
+CORS on [Google Cloud Docs](https://cloud.google.com/storage/docs/configuring-cors).
+
+```json
+[
+  {
+    "origin": ["https://www.example.com"],
+    "method": ["PUT"],
+    "responseHeader": ["Origin", "Content-Type", "Content-MD5", "Content-Disposition"],
+    "maxAgeSeconds": 3600
+  }
+]
+```

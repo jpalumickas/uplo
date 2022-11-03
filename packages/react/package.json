@@ -1,0 +1,38 @@
+{
+  "name": "@uplo/react",
+  "version": "0.16.3",
+  "main": "dist/uplo-react.cjs.js",
+  "module": "dist/uplo-react.esm.js",
+  "exports": {
+    ".": {
+      "require": "./dist/uplo-react.cjs.js",
+      "import": "./dist/uplo-react.esm.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": "jpalumickas/uplo",
+  "dependencies": {
+    "mime": "^3.0.0",
+    "spark-md5": "^3.0.2"
+  },
+  "peerDependencies": {
+    "react": ">= 16.4"
+  },
+  "devDependencies": {
+    "@types/mime": "^3.0.1",
+    "@types/react": "^18.0.24",
+    "@types/spark-md5": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": [
+    "react",
+    "upload",
+    "uploads"
+  ]
+}
