@@ -1,0 +1,17 @@
+# About adapters
+
+Adapters used to communicate with databases where file blobs and attachments are
+stored. `Blob` is used to store all information about file and in which service
+this file is stored. `Attachment` is a connection between record (for example
+User, Post) and a file (Blob). One record can have multiple blobs attached to
+save cloud storage space.
+
+## Supported adapters
+
+* Prisma
+
+## TODO adapters
+
+* TypeORM
+* Knex
+* FaunaDB

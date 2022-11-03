@@ -36,20 +36,6 @@ class PrismaAdapter implements Adapter {
       recordType,
       name,
     })
-    // return await this.findAttachmentsDataLoder().load({
-    //   recordId,
-    //   recordType,
-    //   name,
-    // });
-    // return await this.prisma.fileAttachment.findMany({
-    //   where: {
-    //     recordId,
-    //     recordType,
-    //     name,
-    //   },
-    //   orderBy: { createdAt: 'asc' },
-    //   include: { blob: true },
-    // });
   }
 
   async deleteAttachment(id: ID): Promise<AttachmentData | null> {
