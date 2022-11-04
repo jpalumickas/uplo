@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "repository": "jpalumickas/uplo",
+  "homepage": "https://jpalumickas.github.io/uplo",
   "dependencies": {
     "abab": "^2.0.6",
     "mime": "^3.0.0"

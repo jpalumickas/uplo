@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "repository": "jpalumickas/uplo",
+  "homepage": "https://jpalumickas.github.io/uplo",
   "dependencies": {
     "mime": "^3.0.0",
     "spark-md5": "^3.0.2"

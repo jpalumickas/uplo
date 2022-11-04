@@ -14,6 +14,7 @@
   },
   "license": "MIT",
   "repository": "jpalumickas/uplo",
+  "homepage": "https://jpalumickas.github.io/uplo",
   "dependencies": {
     "@uplo/types": "^0.17.0",
     "sharp": "^0.31.1"

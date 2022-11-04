@@ -14,9 +14,10 @@
   },
   "license": "MIT",
   "repository": "jpalumickas/uplo",
+  "homepage": "https://jpalumickas.github.io/uplo",
   "peerDependencies": {
     "@prisma/client": ">=2.19.0",
-    "@uplo/node": "^0.16.2",
+    "@uplo/node": "^0.17.0",
     "dataloader": ">=2.0.0"
   },
   "dependencies": {
