@@ -20,9 +20,9 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.202.0",
-    "@aws-sdk/lib-storage": "^3.202.0",
-    "@aws-sdk/s3-request-presigner": "^3.202.0",
+    "@aws-sdk/client-s3": "^3.204.0",
+    "@aws-sdk/lib-storage": "^3.204.0",
+    "@aws-sdk/s3-request-presigner": "^3.204.0",
     "@uplo/service-base": "^0.17.0",
     "@uplo/types": "^0.17.0"
   },

@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "@uplo/types": "^0.17.0",
-    "sharp": "^0.31.1"
+    "sharp": "^0.31.2"
   },
   "engines": {
     "node": ">=14"
