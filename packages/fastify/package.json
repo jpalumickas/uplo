@@ -1,12 +1,13 @@
 {
   "name": "@uplo/fastify",
   "version": "0.17.0",
-  "main": "dist/uplo-fastify.cjs.js",
-  "module": "dist/uplo-fastify.esm.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/uplo-fastify.cjs.js",
-      "default": "./dist/uplo-fasitfy.esm.js"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     }
   },
   "publishConfig": {
@@ -15,6 +16,9 @@
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "homepage": "https://jpalumickas.github.io/uplo",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
   "peerDependencies": {
     "@uplo/node": "^0.17.0",
     "fastify": ">=3"

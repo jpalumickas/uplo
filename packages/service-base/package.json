@@ -1,12 +1,13 @@
 {
   "name": "@uplo/service-base",
   "version": "0.17.0",
-  "main": "dist/uplo-service-base.cjs.js",
-  "module": "dist/uplo-service-base.esm.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/uplo-service-base.cjs.js",
-      "default": "./dist/uplo-service-base.esm.js"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     }
   },
   "publishConfig": {
@@ -15,6 +16,9 @@
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "homepage": "https://jpalumickas.github.io/uplo",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
   "dependencies": {
     "@uplo/types": "^0.17.0"
   },
