@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _reduce from 'lodash/reduce';
 import { getDeepValue } from '@uplo/utils';
 import { ID } from '@uplo/types';
 import {
@@ -34,11 +34,11 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
     return Blob({ data: blobData, adapter: adapter, service, analyzers });
   }
 
-  const modelAttachments = _.reduce(
+  const modelAttachments = _reduce(
       attachments,
       (result, modelAttachments, modelName) => {
         // @ts-ignore
-        result[modelName] = (modelId: ID) => _.reduce
+        result[modelName] = (modelId: ID) => _reduce
         (
           modelAttachments,
           (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {

@@ -1,5 +1,6 @@
 import fs from 'node:fs';
-import { upperFirst, camelCase } from 'lodash';
+import upperFirst from 'lodash/upperFirst';
+import camelCase from 'lodash/camelCase';
 import { Analyzer, Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { UploError, BlobNotFoundError } from '../errors';

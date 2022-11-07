@@ -1,4 +1,5 @@
-import { isEmpty, merge } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import merge from 'lodash/merge';
 import { Service, Adapter, BlobData, Analyzer } from '@uplo/types';
 import { downloadToTempfile as downloadToTempfileFn } from '../downloadToTempfile';
 import { AnalyzeError } from '../../errors';

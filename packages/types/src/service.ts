@@ -14,7 +14,7 @@ export interface ServiceDirectUploadData {
 }
 
 export interface ServiceUploadParams {
-  key: string;
+  key: BlobData['key'];
   content: fs.ReadStream | Buffer | Uint8Array | string;
   size: number | bigint;
   contentType: string;

@@ -33,6 +33,6 @@ export interface Adapter {
   createBlob(options: CreateBlobOptions): Promise<BlobData>;
   updateBlobMetadata({ key, metadata }: { key: BlobData['key'], metadata: BlobData['metadata'] }): Promise<BlobData | null>;
   findAttachments(options: { recordId: AttachmentData['recordId'], recordType: AttachmentData['recordType'], name: AttachmentData['name'] }): Promise<AttachmentData[]>;
-  deleteAttachment(id: ID): Promise<AttachmentData>;
+  deleteAttachment(id: ID): Promise<AttachmentData | null>;
   deleteAttachments(options: { recordId: AttachmentData['recordId'], recordType: AttachmentData['recordType'], name: AttachmentData['name'] }): Promise<AttachmentData[]>;
 }

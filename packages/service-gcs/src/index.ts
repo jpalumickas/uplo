@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { Storage, GetSignedUrlConfig } from '@google-cloud/storage';
-import { Service, BlobData } from '@uplo/types';
+import { Service, ServiceUploadParams, BlobData } from '@uplo/types';
 import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 
 interface Options {
@@ -118,7 +118,7 @@ class GCSService implements Service {
     return url;
   }
 
-  async upload({ key, content, contentType }) {
+  async upload({ key, content, contentType }: ServiceUploadParams) {
     const file = this.storage.bucket(this.bucket).file(key);
 
     if (content instanceof fs.ReadStream) {
@@ -137,6 +137,8 @@ class GCSService implements Service {
             resolve(e);
           });
       });
+    } else if (content instanceof Uint8Array) {
+      throw new Error('Uint8Array not implemented');
     }
 
     return await file.save(content);
