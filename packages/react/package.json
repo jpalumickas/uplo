@@ -1,14 +1,14 @@
 {
   "name": "@uplo/react",
   "version": "0.17.0",
-  "main": "dist/uplo-react.cjs.js",
-  "module": "dist/uplo-react.esm.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/uplo-react.cjs.js",
-      "import": "./dist/uplo-react.esm.js"
-    },
-    "./package.json": "./package.json"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
   },
   "publishConfig": {
     "access": "public"
@@ -16,6 +16,9 @@
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "homepage": "https://jpalumickas.github.io/uplo",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
   "dependencies": {
     "mime": "^3.0.0",
     "spark-md5": "^3.0.2"

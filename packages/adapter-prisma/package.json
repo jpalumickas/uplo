@@ -1,12 +1,13 @@
 {
   "name": "@uplo/adapter-prisma",
   "version": "0.17.0",
-  "main": "dist/uplo-adapter-prisma.cjs.js",
-  "module": "dist/uplo-adapter-prisma.esm.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/uplo-adapter-prisma.cjs.js",
-      "default": "./dist/uplo-adapter-prisma.esm.js"
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
     }
   },
   "publishConfig": {
@@ -15,6 +16,9 @@
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "homepage": "https://jpalumickas.github.io/uplo",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
   "peerDependencies": {
     "@prisma/client": ">=2.19.0",
     "@uplo/node": "^0.17.0",
@@ -24,6 +28,7 @@
     "@uplo/types": "^0.17.0"
   },
   "devDependencies": {
+    "@prisma/client": "^4.5.0",
     "@uplo/node": "^0.17.0",
     "dataloader": "^2.1.0"
   },

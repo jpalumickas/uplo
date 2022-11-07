@@ -1,9 +1,14 @@
+type Result = {
+  status: number;
+  response: any;
+}
+
 export const uploadAsync = async (
   url: string,
   headers: Record<string, string>,
   file: File
 ) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<Result>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', url, true);
     xhr.responseType = 'text';
