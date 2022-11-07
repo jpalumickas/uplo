@@ -1,9 +1,9 @@
 import { FastifyPluginAsync } from 'fastify';
-import { Uplo } from '@uplo/node';
+import { Uplo, UploOptionsAttachments } from '@uplo/node';
 
-export interface UploPluginOptions {
+export interface UploPluginOptions<AttachmentsList extends UploOptionsAttachments> {
   mountPath?: string;
-  uplo: Uplo;
+  uplo: Uplo<AttachmentsList>;
 }
 
 const createDirectUploadOptions = {
@@ -34,6 +34,7 @@ interface CreateDirectUploadBody {
   };
 }
 
+// @ts-ignore
 const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, { uplo, mountPath = '/uploads' }) => {
   fastify.decorate('uplo', uplo);
 

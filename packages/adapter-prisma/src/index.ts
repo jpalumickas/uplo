@@ -39,11 +39,13 @@ class PrismaAdapter implements Adapter {
   }
 
   async deleteAttachment(id: ID): Promise<AttachmentData | null> {
-    return await this.prisma.fileAttachment.delete({
+    const result = await this.prisma.fileAttachment.delete({
       where: {
         id,
       },
     });
+
+    return result as AttachmentData;
   }
 
   async deleteAttachments({
@@ -101,7 +103,7 @@ class PrismaAdapter implements Adapter {
     key: Blob['key'];
     metadata: Blob['metadata'];
   }) {
-    return this.prisma.$transaction(async (prisma) => {
+    return this.prisma.$transaction(async (prisma: any) => {
       const blob = await prisma.fileBlob.findUnique({
         where: { key },
       });
@@ -136,7 +138,7 @@ class PrismaAdapter implements Adapter {
       });
     }
 
-    return this.prisma.fileAttachment.create({
+    const result = await this.prisma.fileAttachment.create({
       data: {
         name: attachmentName,
         recordType,
@@ -144,7 +146,9 @@ class PrismaAdapter implements Adapter {
         blob: { connect: { id: blob.id } },
       },
       include: { blob: true },
-    }) as AttachmentData;
+    });
+
+    return result as AttachmentData;
   }
 }
 

@@ -19,7 +19,7 @@ export interface CreateBlobOptions {
 export interface AttachBlobOptions {
   blob: BlobData;
   attachmentName: string;
-  recordId: string;
+  recordId: ID;
   recordType: string;
   append?: boolean;
   returnQuery?: boolean;
@@ -29,8 +29,10 @@ export interface AttachBlobOptions {
 export interface Adapter {
   findBlob(id: ID): Promise<BlobData | null>;
   findBlobByKey(key: string): Promise<BlobData | null>;
-  attachBlob(options: AttachBlobOptions): AttachmentData;
+  attachBlob(options: AttachBlobOptions): Promise<AttachmentData>;
   createBlob(options: CreateBlobOptions): Promise<BlobData>;
   updateBlobMetadata({ key, metadata }: { key: BlobData['key'], metadata: BlobData['metadata'] }): Promise<BlobData | null>;
   findAttachments(options: { recordId: AttachmentData['recordId'], recordType: AttachmentData['recordType'], name: AttachmentData['name'] }): Promise<AttachmentData[]>;
+  deleteAttachment(id: ID): Promise<AttachmentData>;
+  deleteAttachments(options: { recordId: AttachmentData['recordId'], recordType: AttachmentData['recordType'], name: AttachmentData['name'] }): Promise<AttachmentData[]>;
 }

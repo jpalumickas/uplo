@@ -37,10 +37,12 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
   const modelAttachments = _.reduce(
       attachments,
       (result, modelAttachments, modelName) => {
+        // @ts-ignore
         result[modelName] = (modelId: ID) => _.reduce
         (
           modelAttachments,
           (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
+            // @ts-ignore
             r[attachmentName] = new ModelAttachment({
               modelId,
               modelName,
@@ -79,6 +81,7 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
         options: formatAttachmentOptions(attachmentOptions, services),
       });
     },
+    // @ts-ignore
     attachments: modelAttachments,
   };
 };

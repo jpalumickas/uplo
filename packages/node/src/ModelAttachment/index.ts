@@ -124,6 +124,7 @@ export class ModelAttachment {
     }
 
     const content = filePath ? fs.createReadStream(filePath) : contentInput;
+    // @ts-ignore
     const data = await blobDataFromFileInput(content);
 
     const blobParams = {
@@ -158,6 +159,7 @@ export class ModelAttachment {
 
     await this.getService(blob.serviceName).upload({
       filePath,
+    // @ts-ignore
       content: filePath ? fs.createReadStream(filePath) : contentInput,
       ...blob,
     });
