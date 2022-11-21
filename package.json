@@ -22,8 +22,8 @@
     "@changesets/cli": "^2.25.2",
     "lerna": "^6.0.3",
     "prettier": "^2.7.1",
-    "tsup": "^6.4.0",
-    "typescript": "^4.8.4"
+    "tsup": "^6.5.0",
+    "typescript": "^4.9.3"
   },
   "prettier": {
     "tabWidth": 2,

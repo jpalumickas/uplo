@@ -28,7 +28,7 @@
     "@uplo/types": "^0.17.0"
   },
   "devDependencies": {
-    "@prisma/client": "^4.5.0",
+    "@prisma/client": "^4.6.1",
     "@uplo/node": "^0.17.0",
     "dataloader": "^2.1.0"
   },
