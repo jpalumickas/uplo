@@ -29,9 +29,9 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^8.5.9",
-    "@types/lodash": "^4.14.189",
+    "@types/lodash": "^4.14.191",
     "@types/mime": "^3.0.1",
-    "@types/node": "^18.11.9"
+    "@types/node": "^18.11.11"
   },
   "engines": {
     "node": ">=14"
