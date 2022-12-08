@@ -5,4 +5,7 @@ const withNextra = require('nextra')({
 
 module.exports = withNextra({
   basePath: '/uplo',
+  images: {
+    unoptimized: true,
+  },
 })
