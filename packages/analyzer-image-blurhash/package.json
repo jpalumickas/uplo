@@ -1,0 +1,36 @@
+{
+  "name": "@uplo/analyzer-image-blurhash",
+  "version": "0.17.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": "jpalumickas/uplo",
+  "homepage": "https://uplo.js.org",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
+  "dependencies": {
+    "@uplo/types": "^0.17.0",
+    "blurhash": "^2.0.4"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": [
+    "image",
+    "analyze",
+    "blurhash",
+    "upload",
+    "uploads"
+  ]
+}
