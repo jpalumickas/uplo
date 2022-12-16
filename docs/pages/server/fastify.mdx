@@ -1,0 +1,20 @@
+# Fastify
+
+This adds direct upload routes
+
+```sh
+yarn add @uplo/fastify
+```
+
+```ts
+import fastify from 'fastify';
+import uploFastify from '@uplo/fastify';
+
+const app = fastify();
+
+const uplo = {
+  // Your uplo config
+}
+
+app.register(uploFastify, { uplo });
+```
