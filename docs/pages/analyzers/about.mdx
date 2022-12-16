@@ -1,0 +1,39 @@
+# About analyzers
+
+Analzyers are used to get information about blob and store it to metadata. For
+example, you can get Image `width` and `height` with image analyzer.
+
+## Usage
+
+Usually you want to run these in delayed jobs to avoid request blocking. For
+example, you can add `afterAttach` callback to Uplo and schedule blob analyze
+job.
+
+```ts
+import ImageAnalyzer from '@uplo/analyzer-image';
+
+const uplo = Uplo({
+  analyzers: [
+    ImagenAnalyzer()
+  ],
+  callbacks: {
+    afterAttach: async ({ blob }) => {
+      await DelayedJob.performLater('uplo-analyze-blob', { id: blob.id });
+    },
+  }
+})
+```
+and in delayed job you can find blob and call analyze
+
+```ts
+import uplo from '../uplo';
+
+const uploAnalyzeBlob = async ({ id }: { id: ID }) => {
+  if (!id) return;
+
+  const blob = await uplo.$findBlob(id);
+  if (!blob) return;
+
+  return await blob.analyze();
+};
+```

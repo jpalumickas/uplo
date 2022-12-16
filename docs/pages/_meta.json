@@ -3,5 +3,6 @@
   "attachments": "Attachments",
   "adapters": "Adapters",
   "services": "Services",
-  "client": "Client"
+  "client": "Client",
+  "analyzers": "Analyzers"
 }
