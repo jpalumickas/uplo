@@ -28,10 +28,10 @@
     "tempy": "^1.0.1"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^8.5.9",
+    "@types/jsonwebtoken": "^9.0.0",
     "@types/lodash": "^4.14.191",
     "@types/mime": "^3.0.1",
-    "@types/node": "^18.11.17"
+    "@types/node": "^18.11.18"
   },
   "engines": {
     "node": ">=14"
