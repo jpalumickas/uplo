@@ -1,6 +1,6 @@
 {
   "name": "@uplo/analyzer-image-blurhash",
-  "version": "0.17.1",
+  "version": "0.17.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "^0.17.1",
+    "@uplo/types": "^0.17.2",
     "blurhash": "^2.0.4"
   },
   "engines": {
