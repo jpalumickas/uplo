@@ -19,6 +19,18 @@ Add `@uplo/node` to your package.json
 yarn add @uplo/node
 ```
 
+Install Adapter (for example Prisma)
+
+```sh
+yarn add @uplo/adapter-prisma dataloader
+```
+
+Install Service (for example S3)
+
+```sh
+yarn add @uplo/service-s3
+```
+
 Define uplo instance
 
 ```ts
@@ -32,16 +44,18 @@ const config = {
 };
 
 const uplo = Uplo({
+  config,
   adapter: new PrismaAdapter({ prisma }),
   services: {
-    google: new GCSService({
-      credentialsPath: path.resolve(
-        __dirname,
-        '../../config/gcp-credentials.json'
-      ),
-      bucket: process.env.GCS_BUCKET,
+    s3: S3Service({
+      isPublic: false,
+      region: process.env.AWS_REGION,
+      bucket: process.env.AWS_BUCKET,
+      accessKeyId: '*****',
+      secretAccessKey: '*****',
     }),
   },
-  config,
+  attachments: {
+  },
 });
 ```
