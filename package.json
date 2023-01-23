@@ -16,7 +16,8 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "packages:publish": "changeset publish"
+    "packages:publish": "changeset publish",
+    "version:patch": "lerna version patch --force-publish"
   },
   "dependencies": {
     "@changesets/cli": "^2.26.0",
