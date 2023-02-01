@@ -1,4 +1,4 @@
-import _reduce from 'lodash/reduce';
+import _reduce from 'lodash-es/reduce';
 import { getDeepValue } from '@uplo/utils';
 import { ID } from '@uplo/types';
 import {
