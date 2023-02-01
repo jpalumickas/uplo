@@ -36,7 +36,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "16"
-          cache: 'yarn'
+          cache: 'pnpm'
 
       - name: Setup Pages
         uses: actions/configure-pages@v2
@@ -48,13 +48,13 @@ jobs:
           static_site_generator: next
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build with Next.js
-        run: yarn next build
+        run: pnpm next build
 
       - name: Static HTML export with Next.js
-        run: yarn next export
+        run: pnpm next export
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
