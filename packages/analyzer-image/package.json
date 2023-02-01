@@ -20,14 +20,17 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "^0.17.3",
-    "sharp": "^0.31.3"
+    "@uplo/types": "^0.17.3"
+  },
+  "peerDependencies": {
+    "sharp": ">= 0.29"
   },
   "engines": {
     "node": ">=14"
   },
   "devDependencies": {
-    "@types/sharp": "^0.31.1"
+    "@types/sharp": "^0.31.1",
+    "sharp": "^0.31.3"
   },
   "keywords": [
     "image",
