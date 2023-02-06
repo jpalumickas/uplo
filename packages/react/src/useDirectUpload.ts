@@ -1,19 +1,20 @@
 import { useState, useMemo, useCallback } from 'react';
 import useConfig from './useConfig';
 import createBlob from './createBlob';
-import { UploadID, Upload, UploadFileOptions, UseUploadOptions } from './types';
+import { UploadID, Upload, UploadFileOptions, UseDirectUploadOptions } from './types';
 import { uploadAsync } from './uploadAsync';
 
-export const useDirectUpload = (attachmentName: string, { multiple = false }: UseUploadOptions = {}) => {
+export const useDirectUpload = (attachmentName: string, { multiple = false, onUploadAdd, onUploadChange }: UseDirectUploadOptions = {}) => {
   const { host, mountPath } = useConfig();
 
   const [uploads, setUploads] = useState<Upload[]>([]);
-  // const host = 'test.com';
-  // const mountPath = '/uploads';
 
   const addUpload = useCallback((upload: Upload) => {
     setUploads((prev) => multiple ? [...prev, upload] : [upload]);
-  }, [multiple]);
+    if (onUploadAdd) {
+      onUploadAdd(upload)
+    }
+  }, [multiple, onUploadAdd]);
 
   const clear = useCallback(() => setUploads([]), []);
   const uploading = useMemo(() => uploads.some((it) => it.uploading === true), [
@@ -29,10 +30,15 @@ export const useDirectUpload = (attachmentName: string, { multiple = false }: Us
     setUploads((prev) => {
       return prev.map((item) => {
         if (item.id !== id) return item;
-        return { ...item, ...upload };
+        const updatedUpload = { ...item, ...upload }
+
+        if (onUploadChange) {
+          onUploadChange(updatedUpload)
+        }
+        return updatedUpload;
       });
     });
-  }, []);
+  }, [onUploadChange]);
 
   const uploadFile = useCallback(
     async ({ file, id: providedId, metadata }: UploadFileOptions) => {

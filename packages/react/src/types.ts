@@ -12,7 +12,7 @@
 
 export type UploadID = string | number;
 export type Metadata = {
-  [key: string]: string | number;
+  [key: string]: string | number | boolean;
 }
 
 export interface Upload {
@@ -29,6 +29,8 @@ export interface UploadFileOptions {
   metadata?: Metadata;
 }
 
-export interface UseUploadOptions {
+export interface UseDirectUploadOptions {
   multiple?: boolean;
+  onUploadAdd?: (upload: Upload) => void
+  onUploadChange?: ( upload: Upload) => void
 }
