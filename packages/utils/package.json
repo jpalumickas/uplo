@@ -22,6 +22,9 @@
   "dependencies": {
     "@tinyhttp/content-disposition": "~1"
   },
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  },
   "engines": {
     "node": ">=14"
   }

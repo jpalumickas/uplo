@@ -25,6 +25,9 @@
     "@uplo/types": "^0.17.4",
     "@uplo/utils": "^0.17.4"
   },
+  "devDependencies": {
+    "@types/node": "^18.11.18"
+  },
   "engines": {
     "node": ">=14"
   },
