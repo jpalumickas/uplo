@@ -1,13 +1,23 @@
 type Result = {
   status: number;
   response: any;
-}
+};
 
-export const uploadAsync = async (
-  url: string,
-  headers: Record<string, string>,
-  file: File
-) => {
+export const uploadAsync = async ({
+  url,
+  headers,
+  file,
+  onProgress,
+}: {
+  url: string;
+  headers: Record<string, string>;
+  file: File;
+  onProgress?: (data: {
+    loaded: number;
+    total: number;
+    percent: number;
+  }) => void;
+}) => {
   return new Promise<Result>((resolve, reject) => {
     const xhr = new XMLHttpRequest();
     xhr.open('PUT', url, true);
@@ -27,6 +37,15 @@ export const uploadAsync = async (
     });
 
     xhr.addEventListener('error', (event) => reject(event));
+    xhr.upload.addEventListener('progress', (event) => {
+      if (onProgress) {
+        onProgress({
+          loaded: event.loaded,
+          total: event.total,
+          percent: Math.ceil((event.loaded * 100) / event.total),
+        });
+      }
+    });
 
     xhr.send(file.slice());
   });

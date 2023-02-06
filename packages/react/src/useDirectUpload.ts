@@ -4,7 +4,7 @@ import createBlob from './createBlob';
 import { UploadID, Upload, UploadFileOptions, UseDirectUploadOptions } from './types';
 import { uploadAsync } from './uploadAsync';
 
-export const useDirectUpload = (attachmentName: string, { multiple = false, onUploadAdd, onUploadChange }: UseDirectUploadOptions = {}) => {
+export const useDirectUpload = (attachmentName: string, { multiple = false, onUploadAdd, onUploadChange, onUploadSuccess }: UseDirectUploadOptions = {}) => {
   const { host, mountPath } = useConfig();
 
   const [uploads, setUploads] = useState<Upload[]>([]);
@@ -48,6 +48,7 @@ export const useDirectUpload = (attachmentName: string, { multiple = false, onUp
         id,
         file,
         uploading: true,
+        progress: 0,
         signedId: null,
       };
 
@@ -61,11 +62,15 @@ export const useDirectUpload = (attachmentName: string, { multiple = false, onUp
           return upload;
         }
 
-        const { status } = await uploadAsync(
-          result.data.upload.url,
-          result.data.upload.headers,
+        const { status } = await uploadAsync({
+          url: result.data.upload.url,
+          headers: result.data.upload.headers,
           file,
-        );
+          onProgress: ({ percent }) => {
+            upload.progress = percent
+            updateUpload(id, { progress: percent  });
+          }
+        });
 
         if (status >= 200 && status < 300) {
           upload.signedId = result.data.signedId;
@@ -76,7 +81,11 @@ export const useDirectUpload = (attachmentName: string, { multiple = false, onUp
         }
 
         upload.uploading = false;
-        updateUpload(id, { uploading: false });
+        upload.progress = 100;
+        updateUpload(id, { uploading: false, progress: 100 });
+        if (onUploadSuccess) {
+          onUploadSuccess(upload)
+        }
       } catch (err) {
         upload.uploading = false;
 
@@ -91,7 +100,7 @@ export const useDirectUpload = (attachmentName: string, { multiple = false, onUp
 
       return upload;
     },
-    [addUpload, updateUpload]
+    [addUpload, onUploadSuccess, updateUpload]
   );
 
   return {

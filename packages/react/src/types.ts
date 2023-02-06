@@ -20,6 +20,7 @@ export interface Upload {
   file: File;
   signedId: null | string;
   uploading: boolean;
+  progress: number
   error?: string | any;
 }
 
@@ -32,5 +33,6 @@ export interface UploadFileOptions {
 export interface UseDirectUploadOptions {
   multiple?: boolean;
   onUploadAdd?: (upload: Upload) => void
-  onUploadChange?: ( upload: Upload) => void
+  onUploadChange?: (upload: Upload) => void
+  onUploadSuccess?: (upload: Upload) => void
 }
