@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify';
+import fp from 'fastify-plugin'
 import { Uplo, UploOptionsAttachments } from '@uplo/node';
 
 export interface UploPluginOptions<AttachmentsList extends UploOptionsAttachments> {
@@ -35,8 +36,14 @@ interface CreateDirectUploadBody {
 }
 
 // @ts-ignore
-const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, { uplo, mountPath = '/uploads' }) => {
+const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, opts) => {
+  const options = typeof opts === 'function' ? await opts(fastify) : opts;
+
+  const { uplo } = options
+
   fastify.decorate('uplo', uplo);
+
+  const mountPath = options.mountPath || '/uploads'
 
   fastify.post<{ Body: CreateDirectUploadBody}>(`${mountPath}/create-direct-upload`, createDirectUploadOptions, async (request, reply) => {
     const attachmentName = request.body['attachmentName'];
@@ -61,4 +68,4 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, { u
   })
 }
 
-export default fastifyPlugin;
+export default fp(fastifyPlugin);
