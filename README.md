@@ -1,14 +1,14 @@
 # Uplo
 
-Handle file uploads to different storage services like Amazon S3, Google Cloud
-or etc. It also supports different type of ORM adapters, like Prisma.
+Handle file uploads to various storage services like Amazon S3, Google Cloud
+or etc. It also supports various type of ORM adapters, like Prisma.
 
 ## Features
 
 * TypeScript ready
-* Direct uploading to services
-* Multiple services
-* Different ORM adapters
+* Direct uploads
+* Supports multiple services
+* Multiple ORM adapters
 * File analyzers
 
 ## Getting started
@@ -17,6 +17,18 @@ Add `@uplo/node` to your package.json
 
 ```sh
 yarn add @uplo/node
+```
+
+Install Adapter (for example Prisma)
+
+```sh
+yarn add @uplo/adapter-prisma dataloader
+```
+
+Install Service (for example S3)
+
+```sh
+yarn add @uplo/service-s3
 ```
 
 Define uplo instance
@@ -28,21 +40,23 @@ import GCSService from '@uplo/service-gcs';
 
 const config = {
   privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
-  signedIdExpiresIn: 60 * 60, // Time how much signed id is valid
+  signedIdExpiresIn: 60 * 60, // Time how long a Signed ID is valid
 };
 
 const uplo = Uplo({
+  config,
   adapter: new PrismaAdapter({ prisma }),
   services: {
-    google: new GCSService({
-      credentialsPath: path.resolve(
-        __dirname,
-        '../../config/gcp-credentials.json'
-      ),
-      bucket: process.env.GCS_BUCKET,
+    s3: S3Service({
+      isPublic: false,
+      region: process.env.AWS_REGION,
+      bucket: process.env.AWS_BUCKET,
+      accessKeyId: '*****',
+      secretAccessKey: '*****',
     }),
   },
-  config,
+  attachments: {
+  },
 });
 ```
 
