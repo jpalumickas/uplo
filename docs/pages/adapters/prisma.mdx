@@ -2,8 +2,8 @@
 
 ## Installation
 
-Make sure you installed and configured [Prisma](https://www.prisma.io) before
-using this adapter.
+Make sure you have installed and configured [Prisma](https://www.prisma.io)
+before using this adapter.
 
 Install package
 
@@ -26,9 +26,9 @@ const uplo = Uplo({
 Define Prisma schema with following models. You can change this schema if you
 use Integer as ID.
 
-`FileBlob` has all information about file and `FileAttachment` connects blob to
-specific record. You can attach same file (Blob) with multiple records if needed
-to save a cloud storage space.
+`FileBlob` has all the information about the file and `FileAttachment` connects
+a blob to a specific record. You can attach the same file (`Blob`) with
+multiple records if needed to save cloud storage space.
 
 ```prisma
 datasource db {
