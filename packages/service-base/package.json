@@ -15,7 +15,7 @@
   },
   "license": "MIT",
   "repository": "jpalumickas/uplo",
-  "homepage": "https://jpalumickas.github.io/uplo",
+  "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
