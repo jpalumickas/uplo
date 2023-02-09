@@ -1,6 +1,6 @@
 {
   "name": "@uplo/service-gcs",
-  "version": "0.17.4",
+  "version": "0.17.5",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -21,9 +21,9 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^6.9.1",
-    "@uplo/service-base": "^0.17.4",
-    "@uplo/types": "^0.17.4",
-    "@uplo/utils": "^0.17.4"
+    "@uplo/service-base": "^0.17.5",
+    "@uplo/types": "^0.17.5",
+    "@uplo/utils": "^0.17.5"
   },
   "devDependencies": {
     "@types/node": "^18.11.18"
