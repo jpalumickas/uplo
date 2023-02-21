@@ -1,4 +1,4 @@
-import { Analyzer, Service, Adapter, Blob as TBlob, BlobData } from '@uplo/types';
+import { Analyzer, Service, Adapter, Blob as TBlob, BlobUrlOptions, BlobData } from '@uplo/types';
 import analyze from './analyze';
 import { downloadToTempfile as downloadToTempfileFn } from './downloadToTempfile';
 
@@ -25,11 +25,11 @@ export const Blob = ({
     serviceName,
     downloadToTempfile,
     protocolUrl: () => service.protocolUrl(blobData),
-    url: async () => {
+    url: async (opts: BlobUrlOptions = {}) => {
       if (service.isPublic) {
         return service.publicUrl(blobData)
       } else {
-        return service.privateUrl(blobData)
+        return service.privateUrl(blobData, opts)
       }
     },
     analyze: () => analyze({ blobData, service, adapter, analyzers }),

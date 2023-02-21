@@ -103,7 +103,7 @@ class GCSService implements Service {
       version: 'v4',
       expires: Date.now() + expiresIn * 1000,
       responseType: blob.contentType,
-      responseDisposition: contentDisposition({
+      responseDisposition: disposition && contentDisposition({
         type: disposition,
         fileName: blob.fileName,
       }),

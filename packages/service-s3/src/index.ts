@@ -1,6 +1,7 @@
 import { createWriteStream } from 'fs';
 import { Readable } from 'stream';
 import { Upload } from '@aws-sdk/lib-storage';
+import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 import {
   S3ClientConfig,
   S3Client,
@@ -113,12 +114,17 @@ const S3Service = ({
     },
 
     async privateUrl(
-      { key }: BlobData,
-      { expiresIn = 300 }: { expiresIn?: number } = {}
+      blob: BlobData,
+      { disposition, expiresIn = 300 }: { disposition?: ContentDispositionType, expiresIn?: number } = {}
     ) {
+
       const command = new GetObjectCommand({
         Bucket: bucket,
-        Key: key,
+        Key: blob.key,
+        ResponseContentDisposition: disposition && contentDisposition({
+          type: disposition,
+          fileName: blob.fileName,
+        })
       });
 
       return await getSignedUrl(client, command, { expiresIn });

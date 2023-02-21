@@ -1,3 +1,4 @@
+import type { ContentDispositionType } from '@uplo/utils';
 import { ID } from './general';
 import { Service } from './service';
 
@@ -17,6 +18,10 @@ export interface BlobData {
   // [property: string]: any;
 }
 
+export interface BlobUrlOptions {
+  disposition?: ContentDispositionType
+  expiresIn?: number
+}
 // export interface Blob extends Omit<BlobData, 'service'> {
 export interface Blob {
   id: ID;
@@ -29,7 +34,7 @@ export interface Blob {
   data: BlobData;
   serviceName: string;
   service: Service;
-  url: () => Promise<string>;
+  url: (opts: BlobUrlOptions) => Promise<string>;
   protocolUrl: () => Promise<string>;
   analyze: () => Promise<BlobData['metadata']>;
   downloadToTempfile: (callback: (tmpPath: string) => void) => Promise<void>;

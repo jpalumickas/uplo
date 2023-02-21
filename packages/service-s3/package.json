@@ -24,7 +24,8 @@
     "@aws-sdk/lib-storage": "^3.262.0",
     "@aws-sdk/s3-request-presigner": "^3.262.0",
     "@uplo/service-base": "^0.17.5",
-    "@uplo/types": "^0.17.5"
+    "@uplo/types": "^0.17.5",
+    "@uplo/utils": "^0.17.5"
   },
   "engines": {
     "node": ">=14"
