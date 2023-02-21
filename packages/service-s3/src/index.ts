@@ -121,6 +121,7 @@ const S3Service = ({
       const command = new GetObjectCommand({
         Bucket: bucket,
         Key: blob.key,
+        ResponseContentType: blob.contentType,
         ResponseContentDisposition: disposition && contentDisposition({
           type: disposition,
           fileName: blob.fileName,
