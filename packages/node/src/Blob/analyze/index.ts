@@ -30,8 +30,6 @@ const analyze =
     const newMetadata = {};
 
     await downloadToTempfile(async (filePath) => {
-      merge(newMetadata, { identified: true });
-
       for (const analyzer of analyzers) {
         try {
           const analyzerMetadata = await analyzer({ filePath, blob });

@@ -1,6 +1,10 @@
 import { ID } from './general';
 import { Service } from './service';
 
+export interface BlobMetadata {
+  [key: string]: string | number | null;
+}
+
 export interface BlobData {
   id: ID;
   fileName: string;
@@ -8,7 +12,7 @@ export interface BlobData {
   contentType: string;
   checksum: string;
   key: string;
-  metadata: object;
+  metadata: BlobMetadata;
   serviceName: string;
   // [property: string]: any;
 }
@@ -21,8 +25,7 @@ export interface Blob {
   contentType: string;
   checksum: string;
   key: string;
-  metadata: object;
-
+  metadata: BlobMetadata;
   data: BlobData;
   serviceName: string;
   service: Service;
@@ -47,4 +50,5 @@ export interface Attachment extends Omit<AttachmentData, 'blob'> {
   url: Blob['url'];
   protocolUrl: Blob['protocolUrl'];
   downloadToTempfile: Blob['downloadToTempfile'];
+  metadata: Blob['metadata'];
 }

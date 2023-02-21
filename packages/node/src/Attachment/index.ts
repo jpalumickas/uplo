@@ -39,6 +39,7 @@ export const Attachment = ({
     url: blob.url,
     protocolUrl: blob.protocolUrl,
     downloadToTempfile: blob.downloadToTempfile,
+    metadata: blob.metadata,
     blob,
   };
 };
