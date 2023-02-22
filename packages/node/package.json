@@ -1,6 +1,6 @@
 {
   "name": "@uplo/node",
-  "version": "0.17.6",
+  "version": "0.17.7",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -20,8 +20,8 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "^0.17.6",
-    "@uplo/utils": "^0.17.6",
+    "@uplo/types": "^0.17.7",
+    "@uplo/utils": "^0.17.7",
     "jsonwebtoken": "^9.0.0",
     "lodash-es": "^4.17.21",
     "mime": "^3.0.0",

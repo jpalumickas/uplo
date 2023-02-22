@@ -18,8 +18,8 @@ importers:
   packages/adapter-prisma:
     specifiers:
       '@prisma/client': ^4.9.0
-      '@uplo/node': ^0.17.6
-      '@uplo/types': ^0.17.6
+      '@uplo/node': ^0.17.7
+      '@uplo/types': ^0.17.7
       dataloader: ^2.1.0
     dependencies:
       '@uplo/types': link:../types
@@ -31,7 +31,7 @@ importers:
   packages/analyzer-image:
     specifiers:
       '@types/sharp': ^0.31.1
-      '@uplo/types': ^0.17.6
+      '@uplo/types': ^0.17.7
       sharp: ^0.31.3
     dependencies:
       '@uplo/types': link:../types
@@ -42,7 +42,7 @@ importers:
   packages/analyzer-image-blurhash:
     specifiers:
       '@types/sharp': ^0.31.1
-      '@uplo/types': ^0.17.6
+      '@uplo/types': ^0.17.7
       blurhash: ^2.0.4
       sharp: ^0.31.3
     dependencies:
@@ -54,7 +54,7 @@ importers:
 
   packages/fastify:
     specifiers:
-      '@uplo/node': ^0.17.6
+      '@uplo/node': ^0.17.7
       fastify: ^4.12.0
       fastify-plugin: ^4.5.0
     dependencies:
@@ -69,8 +69,8 @@ importers:
       '@types/lodash-es': ^4.17.6
       '@types/mime': ^3.0.1
       '@types/node': ^18.11.18
-      '@uplo/types': ^0.17.6
-      '@uplo/utils': ^0.17.6
+      '@uplo/types': ^0.17.7
+      '@uplo/utils': ^0.17.7
       jsonwebtoken: ^9.0.0
       lodash-es: ^4.17.21
       mime: ^3.0.0
@@ -122,7 +122,7 @@ importers:
 
   packages/service-base:
     specifiers:
-      '@uplo/types': ^0.17.6
+      '@uplo/types': ^0.17.7
     dependencies:
       '@uplo/types': link:../types
 
@@ -130,9 +130,9 @@ importers:
     specifiers:
       '@google-cloud/storage': ^6.9.1
       '@types/node': ^18.11.18
-      '@uplo/service-base': ^0.17.6
-      '@uplo/types': ^0.17.6
-      '@uplo/utils': ^0.17.6
+      '@uplo/service-base': ^0.17.7
+      '@uplo/types': ^0.17.7
+      '@uplo/utils': ^0.17.7
     dependencies:
       '@google-cloud/storage': 6.9.1
       '@uplo/service-base': link:../service-base
@@ -146,9 +146,9 @@ importers:
       '@aws-sdk/client-s3': ^3.262.0
       '@aws-sdk/lib-storage': ^3.262.0
       '@aws-sdk/s3-request-presigner': ^3.262.0
-      '@uplo/service-base': ^0.17.6
-      '@uplo/types': ^0.17.6
-      '@uplo/utils': ^0.17.6
+      '@uplo/service-base': ^0.17.7
+      '@uplo/types': ^0.17.7
+      '@uplo/utils': ^0.17.7
     dependencies:
       '@aws-sdk/client-s3': 3.262.0
       '@aws-sdk/lib-storage': 3.262.0_@aws-sdk+client-s3@3.262.0
@@ -160,7 +160,7 @@ importers:
   packages/types:
     specifiers:
       '@types/node': ^18.11.18
-      '@uplo/utils': ^0.17.6
+      '@uplo/utils': ^0.17.7
     dependencies:
       '@uplo/utils': link:../utils
     devDependencies:
