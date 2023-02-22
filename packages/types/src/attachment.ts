@@ -34,7 +34,7 @@ export interface Blob {
   data: BlobData;
   serviceName: string;
   service: Service;
-  url: (opts: BlobUrlOptions) => Promise<string>;
+  url: (opts?: BlobUrlOptions) => Promise<string>;
   protocolUrl: () => Promise<string>;
   analyze: () => Promise<BlobData['metadata']>;
   downloadToTempfile: (callback: (tmpPath: string) => void) => Promise<void>;
