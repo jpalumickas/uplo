@@ -8,46 +8,45 @@ interface FindAttachmentsRecordData {
   name: string;
 }
 
-const SEPARATOR = '##__--__##'
+const SEPARATOR = '##__--__##';
 type GroupReturn = {
-  [groupName: string]: FindAttachmentsRecordData[]
-}
+  [groupName: string]: FindAttachmentsRecordData[];
+};
 
 const groupByTypeAndName = (data: Readonly<FindAttachmentsRecordData[]>) => {
   return data.reduce<GroupReturn>((obj, item) => {
     const groupName = [item.recordType, item.name].join(SEPARATOR);
     if (!obj[groupName]) {
-      obj[groupName] = []
+      obj[groupName] = [];
     }
 
     obj[groupName].push(item);
-    return obj
-  }, {})
-
-}
+    return obj;
+  }, {});
+};
 
 export const initFindAttachmentsLoader = (prisma: PrismaClient) =>
   new DataLoader(async (recordData: Readonly<FindAttachmentsRecordData[]>) => {
-  const grouped = groupByTypeAndName(recordData);
-  const OR = Object.keys(grouped).map(groupName => {
-    const [recordType, name] = groupName.split(SEPARATOR)
-    return {
-      recordType,
-      name,
-      recordId: { in: grouped[groupName].map(item => item.recordId) },
-    }
-
-  });
-
-    const fileAttachments: AttachmentData[] =
-      await prisma.fileAttachment.findMany({
-        where: {
-          OR,
+    const grouped = groupByTypeAndName(recordData);
+    const OR = Object.keys(grouped).map((groupName) => {
+      const [recordType, name] = groupName.split(SEPARATOR);
+      return {
+        recordType,
+        name,
+        recordId: {
+          in: grouped[groupName].map((item) => item.recordId as string),
         },
-        include: {
-          blob: true,
-        },
-      });
+      };
+    });
+
+    const fileAttachments = (await prisma.fileAttachment.findMany({
+      where: {
+        OR,
+      },
+      include: {
+        blob: true,
+      },
+    })) as AttachmentData[];
 
     const result = recordData.map((recordItem) => {
       return fileAttachments.filter(

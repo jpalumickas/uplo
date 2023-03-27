@@ -41,7 +41,7 @@ class PrismaAdapter implements Adapter {
   async deleteAttachment(id: ID): Promise<AttachmentData | null> {
     const result = await this.prisma.fileAttachment.delete({
       where: {
-        id,
+        id: id as string,
       },
     });
 
@@ -57,13 +57,15 @@ class PrismaAdapter implements Adapter {
     recordType: string;
     name: string;
   }): Promise<AttachmentData[]> {
-    return await this.prisma.fileAttachment.deleteMany({
+    const result = await this.prisma.fileAttachment.deleteMany({
       where: {
-        recordId,
+        recordId: recordId as string,
         recordType,
         name,
       },
     });
+
+    return result as unknown as AttachmentData[]
   }
 
   async createBlob({ params }: CreateBlobOptions): Promise<BlobData> {
@@ -84,7 +86,7 @@ class PrismaAdapter implements Adapter {
 
   async findBlob(id: string | number): Promise<BlobData | null> {
     return (await this.prisma.fileBlob.findUnique({
-      where: { id },
+      where: { id: id as string },
     })) as BlobData | null;
   }
 
@@ -133,7 +135,7 @@ class PrismaAdapter implements Adapter {
         where: {
           name: attachmentName,
           recordType,
-          recordId,
+          recordId: recordId as string,
         },
       });
     }
@@ -142,8 +144,8 @@ class PrismaAdapter implements Adapter {
       data: {
         name: attachmentName,
         recordType,
-        recordId,
-        blob: { connect: { id: blob.id } },
+        recordId: recordId as string,
+        blob: { connect: { id: blob.id as string } },
       },
       include: { blob: true },
     });

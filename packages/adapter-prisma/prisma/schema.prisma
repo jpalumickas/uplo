@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model FileAttachment {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  name       String   @db.VarChar
+  recordType String   @db.VarChar
+  recordId   String   @db.Uuid
+  blobId     String   @db.Uuid
+  createdAt  DateTime @default(now()) @db.Timestamptz(6)
+
+  blob       FileBlob @relation(fields: [blobId], references: [id])
+
+  @@unique([recordType, recordId, name, blobId])
+  @@index([recordType, recordId, name])
+  @@index([blobId])
+}
+
+model FileBlob {
+  id            String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  serviceName   String           @db.VarChar
+  key           String           @unique @db.VarChar
+  fileName      String           @db.VarChar
+  contentType   String?          @db.VarChar
+  size          BigInt
+  checksum      String           @db.VarChar
+  metadata      Json             @default("{}")
+  createdAt     DateTime         @default(now()) @db.Timestamptz(6)
+
+  attachments   FileAttachment[]
+}

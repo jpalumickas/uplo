@@ -13,11 +13,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "license": "MIT",
   "repository": "jpalumickas/uplo",
   "homepage": "https://uplo.js.org",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts"
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "generate": "prisma generate"
   },
   "peerDependencies": {
     "@prisma/client": ">=2.19.0",
@@ -30,7 +35,8 @@
   "devDependencies": {
     "@prisma/client": "^4.11.0",
     "@uplo/node": "workspace:^0.17.8",
-    "dataloader": "^2.2.2"
+    "dataloader": "^2.2.2",
+    "prisma": "^4.11.0"
   },
   "engines": {
     "node": ">=14"
