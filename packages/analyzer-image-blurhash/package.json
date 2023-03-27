@@ -1,6 +1,6 @@
 {
   "name": "@uplo/analyzer-image-blurhash",
-  "version": "0.17.8",
+  "version": "0.17.9",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "workspace:^0.17.8",
+    "@uplo/types": "workspace:^0.17.9",
     "blurhash": "^2.0.5"
   },
   "peerDependencies": {

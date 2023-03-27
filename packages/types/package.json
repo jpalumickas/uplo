@@ -1,6 +1,6 @@
 {
   "name": "@uplo/types",
-  "version": "0.17.8",
+  "version": "0.17.9",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/utils": "workspace:^0.17.8"
+    "@uplo/utils": "workspace:^0.17.9"
   },
   "devDependencies": {
     "@types/node": "^18.15.10"

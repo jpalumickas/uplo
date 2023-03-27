@@ -1,6 +1,6 @@
 {
   "name": "@uplo/service-base",
-  "version": "0.17.8",
+  "version": "0.17.9",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -20,7 +20,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "workspace:^0.17.8"
+    "@uplo/types": "workspace:^0.17.9"
   },
   "engines": {
     "node": ">=14"
