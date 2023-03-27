@@ -4,13 +4,16 @@ import useConfig from './useConfig';
 import createBlob from './createBlob';
 import { Upload, File, UseUploadOptions } from './types';
 
-export const useDirectUpload = (attachmentName: string, { multiple = false }: UseUploadOptions = {}) => {
+export const useDirectUpload = (attachmentName: string, { multiple = false, onUploadAdd, onUploadChange, onUploadSuccess }: UseUploadOptions = {}) => {
   const [uploads, setUploads] = useState<Upload[]>([]);
   const { host, mountPath } = useConfig();
 
   const addUpload = useCallback((upload: Upload) => {
     setUploads((prev) => multiple ? [...prev, upload] : [upload]);
-  }, [multiple]);
+    if (onUploadAdd) {
+      onUploadAdd(upload)
+    }
+  }, [multiple, onUploadAdd]);
 
   const clear = useCallback(() => setUploads([]), []);
   const uploading = useMemo(() => uploads.some((it) => it.uploading === true), [
@@ -26,10 +29,15 @@ export const useDirectUpload = (attachmentName: string, { multiple = false }: Us
     setUploads((prev) => {
       return prev.map((item) => {
         if (item.id !== id) return item;
-        return { ...item, ...upload };
+        const updatedUpload = { ...item, ...upload }
+
+        if (onUploadChange) {
+          onUploadChange(updatedUpload)
+        }
+        return updatedUpload;
       });
     });
-  }, []);
+  }, [onUploadChange]);
 
   const uploadFile = useCallback(
     async (file: File) => {
@@ -71,6 +79,9 @@ export const useDirectUpload = (attachmentName: string, { multiple = false }: Us
 
         upload.uploading = false;
         updateUpload(id, { uploading: false });
+        if (onUploadSuccess) {
+          onUploadSuccess(upload)
+        }
       } catch (err) {
         upload.uploading = false;
 
@@ -85,7 +96,7 @@ export const useDirectUpload = (attachmentName: string, { multiple = false }: Us
 
       return upload;
     },
-    [addUpload, updateUpload]
+    [addUpload, onUploadSuccess, updateUpload]
   );
 
   return {
