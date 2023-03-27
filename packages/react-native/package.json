@@ -29,9 +29,9 @@
   },
   "devDependencies": {
     "@types/mime": "^3.0.1",
-    "@types/react": "^18.0.27",
-    "@types/react-native": "^0.71.1",
-    "expo-file-system": "^15.1.1"
+    "@types/react": "^18.0.30",
+    "@types/react-native": "^0.71.5",
+    "expo-file-system": "^15.2.2"
   },
   "engines": {
     "node": ">=14"

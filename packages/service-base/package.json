@@ -20,7 +20,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "^0.17.8"
+    "@uplo/types": "workspace:^0.17.8"
   },
   "engines": {
     "node": ">=14"

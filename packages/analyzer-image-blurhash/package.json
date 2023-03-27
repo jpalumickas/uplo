@@ -20,15 +20,15 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "^0.17.8",
-    "blurhash": "^2.0.4"
+    "@uplo/types": "workspace:^0.17.8",
+    "blurhash": "^2.0.5"
   },
   "peerDependencies": {
     "sharp": ">= 0.29"
   },
   "devDependencies": {
     "@types/sharp": "^0.31.1",
-    "sharp": "^0.31.3"
+    "sharp": "^0.32.0"
   },
   "engines": {
     "node": ">=14"
