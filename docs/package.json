@@ -13,9 +13,9 @@
   "author": "Justas Palumickas",
   "license": "MIT",
   "dependencies": {
-    "next": "^13.1.6",
-    "nextra": "^2.2.14",
-    "nextra-theme-docs": "^2.2.14",
+    "next": "^13.2.4",
+    "nextra": "^2.2.20",
+    "nextra-theme-docs": "^2.2.20",
     "prism-react-renderer": "^1.3.5",
     "prismjs": "^1.29.0",
     "react": "^18.2.0",
