@@ -1,6 +1,6 @@
 {
   "name": "@uplo/adapter-prisma",
-  "version": "0.17.9",
+  "version": "0.17.10",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -30,11 +30,11 @@
     "dataloader": ">=2.0.0"
   },
   "dependencies": {
-    "@uplo/types": "workspace:^0.17.9"
+    "@uplo/types": "workspace:^0.17.10"
   },
   "devDependencies": {
     "@prisma/client": "^4.12.0",
-    "@uplo/node": "workspace:^0.17.9",
+    "@uplo/node": "workspace:^0.17.10",
     "dataloader": "^2.2.2",
     "prisma": "^4.12.0"
   },

@@ -1,6 +1,6 @@
 {
   "name": "@uplo/service-s3",
-  "version": "0.17.9",
+  "version": "0.17.10",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -23,9 +23,9 @@
     "@aws-sdk/client-s3": "^3.306.0",
     "@aws-sdk/lib-storage": "^3.306.0",
     "@aws-sdk/s3-request-presigner": "^3.306.0",
-    "@uplo/service-base": "workspace:^0.17.9",
-    "@uplo/types": "workspace:^0.17.9",
-    "@uplo/utils": "workspace:^0.17.9"
+    "@uplo/service-base": "workspace:^0.17.10",
+    "@uplo/types": "workspace:^0.17.10",
+    "@uplo/utils": "workspace:^0.17.10"
   },
   "engines": {
     "node": ">=14"

@@ -1,6 +1,6 @@
 {
   "name": "@uplo/fastify",
-  "version": "0.17.9",
+  "version": "0.17.10",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -24,7 +24,7 @@
     "fastify": ">=3"
   },
   "devDependencies": {
-    "@uplo/node": "workspace:^0.17.9",
+    "@uplo/node": "workspace:^0.17.10",
     "fastify": "^4.15.0"
   },
   "engines": {
