@@ -56,8 +56,19 @@ const uplo = Uplo({
     }),
   },
   attachments: {
+    user: {
+      avatar: true, // pass true to use default options
+    },
+    post: {
+      images: { multiple: true }
+    }
   },
 });
+
+const attachment = await uplo.attachments.user(123).avatar.attachFile({
+  filePath: '/home/images/image.png',
+  contentType: 'image/png',
+})
 ```
 
 ## License

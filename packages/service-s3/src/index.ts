@@ -79,6 +79,7 @@ const S3Service = ({
           ContentLength: Number(size),
           ContentType: contentType,
           ContentMD5: checksum,
+          ACL: isPublic ? 'public-read' : 'private',
         },
       });
 
@@ -86,7 +87,8 @@ const S3Service = ({
     },
 
     async delete({ key }: Pick<BlobData, 'key'>) {
-      await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }));
+      const cmd = new DeleteObjectCommand({ Bucket: bucket, Key: key })
+      await client.send(cmd);
 
       return true;
     },
@@ -100,10 +102,16 @@ const S3Service = ({
     },
 
     async directUploadHeaders(blob: BlobData) {
-      return {
+      const headers: HeadersInit = {
         'Content-Type': blob.contentType,
         'Content-MD5': blob.checksum,
       };
+
+      if (isPublic) {
+        headers['x-amz-acl'] = 'public-read';
+      }
+
+      return headers
     },
 
     async publicUrl({ key }: Pick<BlobData, 'key'>) {
