@@ -107,17 +107,17 @@ const S3Service = ({
     },
 
     async publicUrl({ key }: Pick<BlobData, 'key'>) {
-      const publicEndpoint = endpoint
-        ? endpoint
-        : `https://${bucket}.s3${region === DEFAULT_REGION ? '' :  `.${region}`}.amazonaws.com`;
-      return `${publicEndpoint}/${key}`;
+      if (endpoint) {
+        return `${endpoint}/${bucket}/${key}`;
+      } else {
+        return `https://${bucket}.s3${region === DEFAULT_REGION ? '' :  `.${region}`}.amazonaws.com/${key}`;
+      }
     },
 
     async privateUrl(
       blob: BlobData,
       { disposition, expiresIn = 300 }: { disposition?: ContentDispositionType, expiresIn?: number } = {}
     ) {
-
       const command = new GetObjectCommand({
         Bucket: bucket,
         Key: blob.key,
