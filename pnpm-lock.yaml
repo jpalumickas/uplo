@@ -22,14 +22,14 @@ importers:
   packages/adapter-prisma:
     dependencies:
       '@uplo/types':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../types
     devDependencies:
       '@prisma/client':
         specifier: ^4.12.0
         version: 4.12.0(prisma@4.12.0)
       '@uplo/node':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../node
       dataloader:
         specifier: ^2.2.2
@@ -41,7 +41,7 @@ importers:
   packages/analyzer-image:
     dependencies:
       '@uplo/types':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../types
     devDependencies:
       '@types/sharp':
@@ -54,7 +54,7 @@ importers:
   packages/analyzer-image-blurhash:
     dependencies:
       '@uplo/types':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../types
       blurhash:
         specifier: ^2.0.5
@@ -74,7 +74,7 @@ importers:
         version: 4.5.0
     devDependencies:
       '@uplo/node':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../node
       fastify:
         specifier: ^4.15.0
@@ -164,7 +164,7 @@ importers:
   packages/service-base:
     dependencies:
       '@uplo/types':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../types
 
   packages/service-gcs:
@@ -173,13 +173,13 @@ importers:
         specifier: ^6.9.5
         version: 6.9.5
       '@uplo/service-base':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../service-base
       '@uplo/types':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../types
       '@uplo/utils':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../utils
     devDependencies:
       '@types/node':
@@ -198,19 +198,19 @@ importers:
         specifier: ^3.306.0
         version: 3.306.0
       '@uplo/service-base':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../service-base
       '@uplo/types':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../types
       '@uplo/utils':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../utils
 
   packages/types:
     dependencies:
       '@uplo/utils':
-        specifier: workspace:^0.17.10
+        specifier: workspace:^0.17.11
         version: link:../utils
     devDependencies:
       '@types/node':
