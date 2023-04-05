@@ -25,6 +25,7 @@ export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
   services: {
     [serviceName: string]: Service;
   };
+  defaultServiceName?: string;
   adapter: Adapter;
   config?: UploConfig;
   analyzers?: Analyzer[];

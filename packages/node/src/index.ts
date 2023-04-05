@@ -17,6 +17,7 @@ import { defaultConfig } from './lib/defaultConfig';
 
 const Uplo = <AttachmentsList extends UploOptionsAttachments>({
   services,
+  defaultServiceName,
   adapter,
   config: providedConfig,
   analyzers = [],
@@ -47,7 +48,7 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
               modelId,
               modelName,
               attachmentName,
-              options: formatAttachmentOptions(attachmentOptions, services),
+              options: formatAttachmentOptions({ attachmentOptions, services, defaultServiceName }),
               services,
               adapter,
               signer,
@@ -78,7 +79,7 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
         signer,
         adapter,
         services,
-        options: formatAttachmentOptions(attachmentOptions, services),
+        options: formatAttachmentOptions({ attachmentOptions, services, defaultServiceName }),
       });
     },
     // @ts-ignore
