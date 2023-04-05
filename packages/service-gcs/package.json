@@ -20,13 +20,13 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@google-cloud/storage": "^6.9.4",
+    "@google-cloud/storage": "^6.9.5",
     "@uplo/service-base": "workspace:^0.17.9",
     "@uplo/types": "workspace:^0.17.9",
     "@uplo/utils": "workspace:^0.17.9"
   },
   "devDependencies": {
-    "@types/node": "^18.15.10"
+    "@types/node": "^18.15.11"
   },
   "engines": {
     "node": ">=14"

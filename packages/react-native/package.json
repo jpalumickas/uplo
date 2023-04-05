@@ -33,7 +33,7 @@
   },
   "devDependencies": {
     "@types/mime": "^3.0.1",
-    "@types/react": "^18.0.30",
+    "@types/react": "^18.0.33",
     "@types/react-native": "^0.71.5",
     "expo-file-system": "^15.2.2"
   },
