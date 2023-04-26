@@ -1,21 +1,25 @@
-import { promisify } from 'node:util';
-import jwt, { Secret, SignOptions, VerifyOptions, GetPublicKeyOrSecret, JwtPayload } from 'jsonwebtoken';
-import { Signer as TSigner, UploConfig } from '../types';
+import { jwtVerify, JWTPayload, SignJWT } from 'jose';
+import { SignerData, Signer as TSigner, UploConfig } from '../types';
 import { SignerError } from '../errors';
 
-const signAsync = promisify<string | object | Buffer, Secret, SignOptions>(jwt.sign);
-const verifyAsync = promisify<string, Secret | GetPublicKeyOrSecret,VerifyOptions>(jwt.verify);
+const ISSUER = 'uplo';
 
 export const Signer = (config: UploConfig): TSigner => {
+  const secret =
+    config.privateKey && new TextEncoder().encode(config.privateKey);
+
   const generate = async (data: object, purpose: string) => {
-    if (!config.privateKey) {
+    if (!secret) {
       throw new SignerError('Missing private key');
     }
 
-    const token = await signAsync(data, config.privateKey, {
-      audience: purpose,
-      expiresIn: config.signedIdExpiresIn,
-    }) as string | undefined;
+    const token = await new SignJWT(data as JWTPayload)
+      .setProtectedHeader({ alg: 'HS256' })
+      .setIssuedAt()
+      .setIssuer(ISSUER)
+      .setAudience(purpose)
+      .setExpirationTime(Date.now() + (config.signedIdExpiresIn || 3600))
+      .sign(secret);
 
     if (!token) {
       throw new SignerError('Failed to generate signed token');
@@ -25,12 +29,16 @@ export const Signer = (config: UploConfig): TSigner => {
   };
 
   const verify = async (token: string, purpose: string) => {
-    if (!config.privateKey) {
+    if (!secret) {
       throw new SignerError('Missing private key');
     }
 
-    const result = await verifyAsync(token, config.privateKey, { audience: purpose }) as JwtPayload | undefined;
-    return result;
+    const { payload } = await jwtVerify(token, secret, {
+      issuer: ISSUER,
+      audience: purpose,
+    });
+
+    return payload as SignerData | undefined;
   };
 
   return {
