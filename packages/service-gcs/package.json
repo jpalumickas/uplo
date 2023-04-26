@@ -21,12 +21,12 @@
   },
   "dependencies": {
     "@google-cloud/storage": "^6.9.5",
-    "@uplo/service-base": "workspace:^0.17.11",
-    "@uplo/types": "workspace:^0.17.11",
-    "@uplo/utils": "workspace:^0.17.11"
+    "@uplo/service-base": "workspace:^",
+    "@uplo/types": "workspace:^",
+    "@uplo/utils": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11"
+    "@types/node": "^18.16.1"
   },
   "engines": {
     "node": ">=14"

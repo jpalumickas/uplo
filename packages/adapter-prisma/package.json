@@ -30,13 +30,13 @@
     "dataloader": ">=2.0.0"
   },
   "dependencies": {
-    "@uplo/types": "workspace:^0.17.11"
+    "@uplo/types": "workspace:^"
   },
   "devDependencies": {
-    "@prisma/client": "^4.12.0",
-    "@uplo/node": "workspace:^0.17.11",
+    "@prisma/client": "^4.13.0",
+    "@uplo/node": "workspace:^",
     "dataloader": "^2.2.2",
-    "prisma": "^4.12.0"
+    "prisma": "^4.13.0"
   },
   "engines": {
     "node": ">=14"

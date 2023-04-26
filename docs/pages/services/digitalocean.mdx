@@ -26,3 +26,14 @@ const uplo = Uplo({
   },
 })
 ```
+
+## Configure DigitalOcean Space
+
+Add CORS with `PUT` as allowed Method and add these allowed Headers:
+
+* Content-Length
+* Content-MD5
+* Content-Type
+* x-amz-acl
+
+These headers are used for direct upload

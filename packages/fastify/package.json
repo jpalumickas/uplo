@@ -24,8 +24,8 @@
     "fastify": ">=3"
   },
   "devDependencies": {
-    "@uplo/node": "workspace:^0.17.11",
-    "fastify": "^4.15.0"
+    "@uplo/node": "workspace:^",
+    "fastify": "^4.16.3"
   },
   "engines": {
     "node": ">=14"

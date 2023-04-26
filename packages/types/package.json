@@ -20,10 +20,10 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/utils": "workspace:^0.17.11"
+    "@uplo/utils": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^18.15.11"
+    "@types/node": "^18.16.1"
   },
   "engines": {
     "node": ">=14"

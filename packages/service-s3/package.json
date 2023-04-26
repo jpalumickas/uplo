@@ -20,12 +20,12 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.306.0",
-    "@aws-sdk/lib-storage": "^3.306.0",
-    "@aws-sdk/s3-request-presigner": "^3.306.0",
-    "@uplo/service-base": "workspace:^0.17.11",
-    "@uplo/types": "workspace:^0.17.11",
-    "@uplo/utils": "workspace:^0.17.11"
+    "@aws-sdk/client-s3": "^3.319.0",
+    "@aws-sdk/lib-storage": "^3.319.0",
+    "@aws-sdk/s3-request-presigner": "^3.319.0",
+    "@uplo/service-base": "workspace:^",
+    "@uplo/types": "workspace:^",
+    "@uplo/utils": "workspace:^"
   },
   "engines": {
     "node": ">=14"

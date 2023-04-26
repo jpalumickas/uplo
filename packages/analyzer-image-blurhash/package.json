@@ -20,7 +20,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "@uplo/types": "workspace:^0.17.11",
+    "@uplo/types": "workspace:^",
     "blurhash": "^2.0.5"
   },
   "peerDependencies": {
