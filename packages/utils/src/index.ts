@@ -1,3 +1,3 @@
-export * from './contentDisposition';
+export * from './contentDisposition.js';
 export * from './generateKey';
-export * from './getDeepValue';
+export * from './getDeepValue.js';
