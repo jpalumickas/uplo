@@ -23,12 +23,15 @@
   "scripts": {
     "build": "rimraf dist && pnpm build:node && pnpm build:browser",
     "build:node": "tsup src/index.ts --format cjs,esm --dts",
-    "build:browser": "tsup --entry.browser src/browser/index.ts --format esm && mv dist/browser.mjs dist/browser.js"
+    "build:browser": "tsup --entry.browser src/browser/index.ts --format esm && mv dist/browser.mjs dist/browser.js",
+    "test": "vitest run",
+    "test:dev": "vitest dev"
   },
   "devDependencies": {
     "@tinyhttp/content-disposition": "~2.0.8",
     "@types/node": "^18.16.1",
-    "rimraf": "^5.0.0"
+    "rimraf": "^5.0.0",
+    "vitest": "^0.30.1"
   },
   "engines": {
     "node": ">=14"
