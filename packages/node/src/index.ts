@@ -8,7 +8,7 @@ import {
   UploOptionsAttachment,
 } from './types';
 import { AttachmentNotFoundError } from './errors';
-import { Signer } from './signer';
+import { Signer } from './Signer';
 import { ModelAttachment } from './ModelAttachment';
 import { Blob } from './Blob';
 import { GenericAttachment } from './GenericAttachment';

@@ -1,11 +1,11 @@
 import { Adapter, Service } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { UploError } from '../errors';
-import { SignerResult, CreateDirectUploadParams } from '../types';
+import { Signer, CreateDirectUploadParams } from '../types';
 
 type Options = {
   params: CreateDirectUploadParams;
-  signer: SignerResult;
+  signer: Signer;
   adapter: Adapter;
   service: Service;
   serviceName: string;
@@ -13,7 +13,7 @@ type Options = {
 
 export const createDirectUpload = async  ({ params, signer, adapter, service, serviceName }: Options) => {
   const blobParams = {
-    key: generateKey(),
+    key: await generateKey(),
     fileName: params.fileName,
     contentType: params.contentType,
     size: params.size,

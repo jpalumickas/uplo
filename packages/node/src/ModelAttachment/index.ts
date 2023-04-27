@@ -4,7 +4,8 @@ import camelCase from 'lodash-es/camelCase';
 import { Analyzer, Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { UploError, BlobNotFoundError } from '../errors';
-import { Signer, Callbacks } from '../types';
+import { Callbacks } from '../types';
+import { Signer } from '../Signer';
 import { Attachment } from '../Attachment';
 import { blobDataFromFileInput } from './blobDataFromFileInput';
 
@@ -21,7 +22,7 @@ interface ModelAttachmentParams {
   attachmentName: string;
   services: Record<string, Service>;
   adapter: Adapter;
-  signer: Signer;
+  signer: ReturnType<typeof Signer>;
   callbacks: Callbacks;
   analyzers: Analyzer[];
   options: ModelAttachmentOptions
@@ -46,7 +47,7 @@ export class ModelAttachment {
   public attachmentName: string;
   public adapter: Adapter;
   public services: Record<string, Service>;
-  public signer: Signer;
+  public signer: ReturnType<typeof Signer>;
   public callbacks: Callbacks;
   public analyzers: Analyzer[];
   public options: ModelAttachmentOptions;
@@ -129,7 +130,7 @@ export class ModelAttachment {
     const data = await blobDataFromFileInput(content);
 
     const blobParams = {
-      key: generateKey(),
+      key: await generateKey(),
       fileName: params.fileName || data.fileName,
       contentType: params.contentType || data.contentType,
       size: params.size || data.size,

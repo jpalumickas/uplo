@@ -1,11 +1,10 @@
 import { ID, Blob, Service, Analyzer, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
-import { Signer } from './signer';
+import { Signer } from '../Signer';
 import { ModelAttachment } from '../ModelAttachment';
 import { GenericAttachment }  from '../GenericAttachment';
 
 export * from './callbacks';
-export * from './signer';
 
 export interface UploConfig {
   privateKey?: string;
@@ -34,7 +33,7 @@ export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
 }
 
 export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
-  signer: Signer;
+  signer: ReturnType<typeof Signer>;
   adapter: Adapter;
   $services: Record<string, Service>;
   $findBlob: (id: ID) => Promise<Blob | null>;

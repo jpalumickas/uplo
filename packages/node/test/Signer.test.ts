@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { Signer } from './index'
+import { Signer } from '../src/Signer'
 
 const signer = Signer({
   privateKey: 'test',

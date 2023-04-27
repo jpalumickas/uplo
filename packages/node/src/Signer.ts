@@ -1,14 +1,22 @@
+import { ID } from '@uplo/types';
 import { jwtVerify, JWTPayload, SignJWT } from 'jose';
-import { SignerData, Signer as TSigner, UploConfig } from '../types';
-import { SignerError } from '../errors';
+import { UploConfig } from './types';
+import { SignerError } from './errors';
 
 const ISSUER = 'uplo';
 
-export const Signer = (config: UploConfig): TSigner => {
+export type SignerData = {
+  blobId?: ID;
+  [key: string]: string | number | undefined;
+}
+
+export type SignerPurpose = 'blob';
+
+export const Signer = (config: UploConfig) => {
   const secret =
     config.privateKey && new TextEncoder().encode(config.privateKey);
 
-  const generate = async (data: object, purpose: string) => {
+  const generate = async (data: object, purpose: SignerPurpose) => {
     if (!secret) {
       throw new SignerError('Missing private key');
     }
@@ -28,7 +36,7 @@ export const Signer = (config: UploConfig): TSigner => {
     return token;
   };
 
-  const verify = async (token: string, purpose: string) => {
+  const verify = async (token: string, purpose: SignerPurpose) => {
     if (!secret) {
       throw new SignerError('Missing private key');
     }
