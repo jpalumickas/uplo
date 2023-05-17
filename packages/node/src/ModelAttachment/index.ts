@@ -1,8 +1,8 @@
 import fs from 'node:fs';
-import upperFirst from 'lodash-es/upperFirst';
 import camelCase from 'lodash-es/camelCase';
 import { Analyzer, Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
+import { upperFirst } from '../utils/upperFirst'
 import { UploError, BlobNotFoundError } from '../errors';
 import { Callbacks } from '../types';
 import { Signer } from '../Signer';

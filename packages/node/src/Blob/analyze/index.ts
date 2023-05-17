@@ -1,4 +1,3 @@
-import isEmpty from 'lodash-es/isEmpty';
 import merge from 'lodash-es/merge';
 import { Service, Adapter, BlobData, Analyzer } from '@uplo/types';
 import { downloadToTempfile as downloadToTempfileFn } from '../downloadToTempfile';
@@ -17,15 +16,15 @@ const analyze =
     adapter: Adapter;
     analyzers: Analyzer[];
   }): Promise<BlobData['metadata']> => {
-    const blob = Blob({ data: blobData, service, adapter, analyzers });
-    const downloadToTempfile = downloadToTempfileFn({ key: blobData.key, fileName: blobData.fileName, service });
-
-    if (isEmpty(analyzers)) {
+    if (!analyzers || analyzers.length === 0) {
       console.warn(
         `[Uplo] No analyzers provided. Skipping analyze for Blob ${blobData.key}`
       );
       return {};
     }
+
+    const blob = Blob({ data: blobData, service, adapter, analyzers });
+    const downloadToTempfile = downloadToTempfileFn({ key: blobData.key, fileName: blobData.fileName, service });
 
     const newMetadata = {};
 
@@ -34,7 +33,7 @@ const analyze =
         try {
           const analyzerMetadata = await analyzer({ filePath, blob });
 
-          if (!isEmpty(analyzerMetadata)) {
+          if (analyzerMetadata && Object.keys(analyzerMetadata).length > 0) {
             merge(newMetadata, analyzerMetadata);
           }
         } catch (err) {
