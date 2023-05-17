@@ -1,4 +1,3 @@
-import _reduce from 'lodash-es/reduce';
 import { getDeepValue } from '@uplo/utils';
 import { ID } from '@uplo/types';
 import {
@@ -7,7 +6,7 @@ import {
   UploOptionsAttachments,
   UploOptionsAttachment,
 } from './types';
-import { AttachmentNotFoundError } from './errors';
+import { UploError, AttachmentNotFoundError } from './errors';
 import { Signer } from './Signer';
 import { ModelAttachment } from './ModelAttachment';
 import { Blob } from './Blob';
@@ -16,7 +15,7 @@ import { formatAttachmentOptions } from './lib/formatAttachmentOptions';
 import { defaultConfig } from './lib/defaultConfig';
 
 const Uplo = <AttachmentsList extends UploOptionsAttachments>({
-  services,
+  services = {},
   defaultServiceName,
   adapter,
   config: providedConfig,
@@ -32,38 +31,47 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
     if (!blobData) return null;
 
     const service = services[blobData.serviceName];
+    if (!service) {
+      throw new UploError(
+        `Cannot find service with name ${blobData.serviceName}`
+      );
+    }
+
     return Blob({ data: blobData, adapter: adapter, service, analyzers });
-  }
+  };
 
-  const modelAttachments = _reduce(
-      attachments,
-      (result, modelAttachments, modelName) => {
-        // @ts-ignore
-        result[modelName] = (modelId: ID) => _reduce
-        (
-          modelAttachments,
-          (r, attachmentOptions: UploOptionsAttachment, attachmentName) => {
-            // @ts-ignore
-            r[attachmentName] = new ModelAttachment({
-              modelId,
-              modelName,
-              attachmentName,
-              options: formatAttachmentOptions({ attachmentOptions, services, defaultServiceName }),
+  const modelAttachments = Object.keys(attachments).reduce(
+    (result, modelName) => {
+      const modelAttachments = attachments[modelName];
+
+      // @ts-ignore
+      result[modelName] = (modelId: ID) =>
+        Object.keys(modelAttachments!).reduce((r, attachmentName) => {
+          const attachmentOptions = modelAttachments![
+            attachmentName
+          ] as UploOptionsAttachment;
+      // @ts-ignore
+          r[attachmentName] = new ModelAttachment({
+            modelId,
+            modelName,
+            attachmentName,
+            options: formatAttachmentOptions({
+              attachmentOptions,
               services,
-              adapter,
-              signer,
-              callbacks,
-              analyzers,
-            });
-            return r;
-          },
-          {}
-        );
-
-        return result;
-      },
-      {}
-    )
+              defaultServiceName,
+            }),
+            services,
+            adapter,
+            signer,
+            callbacks,
+            analyzers,
+          });
+          return r;
+        }, {});
+      return result;
+    },
+    {}
+  );
 
   return {
     signer,
@@ -71,15 +79,21 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
     $services: services,
     $findBlob: findBlob,
     $findGenericAttachment: (name: `${string}.${string}`) => {
-      const attachmentOptions = getDeepValue(attachments, name, null)
+      const attachmentOptions = getDeepValue(attachments, name, null);
       if (!attachmentOptions) {
-        throw new AttachmentNotFoundError(`Attachment with name ${name} not found`);
+        throw new AttachmentNotFoundError(
+          `Attachment with name ${name} not found`
+        );
       }
       return GenericAttachment({
         signer,
         adapter,
         services,
-        options: formatAttachmentOptions({ attachmentOptions, services, defaultServiceName }),
+        options: formatAttachmentOptions({
+          attachmentOptions,
+          services,
+          defaultServiceName,
+        }),
       });
     },
     // @ts-ignore
