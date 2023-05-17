@@ -1,8 +1,7 @@
 import fs from 'node:fs';
-import camelCase from 'lodash-es/camelCase';
+import camelCase from 'camelcase';
 import { Analyzer, Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
-import { upperFirst } from '../utils/upperFirst'
 import { UploError, BlobNotFoundError } from '../errors';
 import { Callbacks } from '../types';
 import { Signer } from '../Signer';
@@ -63,7 +62,7 @@ export class ModelAttachment {
     this.analyzers = params.analyzers;
     this.options = params.options;
 
-    this.recordType = upperFirst(camelCase(this.modelName));
+    this.recordType = camelCase(this.modelName, { pascalCase: true });
   }
 
   async findOne() {

@@ -26,6 +26,8 @@
   "dependencies": {
     "@uplo/types": "workspace:*",
     "@uplo/utils": "workspace:*",
+    "camelcase": "^6.3.0",
+    "deepmerge": "^4.3.1",
     "jose": "^4.14.4",
     "lodash-es": "^4.17.21",
     "mime": "^3.0.0",

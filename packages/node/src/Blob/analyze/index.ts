@@ -1,4 +1,4 @@
-import merge from 'lodash-es/merge';
+import merge from 'deepmerge';
 import { Service, Adapter, BlobData, Analyzer } from '@uplo/types';
 import { downloadToTempfile as downloadToTempfileFn } from '../downloadToTempfile';
 import { AnalyzeError } from '../../errors';
@@ -26,7 +26,7 @@ const analyze =
     const blob = Blob({ data: blobData, service, adapter, analyzers });
     const downloadToTempfile = downloadToTempfileFn({ key: blobData.key, fileName: blobData.fileName, service });
 
-    const newMetadata = {};
+    let newMetadata = {};
 
     await downloadToTempfile(async (filePath) => {
       for (const analyzer of analyzers) {
@@ -34,7 +34,7 @@ const analyze =
           const analyzerMetadata = await analyzer({ filePath, blob });
 
           if (analyzerMetadata && Object.keys(analyzerMetadata).length > 0) {
-            merge(newMetadata, analyzerMetadata);
+            newMetadata = merge(newMetadata, analyzerMetadata);
           }
         } catch (err) {
           if (err instanceof Error) {
@@ -45,7 +45,7 @@ const analyze =
         }
       }
 
-      merge(newMetadata, { analyzed: true });
+      newMetadata = merge(newMetadata, { analyzed: true });
     });
 
     await adapter.updateBlobMetadata({ key: blobData.key, metadata: newMetadata });
