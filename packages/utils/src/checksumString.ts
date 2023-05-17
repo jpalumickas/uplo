@@ -1,5 +1,6 @@
 import crypto from 'node:crypto';
 
 export const checksumString = async (content: string) => {
-  return crypto.createHash('md5').update(content).digest('base64');
+  const buffer = Buffer.from(content, 'utf-8')
+  return crypto.createHash('md5').update(buffer).digest('base64');
 }
