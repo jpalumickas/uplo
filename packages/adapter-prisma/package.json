@@ -33,10 +33,10 @@
     "@uplo/types": "workspace:^"
   },
   "devDependencies": {
-    "@prisma/client": "^4.13.0",
+    "@prisma/client": "^4.14.0",
     "@uplo/node": "workspace:^",
     "dataloader": "^2.2.2",
-    "prisma": "^4.13.0"
+    "prisma": "^4.14.0"
   },
   "engines": {
     "node": ">=14"

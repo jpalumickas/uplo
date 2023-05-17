@@ -29,8 +29,8 @@
     "node": ">=14"
   },
   "devDependencies": {
-    "@types/sharp": "^0.31.1",
-    "sharp": "^0.32.0"
+    "@types/sharp": "^0.32.0",
+    "sharp": "^0.32.1"
   },
   "keywords": [
     "image",
