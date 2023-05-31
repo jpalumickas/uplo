@@ -34,8 +34,8 @@
   },
   "devDependencies": {
     "@types/mime": "^3.0.1",
-    "@types/node": "^20.1.7",
-    "vitest": "^0.31.0"
+    "@types/node": "^20.2.5",
+    "vitest": "^0.31.2"
   },
   "engines": {
     "node": ">=14"
