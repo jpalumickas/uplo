@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "packages:publish": "changeset publish",
+    "packages:publish": "pnpm publish -r --filter @uplo/*",
     "version:patch": "lerna version patch --force-publish",
     "version:minor": "lerna version minor --force-publish"
   },
