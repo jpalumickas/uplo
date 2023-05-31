@@ -20,7 +20,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "peerDependencies": {
-    "@uplo/node": "^0.17.0",
+    "@uplo/node": "workspace:^",
     "fastify": ">=3"
   },
   "devDependencies": {
