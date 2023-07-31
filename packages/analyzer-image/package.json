@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@types/sharp": "^0.32.0",
-    "sharp": "^0.32.1"
+    "sharp": "^0.32.4"
   },
   "keywords": [
     "image",
