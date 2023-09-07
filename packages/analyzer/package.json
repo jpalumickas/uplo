@@ -1,0 +1,41 @@
+{
+  "name": "@uplo/analyzer",
+  "version": "0.18.2",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "repository": "jpalumickas/uplo",
+  "homepage": "https://uplo.js.org",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts"
+  },
+  "dependencies": {
+    "@uplo/types": "workspace:^",
+    "deepmerge": "^4.3.1"
+  },
+  "devDependencies": {
+    "@uplo/node": "workspace:^",
+    "tempy": "^1.0.1"
+  },
+  "peerDependencies": {
+    "@uplo/node": "workspace:^"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": [
+    "analyze",
+    "upload",
+    "uploads"
+  ]
+}

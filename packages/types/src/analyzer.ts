@@ -5,4 +5,4 @@ export interface AnalyzerOptions {
   filePath: string;
 }
 
-export type Analyzer = ({ blob, filePath }: AnalyzerOptions) => object;
+export type Analyzer = ({ blob, filePath }: AnalyzerOptions) => Promise<object>;

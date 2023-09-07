@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import camelCase from 'camelcase';
-import { Analyzer, Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
+import { Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { UploError, BlobNotFoundError } from '../errors';
 import { Callbacks } from '../types';
@@ -12,7 +12,7 @@ export interface ModelAttachmentOptions {
   multiple: boolean;
   serviceName: string;
   contentType?: string | string[] | RegExp;
-  directUpload?: boolean
+  directUpload?: boolean;
 }
 
 interface ModelAttachmentParams {
@@ -23,8 +23,7 @@ interface ModelAttachmentParams {
   adapter: Adapter;
   signer: ReturnType<typeof Signer>;
   callbacks: Callbacks;
-  analyzers: Analyzer[];
-  options: ModelAttachmentOptions
+  options: ModelAttachmentOptions;
 }
 
 interface AttachFileOptions {
@@ -48,7 +47,6 @@ export class ModelAttachment {
   public services: Record<string, Service>;
   public signer: ReturnType<typeof Signer>;
   public callbacks: Callbacks;
-  public analyzers: Analyzer[];
   public options: ModelAttachmentOptions;
 
   constructor(params: ModelAttachmentParams) {
@@ -59,7 +57,6 @@ export class ModelAttachment {
     this.services = params.services;
     this.signer = params.signer;
     this.callbacks = params.callbacks;
-    this.analyzers = params.analyzers;
     this.options = params.options;
 
     this.recordType = camelCase(this.modelName, { pascalCase: true });
@@ -90,13 +87,15 @@ export class ModelAttachment {
       name: this.attachmentName,
     });
 
-    return results.map(result => this.buildAttachment(result));
+    return results.map((result) => this.buildAttachment(result));
   }
 
   async detach(attachmentId?: ID) {
     if (this.options.multiple) {
       if (!attachmentId) {
-        throw new UploError('Provide attachment ID when detaching attachment in multiple');
+        throw new UploError(
+          'Provide attachment ID when detaching attachment in multiple'
+        );
       }
       await this.adapter.deleteAttachment(attachmentId);
       return true;
@@ -117,9 +116,11 @@ export class ModelAttachment {
     return true;
   }
 
-  async attachFile(
-    { filePath, content: contentInput, ...params }: AttachFileOptions
-  ) {
+  async attachFile({
+    filePath,
+    content: contentInput,
+    ...params
+  }: AttachFileOptions) {
     if (!contentInput && !filePath) {
       throw new UploError('Provide filePath or content when attacing a file');
     }
@@ -160,7 +161,7 @@ export class ModelAttachment {
 
     await this.getService(blob.serviceName).upload({
       filePath,
-    // @ts-ignore
+      // @ts-ignore
       content: filePath ? fs.createReadStream(filePath) : contentInput,
       ...blob,
     });
@@ -227,7 +228,7 @@ export class ModelAttachment {
   }
 
   private buildAttachment(data: AttachmentData) {
-    return Attachment({ data, adapter: this.adapter, services: this.services, analyzers: this.analyzers });
+    return Attachment({ data, adapter: this.adapter, services: this.services });
   }
 
   private getService(serviceName: string) {

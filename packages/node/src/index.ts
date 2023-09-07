@@ -19,7 +19,6 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
   defaultServiceName,
   adapter,
   config: providedConfig,
-  analyzers = [],
   callbacks = {},
   attachments,
 }: UploOptions<AttachmentsList>): TUplo<AttachmentsList> => {
@@ -37,7 +36,7 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
       );
     }
 
-    return Blob({ data: blobData, adapter: adapter, service, analyzers });
+    return Blob({ data: blobData, adapter: adapter, service });
   };
 
   const modelAttachments = Object.keys(attachments).reduce(
@@ -50,7 +49,7 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
           const attachmentOptions = modelAttachments![
             attachmentName
           ] as UploOptionsAttachment;
-      // @ts-ignore
+          // @ts-ignore
           r[attachmentName] = new ModelAttachment({
             modelId,
             modelName,
@@ -64,7 +63,6 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
             adapter,
             signer,
             callbacks,
-            analyzers,
           });
           return r;
         }, {});

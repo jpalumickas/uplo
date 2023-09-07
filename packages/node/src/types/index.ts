@@ -1,8 +1,8 @@
-import { ID, Blob, Service, Analyzer, Adapter } from '@uplo/types';
+import { ID, Blob, Service, Adapter } from '@uplo/types';
 import { Callbacks } from './callbacks';
 import { Signer } from '../Signer';
 import { ModelAttachment } from '../ModelAttachment';
-import { GenericAttachment }  from '../GenericAttachment';
+import { GenericAttachment } from '../GenericAttachment';
 
 export * from './callbacks';
 
@@ -18,7 +18,9 @@ export interface UploOptionsAttachment {
   contentType?: string | string[] | RegExp;
 }
 
-export type UploOptionsAttachments = Partial<Record<string, Record<string, UploOptionsAttachment | true>>>;
+export type UploOptionsAttachments = Partial<
+  Record<string, Record<string, UploOptionsAttachment | true>>
+>;
 
 export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
   services: {
@@ -27,9 +29,8 @@ export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
   defaultServiceName?: string;
   adapter: Adapter;
   config?: UploConfig;
-  analyzers?: Analyzer[];
   callbacks?: Callbacks;
-  attachments: AttachmentsList
+  attachments: AttachmentsList;
 }
 
 export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
@@ -37,7 +38,9 @@ export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
   adapter: Adapter;
   $services: Record<string, Service>;
   $findBlob: (id: ID) => Promise<Blob | null>;
-  $findGenericAttachment: (name: `${string}.${string}`) => ReturnType<typeof GenericAttachment>;
+  $findGenericAttachment: (
+    name: `${string}.${string}`
+  ) => ReturnType<typeof GenericAttachment>;
 
   // attachments: Record<ModelNames, Record<string, ModelAttachment>>
 
@@ -45,7 +48,7 @@ export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
     [ModelName in keyof AttachmentsList]: (id: ID) => {
       [AttachmentName in keyof AttachmentsList[ModelName]]: ModelAttachment;
     };
-  }
+  };
 }
 
 export interface CreateDirectUploadParamsMetadata {

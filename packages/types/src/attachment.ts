@@ -19,8 +19,8 @@ export interface BlobData {
 }
 
 export interface BlobUrlOptions {
-  disposition?: ContentDispositionType
-  expiresIn?: number
+  disposition?: ContentDispositionType;
+  expiresIn?: number;
 }
 // export interface Blob extends Omit<BlobData, 'service'> {
 export interface Blob {
@@ -36,8 +36,7 @@ export interface Blob {
   service: Service;
   url: (opts?: BlobUrlOptions) => Promise<string>;
   protocolUrl: () => Promise<string>;
-  analyze: () => Promise<BlobData['metadata']>;
-  downloadToTempfile: (callback: (tmpPath: string) => void) => Promise<void>;
+  updateMetadata: (metadata: BlobData['metadata']) => Promise<void>;
 }
 
 export interface AttachmentData {
@@ -54,6 +53,5 @@ export interface Attachment extends Omit<AttachmentData, 'blob'> {
   blob: Blob;
   url: Blob['url'];
   protocolUrl: Blob['protocolUrl'];
-  downloadToTempfile: Blob['downloadToTempfile'];
   metadata: Blob['metadata'];
 }
