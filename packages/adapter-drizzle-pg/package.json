@@ -1,5 +1,5 @@
 {
-  "name": "@uplo/adapter-prisma",
+  "name": "@uplo/adapter-drizzle-pg",
   "version": "0.18.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -21,32 +21,29 @@
   "repository": "jpalumickas/uplo",
   "homepage": "https://uplo.js.org",
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
-    "generate": "prisma generate"
+    "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "peerDependencies": {
-    "@prisma/client": ">=2.19.0",
     "@uplo/node": "workspace:^",
-    "dataloader": ">=2.0.0"
+    "dataloader": ">=2.0.0",
+    "drizzle-orm": ">=0.28.6"
   },
   "dependencies": {
     "@uplo/types": "workspace:^"
   },
   "devDependencies": {
-    "@prisma/client": "^5.2.0",
     "@uplo/node": "workspace:^",
     "dataloader": "^2.2.2",
-    "prisma": "^5.2.0"
+    "drizzle-orm": "^0.28.6"
   },
   "engines": {
     "node": ">=14"
   },
   "keywords": [
-    "prisma",
-    "upload",
-    "uploads",
+    "drizzle",
     "postgres",
     "postgresql",
-    "mysql"
+    "upload",
+    "uploads"
   ]
 }

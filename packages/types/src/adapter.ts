@@ -31,8 +31,22 @@ export interface Adapter {
   findBlobByKey(key: string): Promise<BlobData | null>;
   attachBlob(options: AttachBlobOptions): Promise<AttachmentData>;
   createBlob(options: CreateBlobOptions): Promise<BlobData>;
-  updateBlobMetadata({ key, metadata }: { key: BlobData['key'], metadata: BlobData['metadata'] }): Promise<BlobData | null>;
-  findAttachments(options: { recordId: AttachmentData['recordId'], recordType: AttachmentData['recordType'], name: AttachmentData['name'] }): Promise<AttachmentData[]>;
-  deleteAttachment(id: ID): Promise<AttachmentData | null>;
-  deleteAttachments(options: { recordId: AttachmentData['recordId'], recordType: AttachmentData['recordType'], name: AttachmentData['name'] }): Promise<AttachmentData[]>;
+  updateBlobMetadata({
+    key,
+    metadata,
+  }: {
+    key: BlobData['key'];
+    metadata: BlobData['metadata'];
+  }): Promise<BlobData | null>;
+  findAttachments(options: {
+    recordId: AttachmentData['recordId'];
+    recordType: AttachmentData['recordType'];
+    name: AttachmentData['name'];
+  }): Promise<AttachmentData[]>;
+  deleteAttachment(id: ID): Promise<Omit<AttachmentData, 'blob'> | null>;
+  deleteAttachments(options: {
+    recordId: AttachmentData['recordId'];
+    recordType: AttachmentData['recordType'];
+    name: AttachmentData['name'];
+  }): Promise<Omit<AttachmentData, 'blob'>[]>;
 }

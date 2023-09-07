@@ -54,9 +54,9 @@ importers:
       '@prisma/client':
         specifier: ^5.2.0
         version: 5.2.0(prisma@5.2.0)
-      '@uplo/adapter-drizzle':
+      '@uplo/adapter-drizzle-pg':
         specifier: workspace:*
-        version: link:../../packages/adapter-drizzle
+        version: link:../../packages/adapter-drizzle-pg
       '@uplo/adapter-prisma':
         specifier: workspace:*
         version: link:../../packages/adapter-prisma
@@ -86,7 +86,7 @@ importers:
         specifier: ^0.34.3
         version: 0.34.3
 
-  packages/adapter-drizzle:
+  packages/adapter-drizzle-pg:
     dependencies:
       '@uplo/types':
         specifier: workspace:^

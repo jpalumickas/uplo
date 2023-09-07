@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@prisma/client": "^5.2.0",
-    "@uplo/adapter-drizzle": "workspace:*",
+    "@uplo/adapter-drizzle-pg": "workspace:*",
     "@uplo/adapter-prisma": "workspace:*",
     "@uplo/node": "workspace:*",
     "@uplo/service-gcs": "workspace:*",

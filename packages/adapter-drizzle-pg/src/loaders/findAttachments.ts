@@ -1,6 +1,7 @@
-import { PrismaClient } from '@prisma/client';
 import DataLoader from 'dataloader';
-import { ID, AttachmentData } from '@uplo/types';
+import { ID } from '@uplo/types';
+import { DrizzleAdapterOptions } from '..';
+import { and, inArray, eq, or } from 'drizzle-orm';
 
 type FindAttachmentsRecordData = {
   recordId: ID;
@@ -25,28 +26,25 @@ const groupByTypeAndName = (data: Readonly<FindAttachmentsRecordData[]>) => {
   }, {});
 };
 
-export const initFindAttachmentsLoader = (prisma: PrismaClient) =>
+export const findAttachmentsLoader = ({ db, schema }: DrizzleAdapterOptions) =>
   new DataLoader(async (recordData: Readonly<FindAttachmentsRecordData[]>) => {
     const grouped = groupByTypeAndName(recordData);
     const OR = Object.keys(grouped).map((groupName) => {
       const [recordType, name] = groupName.split(SEPARATOR);
-      return {
-        recordType,
-        name,
-        recordId: {
-          in: grouped[groupName].map((item) => item.recordId as string),
-        },
-      };
+      return and(
+        eq(schema.fileAttachments.recordType, recordType),
+        eq(schema.fileAttachments.name, name),
+        inArray(
+          schema.fileAttachments.recordId,
+          grouped[groupName].map((item) => item.recordId as string)
+        )
+      );
     });
 
-    const fileAttachments = (await prisma.fileAttachment.findMany({
-      where: {
-        OR,
-      },
-      include: {
-        blob: true,
-      },
-    })) as AttachmentData[];
+    const fileAttachments = await db
+      .select()
+      .from(schema.fileAttachments)
+      .where(or(...OR));
 
     const result = recordData.map((recordItem) => {
       return fileAttachments.filter(
