@@ -1,4 +1,4 @@
-import { Analyzer } from '@uplo/types';
+import { Analyzer } from '@uplo/analyzer';
 import { encodeImageToBlurhash } from './encodeImageToBlurhash';
 
 const ImageBlurhashAnalyzer =

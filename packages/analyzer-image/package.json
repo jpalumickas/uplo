@@ -19,16 +19,15 @@
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
-  "dependencies": {
-    "@uplo/types": "workspace:^"
-  },
   "peerDependencies": {
+    "@uplo/analyzer": "workspace:^",
     "sharp": ">= 0.29"
   },
   "engines": {
     "node": ">=14"
   },
   "devDependencies": {
+    "@uplo/analyzer": "workspace:^",
     "@types/sharp": "^0.32.0",
     "sharp": "^0.32.5"
   },

@@ -1,4 +1,4 @@
-import { Analyzer } from '@uplo/types';
+import { Analyzer } from '@uplo/analyzer';
 import sharp from 'sharp';
 
 const ORIENTATIONS = [

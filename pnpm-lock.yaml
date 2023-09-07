@@ -85,23 +85,19 @@ importers:
         version: 1.0.1
 
   packages/analyzer-image:
-    dependencies:
-      '@uplo/types':
-        specifier: workspace:^
-        version: link:../types
     devDependencies:
       '@types/sharp':
         specifier: ^0.32.0
         version: 0.32.0
+      '@uplo/analyzer':
+        specifier: workspace:^
+        version: link:../analyzer
       sharp:
         specifier: ^0.32.5
         version: 0.32.5
 
   packages/analyzer-image-blurhash:
     dependencies:
-      '@uplo/types':
-        specifier: workspace:^
-        version: link:../types
       blurhash:
         specifier: ^2.0.5
         version: 2.0.5
@@ -109,6 +105,9 @@ importers:
       '@types/sharp':
         specifier: ^0.32.0
         version: 0.32.0
+      '@uplo/analyzer':
+        specifier: workspace:^
+        version: link:../analyzer
       sharp:
         specifier: ^0.32.5
         version: 0.32.5
