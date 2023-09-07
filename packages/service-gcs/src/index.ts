@@ -103,10 +103,12 @@ class GCSService implements Service {
       version: 'v4',
       expires: Date.now() + expiresIn * 1000,
       responseType: blob.contentType,
-      responseDisposition: disposition && contentDisposition({
-        type: disposition,
-        fileName: blob.fileName,
-      }),
+      responseDisposition:
+        disposition &&
+        contentDisposition({
+          type: disposition,
+          fileName: blob.fileName,
+        }),
     };
 
     // Get a v4 signed URL for uploading file
@@ -139,6 +141,10 @@ class GCSService implements Service {
       });
     } else if (content instanceof Uint8Array) {
       throw new Error('Uint8Array not implemented');
+    } else if (content instanceof globalThis.Blob) {
+      throw new Error('Blob not implemented');
+    } else if (content instanceof ReadableStream) {
+      throw new Error('ReadableStream not implemented');
     }
 
     return await file.save(content);

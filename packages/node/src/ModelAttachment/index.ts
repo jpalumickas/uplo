@@ -1,4 +1,3 @@
-import fs from 'node:fs';
 import camelCase from 'camelcase';
 import { Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
@@ -6,7 +5,7 @@ import { UploError, BlobNotFoundError } from '../errors';
 import { Callbacks } from '../types';
 import { Signer } from '../Signer';
 import { Attachment } from '../Attachment';
-import { blobDataFromFileInput } from './blobDataFromFileInput';
+import { BlobInput } from '../blobInputs/types';
 
 export interface ModelAttachmentOptions {
   multiple: boolean;
@@ -24,18 +23,6 @@ interface ModelAttachmentParams {
   signer: ReturnType<typeof Signer>;
   callbacks: Callbacks;
   options: ModelAttachmentOptions;
-}
-
-interface AttachFileOptions {
-  filePath?: string;
-  content?: string | Buffer;
-  fileName?: string;
-  contentType?: string;
-  size?: number;
-  checksum?: string;
-  metadata?: {
-    [key: string]: string | number | null;
-  };
 }
 
 export class ModelAttachment {
@@ -116,26 +103,14 @@ export class ModelAttachment {
     return true;
   }
 
-  async attachFile({
-    filePath,
-    content: contentInput,
-    ...params
-  }: AttachFileOptions) {
-    if (!contentInput && !filePath) {
-      throw new UploError('Provide filePath or content when attacing a file');
-    }
-
-    const content = filePath ? fs.createReadStream(filePath) : contentInput;
-    // @ts-ignore
-    const data = await blobDataFromFileInput(content);
-
+  async attachFile(input: BlobInput) {
     const blobParams = {
       key: await generateKey(),
-      fileName: params.fileName || data.fileName,
-      contentType: params.contentType || data.contentType,
-      size: params.size || data.size,
-      checksum: params.checksum || data.checksum,
-      metadata: params.metadata || {},
+      fileName: input.fileName,
+      contentType: input.contentType,
+      size: input.size,
+      checksum: input.checksum,
+      metadata: {},
     };
 
     if (
@@ -160,9 +135,7 @@ export class ModelAttachment {
     });
 
     await this.getService(blob.serviceName).upload({
-      filePath,
-      // @ts-ignore
-      content: filePath ? fs.createReadStream(filePath) : contentInput,
+      content: input.content,
       ...blob,
     });
 

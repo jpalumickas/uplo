@@ -102,5 +102,6 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
 export * from '@uplo/types';
 export * from './types';
 export * from './errors';
+export * from './blobInputs';
 
 export default Uplo;
