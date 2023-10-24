@@ -28,8 +28,7 @@
   },
   "devDependencies": {
     "@uplo/analyzer": "workspace:^",
-    "@types/sharp": "^0.32.0",
-    "sharp": "^0.32.5"
+    "sharp": "^0.32.6"
   },
   "engines": {
     "node": ">=14"

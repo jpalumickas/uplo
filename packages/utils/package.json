@@ -28,10 +28,10 @@
     "test:dev": "vitest dev"
   },
   "devDependencies": {
-    "@tinyhttp/content-disposition": "~2.1.0",
-    "@types/node": "^20.5.9",
-    "rimraf": "^5.0.1",
-    "vitest": "^0.34.3"
+    "@tinyhttp/content-disposition": "~2.2.0",
+    "@types/node": "^20.8.8",
+    "rimraf": "^5.0.5",
+    "vitest": "^0.34.6"
   },
   "engines": {
     "node": ">=14"
