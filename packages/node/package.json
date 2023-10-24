@@ -27,13 +27,13 @@
     "@uplo/types": "workspace:^",
     "@uplo/utils": "workspace:^",
     "camelcase": "^6.3.0",
-    "jose": "^4.14.6",
+    "jose": "^4.15.4",
     "mime": "^3.0.0"
   },
   "devDependencies": {
-    "@types/mime": "^3.0.1",
-    "@types/node": "^20.5.9",
-    "vitest": "^0.34.3"
+    "@types/mime": "^3.0.3",
+    "@types/node": "^20.8.8",
+    "vitest": "^0.34.6"
   },
   "engines": {
     "node": ">=14"
