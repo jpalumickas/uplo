@@ -4,7 +4,7 @@ import { BlobInput } from './types.js';
 export interface BlobBufferInput {
   fileName: string;
   contentType: string;
-  content: Buffer;
+  buffer: Buffer;
 }
 
 export const blobBufferInput = async (
@@ -12,9 +12,9 @@ export const blobBufferInput = async (
 ): Promise<BlobInput> => {
   return {
     fileName: input.fileName,
-    size: input.content.length,
-    content: input.content,
+    size: input.buffer.length,
+    content: input.buffer,
     contentType: input.contentType,
-    checksum: await createHash('md5').update(input.content).digest('base64'),
+    checksum: await createHash('md5').update(input.buffer).digest('base64'),
   };
 };

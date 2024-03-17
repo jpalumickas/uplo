@@ -74,22 +74,43 @@ const attachments = await uplo.attachments.post(456).images.detachMany()
 Attach a file from a file path.
 
 ```ts
-const attachment = await uplo.attachments.user(123).avatar.attachFile({
-  filePath: '/home/images/image.png',
-  contentType: 'image/png',
+import { blobFileInput } from '@uplo/node'
+
+const fileInput = await blobFileInput({
+  path: '/home/images/image.png',
+  // contentType: 'image/png', // Optional
+  // fileName: 'image.png' // Optional
 })
+
+const attachment = await uplo.attachments.user(123).avatar.attachFile(fileInput)
 ```
 
-Attach a file with content.
+Attach a file with string.
 
 ```ts
-const content = 'This is my file' // Can be string, Buffer
+import { blobStringInput } from '@uplo/node'
 
-const attachment = await uplo.attachments.user(123).avatar.attachFile({
-  content,
+const fileInput = await blobStringInput({
+  content: 'Hello',
   contentType: 'text/plain',
-  fileName: 'text.txt',
+  fileName: 'welcome.txt'
 })
+
+const attachment = await uplo.attachments.user(123).avatar.attachFile(fileInput)
+```
+
+Attach a file with buffer.
+
+```ts
+import { blobBufferInput } from '@uplo/node'
+
+const fileInput = await blobBufferInput({
+  buffer,
+  contentType: 'text/plain',
+  fileName: 'welcome.txt'
+})
+
+const attachment = await uplo.attachments.user(123).avatar.attachFile(fileInput)
 ```
 
 ## Attach signed file
