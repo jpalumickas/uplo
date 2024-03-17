@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "lib": ["dom", "es2020"],
+    "target": "es2020",
+    "strict": true,
+    "noEmit": true,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "noUnusedLocals": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "importHelpers": true,
+    "sourceMap": true,
+    "jsx": "react",
+    "types": ["@cloudflare/workers-types"]
+  }
+}

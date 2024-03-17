@@ -29,9 +29,9 @@
   },
   "devDependencies": {
     "@tinyhttp/content-disposition": "~2.2.0",
-    "@types/node": "^20.8.8",
+    "@types/node": "^20.11.28",
     "rimraf": "^5.0.5",
-    "vitest": "^0.34.6"
+    "vitest": "^1.4.0"
   },
   "engines": {
     "node": ">=14"

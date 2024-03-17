@@ -1,0 +1,19 @@
+{
+  "name": "@examples/cloudflare-worker",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@uplo/node": "workspace:*",
+    "@uplo/service-gcs": "workspace:*",
+    "@uplo/service-s3": "workspace:*",
+    "@uplo/utils": "workspace:*",
+    "wrangler": "^3.34.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240314.0",
+    "vitest": "^1.4.0"
+  },
+  "scripts": {
+    "dev": "wrangler dev"
+  }
+}

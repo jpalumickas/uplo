@@ -31,9 +31,9 @@
     "mime": "^3.0.0"
   },
   "devDependencies": {
-    "@types/mime": "^3.0.3",
-    "@types/node": "^20.8.8",
-    "vitest": "^0.34.6"
+    "@types/mime": "^3.0.4",
+    "@types/node": "^20.11.28",
+    "vitest": "^1.4.0"
   },
   "engines": {
     "node": ">=14"

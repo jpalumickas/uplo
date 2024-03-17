@@ -28,9 +28,9 @@
     "react": ">= 16.4"
   },
   "devDependencies": {
-    "@types/mime": "^3.0.3",
-    "@types/react": "^18.2.31",
-    "@types/spark-md5": "^3.0.3"
+    "@types/mime": "^3.0.4",
+    "@types/react": "^18.2.66",
+    "@types/spark-md5": "^3.0.4"
   },
   "engines": {
     "node": ">=14"
