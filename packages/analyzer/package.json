@@ -24,8 +24,8 @@
     "deepmerge": "^4.3.1"
   },
   "devDependencies": {
-    "@uplo/node": "workspace:^",
-    "tempy": "^1.0.1"
+    "@types/node": "^20.11.28",
+    "@uplo/node": "workspace:^"
   },
   "peerDependencies": {
     "@uplo/node": "workspace:^"

@@ -27,7 +27,7 @@
     "@uplo/types": "workspace:^",
     "@uplo/utils": "workspace:^",
     "camelcase": "^6.3.0",
-    "jose": "^4.15.4",
+    "jose": "^5.2.3",
     "mime": "^3.0.0"
   },
   "devDependencies": {

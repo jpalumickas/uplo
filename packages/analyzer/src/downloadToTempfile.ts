@@ -1,12 +1,12 @@
-import { file as tempyFile } from 'tempy';
 import { Blob } from '@uplo/types';
 import { UploError } from '@uplo/node';
+import { tempFile } from './utils/tempFile.js';
 
 export const downloadToTempfile = async (
   { blob }: { blob: Blob },
   callback: (tmpPath: string) => void
 ) => {
-  return await tempyFile.task(
+  return await tempFile(
     async (tmpPath) => {
       try {
         await blob.service.download({ key: blob.key, path: tmpPath });
@@ -21,12 +21,10 @@ export const downloadToTempfile = async (
         } else {
           throw new UploError(`Failed to download blob with key ${blob.key}.`);
         }
-
-        return;
       }
     },
     {
-      name: blob.fileName,
+      fileName: blob.fileName,
     }
   );
 };

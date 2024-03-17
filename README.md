@@ -65,10 +65,9 @@ const uplo = Uplo({
   },
 });
 
-const attachment = await uplo.attachments.user(123).avatar.attachFile({
-  filePath: '/home/images/image.png',
-  contentType: 'image/png',
-})
+const attachment = await uplo.attachments.user(123).avatar.attachFile(await blobFileInput({
+  path: '/home/images/image.png'
+}))
 ```
 
 ## License
