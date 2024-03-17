@@ -29,7 +29,7 @@
     "@types/node": "^20.11.28"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "keywords": [
     "google",

@@ -28,7 +28,7 @@
     "fastify": "^4.26.2"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "keywords": [
     "fastify",

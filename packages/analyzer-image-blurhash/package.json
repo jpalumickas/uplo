@@ -31,7 +31,7 @@
     "sharp": "^0.33.2"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "keywords": [
     "image",

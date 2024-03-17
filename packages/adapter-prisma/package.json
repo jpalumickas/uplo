@@ -39,7 +39,7 @@
     "prisma": "^5.11.0"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=18"
   },
   "keywords": [
     "prisma",
