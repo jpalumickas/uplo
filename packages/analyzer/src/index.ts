@@ -6,7 +6,7 @@ export interface AnalyzerOptions {
   analyzers: Analyzer[];
 }
 
-export const analyzer = ({ analyzers = [] }: AnalyzerOptions) => {
+export const UploAnalyzer = ({ analyzers = [] }: AnalyzerOptions) => {
   return {
     analyze: analyze(analyzers),
     downloadToTempfile,
@@ -15,4 +15,4 @@ export const analyzer = ({ analyzers = [] }: AnalyzerOptions) => {
 
 export type * from './types';
 
-export default analyzer;
+export default UploAnalyzer;

@@ -1,10 +1,11 @@
 import { getDeepValue } from '@uplo/utils';
-import { ID } from '@uplo/types';
-import {
+import type { ID } from '@uplo/types';
+import type {
   UploOptions,
-  Uplo as TUplo,
+  UploAttachments,
   UploOptionsAttachments,
   UploOptionsAttachment,
+  UploInstance,
 } from './types';
 import { UploError, AttachmentNotFoundError } from './errors';
 import { Signer } from './Signer';
@@ -14,14 +15,14 @@ import { GenericAttachment } from './GenericAttachment';
 import { formatAttachmentOptions } from './lib/formatAttachmentOptions';
 import { defaultConfig } from './lib/defaultConfig';
 
-const Uplo = <AttachmentsList extends UploOptionsAttachments>({
+export const Uplo = <AttachmentsList extends UploOptionsAttachments>({
   services = {},
   defaultServiceName,
   adapter,
   config: providedConfig,
   callbacks = {},
   attachments,
-}: UploOptions<AttachmentsList>): TUplo<AttachmentsList> => {
+}: UploOptions<AttachmentsList>): UploInstance<AttachmentsList> => {
   const config = Object.assign({}, defaultConfig, providedConfig);
   const signer = Signer(config);
 
@@ -69,7 +70,7 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
       return result;
     },
     {}
-  );
+  ) as UploAttachments<typeof attachments>;
 
   return {
     signer,
@@ -99,8 +100,8 @@ const Uplo = <AttachmentsList extends UploOptionsAttachments>({
   };
 };
 
-export * from '@uplo/types';
-export * from './types';
+export type * from '@uplo/types';
+export type * from './types';
 export * from './errors';
 export * from './blobInputs';
 

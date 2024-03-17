@@ -33,7 +33,13 @@ export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
   attachments: AttachmentsList;
 }
 
-export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
+export type UploAttachments<AttachmentsList> = {
+  [ModelName in keyof AttachmentsList]: (id: ID) => {
+    [AttachmentName in keyof AttachmentsList[ModelName]]: ModelAttachment;
+  };
+};
+
+export interface UploInstance<AttachmentsList extends UploOptionsAttachments> {
   signer: ReturnType<typeof Signer>;
   adapter: Adapter;
   $services: Record<string, Service>;
@@ -42,13 +48,7 @@ export interface Uplo<AttachmentsList extends UploOptionsAttachments> {
     name: `${string}.${string}`
   ) => ReturnType<typeof GenericAttachment>;
 
-  // attachments: Record<ModelNames, Record<string, ModelAttachment>>
-
-  attachments: {
-    [ModelName in keyof AttachmentsList]: (id: ID) => {
-      [AttachmentName in keyof AttachmentsList[ModelName]]: ModelAttachment;
-    };
-  };
+  attachments: UploAttachments<AttachmentsList>;
 }
 
 export interface CreateDirectUploadParamsMetadata {
