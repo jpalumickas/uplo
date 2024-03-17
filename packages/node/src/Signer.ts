@@ -8,7 +8,7 @@ const ISSUER = 'uplo';
 export type SignerData = {
   blobId?: ID;
   [key: string]: string | number | undefined;
-}
+};
 
 export type SignerPurpose = 'blob';
 

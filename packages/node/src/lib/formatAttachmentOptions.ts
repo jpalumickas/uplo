@@ -1,6 +1,6 @@
 import { Service } from '@uplo/types';
 import { UploOptionsAttachment } from '../types';
-import { UploError } from '../errors'
+import { UploError } from '../errors';
 
 export const formatAttachmentOptions = ({
   attachmentOptions,
@@ -18,7 +18,8 @@ export const formatAttachmentOptions = ({
   const allServiceNames = Object.keys(services);
 
   const options = attachmentOptions === true ? {} : attachmentOptions;
-  const serviceName = options.serviceName || defaultServiceName || allServiceNames[0];
+  const serviceName =
+    options.serviceName || defaultServiceName || allServiceNames[0];
 
   if (!allServiceNames.includes(serviceName)) {
     throw new UploError(`Service with name "${serviceName}" was not defined.`);

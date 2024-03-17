@@ -1,14 +1,14 @@
 import { ReadStream, createReadStream, lstatSync } from 'node:fs';
 import { basename } from 'node:path';
 import crypto from 'node:crypto';
-import mime from 'mime/lite';
-import { BlobInput } from './types.js'
-import { UploError } from '../errors'
+import mime from 'mime/lite.js';
+import { BlobInput } from './types.js';
+import { UploError } from '../errors.js';
 
 export interface BlobFileInput {
-  path: string
-  fileName?: string
-  contentType?: string
+  path: string;
+  fileName?: string;
+  contentType?: string;
 }
 
 const checksumFromReadStream = (input: ReadStream): Promise<string> => {
@@ -27,17 +27,19 @@ const checksumFromReadStream = (input: ReadStream): Promise<string> => {
   });
 };
 
-export const blobFileInput = async (input: BlobFileInput): Promise<BlobInput> => {
+export const blobFileInput = async (
+  input: BlobFileInput
+): Promise<BlobInput> => {
   const size = lstatSync(input.path).size;
   const fileName = input.fileName || basename(input.path);
   const contentType = input.contentType || mime.getType(fileName) || undefined;
 
   if (!contentType) {
-    throw new UploError('Cannot get content type from this path')
+    throw new UploError('Cannot get content type from this path');
   }
 
-  const stream = createReadStream(input.path)
-  const checksum = await checksumFromReadStream(stream)
+  const stream = createReadStream(input.path);
+  const checksum = await checksumFromReadStream(stream);
 
   return {
     fileName,
@@ -45,6 +47,5 @@ export const blobFileInput = async (input: BlobFileInput): Promise<BlobInput> =>
     content: stream,
     contentType,
     checksum,
-  }
-
-}
+  };
+};
