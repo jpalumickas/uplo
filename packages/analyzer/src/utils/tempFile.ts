@@ -10,7 +10,7 @@ export const tempFile = async (
   const temporaryFileDirectory = `${temporaryDirectory}/${crypto.randomUUID()}`;
   const temporaryFilePath = `${temporaryFileDirectory}/${fileName}`;
 
-  await fs.mkdir(temporaryFilePath, { recursive: true });
+  await fs.mkdir(temporaryFileDirectory, { recursive: true });
 
   await callback(temporaryFilePath);
 
