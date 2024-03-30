@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@uplo/analyzer": "workspace:^",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.3"
   },
   "keywords": [
     "image",

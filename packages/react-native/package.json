@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@types/mime": "^3.0.4",
-    "@types/react": "^18.2.66",
+    "@types/react": "^18.2.73",
     "expo-file-system": "^16.0.8"
   },
   "engines": {

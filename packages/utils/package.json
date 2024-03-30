@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@tinyhttp/content-disposition": "~2.2.0",
-    "@types/node": "^20.11.28",
+    "@types/node": "^20.12.2",
     "rimraf": "^5.0.5",
     "vitest": "^1.4.0"
   },
