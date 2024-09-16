@@ -7,3 +7,5 @@ export const initDB = async ({ databaseUrl }: { databaseUrl: string }) => {
 
   return { db };
 };
+
+export type DB = Awaited<ReturnType<typeof initDB>>['db'];

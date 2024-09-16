@@ -8,17 +8,17 @@ export const isEdge =
   // @ts-ignore
   (typeof EdgeRuntime !== 'undefined' &&
     // @ts-ignore
-    ['edge-runtime', 'vercel'].includes(EdgeRuntime))
+    ['edge-runtime', 'vercel'].includes(EdgeRuntime));
 
 export const isNode =
   typeof process !== 'undefined' &&
   process.versions != null &&
-  process.versions.node != null
+  process.versions.node != null;
 
 export const isDeno =
   // @ts-ignore
-  typeof Deno !== "undefined" &&
+  typeof Deno !== 'undefined' &&
   // @ts-ignore
-  typeof Deno.version !== "undefined" &&
+  typeof Deno.version !== 'undefined' &&
   // @ts-ignore
-  typeof Deno.version.deno !== "undefined";
+  typeof Deno.version.deno !== 'undefined';

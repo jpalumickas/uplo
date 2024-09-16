@@ -8,22 +8,25 @@ type GetIndexedField<T, K> = K extends keyof T
       : number extends keyof T
         ? T[number]
         : undefined
-    : undefined
+    : undefined;
 
 type FieldWithPossiblyUndefined<T, Key> =
   | GetFieldType<Exclude<T, undefined>, Key>
-  | Extract<T, undefined>
+  | Extract<T, undefined>;
 
 type IndexedFieldWithPossiblyUndefined<T, Key> =
   | GetIndexedField<Exclude<T, undefined>, Key>
-  | Extract<T, undefined>
+  | Extract<T, undefined>;
 
 export type GetFieldType<T, P> = P extends `${infer Left}.${infer Right}`
   ? Left extends keyof T
     ? FieldWithPossiblyUndefined<T[Left], Right>
     : Left extends `${infer FieldKey}[${infer IndexKey}]`
       ? FieldKey extends keyof T
-        ? FieldWithPossiblyUndefined<IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>, Right>
+        ? FieldWithPossiblyUndefined<
+            IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>,
+            Right
+          >
         : undefined
       : undefined
   : P extends keyof T
@@ -32,12 +35,12 @@ export type GetFieldType<T, P> = P extends `${infer Left}.${infer Right}`
       ? FieldKey extends keyof T
         ? IndexedFieldWithPossiblyUndefined<T[FieldKey], IndexKey>
         : undefined
-      : undefined
+      : undefined;
 
 export function getDeepValue<
   TData,
   TPath extends string,
-  TDefault = GetFieldType<TData, TPath>
+  TDefault = GetFieldType<TData, TPath>,
 >(
   data: TData,
   path: TPath,
