@@ -22,6 +22,7 @@ interface Options {
   secretAccessKey: string;
   endpoint?: S3ClientConfig['endpoint'];
   forcePathStyle?: S3ClientConfig['forcePathStyle'];
+  requestHandler?: S3ClientConfig['requestHandler'];
 }
 
 const S3Service = ({
@@ -32,6 +33,7 @@ const S3Service = ({
   endpoint,
   region = DEFAULT_REGION,
   forcePathStyle,
+  requestHandler,
 }: Options): Service => {
   const s3Config: S3ClientConfig = {
     credentials: {
@@ -41,6 +43,7 @@ const S3Service = ({
     region: region,
     endpoint,
     forcePathStyle,
+    requestHandler,
   };
 
   const client = new S3Client(s3Config);
@@ -87,19 +90,25 @@ const S3Service = ({
     },
 
     async delete({ key }: Pick<BlobData, 'key'>) {
-      const cmd = new DeleteObjectCommand({ Bucket: bucket, Key: key })
+      const cmd = new DeleteObjectCommand({ Bucket: bucket, Key: key });
       await client.send(cmd);
 
       return true;
     },
 
-    async download({ key: _key, path: _path }: { key: BlobData['key']; path: string }) {
+    async download({
+      key: _key,
+      path: _path,
+    }: {
+      key: BlobData['key'];
+      path: string;
+    }) {
       throw new Error('Not implemented');
-    //   const command = new GetObjectCommand({ Bucket: bucket, Key: key });
-    //   const s3Item = await client.send(command);
-    //   if (s3Item.Body) {
-    //     (s3Item.Body as Readable).pipe(createWriteStream(path));
-    //   }
+      //   const command = new GetObjectCommand({ Bucket: bucket, Key: key });
+      //   const s3Item = await client.send(command);
+      //   if (s3Item.Body) {
+      //     (s3Item.Body as Readable).pipe(createWriteStream(path));
+      //   }
     },
 
     async directUploadHeaders(blob: BlobData) {
@@ -112,29 +121,34 @@ const S3Service = ({
         headers['x-amz-acl'] = 'public-read';
       }
 
-      return headers
+      return headers;
     },
 
     async publicUrl({ key }: Pick<BlobData, 'key'>) {
       if (endpoint) {
         return `${endpoint}/${bucket}/${key}`;
       } else {
-        return `https://${bucket}.s3${region === DEFAULT_REGION ? '' :  `.${region}`}.amazonaws.com/${key}`;
+        return `https://${bucket}.s3${region === DEFAULT_REGION ? '' : `.${region}`}.amazonaws.com/${key}`;
       }
     },
 
     async privateUrl(
       blob: BlobData,
-      { disposition, expiresIn = 300 }: { disposition?: ContentDispositionType, expiresIn?: number } = {}
+      {
+        disposition,
+        expiresIn = 300,
+      }: { disposition?: ContentDispositionType; expiresIn?: number } = {}
     ) {
       const command = new GetObjectCommand({
         Bucket: bucket,
         Key: blob.key,
         ResponseContentType: blob.contentType,
-        ResponseContentDisposition: disposition && contentDisposition({
-          type: disposition,
-          fileName: blob.fileName,
-        })
+        ResponseContentDisposition:
+          disposition &&
+          contentDisposition({
+            type: disposition,
+            fileName: blob.fileName,
+          }),
       });
 
       return await getSignedUrl(client, command, { expiresIn });

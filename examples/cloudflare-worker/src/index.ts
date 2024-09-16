@@ -53,6 +53,13 @@ export default {
       bucket: env.AWS_BUCKET,
       accessKeyId: env.AWS_ACCESS_KEY_ID,
       secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+      endpoint: env.AWS_ENDPOINT,
+      forcePathStyle: true,
+      requestHandler: {
+        requestInit(_httpRequest) {
+          return { cache: undefined };
+        },
+      },
     });
 
     const uplo = Uplo({
@@ -72,16 +79,14 @@ export default {
 
     // const service = GCSService({})
 
-    const blobInput = await imageUrlToBlobInput(
-      'https://www.viewbug.com/media/mediafiles/2015/10/16/59560665_medium.jpg'
-    );
-    await uplo.attachments.user(1).avatar.attachFile(blobInput);
+    // const blobInput = await imageUrlToBlobInput(
+    //   'https://www.viewbug.com/media/mediafiles/2015/10/16/59560665_medium.jpg'
+    // );
+    // await uplo.attachments.user(1).avatar.attachFile(blobInput);
 
     const userAttachment = await uplo.attachments.user(1).avatar.findOne();
 
-    console.log(userAttachment);
-
-    const avatarUrl = userAttachment?.url();
+    const avatarUrl = await userAttachment?.url();
     return new Response(`User avatar url: ${avatarUrl}`);
   },
 };
