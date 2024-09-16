@@ -1,12 +1,12 @@
-import SparkMD5 from 'spark-md5';
+import { ArrayBuffer as MD5ArrayBuffer } from 'spark-md5';
 
 const chunkSize = 2097152; // 2MB
 
-export const checksum = async (file: File) => {
+export const checksumFromFile = async (file: File) => {
   return new Promise((resolve, reject) => {
     const chunkCount = Math.ceil(file.size / chunkSize);
     let chunkIndex = 0;
-    const md5buffer = new SparkMD5.ArrayBuffer();
+    const md5buffer = new MD5ArrayBuffer();
     const fileReader = new FileReader();
 
     const readNextChunk = () => {
@@ -37,7 +37,6 @@ export const checksum = async (file: File) => {
     fileReader.addEventListener('error', (event) => {
       reject(event);
     });
-
 
     readNextChunk();
   });

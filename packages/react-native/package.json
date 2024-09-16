@@ -24,8 +24,7 @@
     "build": "tsup src/index.ts --format cjs,esm --dts"
   },
   "dependencies": {
-    "mime": "^3.0.0",
-    "react": "^18.2.0"
+    "mime": "^3.0.0"
   },
   "peerDependencies": {
     "expo-file-system": ">= 13",
@@ -35,7 +34,7 @@
     "@types/mime": "^3.0.4",
     "@types/react": "^18.2.73",
     "expo-file-system": "^16.0.8",
-    "prettier": "^3.3.3"
+    "react": "^18.2.0"
   },
   "engines": {
     "node": ">=18"

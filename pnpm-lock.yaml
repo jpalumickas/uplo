@@ -245,9 +245,6 @@ importers:
       mime:
         specifier: ^3.0.0
         version: 3.0.0
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
       spark-md5:
         specifier: ^3.0.2
         version: 3.0.2
@@ -264,15 +261,15 @@ importers:
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
 
   packages/react-native:
     dependencies:
       mime:
         specifier: ^3.0.0
         version: 3.0.0
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
     devDependencies:
       '@types/mime':
         specifier: ^3.0.4
@@ -283,9 +280,9 @@ importers:
       expo-file-system:
         specifier: ^16.0.8
         version: 16.0.9(expo@51.0.32)
-      prettier:
-        specifier: ^3.3.3
-        version: 3.3.3
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
 
   packages/server:
     dependencies:
@@ -6086,12 +6083,6 @@ packages:
     dependencies:
       undici-types: 6.19.8
 
-  /@types/node@22.5.5:
-    resolution: {integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA==}
-    dependencies:
-      undici-types: 6.19.8
-    dev: true
-
   /@types/normalize-package-data@2.4.4:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
     dev: true
@@ -6959,7 +6950,7 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      '@types/node': 22.5.5
+      '@types/node': 20.16.5
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -9681,6 +9672,7 @@ packages:
 
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
+    dev: true
 
   /js-yaml@3.14.1:
     resolution: {integrity: sha512-okMH7OXXJ7YrN9Ok3/SXrnu4iX9yOk+25nqX4imS2npuvTYDmo/QEZoqwZkYaIDk3jVvBOTOIEgEhaLOynBS9g==}
@@ -10191,6 +10183,7 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
+    dev: true
 
   /loupe@3.1.1:
     resolution: {integrity: sha512-edNu/8D5MKVfGVFRhFf8aAxiTM6Wumfz5XsaatSxlD3w4R1d/WEKUTydCdPGbl9K7QG/Ca3GnDV2sIKIpXRQcw==}
@@ -11748,7 +11741,7 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
+    dev: true
 
   /read-cmd-shim@4.0.0:
     resolution: {integrity: sha512-yILWifhaSEEytfXI76kB9xEEiG1AiozaCJZ83A87ytjRiN+jVibXjedjCRNjoZviinhG+4UkalO3mWTd8u5O0Q==}
