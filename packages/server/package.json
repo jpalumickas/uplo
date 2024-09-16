@@ -33,6 +33,7 @@
   "devDependencies": {
     "@types/mime": "^3.0.4",
     "@types/node": "^20.12.2",
+    "prettier": "^3.3.3",
     "vitest": "^2.1.1"
   },
   "engines": {

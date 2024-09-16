@@ -1,25 +1,16 @@
 import { checksumString } from '@uplo/utils';
-import Uplo from '@uplo/node';
-// import S3Service from '@uplo/service-s3'
+import Uplo from '@uplo/server';
+import S3Service from '@uplo/service-s3';
+import { DrizzleAdapter } from '@uplo/adapter-drizzle-pg';
+import { initDB, schema } from './db';
 // import GCSService from '@uplo/service-gcs'
 
-/**
- * Welcome to Cloudflare Workers! This is your first worker.
- *
- * - Run `wrangler dev src/index.ts` in your terminal to start a development server
- * - Open a browser tab at http://localhost:8787/ to see your worker in action
- * - Run `wrangler publish src/index.ts --name my-worker` to publish your worker
- *
- * Learn more at https://developers.cloudflare.com/workers/
- */
-
 export interface Env {
-  // Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-  // MY_KV_NAMESPACE: KVNamespace;
-  //
-  // Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
-  // MY_DURABLE_OBJECT: DurableObjectNamespace;
-  //
+  AWS_ENDPOINT: string;
+  AWS_BUCKET: string;
+  AWS_ACCESS_KEY_ID: string;
+  AWS_SECRET_ACCESS_KEY: string;
+  DATABASE_URL: string;
   // Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
   // MY_BUCKET: R2Bucket;
   //
@@ -33,12 +24,39 @@ export default {
     env: Env,
     ctx: ExecutionContext
   ): Promise<Response> {
-    const uplo = Uplo({
-      attachments: {},
+    const { db, client } = await initDB({
+      connectionString: env.DATABASE_URL,
     });
 
-    // const servie = S3Service({})
-    // const servie = GCSService({})
+    const s3Service = S3Service({
+      isPublic: false,
+      bucket: env.AWS_BUCKET,
+      accessKeyId: env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+    });
+
+    const uplo = Uplo({
+      adapter: DrizzleAdapter({
+        db,
+        schema,
+      }),
+      services: {
+        s3: s3Service,
+      },
+      attachments: {
+        user: {
+          avatar: true,
+        },
+      },
+    });
+
+    // const service = GCSService({})
+
+    const userAttachment = await uplo.attachments.user(1).avatar.findOne();
+
+    console.log(userAttachment);
+
+    ctx.waitUntil(client.end());
 
     return new Response(`Hello World 2! ${await checksumString('test')}`);
   },

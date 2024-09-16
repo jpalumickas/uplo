@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import { ID } from '@uplo/types';
+import type { ID, BlobData } from '@uplo/types';
 import { DrizzleAdapterOptions } from '..';
 import { inArray } from 'drizzle-orm';
 
@@ -15,7 +15,8 @@ export const findBlobLoader = ({ db, schema }: DrizzleAdapterOptions) =>
       .where(inArray(schema.fileBlobs.id, [...blobIds]));
 
     const result = blobIds.map((blobId) => {
-      return blobs.find((blob) => blob.id === blobId) || null;
+      return (blobs.find((blob) => blob.id === blobId) ||
+        null) as BlobData | null;
     });
 
     return Promise.resolve(result);

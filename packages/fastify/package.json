@@ -25,7 +25,8 @@
   },
   "devDependencies": {
     "@uplo/node": "workspace:^",
-    "fastify": "^4.28.1"
+    "fastify": "^4.28.1",
+    "prettier": "^3.3.3"
   },
   "engines": {
     "node": ">=18"

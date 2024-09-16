@@ -40,5 +40,8 @@
     "minio",
     "digital ocean",
     "digitalocean"
-  ]
+  ],
+  "devDependencies": {
+    "prettier": "^3.3.3"
+  }
 }

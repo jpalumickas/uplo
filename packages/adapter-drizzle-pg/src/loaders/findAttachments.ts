@@ -1,5 +1,5 @@
 import DataLoader from 'dataloader';
-import { ID } from '@uplo/types';
+import type { ID, AttachmentData } from '@uplo/types';
 import { DrizzleAdapterOptions } from '..';
 import { and, inArray, eq, or } from 'drizzle-orm';
 
@@ -52,7 +52,7 @@ export const findAttachmentsLoader = ({ db, schema }: DrizzleAdapterOptions) =>
           fileAttachment.recordId === recordItem.recordId &&
           fileAttachment.recordType === recordItem.recordType &&
           fileAttachment.name === recordItem.name
-      );
+      ) as AttachmentData[];
     });
 
     return Promise.resolve(result);

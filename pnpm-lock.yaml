@@ -27,9 +27,12 @@ importers:
 
   examples/cloudflare-worker:
     dependencies:
-      '@uplo/node':
+      '@uplo/adapter-drizzle-pg':
         specifier: workspace:*
-        version: link:../../packages/node
+        version: link:../../packages/adapter-drizzle-pg
+      '@uplo/server':
+        specifier: workspace:*
+        version: link:../../packages/server
       '@uplo/service-gcs':
         specifier: workspace:*
         version: link:../../packages/service-gcs
@@ -39,6 +42,12 @@ importers:
       '@uplo/utils':
         specifier: workspace:*
         version: link:../../packages/utils
+      drizzle-orm:
+        specifier: ^0.33.0
+        version: 0.33.0(@cloudflare/workers-types@4.20240909.0)(@types/pg@8.11.10)(pg@8.12.0)
+      pg:
+        specifier: ^8.12.0
+        version: 8.12.0
       wrangler:
         specifier: ^3.78.2
         version: 3.78.2(@cloudflare/workers-types@4.20240909.0)
@@ -46,6 +55,12 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^4.20240909.0
         version: 4.20240909.0
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.11.10
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       vitest:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@20.16.5)
@@ -77,6 +92,9 @@ importers:
       dotenv-cli:
         specifier: ^7.4.2
         version: 7.4.2
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       prisma:
         specifier: ^5.19.1
         version: 5.19.1
@@ -101,7 +119,10 @@ importers:
         version: 2.2.2
       drizzle-orm:
         specifier: ^0.33.0
-        version: 0.33.0
+        version: 0.33.0(@cloudflare/workers-types@4.20240909.0)(@types/pg@8.11.10)(pg@8.12.0)
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/adapter-prisma:
     dependencies:
@@ -118,6 +139,9 @@ importers:
       dataloader:
         specifier: ^2.2.2
         version: 2.2.2
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       prisma:
         specifier: ^5.19.1
         version: 5.19.1
@@ -137,12 +161,18 @@ importers:
       '@uplo/node':
         specifier: workspace:^
         version: link:../node
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/analyzer-image:
     devDependencies:
       '@uplo/analyzer':
         specifier: workspace:^
         version: link:../analyzer
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -156,6 +186,9 @@ importers:
       '@uplo/analyzer':
         specifier: workspace:^
         version: link:../analyzer
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
@@ -172,6 +205,9 @@ importers:
       fastify:
         specifier: ^4.28.1
         version: 4.28.1
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/node:
     dependencies:
@@ -188,6 +224,9 @@ importers:
       '@types/node':
         specifier: ^20.12.2
         version: 20.16.5
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       vitest:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@20.16.5)
@@ -213,6 +252,9 @@ importers:
       '@types/spark-md5':
         specifier: ^3.0.4
         version: 3.0.4
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/react-native:
     dependencies:
@@ -235,6 +277,9 @@ importers:
       expo-file-system:
         specifier: ^16.0.8
         version: 16.0.9(expo@51.0.32)
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/server:
     dependencies:
@@ -260,6 +305,9 @@ importers:
       '@types/node':
         specifier: ^20.12.2
         version: 20.16.5
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       vitest:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@20.16.5)
@@ -269,6 +317,10 @@ importers:
       '@uplo/types':
         specifier: workspace:^
         version: link:../types
+    devDependencies:
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/service-gcs:
     dependencies:
@@ -288,6 +340,9 @@ importers:
       '@types/node':
         specifier: ^20.12.2
         version: 20.16.5
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/service-s3:
     dependencies:
@@ -309,6 +364,10 @@ importers:
       '@uplo/utils':
         specifier: workspace:^
         version: link:../utils
+    devDependencies:
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/types:
     dependencies:
@@ -319,6 +378,9 @@ importers:
       '@types/node':
         specifier: ^20.12.2
         version: 20.16.5
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
 
   packages/utils:
     devDependencies:
@@ -328,6 +390,9 @@ importers:
       '@types/node':
         specifier: ^20.12.2
         version: 20.16.5
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
@@ -5590,6 +5655,13 @@ packages:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
     dev: true
 
+  /@types/pg@8.11.10:
+    resolution: {integrity: sha512-LczQUW4dbOQzsH2RQ5qoeJ6qJPdrcM/DcMLoqWQkMLMsq83J5lAX3LXjdkWdpscFy67JSOWDnh7Ny/sPFykmkg==}
+    dependencies:
+      '@types/node': 20.16.5
+      pg-protocol: 1.6.1
+      pg-types: 4.0.2
+
   /@types/prop-types@15.7.12:
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
     dev: true
@@ -7090,7 +7162,7 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /drizzle-orm@0.33.0:
+  /drizzle-orm@0.33.0(@cloudflare/workers-types@4.20240909.0)(@types/pg@8.11.10)(pg@8.12.0):
     resolution: {integrity: sha512-SHy72R2Rdkz0LEq0PSG/IdvnT3nGiWuRk+2tXZQ90GVq/XQhpCzu/EFT3V2rox+w8MlkBQxifF8pCStNYnERfA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -7178,7 +7250,10 @@ packages:
         optional: true
       sqlite3:
         optional: true
-    dev: true
+    dependencies:
+      '@cloudflare/workers-types': 4.20240909.0
+      '@types/pg': 8.11.10
+      pg: 8.12.0
 
   /duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
@@ -10307,6 +10382,9 @@ packages:
       object-keys: 1.1.1
     dev: true
 
+  /obuf@1.1.2:
+    resolution: {integrity: sha512-PX1wu0AmAdPqOL1mWhqmlOd8kOIZQwGZw6rh7uby9fTc5lhaOWFLX3I6R1hrF9k3zUY40e6igsLGkDXK92LJNg==}
+
   /ohash@1.1.4:
     resolution: {integrity: sha512-FlDryZAahJmEF3VR3w1KogSEdWX3WhA5GPakFx4J81kEAiHyLMpdLLElS8n8dfNadMgAne/MywcvmogzscVt4g==}
     dev: false
@@ -10706,6 +10784,76 @@ packages:
     engines: {node: '>= 14.16'}
     dev: true
 
+  /pg-cloudflare@1.1.1:
+    resolution: {integrity: sha512-xWPagP/4B6BgFO+EKz3JONXv3YDgvkbVrGw2mTo3D6tVDQRh1e7cqVGvyR3BE+eQgAvx1XhW/iEASj4/jCWl3Q==}
+    requiresBuild: true
+    optional: true
+
+  /pg-connection-string@2.6.4:
+    resolution: {integrity: sha512-v+Z7W/0EO707aNMaAEfiGnGL9sxxumwLl2fJvCQtMn9Fxsg+lPpPkdcyBSv/KFgpGdYkMfn+EI1Or2EHjpgLCA==}
+
+  /pg-int8@1.0.1:
+    resolution: {integrity: sha512-WCtabS6t3c8SkpDBUlb1kjOs7l66xsGdKpIPZsg4wR+B3+u9UAum2odSsF9tnvxg80h4ZxLWMy4pRjOsFIqQpw==}
+    engines: {node: '>=4.0.0'}
+
+  /pg-numeric@1.0.2:
+    resolution: {integrity: sha512-BM/Thnrw5jm2kKLE5uJkXqqExRUY/toLHda65XgFTBTFYZyopbKjBe29Ii3RbkvlsMoFwD+tHeGaCjjv0gHlyw==}
+    engines: {node: '>=4'}
+
+  /pg-pool@3.6.2(pg@8.12.0):
+    resolution: {integrity: sha512-Htjbg8BlwXqSBQ9V8Vjtc+vzf/6fVUuak/3/XXKA9oxZprwW3IMDQTGHP+KDmVL7rtd+R1QjbnCFPuTHm3G4hg==}
+    peerDependencies:
+      pg: '>=8.0'
+    dependencies:
+      pg: 8.12.0
+
+  /pg-protocol@1.6.1:
+    resolution: {integrity: sha512-jPIlvgoD63hrEuihvIg+tJhoGjUsLPn6poJY9N5CnlPd91c2T18T/9zBtLxZSb1EhYxBRoZJtzScCaWlYLtktg==}
+
+  /pg-types@2.2.0:
+    resolution: {integrity: sha512-qTAAlrEsl8s4OiEQY69wDvcMIdQN6wdz5ojQiOy6YRMuynxenON0O5oCpJI6lshc6scgAY8qvJ2On/p+CXY0GA==}
+    engines: {node: '>=4'}
+    dependencies:
+      pg-int8: 1.0.1
+      postgres-array: 2.0.0
+      postgres-bytea: 1.0.0
+      postgres-date: 1.0.7
+      postgres-interval: 1.2.0
+
+  /pg-types@4.0.2:
+    resolution: {integrity: sha512-cRL3JpS3lKMGsKaWndugWQoLOCoP+Cic8oseVcbr0qhPzYD5DWXK+RZ9LY9wxRf7RQia4SCwQlXk0q6FCPrVng==}
+    engines: {node: '>=10'}
+    dependencies:
+      pg-int8: 1.0.1
+      pg-numeric: 1.0.2
+      postgres-array: 3.0.2
+      postgres-bytea: 3.0.0
+      postgres-date: 2.1.0
+      postgres-interval: 3.0.0
+      postgres-range: 1.1.4
+
+  /pg@8.12.0:
+    resolution: {integrity: sha512-A+LHUSnwnxrnL/tZ+OLfqR1SxLN3c/pgDztZ47Rpbsd4jUytsTtwQo/TLPRzPJMp/1pbhYVhH9cuSZLAajNfjQ==}
+    engines: {node: '>= 8.0.0'}
+    peerDependencies:
+      pg-native: '>=3.0.1'
+    peerDependenciesMeta:
+      pg-native:
+        optional: true
+    dependencies:
+      pg-connection-string: 2.6.4
+      pg-pool: 3.6.2(pg@8.12.0)
+      pg-protocol: 1.6.1
+      pg-types: 2.2.0
+      pgpass: 1.0.5
+    optionalDependencies:
+      pg-cloudflare: 1.1.1
+
+  /pgpass@1.0.5:
+    resolution: {integrity: sha512-FdW9r/jQZhSeohs1Z3sI1yxFQNFvMcnmfuj4WBMUTxOrAyLMaTcE1aAMBiTlbMNaXvBCQuVi0R7hd8udDSP7ug==}
+    dependencies:
+      split2: 4.2.0
+
   /picocolors@1.1.0:
     resolution: {integrity: sha512-TQ92mBOW0l3LeMeyLV6mzy/kWr8lkd/hp3mTg7wYK7zJhuBStmGMBG0BdeDZS/dZx1IukaX6Bk11zcln25o1Aw==}
 
@@ -10840,6 +10988,45 @@ packages:
       source-map-js: 1.2.1
     dev: true
 
+  /postgres-array@2.0.0:
+    resolution: {integrity: sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==}
+    engines: {node: '>=4'}
+
+  /postgres-array@3.0.2:
+    resolution: {integrity: sha512-6faShkdFugNQCLwucjPcY5ARoW1SlbnrZjmGl0IrrqewpvxvhSLHimCVzqeuULCbG0fQv7Dtk1yDbG3xv7Veog==}
+    engines: {node: '>=12'}
+
+  /postgres-bytea@1.0.0:
+    resolution: {integrity: sha512-xy3pmLuQqRBZBXDULy7KbaitYqLcmxigw14Q5sj8QBVLqEwXfeybIKVWiqAXTlcvdvb0+xkOtDbfQMOf4lST1w==}
+    engines: {node: '>=0.10.0'}
+
+  /postgres-bytea@3.0.0:
+    resolution: {integrity: sha512-CNd4jim9RFPkObHSjVHlVrxoVQXz7quwNFpz7RY1okNNme49+sVyiTvTRobiLV548Hx/hb1BG+iE7h9493WzFw==}
+    engines: {node: '>= 6'}
+    dependencies:
+      obuf: 1.1.2
+
+  /postgres-date@1.0.7:
+    resolution: {integrity: sha512-suDmjLVQg78nMK2UZ454hAG+OAW+HQPZ6n++TNDUX+L0+uUlLywnoxJKDou51Zm+zTCjrCl0Nq6J9C5hP9vK/Q==}
+    engines: {node: '>=0.10.0'}
+
+  /postgres-date@2.1.0:
+    resolution: {integrity: sha512-K7Juri8gtgXVcDfZttFKVmhglp7epKb1K4pgrkLxehjqkrgPhfG6OO8LHLkfaqkbpjNRnra018XwAr1yQFWGcA==}
+    engines: {node: '>=12'}
+
+  /postgres-interval@1.2.0:
+    resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      xtend: 4.0.2
+
+  /postgres-interval@3.0.0:
+    resolution: {integrity: sha512-BSNDnbyZCXSxgA+1f5UU2GmwhoI0aU5yMxRGO8CdFEcY2BQF9xm/7MqKnYoM1nJDk8nONNWDk9WeSmePFhQdlw==}
+    engines: {node: '>=12'}
+
+  /postgres-range@1.1.4:
+    resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
+
   /prettier@2.8.8:
     resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
@@ -10850,7 +11037,6 @@ packages:
     resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: false
 
   /pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
@@ -11822,7 +12008,6 @@ packages:
   /split2@4.2.0:
     resolution: {integrity: sha512-UcjcJOWknrNkF6PLX83qcHM6KHgVKNkV62Y8a5uYDVv9ydGQVwAHMKqHdJje1VTWpljG0WYpCDhrCdAOYH4TWg==}
     engines: {node: '>= 10.x'}
-    dev: true
 
   /split@1.0.1:
     resolution: {integrity: sha512-mTyOoPbrivtXnwnIxZRFYRrPNtEFKlpB2fvjSnCQUiAA6qAZzqwna5envK4uk6OIeP17CsdF3rSBGYVBsU0Tkg==}
@@ -13081,7 +13266,6 @@ packages:
   /xtend@4.0.2:
     resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
     engines: {node: '>=0.4'}
-    dev: true
 
   /xxhash-wasm@1.0.2:
     resolution: {integrity: sha512-ibF0Or+FivM9lNrg+HGJfVX8WJqgo+kCLDc4vx6xMeTce7Aj+DLttKbxxRR/gNLSAelRc1omAPlJ77N/Jem07A==}

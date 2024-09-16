@@ -3,14 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@uplo/node": "workspace:*",
+    "@uplo/adapter-drizzle-pg": "workspace:*",
+    "@uplo/server": "workspace:*",
     "@uplo/service-gcs": "workspace:*",
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
+    "drizzle-orm": "^0.33.0",
+    "pg": "^8.12.0",
     "wrangler": "^3.78.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240909.0",
+    "@types/pg": "^8.11.10",
+    "prettier": "^3.3.3",
     "vitest": "^2.1.1"
   },
   "scripts": {

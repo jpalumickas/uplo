@@ -7,13 +7,14 @@ import { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core';
 
 export interface DrizzleAdapterOptions {
   db: PgDatabase<PgQueryResultHKT>;
-  schema: typeof defaultSchema;
+  schema: any;
 }
 
 export const DrizzleAdapter = ({
   db,
-  schema,
+  schema: plainSchema,
 }: DrizzleAdapterOptions): Adapter => {
+  const schema = plainSchema as typeof defaultSchema;
   const loaders = initLoaders({ db, schema });
 
   return {

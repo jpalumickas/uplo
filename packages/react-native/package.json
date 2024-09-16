@@ -35,7 +35,8 @@
   "devDependencies": {
     "@types/mime": "^3.0.4",
     "@types/react": "^18.2.73",
-    "expo-file-system": "^16.0.8"
+    "expo-file-system": "^16.0.8",
+    "prettier": "^3.3.3"
   },
   "engines": {
     "node": ">=18"

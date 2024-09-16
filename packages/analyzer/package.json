@@ -25,7 +25,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.12.2",
-    "@uplo/node": "workspace:^"
+    "@uplo/node": "workspace:^",
+    "prettier": "^3.3.3"
   },
   "peerDependencies": {
     "@uplo/node": "workspace:^"
