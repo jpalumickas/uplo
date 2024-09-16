@@ -3,10 +3,10 @@ import { BlobNotFoundError } from '@uplo/node';
 import { loaders as initLoaders } from './loaders';
 import * as defaultSchema from './defaultSchema';
 import { eq, and } from 'drizzle-orm';
-import { PgDatabase, QueryResultHKT } from 'drizzle-orm/pg-core';
+import { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core';
 
 export interface DrizzleAdapterOptions {
-  db: PgDatabase<QueryResultHKT>;
+  db: PgDatabase<PgQueryResultHKT>;
   schema: typeof defaultSchema;
 }
 
