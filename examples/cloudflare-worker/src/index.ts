@@ -24,8 +24,8 @@ export default {
     env: Env,
     ctx: ExecutionContext
   ): Promise<Response> {
-    const { db, client } = await initDB({
-      connectionString: env.DATABASE_URL,
+    const { db } = await initDB({
+      databaseUrl: env.DATABASE_URL,
     });
 
     const s3Service = S3Service({
@@ -55,8 +55,6 @@ export default {
     const userAttachment = await uplo.attachments.user(1).avatar.findOne();
 
     console.log(userAttachment);
-
-    ctx.waitUntil(client.end());
 
     return new Response(`Hello World 2! ${await checksumString('test')}`);
   },

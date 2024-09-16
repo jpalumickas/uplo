@@ -1,14 +1,9 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { Client } from 'pg';
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
 
-export const initDB = async ({
-  connectionString,
-}: {
-  connectionString: string;
-}) => {
-  const client = new Client({ connectionString });
-  await client.connect();
-  const db = drizzle(client);
+export const initDB = async ({ databaseUrl }: { databaseUrl: string }) => {
+  const sql = neon(databaseUrl);
+  const db = drizzle(sql);
 
-  return { db, client };
+  return { db };
 };

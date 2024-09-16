@@ -2,14 +2,15 @@ import {
   pgTable,
   bigint,
   jsonb,
-  uuid,
   varchar,
   timestamp,
+  integer,
+  serial,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import type { Blob } from '@uplo/server';
 
-const id = uuid('id').defaultRandom().primaryKey().$type<Blob['id']>();
+const id = serial('id').primaryKey().$type<Blob['id']>();
 
 const createdAt = timestamp('created_at', {
   precision: 6,
@@ -20,10 +21,10 @@ const createdAt = timestamp('created_at', {
 
 export const fileAttachments = pgTable('file_attachments', {
   id,
-  blobId: uuid('blob_id').notNull().$type<Blob['id']>(),
+  blobId: integer('blob_id').notNull().$type<Blob['id']>(),
   name: varchar('name').notNull(),
   recordType: varchar('record_type').notNull(),
-  recordId: uuid('record_id').notNull(),
+  recordId: integer('record_id').notNull(),
   createdAt,
 });
 

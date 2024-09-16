@@ -1,5 +1,5 @@
 import { Adapter, BlobData } from '@uplo/types';
-import { BlobNotFoundError } from '@uplo/node';
+import { BlobNotFoundError } from '@uplo/server';
 import { loaders as initLoaders } from './loaders';
 import * as defaultSchema from './defaultSchema';
 import { eq, and } from 'drizzle-orm';

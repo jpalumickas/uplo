@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@neondatabase/serverless": "^0.9.5",
     "@uplo/adapter-drizzle-pg": "workspace:*",
     "@uplo/server": "workspace:*",
     "@uplo/service-gcs": "workspace:*",
@@ -15,6 +16,8 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240909.0",
     "@types/pg": "^8.11.10",
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.24.2",
     "prettier": "^3.3.3",
     "vitest": "^2.1.1"
   },
