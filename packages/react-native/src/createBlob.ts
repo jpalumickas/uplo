@@ -1,6 +1,6 @@
 import mime from 'mime/lite';
-import getFileInfo from './getFileInfo';
-import checksum from './checksum';
+import { getFileInfo } from './utils/getFileInfo';
+import { checksumFromMD5 } from './utils/checksumFromMD5';
 import { File } from './types';
 
 interface Options {
@@ -8,7 +8,7 @@ interface Options {
   mountPath?: string;
 }
 
-const createBlob = async (
+export const createBlob = async (
   attachmentName: string,
   file: File,
   { host, mountPath = '/uploads' }: Options
@@ -37,7 +37,7 @@ const createBlob = async (
 
   const requestData = {
     attachmentName,
-    checksum: await checksum(fileData.md5),
+    checksum: await checksumFromMD5(fileData.md5),
     size: fileData.size,
     fileName,
     contentType: file.contentType || mime.getType(fileName),
@@ -72,5 +72,3 @@ const createBlob = async (
     return { data: null, error };
   }
 };
-
-export default createBlob;

@@ -1,4 +1,3 @@
-export { Context } from './Context';
-export * from './UploProvider';
-export * from './useDirectUpload';
+export * from './context';
+export * from './hooks';
 export * from './types';

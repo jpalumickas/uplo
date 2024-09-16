@@ -8,7 +8,9 @@ type EFSResult = {
   size: number;
 };
 
-const getFileInfo = async (filePath: string): Promise<FileInfo | null> => {
+export const getFileInfo = async (
+  filePath: string
+): Promise<FileInfo | null> => {
   try {
     const expoFileSystem = require('expo-file-system');
     const result: EFSResult = await expoFileSystem.getInfoAsync(filePath, {
@@ -27,5 +29,3 @@ const getFileInfo = async (filePath: string): Promise<FileInfo | null> => {
     return null;
   }
 };
-
-export default getFileInfo;

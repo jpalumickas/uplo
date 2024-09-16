@@ -1,4 +1,4 @@
-const checksum = async (md5: string) => {
+export const checksumFromMD5 = async (md5: string) => {
   const hexArray = md5
     .replace(/\r|\n/g, '')
     .replace(/([\da-fA-F]{2}) ?/g, '0x$1 ')
@@ -10,5 +10,3 @@ const checksum = async (md5: string) => {
 
   return btoa(byteString);
 };
-
-export default checksum;

@@ -1,8 +1,11 @@
 import { useState, useMemo, useCallback } from 'react';
 import { uploadAsync } from 'expo-file-system';
-import useConfig from './useConfig';
-import createBlob from './createBlob';
-import { Upload, File, UseUploadOptions } from './types';
+import { createBlob } from '../createBlob';
+import { Upload, File, UseUploadOptions } from '../types';
+
+import { useUploConfig } from './useUploConfig';
+
+const getRandomId = () => `${Date.now()}${Math.floor(Math.random() * 100000)}`;
 
 export const useDirectUpload = (
   attachmentName: string,
@@ -14,7 +17,7 @@ export const useDirectUpload = (
   }: UseUploadOptions = {}
 ) => {
   const [uploads, setUploads] = useState<Upload[]>([]);
-  const { host, mountPath } = useConfig();
+  const { host, mountPath } = useUploConfig();
 
   const addUpload = useCallback(
     (upload: Upload) => {
@@ -56,7 +59,7 @@ export const useDirectUpload = (
 
   const uploadFile = useCallback(
     async (file: File) => {
-      const id = file.id || Date.now().toString();
+      const id = file.id || getRandomId();
 
       let upload: Upload = {
         id,
