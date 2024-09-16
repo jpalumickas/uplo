@@ -2,8 +2,8 @@ import { ReadStream, createReadStream, lstatSync } from 'node:fs';
 import { basename } from 'node:path';
 import crypto from 'node:crypto';
 import mime from 'mime/lite.js';
-import { BlobInput } from './types.js';
-import { UploError } from '../errors.js';
+import { BlobInput } from '../../../server/src/blobInputs/types.js';
+import { UploError } from '../../../server/src/errors.js';
 
 export interface BlobFileInput {
   path: string;

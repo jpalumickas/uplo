@@ -178,7 +178,16 @@ importers:
       '@uplo/server':
         specifier: workspace:^
         version: link:../server
+      mime:
+        specifier: ^3.0.0
+        version: 3.0.0
     devDependencies:
+      '@types/mime':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@types/node':
+        specifier: ^20.12.2
+        version: 20.16.5
       vitest:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@20.16.5)

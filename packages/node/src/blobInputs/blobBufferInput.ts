@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { BlobInput } from './types.js';
+import type { BlobInput } from '@uplo/server';
 
 export interface BlobBufferInput {
   fileName: string;
