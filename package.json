@@ -21,10 +21,10 @@
     "version:minor": "lerna version minor --force-publish"
   },
   "dependencies": {
-    "@changesets/cli": "^2.27.1",
-    "prettier": "^3.2.5",
-    "tsup": "^8.0.2",
-    "typescript": "^5.4.3"
+    "@changesets/cli": "^2.27.8",
+    "prettier": "^3.3.3",
+    "tsup": "^8.2.4",
+    "typescript": "^5.6.2"
   },
   "prettier": {
     "tabWidth": 2,
@@ -39,6 +39,6 @@
   },
   "packageManager": "pnpm@8.15.4+sha256.cea6d0bdf2de3a0549582da3983c70c92ffc577ff4410cbf190817ddc35137c2",
   "devDependencies": {
-    "lerna": "^8.1.2"
+    "lerna": "^8.1.8"
   }
 }

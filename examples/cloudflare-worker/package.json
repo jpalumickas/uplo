@@ -7,10 +7,10 @@
     "@uplo/service-gcs": "workspace:*",
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
-    "wrangler": "^3.41.0"
+    "wrangler": "^3.78.2"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240329.0",
+    "@cloudflare/workers-types": "^4.20240909.0",
     "vitest": "^1.4.0"
   },
   "scripts": {
