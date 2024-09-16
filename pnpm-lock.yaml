@@ -175,28 +175,10 @@ importers:
 
   packages/node:
     dependencies:
-      '@uplo/types':
+      '@uplo/server':
         specifier: workspace:^
-        version: link:../types
-      '@uplo/utils':
-        specifier: workspace:^
-        version: link:../utils
-      camelcase:
-        specifier: ^6.3.0
-        version: 6.3.0
-      jose:
-        specifier: ^5.9.2
-        version: 5.9.2
-      mime:
-        specifier: ^3.0.0
-        version: 3.0.0
+        version: link:../server
     devDependencies:
-      '@types/mime':
-        specifier: ^3.0.4
-        version: 3.0.4
-      '@types/node':
-        specifier: ^20.12.2
-        version: 20.16.5
       vitest:
         specifier: ^2.1.1
         version: 2.1.1(@types/node@20.16.5)
@@ -244,6 +226,34 @@ importers:
       expo-file-system:
         specifier: ^16.0.8
         version: 16.0.9(expo@51.0.32)
+
+  packages/server:
+    dependencies:
+      '@uplo/types':
+        specifier: workspace:^
+        version: link:../types
+      '@uplo/utils':
+        specifier: workspace:^
+        version: link:../utils
+      camelcase:
+        specifier: ^6.3.0
+        version: 6.3.0
+      jose:
+        specifier: ^5.9.2
+        version: 5.9.2
+      mime:
+        specifier: ^3.0.0
+        version: 3.0.0
+    devDependencies:
+      '@types/mime':
+        specifier: ^3.0.4
+        version: 3.0.4
+      '@types/node':
+        specifier: ^20.12.2
+        version: 20.16.5
+      vitest:
+        specifier: ^2.1.1
+        version: 2.1.1(@types/node@20.16.5)
 
   packages/service-base:
     dependencies:
@@ -5567,12 +5577,6 @@ packages:
     dependencies:
       undici-types: 6.19.8
 
-  /@types/node@22.5.5:
-    resolution: {integrity: sha512-Xjs4y5UPO/CLdzpgR6GirZJx36yScjh73+2NlLlkFRSoQN8B0DpfXPdZGnvVmLRLOsqDpOfTNv7D9trgGhmOIA==}
-    dependencies:
-      undici-types: 6.19.8
-    dev: true
-
   /@types/normalize-package-data@2.4.4:
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
     dev: true
@@ -6420,7 +6424,7 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      '@types/node': 22.5.5
+      '@types/node': 20.16.5
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
