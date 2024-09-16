@@ -11,8 +11,7 @@ const useConfig = () => {
     ...config,
     mountPath,
     uploadsUrl,
-  }
-}
-
+  };
+};
 
 export default useConfig;

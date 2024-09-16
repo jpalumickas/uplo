@@ -3,11 +3,11 @@ import { createContext } from 'react';
 type ContextType = {
   host: string;
   mountPath?: string;
-}
+};
 
 const defaultContext = {
   host: '',
-  mountPath: '/uploads'
+  mountPath: '/uploads',
 };
 
 export const Context = createContext<ContextType>(defaultContext);

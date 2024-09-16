@@ -1,5 +1,5 @@
-import getFileInfo from './getFileInfo';
 import mime from 'mime/lite';
+import getFileInfo from './getFileInfo';
 import checksum from './checksum';
 import { File } from './types';
 
@@ -8,7 +8,11 @@ interface Options {
   mountPath?: string;
 }
 
-const createBlob = async (attachmentName: string, file: File, { host, mountPath = '/uploads' }: Options) => {
+const createBlob = async (
+  attachmentName: string,
+  file: File,
+  { host, mountPath = '/uploads' }: Options
+) => {
   if (file.contentType && !file.contentType.match(/.+\/.+/)) {
     return { data: null, error: 'Invalid content type' };
   }
@@ -22,10 +26,14 @@ const createBlob = async (attachmentName: string, file: File, { host, mountPath 
 
   const metadata = {
     ...file.metadata,
-  }
+  };
 
-  if (file.width) { metadata.width = file.width }
-  if (file.height) { metadata.height = file.height }
+  if (file.width) {
+    metadata.width = file.width;
+  }
+  if (file.height) {
+    metadata.height = file.height;
+  }
 
   const requestData = {
     attachmentName,
@@ -47,12 +55,12 @@ const createBlob = async (attachmentName: string, file: File, { host, mountPath 
       const data = await response.json();
       return {
         data,
-        error: null
-      }
+        error: null,
+      };
     } else {
-      return { data: null, error: 'Failed to create direct upload blob' }
+      return { data: null, error: 'Failed to create direct upload blob' };
     }
-  } catch(err) {
+  } catch (err) {
     let error = null;
 
     if (typeof err === 'string') {
@@ -61,7 +69,7 @@ const createBlob = async (attachmentName: string, file: File, { host, mountPath 
       error = err.message;
     }
 
-    return { data: null, error }
+    return { data: null, error };
   }
 };
 

@@ -7,6 +7,8 @@ export interface UploProviderProps {
   mountPath?: string;
 }
 
-export const UploProvider: React.FC<UploProviderProps> = ({ host, mountPath, children }) => (
-  <Provider value={{ host, mountPath }}>{children}</Provider>
-);
+export const UploProvider: React.FC<UploProviderProps> = ({
+  host,
+  mountPath,
+  children,
+}) => <Provider value={{ host, mountPath }}>{children}</Provider>;

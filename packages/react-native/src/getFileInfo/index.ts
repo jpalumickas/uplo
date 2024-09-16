@@ -4,9 +4,9 @@ interface FileInfo {
 }
 
 type EFSResult = {
-  md5?: string
-  size: number
-}
+  md5?: string;
+  size: number;
+};
 
 const getFileInfo = async (filePath: string): Promise<FileInfo | null> => {
   try {
@@ -22,10 +22,10 @@ const getFileInfo = async (filePath: string): Promise<FileInfo | null> => {
     return {
       md5: result.md5,
       size: result.size,
-    }
+    };
   } catch (err) {
     return null;
   }
-}
+};
 
 export default getFileInfo;
