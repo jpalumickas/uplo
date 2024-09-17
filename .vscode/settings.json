@@ -6,6 +6,8 @@
     "uplo"
   ],
   "cSpell.ignoreWords": [
-    "Nextra"
+    "Nextra",
+    "blurhash",
+    "tsup"
   ]
 }
