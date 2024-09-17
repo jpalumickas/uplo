@@ -1,5 +1,5 @@
-// import { createWriteStream } from 'node:fs';
-// import { Readable } from 'node:stream';
+import { createWriteStream } from 'node:fs';
+import { Readable } from 'node:stream';
 import { Upload } from '@aws-sdk/lib-storage';
 import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 import {
@@ -96,19 +96,13 @@ const S3Service = ({
       return true;
     },
 
-    async download({
-      key: _key,
-      path: _path,
-    }: {
-      key: BlobData['key'];
-      path: string;
-    }) {
-      throw new Error('Not implemented');
-      //   const command = new GetObjectCommand({ Bucket: bucket, Key: key });
-      //   const s3Item = await client.send(command);
-      //   if (s3Item.Body) {
-      //     (s3Item.Body as Readable).pipe(createWriteStream(path));
-      //   }
+    async download({ key, path }: { key: BlobData['key']; path: string }) {
+      // throw new Error('Not implemented');
+      const command = new GetObjectCommand({ Bucket: bucket, Key: key });
+      const s3Item = await client.send(command);
+      if (s3Item.Body) {
+        (s3Item.Body as Readable).pipe(createWriteStream(path));
+      }
     },
 
     async directUploadHeaders(blob: BlobData) {
