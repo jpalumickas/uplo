@@ -139,8 +139,6 @@ class GCSService implements Service {
             resolve(e);
           });
       });
-    } else if (content instanceof Uint8Array) {
-      throw new Error('Uint8Array not implemented');
     } else if (content instanceof globalThis.Blob) {
       throw new Error('Blob not implemented');
     } else if (content instanceof ReadableStream) {
