@@ -6,6 +6,7 @@ interface FileInfo {
 type EFSResult = {
   md5?: string;
   size: number;
+  exists: boolean;
 };
 
 export const getFileInfo = async (
@@ -19,6 +20,7 @@ export const getFileInfo = async (
     });
 
     if (!result) return null;
+    if (!result.exists) return null;
     if (!result.md5) return null;
 
     return {

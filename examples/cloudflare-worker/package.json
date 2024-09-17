@@ -10,8 +10,8 @@
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
     "drizzle-orm": "^0.33.0",
-    "pg": "^8.12.0",
-    "wrangler": "^3.78.2"
+    "pg": "^8.13.0",
+    "wrangler": "^3.78.4"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240909.0",
