@@ -2,6 +2,10 @@
   "cSpell.words": [
     "fastify",
     "jpalumickas",
+    "unoptimized",
     "uplo"
+  ],
+  "cSpell.ignoreWords": [
+    "Nextra"
   ]
 }
