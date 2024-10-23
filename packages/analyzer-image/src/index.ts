@@ -20,9 +20,8 @@ const ImageAnalyzer =
 
     const metadata = await sharp(filePath).metadata();
     if (!metadata) return;
-    if (!metadata.orientation) return;
 
-    const orientation = ORIENTATIONS[metadata.orientation];
+    const orientation = ORIENTATIONS[metadata.orientation || 0];
     const isRotated = ['Right-Top', 'Left-Bottom'].includes(orientation);
 
     const result = {
