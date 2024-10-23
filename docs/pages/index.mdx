@@ -13,10 +13,10 @@ or etc. It also supports various type of ORM adapters, like Prisma.
 
 ## Getting started
 
-Add `@uplo/node` to your package.json
+Add `@uplo/server` (or `@uplo/node` if using Node) to your package.json
 
 ```sh npm2yarn
-npm i @uplo/node
+npm i @uplo/server
 ```
 
 Install Adapter (for example Prisma)
@@ -34,9 +34,9 @@ npm i @uplo/service-s3
 Define uplo instance
 
 ```ts
-import Uplo from '@uplo/node';
+import Uplo from '@uplo/server';
 import PrismaAdapter from '@uplo/adapter-prisma';
-import GCSService from '@uplo/service-gcs';
+import S3Service from '@uplo/service-s3';
 
 const config = {
   privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
