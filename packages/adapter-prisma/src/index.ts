@@ -8,7 +8,7 @@ import {
   ID,
   AttachmentData,
 } from '@uplo/types';
-import { BlobNotFoundError } from '@uplo/node';
+import { BlobNotFoundError } from '@uplo/server';
 import { initFindAttachmentsLoader } from './loaders/findAttachments';
 
 class PrismaAdapter implements Adapter {

@@ -1,6 +1,6 @@
 {
   "name": "@uplo/monorepo",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "index.js",
   "author": "Justas Palumickas",
   "license": "MIT",
@@ -20,17 +20,17 @@
     "version:patch": "lerna version patch --force-publish",
     "version:minor": "lerna version minor --force-publish"
   },
-  "dependencies": {
-    "@changesets/cli": "^2.27.9",
-    "prettier": "^3.3.3",
-    "tsup": "^8.3.0",
-    "typescript": "^5.6.3"
-  },
   "engines": {
     "node": ">=18"
   },
   "packageManager": "pnpm@8.15.4+sha256.cea6d0bdf2de3a0549582da3983c70c92ffc577ff4410cbf190817ddc35137c2",
   "devDependencies": {
-    "lerna": "^8.1.8"
+    "@changesets/cli": "^2.27.9",
+    "lerna": "^8.1.8",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
   }
 }

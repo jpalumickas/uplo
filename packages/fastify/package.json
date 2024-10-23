@@ -6,10 +6,12 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
     }
   },
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
@@ -25,8 +27,7 @@
   },
   "devDependencies": {
     "@uplo/node": "workspace:^",
-    "fastify": "^4.28.1",
-    "prettier": "^3.3.3"
+    "fastify": "^4.28.1"
   },
   "engines": {
     "node": ">=18"

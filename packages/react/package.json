@@ -6,10 +6,12 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "require": "./dist/index.js",
       "import": "./dist/index.mjs"
     }
   },
+  "sideEffects": false,
   "publishConfig": {
     "access": "public"
   },
@@ -30,7 +32,6 @@
     "@types/mime": "^3.0.4",
     "@types/react": "^18.3.12",
     "@types/spark-md5": "^3.0.4",
-    "prettier": "^3.3.3",
     "react": "^18.2.0"
   },
   "engines": {
