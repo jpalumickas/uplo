@@ -24,7 +24,7 @@
     "deepmerge": "^4.3.1"
   },
   "devDependencies": {
-    "@types/node": "^20.12.2",
+    "@types/node": "^22.7.9",
     "@uplo/node": "workspace:^",
     "prettier": "^3.3.3"
   },
