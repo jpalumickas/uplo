@@ -1,5 +1,10 @@
-module.exports = {
-  purge: ['./components/**/*.js', './pages/**/*.md', './pages/**/*.mdx', './theme.config.js'],
+export default {
+  purge: [
+    './components/**/*.js',
+    './pages/**/*.md',
+    './pages/**/*.mdx',
+    './theme.config.js',
+  ],
   theme: {
     screens: {
       sm: '640px',
@@ -7,5 +12,5 @@ module.exports = {
       lg: '1024px',
       xl: '1280px',
     },
-  }
-}
+  },
+};

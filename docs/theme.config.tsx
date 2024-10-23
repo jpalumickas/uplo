@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
+import { useConfig, type DocsThemeConfig } from 'nextra-theme-docs';
 
-const themeConfig = {
+const themeConfig: DocsThemeConfig = {
   project: {
     link: 'https://github.com/jpalumickas/uplo',
   },
@@ -20,19 +21,19 @@ const themeConfig = {
       <span style={{ marginTop: '4px' }}>Modular uploader for Node.js</span>
     </div>
   ),
-  head: (
-    <>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </>
-  ),
-  useNextSeoProps() {
+  head() {
     const { route } = useRouter();
-
-    return {
-      description:
-        'Uplo can Handle file uploads to different storage services like Amazon S3, Google Cloud or etc. It also supports different type of ORM adapters, like Prisma.',
-      titleTemplate: route === '/' ? 'Uplo' : '%s - Uplo',
-    };
+    const { title } = useConfig();
+    return (
+      <>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{route === '/' ? 'Uplo' : `${title} - Uplo`}</title>
+        <meta
+          name="description"
+          content="Uplo can Handle file uploads to different storage services like Amazon S3, Google Cloud or etc. It also supports different type of ORM adapters, like Prisma."
+        />
+      </>
+    );
   },
 };
 
