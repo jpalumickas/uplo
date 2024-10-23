@@ -1,4 +1,5 @@
 import type { ReadStream as FsReadStream } from 'node:fs';
+import type { Readable } from 'node:stream';
 import { ContentDispositionType } from '@uplo/utils';
 import { BlobData } from './attachment';
 
@@ -33,7 +34,7 @@ export interface Service {
     key: BlobData['key'],
     options: ServiceUpdateMetadataOptions
   ): Promise<any>;
-  download(options: { key: BlobData['key']; path: string }): any;
+  createReadStream(options: { key: BlobData['key'] }): Promise<Readable>;
   directUploadHeaders?(
     blob: BlobData
   ): Promise<Record<string, any>> | undefined;

@@ -1,3 +1,5 @@
+import { createWriteStream } from 'node:fs';
+import { finished } from 'node:stream/promises';
 import { Blob } from '@uplo/types';
 import { UploError } from '@uplo/node';
 import { tempFile } from './utils/tempFile.js';
@@ -9,7 +11,11 @@ export const downloadToTempfile = async (
   return await tempFile(
     async (tmpPath) => {
       try {
-        await blob.service.download({ key: blob.key, path: tmpPath });
+        const readStream = await blob.service.createReadStream({
+          key: blob.key,
+        });
+        await finished(readStream.pipe(createWriteStream(tmpPath)));
+
         return await callback(tmpPath);
       } catch (err) {
         if (err instanceof UploError) {

@@ -1,5 +1,5 @@
-import { createWriteStream } from 'node:fs';
-import { Readable } from 'node:stream';
+import { UploError } from '@uplo/server';
+import type { Readable } from 'node:stream';
 import { Upload } from '@aws-sdk/lib-storage';
 import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 import {
@@ -96,12 +96,13 @@ const S3Service = ({
       return true;
     },
 
-    async download({ key, path }: { key: BlobData['key']; path: string }) {
-      // throw new Error('Not implemented');
+    async createReadStream({ key }: { key: BlobData['key'] }) {
       const command = new GetObjectCommand({ Bucket: bucket, Key: key });
       const s3Item = await client.send(command);
       if (s3Item.Body) {
-        (s3Item.Body as Readable).pipe(createWriteStream(path));
+        return s3Item.Body as Readable;
+      } else {
+        throw new UploError('No body found when creating read stream');
       }
     },
 

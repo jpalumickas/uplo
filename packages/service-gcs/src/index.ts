@@ -148,11 +148,8 @@ class GCSService implements Service {
     return await file.save(content);
   }
 
-  async download({ key, path }: { key: BlobData['key']; path: string }) {
-    return await this.storage
-      .bucket(this.bucket)
-      .file(key)
-      .download({ destination: path });
+  async createReadStream({ key }: { key: BlobData['key'] }) {
+    return this.storage.bucket(this.bucket).file(key).createReadStream();
   }
 
   async delete({ key }: { key: BlobData['key'] }) {
