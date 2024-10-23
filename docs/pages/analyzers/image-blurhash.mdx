@@ -4,10 +4,10 @@ Stores image `blurhash` to blob metadata.
 
 ## Usage
 
-Install package
+Install analyzer and `sharp` packages
 
-```sh
-yarn add @uplo/analyzer-image-blurhash sharp
+```sh npm2yarn
+npm i @uplo/analyzer-image-blurhash sharp
 ```
 
 Add analyzer to Uplo
@@ -15,7 +15,7 @@ Add analyzer to Uplo
 ```ts
 import ImageBlurhashAnalyzer from '@uplo/analyzer-image-blurhash';
 
-const uplo = Uplo({
+const uplo = UploAnalyzer({
   analyzers: [
     ImageBlurhashAnalyzer()
   ]
@@ -25,7 +25,7 @@ const uplo = Uplo({
 You can configure blurhash `size`, `xComponents` and `yComponents`
 
 ```ts
-const uplo = Uplo({
+const uplo = UploAnalyzer({
   analyzers: [
     ImageBlurhashAnalyzer({
       size: 32,

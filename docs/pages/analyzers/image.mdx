@@ -4,10 +4,10 @@ Stores image `width` and `height` to blob metadata.
 
 ## Usage
 
-Install package
+Install analyzer and `sharp` packages
 
-```sh
-yarn add @uplo/analyzer-image sharp
+```sh npm2yarn
+npm i @uplo/analyzer-image sharp
 ```
 
 Add analyzer to Uplo
@@ -15,7 +15,7 @@ Add analyzer to Uplo
 ```ts
 import ImageAnalyzer from '@uplo/analyzer-image';
 
-const uplo = Uplo({
+const uplo = UploAnalyzer({
   analyzers: [
     ImageAnalyzer()
   ]
