@@ -6,10 +6,13 @@
     "@prisma/client": "^5.21.1",
     "@uplo/adapter-drizzle-pg": "workspace:*",
     "@uplo/adapter-prisma": "workspace:*",
+    "@uplo/analyzer": "workspace:*",
+    "@uplo/analyzer-image": "workspace:*",
     "@uplo/node": "workspace:*",
     "@uplo/service-gcs": "workspace:*",
     "@uplo/service-s3": "workspace:*",
-    "@uplo/utils": "workspace:*"
+    "@uplo/utils": "workspace:*",
+    "sharp": "^0.33.5"
   },
   "devDependencies": {
     "dotenv-cli": "^7.4.2",

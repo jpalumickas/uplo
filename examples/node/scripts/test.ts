@@ -1,8 +1,13 @@
-import { uplo } from '../src/uplo';
+import { UploAnalyzer } from '@uplo/analyzer';
+import ImageAnalyzer from '@uplo/analyzer-image';
 import { blobStringInput } from '@uplo/node';
+import { uplo } from '../src/uplo';
 
-const user1ID = '31afe15c-5bb2-4390-9ecc-0b4bfaab1c88';
-const user2ID = 'e63e7049-6052-46e5-9933-4568fe3075a7';
+const analyzer = UploAnalyzer({
+  analyzers: [ImageAnalyzer()],
+});
+
+const user1ID = 1;
 
 (async () => {
   console.log('Starting');
@@ -14,19 +19,25 @@ const user2ID = 'e63e7049-6052-46e5-9933-4568fe3075a7';
     .backgroundCovers.findMany();
   console.log('  background covers', backgroundCovers);
 
-  const result = await uplo.attachments.user(user1ID).note.attachFile(
-    await blobStringInput({
-      content: 'test',
-      contentType: 'text/plain',
-      fileName: 'test.txt',
-    })
-  );
+  // const result = await uplo.attachments.user(user1ID).note.attachFile(
+  //   await blobStringInput({
+  //     content: 'test',
+  //     contentType: 'text/plain',
+  //     fileName: 'test.txt',
+  //   })
+  // );
 
-  console.log(result);
+  // console.log(result);
+  // const noteBlob = await uplo.$findBlob(result.id);
+  // console.log(noteBlob);
 
   const note = await uplo.attachments.user(user1ID).note.findOne();
   console.log('  note url', await note?.url());
 
-  const noteBlob = await uplo.$findBlob('50dd6f74-9aa4-43ff-8b03-df624489a733');
-  console.log(noteBlob);
+  const avatarBlob = await uplo.$findBlob(9);
+  console.log(avatarBlob);
+  if (avatarBlob) {
+    const avatarMetadata = await analyzer.analyze({ blob: avatarBlob });
+    console.log('  avatar metadata', avatarMetadata);
+  }
 })();

@@ -11,11 +11,11 @@ datasource db {
 }
 
 model FileAttachment {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id         Int      @id @default(autoincrement())
   name       String   @db.VarChar
   recordType String   @map("record_type") @db.VarChar
-  recordId   String   @map("record_id") @db.Uuid
-  blobId     String   @map("blob_id") @db.Uuid
+  recordId   Int      @map("record_id")
+  blobId     Int      @map("blob_id")
   createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
   blob FileBlob @relation(fields: [blobId], references: [id])
@@ -27,7 +27,7 @@ model FileAttachment {
 }
 
 model FileBlob {
-  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  id          Int      @id @default(autoincrement())
   serviceName String   @map("service_name") @db.VarChar
   key         String   @unique @map("key") @db.VarChar
   fileName    String   @map("file_name") @db.VarChar

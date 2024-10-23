@@ -34,7 +34,7 @@ export const initFindAttachmentsLoader = (prisma: PrismaClient) =>
         recordType,
         name,
         recordId: {
-          in: grouped[groupName].map((item) => item.recordId as string),
+          in: grouped[groupName].map((item) => item.recordId as any),
         },
       };
     });
