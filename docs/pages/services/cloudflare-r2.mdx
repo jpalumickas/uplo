@@ -1,4 +1,4 @@
-# MinIO
+# Cloudflare R2
 
 ## Installation
 
@@ -15,13 +15,19 @@ import S3Service from '@uplo/service-s3'
 
 const uplo = Uplo({
   services: {
-    minio: S3Service({
+    r2: S3Service({
       isPublic: false,
-      endpoint: 'https://minio.example.com',
-      forcePathStyle: true,
+      endpoint: 'Your endpoint from R2',
       bucket: 'your-bucket',
       accessKeyId: '*****',
       secretAccessKey: '*****',
+
+      // If you are using Cloudflare Workers, add this:
+      // requestHandler: {
+      //  requestInit(_httpRequest) {
+      //    return { cache: undefined };
+      //  },
+      // },
     }),
   },
 })

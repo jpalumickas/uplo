@@ -1,0 +1,55 @@
+# Drizzle
+
+## Installation
+
+Make sure you have installed and configured [Drizzle ORM](https://orm.drizzle.team) before using this adapter.
+
+Install package
+
+```sh npm2yarn
+npm i @uplo/adapter-drizzle
+```
+
+Add Drizzle adapter to Uplo
+
+```ts
+import DrizzleAdapter from '@uplo/adapter-drizzle';
+
+const uplo = Uplo({
+  adapter: Drizzle({ db, schema }),
+})
+```
+
+## Example schema
+
+```ts
+const id = serial('id').primaryKey().$type<Blob['id']>();
+
+const createdAt = timestamp('created_at', {
+  precision: 6,
+  withTimezone: true,
+})
+  .defaultNow()
+  .notNull();
+
+export const fileAttachments = pgTable('file_attachments', {
+  id,
+  blobId: integer('blob_id').notNull().$type<Blob['id']>(),
+  name: varchar('name').notNull(),
+  recordType: varchar('record_type').notNull(),
+  recordId: integer('record_id').notNull(),
+  createdAt,
+});
+
+export const fileBlobs = pgTable('file_blobs', {
+  id,
+  serviceName: varchar('service_name').notNull(),
+  key: varchar('key').notNull(),
+  fileName: varchar('file_name').notNull(),
+  contentType: varchar('content_type').notNull(),
+  size: bigint('size', { mode: 'bigint' }).notNull(),
+  checksum: varchar('checksum').notNull(),
+  metadata: jsonb('metadata').default({}).$type<Blob['metadata']>().notNull(),
+  createdAt,
+});
+```
