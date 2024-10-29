@@ -1,15 +1,17 @@
 import type { Adapter, Service } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
-import { UploError } from '../errors';
+import { UploError } from '../errors.js';
 import type { Signer } from '../Signer';
-import type { CreateDirectUploadParams } from '../types';
+import type { CreateDirectUploadParams } from '../types/generic-attachment.js';
+import { FormattedAttachmentOptions } from '../types/attachments.js';
+import { validateBlobInputData } from '../utils/validateBobInputData.js';
 
 type Options = {
   params: CreateDirectUploadParams;
   signer: ReturnType<typeof Signer>;
   adapter: Adapter;
   service: Service;
-  serviceName: string;
+  attachmentOptions: FormattedAttachmentOptions;
 };
 
 export const createDirectUpload = async ({
@@ -17,7 +19,7 @@ export const createDirectUpload = async ({
   signer,
   adapter,
   service,
-  serviceName,
+  attachmentOptions,
 }: Options) => {
   const blobParams = {
     key: await generateKey(),
@@ -28,10 +30,12 @@ export const createDirectUpload = async ({
     metadata: params.metadata,
   };
 
+  validateBlobInputData(blobParams, attachmentOptions.validate);
+
   const blob = await adapter.createBlob({
     params: {
       ...blobParams,
-      serviceName,
+      serviceName: attachmentOptions.serviceName,
     },
   });
 

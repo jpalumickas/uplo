@@ -1,6 +1,7 @@
 import { Service } from '@uplo/types';
-import { UploOptionsAttachment } from '../types';
-import { UploError } from '../errors';
+import type { UploOptionsAttachment } from '../types';
+import { UploError } from '../errors.js';
+import type { FormattedAttachmentOptions } from '../types/attachments.js';
 
 export const formatAttachmentOptions = ({
   attachmentOptions,
@@ -10,7 +11,7 @@ export const formatAttachmentOptions = ({
   attachmentOptions: true | UploOptionsAttachment;
   services: Record<string, Service>;
   defaultServiceName?: string;
-}) => {
+}): FormattedAttachmentOptions => {
   if (Object.keys(services).length === 0) {
     throw new UploError('At least one service must be provided');
   }
@@ -28,7 +29,7 @@ export const formatAttachmentOptions = ({
   return {
     multiple: options.multiple ?? false,
     directUpload: options.directUpload ?? true,
-    contentType: options.contentType,
+    validate: options.validate,
     serviceName,
   };
 };

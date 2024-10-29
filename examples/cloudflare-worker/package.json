@@ -10,6 +10,7 @@
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
     "drizzle-orm": "^0.35.3",
+    "hono": "^4.6.8",
     "pg": "^8.13.1",
     "wrangler": "^3.83.0"
   },

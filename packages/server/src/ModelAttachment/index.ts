@@ -2,16 +2,17 @@ import camelCase from 'camelcase';
 import { Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types';
 import { generateKey } from '@uplo/utils';
 import { UploError, BlobNotFoundError } from '../errors';
-import { Callbacks } from '../types';
+import { AttachmentValidateType, Callbacks } from '../types';
 import { Signer } from '../Signer';
 import { Attachment } from '../Attachment';
 import { BlobInput } from '../blobInputs/types';
+import { validateBlobInputData } from '../utils/validateBobInputData';
 
 export interface ModelAttachmentOptions {
   multiple: boolean;
   serviceName: string;
-  contentType?: string | string[] | RegExp;
   directUpload?: boolean;
+  validate?: AttachmentValidateType;
 }
 
 interface ModelAttachmentParams {
@@ -113,14 +114,7 @@ export class ModelAttachment {
       metadata: {},
     };
 
-    if (
-      !blobParams.fileName ||
-      !blobParams.contentType ||
-      !blobParams.size ||
-      !blobParams.checksum
-    ) {
-      throw new UploError('Missing data when attaching a file');
-    }
+    validateBlobInputData(blobParams, this.options.validate);
 
     const blob = await this.adapter.createBlob({
       params: {

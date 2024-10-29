@@ -1,6 +1,6 @@
 # Uplo Cloudflare Workers Example
 
-Cloudflare Workers + Neon Postgres + Drizzle Adapter
+Cloudflare Workers + Hono + Neon Postgres + Drizzle Adapter
 
 ## Requirements
 
@@ -16,4 +16,5 @@ AWS_BUCKET=""
 AWS_ACCESS_KEY_ID=""
 AWS_SECRET_ACCESS_KEY=""
 DATABASE_URL=""
+UPLO_SECRET_TOKEN=""
 ```

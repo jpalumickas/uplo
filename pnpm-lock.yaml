@@ -53,6 +53,9 @@ importers:
       drizzle-orm:
         specifier: ^0.35.3
         version: 0.35.3(@cloudflare/workers-types@4.20241022.0)(@libsql/client-wasm@0.14.0)(@neondatabase/serverless@0.10.1)(@types/pg@8.11.10)(pg@8.13.1)
+      hono:
+        specifier: ^4.6.8
+        version: 4.6.8
       pg:
         specifier: ^8.13.1
         version: 8.13.1
@@ -288,12 +291,18 @@ importers:
       camelcase:
         specifier: ^6.3.0
         version: 6.3.0
+      hono:
+        specifier: ^4.6.8
+        version: 4.6.8
       jose:
         specifier: ^5.9.6
         version: 5.9.6
       mime:
         specifier: ^3.0.0
         version: 3.0.0
+      zod:
+        specifier: ^3.23.8
+        version: 3.23.8
     devDependencies:
       '@types/mime':
         specifier: ^3.0.4
@@ -9383,6 +9392,11 @@ packages:
     dependencies:
       hermes-estree: 0.19.1
     dev: true
+
+  /hono@4.6.8:
+    resolution: {integrity: sha512-f+2Ec9JAzabT61pglDiLJcF/DjiSefZkjCn9bzm1cYLGkD5ExJ3Jnv93ax9h0bn7UPLHF81KktoyjdQfWI2n1Q==}
+    engines: {node: '>=16.9.0'}
+    dev: false
 
   /hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
