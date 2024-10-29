@@ -8,6 +8,7 @@ export interface UploConfig {
 
 type AttachmentValidateObjectType = {
   contentType?: string | string[] | RegExp | RegExp[];
+  size?: { min?: number; max?: number };
 };
 
 export type AttachmentValidateType = AttachmentValidateObjectType;

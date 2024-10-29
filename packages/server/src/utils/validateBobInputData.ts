@@ -34,17 +34,47 @@ const validateContentType = (
   return true;
 };
 
+const validateSize = (
+  size: number,
+  sizeValidator: AttachmentValidateType['size']
+) => {
+  if (!sizeValidator) {
+    return true;
+  }
+
+  if (sizeValidator.min !== undefined && size < sizeValidator.min) {
+    throw new BlobValidationError('File size is too small');
+  }
+
+  if (sizeValidator.max !== undefined && size > sizeValidator.max) {
+    throw new BlobValidationError('File size is too large');
+  }
+
+  return true;
+};
+
 export const validateBlobInputData = (
   blobInputData: BlobInputData,
   validator: AttachmentValidateType | null | undefined
 ) => {
+  if (!blobInputData?.fileName?.trim()) {
+    throw new BlobValidationError('Missing file name');
+  }
+
   if (
-    !blobInputData?.fileName?.trim() ||
-    !blobInputData?.contentType?.trim() ||
     !blobInputData?.size ||
-    !blobInputData?.checksum?.trim()
+    !Number.isFinite(blobInputData.size) ||
+    blobInputData.size < 0
   ) {
-    throw new BlobValidationError('Missing data for attachment');
+    throw new BlobValidationError('Missing size');
+  }
+
+  if (!blobInputData?.checksum?.trim()) {
+    throw new BlobValidationError('Missing checksum');
+  }
+
+  if (!blobInputData?.contentType?.trim()) {
+    throw new BlobValidationError('Missing content type');
   }
 
   if (!validator) {
@@ -52,6 +82,7 @@ export const validateBlobInputData = (
   }
 
   validateContentType(blobInputData.contentType, validator.contentType);
+  validateSize(blobInputData.size, validator.size);
 
   return true;
 };

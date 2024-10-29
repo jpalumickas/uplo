@@ -37,6 +37,9 @@ export const createUplo = (c: HonoContext) => {
           validate: {
             // contentType: ['image/png', 'image/jpeg'],
             contentType: /image\/\w/,
+            size: {
+              max: 1024 * 1024 * 5, // 5MB
+            },
           },
         },
       },
