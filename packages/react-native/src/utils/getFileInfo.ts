@@ -28,6 +28,7 @@ export const getFileInfo = async (
       size: result.size,
     };
   } catch (err) {
+    console.error('Error getting file info:', err);
     return null;
   }
 };

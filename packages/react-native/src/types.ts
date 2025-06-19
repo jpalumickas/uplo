@@ -7,7 +7,7 @@ export interface File {
   id?: string;
   localUri?: string;
   uri: string;
-  fileName?: string;
+  fileName?: string | null;
   contentType?: string;
   width?: number;
   height?: number;
