@@ -29,7 +29,7 @@
     "mime": "^3.0.0"
   },
   "peerDependencies": {
-    "expo-file-system": ">= 13",
+    "expo-file-system": ">= 16",
     "react": ">= 16.4"
   },
   "devDependencies": {

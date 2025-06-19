@@ -1,20 +1,15 @@
+import * as FileSystem from 'expo-file-system';
+
 interface FileInfo {
   md5: string;
   size: number;
 }
 
-type EFSResult = {
-  md5?: string;
-  size: number;
-  exists: boolean;
-};
-
 export const getFileInfo = async (
   filePath: string
 ): Promise<FileInfo | null> => {
   try {
-    const expoFileSystem = require('expo-file-system');
-    const result: EFSResult = await expoFileSystem.getInfoAsync(filePath, {
+    const result = await FileSystem.getInfoAsync(filePath, {
       md5: true,
       size: true,
     });
@@ -28,7 +23,7 @@ export const getFileInfo = async (
       size: result.size,
     };
   } catch (err) {
-    console.error('Error getting file info:', err);
+    console.error('[Uplo] Error getting file info:', err);
     return null;
   }
 };
