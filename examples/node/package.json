@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@prisma/client": "^5.21.1",
+    "@prisma/client": "^6.10.1",
     "@uplo/adapter-drizzle-pg": "workspace:*",
     "@uplo/adapter-prisma": "workspace:*",
     "@uplo/analyzer": "workspace:*",
@@ -12,10 +12,10 @@
     "@uplo/service-gcs": "workspace:*",
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
-    "sharp": "^0.33.5"
+    "sharp": "^0.34.2"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.4.2",
+    "dotenv-cli": "^8.0.0",
     "prettier": "^3.3.3",
     "prisma": "^5.21.1",
     "tsx": "^4.19.2",
