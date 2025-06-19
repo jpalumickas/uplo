@@ -9,25 +9,25 @@ importers:
   .:
     devDependencies:
       '@changesets/cli':
-        specifier: ^2.27.9
+        specifier: ^2.29.4
         version: 2.29.4
       lerna:
-        specifier: ^8.1.8
+        specifier: ^8.2.2
         version: 8.2.2(encoding@0.1.13)
       prettier:
-        specifier: ^3.3.3
+        specifier: ^3.5.3
         version: 3.5.3
       rimraf:
         specifier: ^6.0.1
         version: 6.0.1
       tsup:
-        specifier: ^8.3.5
+        specifier: ^8.5.0
         version: 8.5.0(postcss@8.5.6)(tsx@4.20.3)(typescript@5.8.3)(yaml@2.8.0)
       typescript:
-        specifier: ^5.6.3
+        specifier: ^5.8.3
         version: 5.8.3
       vitest:
-        specifier: ^2.1.4
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@24.0.3)(lightningcss@1.27.0)(terser@5.43.1)
 
   examples/cloudflare-worker:
@@ -12528,7 +12528,7 @@ snapshots:
 
   log-symbols@4.1.0:
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       is-unicode-supported: 0.1.0
 
   loose-envify@1.4.0:
