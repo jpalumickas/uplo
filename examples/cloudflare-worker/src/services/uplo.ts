@@ -34,6 +34,7 @@ export const createUplo = (c: HonoContext) => {
     attachments: {
       user: {
         avatar: {
+          directUpload: true,
           validate: {
             // contentType: ['image/png', 'image/jpeg'],
             contentType: /image\/\w/,
@@ -45,6 +46,8 @@ export const createUplo = (c: HonoContext) => {
       },
     },
   });
+
+  uplo.attachments.user(123);
 
   return uplo;
 };

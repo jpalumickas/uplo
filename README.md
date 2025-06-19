@@ -57,7 +57,11 @@ const uplo = Uplo({
   },
   attachments: {
     user: {
-      avatar: true, // pass true to use default options
+      avatar: {
+        validate: {
+          contentType: /image\/*/
+        }
+      }
     },
     post: {
       images: { multiple: true }

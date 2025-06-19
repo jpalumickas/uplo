@@ -3,3 +3,5 @@ dist
 yarn-error.log
 docs/out
 packages/adapter-prisma/.env
+
+.DS_Store
