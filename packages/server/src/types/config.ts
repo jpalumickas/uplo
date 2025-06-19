@@ -7,8 +7,15 @@ export interface UploConfig {
 }
 
 type AttachmentValidateObjectType = {
+  /** File content type */
   contentType?: string | string[] | RegExp | RegExp[];
-  size?: { min?: number; max?: number };
+  /** File size in bytes */
+  size?: {
+    /** Minimum file size in bytes */
+    min?: number;
+    /** Maximum file size in bytes */
+    max?: number;
+  };
 };
 
 export type AttachmentValidateType = AttachmentValidateObjectType;
@@ -16,6 +23,7 @@ export type AttachmentValidateType = AttachmentValidateObjectType;
 export interface UploOptionsAttachment {
   multiple?: boolean;
   serviceName?: string;
+  /** Support direct upload to service with Signed URL */
   directUpload?: boolean;
   validate?: AttachmentValidateType;
 }
@@ -24,7 +32,9 @@ export type UploOptionsAttachments = Partial<
   Record<string, Record<string, UploOptionsAttachment | true>>
 >;
 
-export interface UploOptions<AttachmentsList extends UploOptionsAttachments> {
+export interface UploOptions<
+  AttachmentsList extends UploOptionsAttachments = {},
+> {
   services: {
     [serviceName: string]: Service;
   };

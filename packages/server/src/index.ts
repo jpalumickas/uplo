@@ -104,6 +104,6 @@ export type * from '@uplo/types';
 export type * from './types';
 export * from './errors';
 export * from './blobInputs';
-export type * from './blobInputs/types.js'
+export type * from './blobInputs/types.js';
 
 export default Uplo;

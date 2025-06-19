@@ -1,14 +1,14 @@
-import { ID } from '@uplo/types';
+import type { ID } from '@uplo/types';
 import { jwtVerify, JWTPayload, SignJWT } from 'jose';
 import { UploConfig } from './types';
 import { SignerError } from './errors';
 
 const ISSUER = 'uplo';
 
-export type SignerData = {
+export type SignerBlobData = {
   blobId?: ID;
-  [key: string]: string | number | undefined;
 };
+export type SignerData = SignerBlobData;
 
 export type SignerPurpose = 'blob';
 
@@ -16,7 +16,14 @@ export const Signer = (config: UploConfig) => {
   const secret =
     config.privateKey && new TextEncoder().encode(config.privateKey);
 
-  const generate = async (data: object, purpose: SignerPurpose) => {
+  async function generate(
+    data: SignerBlobData,
+    purpose: 'blob'
+  ): Promise<string>;
+  async function generate(
+    data: SignerData,
+    purpose: SignerPurpose
+  ): Promise<string> {
     if (!secret) {
       throw new SignerError('Missing private key');
     }
@@ -34,19 +41,19 @@ export const Signer = (config: UploConfig) => {
     }
 
     return token;
-  };
+  }
 
   const verify = async (token: string, purpose: SignerPurpose) => {
     if (!secret) {
       throw new SignerError('Missing private key');
     }
 
-    const { payload } = await jwtVerify(token, secret, {
+    const { payload } = await jwtVerify<SignerData>(token, secret, {
       issuer: ISSUER,
       audience: purpose,
     });
 
-    return payload as SignerData | undefined;
+    return payload;
   };
 
   return {
