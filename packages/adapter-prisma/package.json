@@ -37,8 +37,8 @@
   "devDependencies": {
     "@prisma/client": "^6.10.1",
     "@uplo/server": "workspace:^",
-    "dataloader": "^2.2.2",
-    "prisma": "^5.21.1"
+    "dataloader": "^2.2.3",
+    "prisma": "^5.22.0"
   },
   "engines": {
     "node": ">=18"

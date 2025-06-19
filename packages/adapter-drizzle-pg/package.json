@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@uplo/server": "workspace:^",
-    "dataloader": "^2.2.2",
+    "dataloader": "^2.2.3",
     "drizzle-orm": "^0.44.2"
   },
   "engines": {

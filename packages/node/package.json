@@ -29,9 +29,9 @@
   },
   "devDependencies": {
     "@types/mime": "^3.0.4",
-    "@types/node": "^22.8.4",
-    "prettier": "^3.3.3",
-    "vitest": "^2.1.4"
+    "@types/node": "^22.15.32",
+    "prettier": "^3.5.3",
+    "vitest": "^2.1.9"
   },
   "engines": {
     "node": ">=18"

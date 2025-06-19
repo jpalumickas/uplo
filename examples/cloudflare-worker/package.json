@@ -3,24 +3,24 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.1",
+    "@neondatabase/serverless": "^0.10.4",
     "@uplo/adapter-drizzle-pg": "workspace:*",
     "@uplo/server": "workspace:*",
     "@uplo/service-gcs": "workspace:*",
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
     "drizzle-orm": "^0.44.2",
-    "hono": "^4.6.8",
-    "pg": "^8.13.1",
-    "wrangler": "^3.83.0"
+    "hono": "^4.8.0",
+    "pg": "^8.16.1",
+    "wrangler": "^3.114.9"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241022.0",
-    "@types/pg": "^8.11.10",
-    "dotenv": "^16.4.5",
+    "@cloudflare/workers-types": "^4.20250619.0",
+    "@types/pg": "^8.15.4",
+    "dotenv": "^16.5.0",
     "drizzle-kit": "^0.31.1",
-    "prettier": "^3.3.3",
-    "vitest": "^2.1.4"
+    "prettier": "^3.5.3",
+    "vitest": "^2.1.9"
   },
   "scripts": {
     "dev": "wrangler dev"

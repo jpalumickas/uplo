@@ -33,7 +33,7 @@ importers:
   examples/cloudflare-worker:
     dependencies:
       '@neondatabase/serverless':
-        specifier: ^0.10.1
+        specifier: ^0.10.4
         version: 0.10.4
       '@uplo/adapter-drizzle-pg':
         specifier: workspace:*
@@ -54,32 +54,32 @@ importers:
         specifier: ^0.44.2
         version: 0.44.2(@cloudflare/workers-types@4.20250619.0)(@libsql/client-wasm@0.15.9)(@neondatabase/serverless@0.10.4)(@prisma/client@6.10.1(prisma@5.22.0)(typescript@5.8.3))(@types/pg@8.15.4)(pg@8.16.1)(prisma@5.22.0)
       hono:
-        specifier: ^4.6.8
+        specifier: ^4.8.0
         version: 4.8.0
       pg:
-        specifier: ^8.13.1
+        specifier: ^8.16.1
         version: 8.16.1
       wrangler:
-        specifier: ^3.83.0
+        specifier: ^3.114.9
         version: 3.114.9(@cloudflare/workers-types@4.20250619.0)
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20241022.0
+        specifier: ^4.20250619.0
         version: 4.20250619.0
       '@types/pg':
-        specifier: ^8.11.10
+        specifier: ^8.15.4
         version: 8.15.4
       dotenv:
-        specifier: ^16.4.5
+        specifier: ^16.5.0
         version: 16.5.0
       drizzle-kit:
         specifier: ^0.31.1
         version: 0.31.1
       prettier:
-        specifier: ^3.3.3
+        specifier: ^3.5.3
         version: 3.5.3
       vitest:
-        specifier: ^2.1.4
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@24.0.3)(lightningcss@1.27.0)(terser@5.43.1)
 
   examples/node:
@@ -119,16 +119,16 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0
       prettier:
-        specifier: ^3.3.3
+        specifier: ^3.5.3
         version: 3.5.3
       prisma:
-        specifier: ^5.21.1
+        specifier: ^5.22.0
         version: 5.22.0
       tsx:
-        specifier: ^4.19.2
+        specifier: ^4.20.3
         version: 4.20.3
       vitest:
-        specifier: ^2.1.4
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@24.0.3)(lightningcss@1.27.0)(terser@5.43.1)
 
   packages/adapter-drizzle-pg:
@@ -141,7 +141,7 @@ importers:
         specifier: workspace:^
         version: link:../server
       dataloader:
-        specifier: ^2.2.2
+        specifier: ^2.2.3
         version: 2.2.3
       drizzle-orm:
         specifier: ^0.44.2
@@ -160,10 +160,10 @@ importers:
         specifier: workspace:^
         version: link:../server
       dataloader:
-        specifier: ^2.2.2
+        specifier: ^2.2.3
         version: 2.2.3
       prisma:
-        specifier: ^5.21.1
+        specifier: ^5.22.0
         version: 5.22.0
 
   packages/analyzer:
@@ -176,7 +176,7 @@ importers:
         version: 4.3.1
     devDependencies:
       '@types/node':
-        specifier: ^22.8.4
+        specifier: ^22.15.32
         version: 22.15.32
       '@uplo/node':
         specifier: workspace:^
@@ -214,7 +214,7 @@ importers:
         specifier: workspace:^
         version: link:../node
       fastify:
-        specifier: ^4.28.1
+        specifier: ^4.29.1
         version: 4.29.1
 
   packages/node:
@@ -230,13 +230,13 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^22.8.4
+        specifier: ^22.15.32
         version: 22.15.32
       prettier:
-        specifier: ^3.3.3
+        specifier: ^3.5.3
         version: 3.5.3
       vitest:
-        specifier: ^2.1.4
+        specifier: ^2.1.9
         version: 2.1.9(@types/node@22.15.32)(lightningcss@1.27.0)(terser@5.43.1)
 
   packages/react:
@@ -252,13 +252,13 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/react':
-        specifier: ^18.3.12
+        specifier: ^18.3.23
         version: 18.3.23
       '@types/spark-md5':
         specifier: ^3.0.5
         version: 3.0.5
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
 
   packages/react-native:
@@ -271,13 +271,13 @@ importers:
         specifier: ^3.0.4
         version: 3.0.4
       '@types/react':
-        specifier: ^18.3.12
+        specifier: ^18.3.23
         version: 18.3.23
       expo-file-system:
         specifier: ^18.1.10
         version: 18.1.10(expo@53.0.12(@babel/core@7.27.4)(react-native@0.80.0(@babel/core@7.27.4)(@types/react@18.3.23)(react@18.3.1))(react@18.3.1))(react-native@0.80.0(@babel/core@7.27.4)(@types/react@18.3.23)(react@18.3.1))
       react:
-        specifier: ^18.2.0
+        specifier: ^18.3.1
         version: 18.3.1
 
   packages/server:
@@ -292,23 +292,23 @@ importers:
         specifier: ^6.3.0
         version: 6.3.0
       hono:
-        specifier: ^4.6.8
+        specifier: ^4.8.0
         version: 4.8.0
       jose:
-        specifier: ^5.9.6
+        specifier: ^5.10.0
         version: 5.10.0
       mime:
         specifier: ^3.0.0
         version: 3.0.0
       zod:
-        specifier: ^3.23.8
+        specifier: ^3.25.67
         version: 3.25.67
     devDependencies:
       '@types/mime':
         specifier: ^3.0.4
         version: 3.0.4
       '@types/node':
-        specifier: ^22.8.4
+        specifier: ^22.15.32
         version: 22.15.32
 
   packages/service-base:
@@ -320,7 +320,7 @@ importers:
   packages/service-gcs:
     dependencies:
       '@google-cloud/storage':
-        specifier: ^7.13.0
+        specifier: ^7.16.0
         version: 7.16.0(encoding@0.1.13)
       '@uplo/service-base':
         specifier: workspace:^
@@ -333,19 +333,19 @@ importers:
         version: link:../utils
     devDependencies:
       '@types/node':
-        specifier: ^22.8.4
+        specifier: ^22.15.32
         version: 22.15.32
 
   packages/service-s3:
     dependencies:
       '@aws-sdk/client-s3':
-        specifier: ^3.679.0
+        specifier: ^3.832.0
         version: 3.832.0
       '@aws-sdk/lib-storage':
-        specifier: ^3.679.0
+        specifier: ^3.832.0
         version: 3.832.0(@aws-sdk/client-s3@3.832.0)
       '@aws-sdk/s3-request-presigner':
-        specifier: ^3.679.0
+        specifier: ^3.832.0
         version: 3.832.0
       '@uplo/service-base':
         specifier: workspace:^
@@ -368,7 +368,7 @@ importers:
         version: link:../utils
     devDependencies:
       '@types/node':
-        specifier: ^22.8.4
+        specifier: ^22.15.32
         version: 22.15.32
 
   packages/utils:
@@ -377,7 +377,7 @@ importers:
         specifier: ~2.2.2
         version: 2.2.2
       '@types/node':
-        specifier: ^22.8.4
+        specifier: ^22.15.32
         version: 22.15.32
 
 packages:
@@ -10249,13 +10249,13 @@ snapshots:
 
   '@types/pg@8.11.6':
     dependencies:
-      '@types/node': 22.15.32
+      '@types/node': 24.0.3
       pg-protocol: 1.10.1
       pg-types: 4.0.2
 
   '@types/pg@8.15.4':
     dependencies:
-      '@types/node': 22.15.32
+      '@types/node': 24.0.3
       pg-protocol: 1.10.1
       pg-types: 2.2.0
 
