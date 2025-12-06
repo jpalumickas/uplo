@@ -28,7 +28,7 @@
     "@uplo/utils": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^22.15.32"
+    "@types/node": "^24.10.1"
   },
   "engines": {
     "node": ">=18"
