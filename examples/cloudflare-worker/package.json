@@ -17,10 +17,10 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251205.0",
     "@types/pg": "^8.15.6",
-    "dotenv": "^16.5.0",
+    "dotenv": "^17.2.3",
     "drizzle-kit": "^0.31.8",
     "prettier": "^3.7.4",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.15"
   },
   "scripts": {
     "dev": "wrangler dev"
