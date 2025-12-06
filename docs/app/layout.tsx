@@ -41,6 +41,7 @@ export default async function RootLayout({ children }) {
           docsRepositoryBase="https://github.com/jpalumickas/uplo/blob/main/docs"
           sidebar={{ defaultMenuCollapseLevel: 1 }}
           pageMap={pageMap}
+          search={false}
         >
           {children}
         </Layout>
