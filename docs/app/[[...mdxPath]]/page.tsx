@@ -6,7 +6,13 @@ export const generateStaticParams = generateStaticParamsFor('mdxPath');
 export async function generateMetadata(props) {
   const params = await props.params;
   const { metadata } = await importPage(params.mdxPath);
-  return metadata;
+
+  const isRootPage = !params.mdxPath || params.mdxPath.length === 0;
+
+  return {
+    ...metadata,
+    title: isRootPage ? 'Uplo' : `${metadata.title} - Uplo`,
+  };
 }
 
 const Wrapper = getMDXComponents().wrapper;

@@ -1,14 +1,11 @@
 /* eslint-env node */
 import { Footer, Layout, Navbar } from 'nextra-theme-docs';
-import { Banner, Head } from 'nextra/components';
+import { Head } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
 import 'nextra-theme-docs/style.css';
 
 export const metadata = {
   metadataBase: new URL('https://uplo.js.org'),
-  title: {
-    template: '%s - Uplo',
-  },
   description:
     'Uplo can Handle file uploads to different storage services like Amazon S3, Google Cloud or etc. It also supports different type of ORM adapters, like Prisma or Drizzle.',
   applicationName: 'Uplo',
