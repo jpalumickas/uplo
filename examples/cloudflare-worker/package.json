@@ -10,16 +10,16 @@
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
     "drizzle-orm": "^0.44.2",
-    "hono": "^4.8.0",
-    "pg": "^8.16.1",
+    "hono": "^4.10.7",
+    "pg": "^8.16.3",
     "wrangler": "^3.114.9"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250619.0",
-    "@types/pg": "^8.15.4",
+    "@cloudflare/workers-types": "^4.20251205.0",
+    "@types/pg": "^8.15.6",
     "dotenv": "^16.5.0",
     "drizzle-kit": "^0.31.1",
-    "prettier": "^3.5.3",
+    "prettier": "^3.7.4",
     "vitest": "^2.1.9"
   },
   "scripts": {

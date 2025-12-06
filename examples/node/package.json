@@ -12,13 +12,13 @@
     "@uplo/service-gcs": "workspace:*",
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
-    "sharp": "^0.34.2"
+    "sharp": "^0.34.5"
   },
   "devDependencies": {
     "dotenv-cli": "^8.0.0",
-    "prettier": "^3.5.3",
+    "prettier": "^3.7.4",
     "prisma": "^5.22.0",
-    "tsx": "^4.20.3",
+    "tsx": "^4.21.0",
     "vitest": "^2.1.9"
   },
   "scripts": {}
