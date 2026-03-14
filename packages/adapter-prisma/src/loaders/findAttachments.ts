@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import type { PrismaClient } from '@prisma/client';
 import DataLoader from 'dataloader';
 import type { ID, AttachmentData } from '@uplo/types';
 
