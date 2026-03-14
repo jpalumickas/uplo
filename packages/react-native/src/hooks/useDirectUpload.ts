@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback } from 'react';
-import { uploadAsync } from 'expo-file-system';
+import { uploadAsync } from 'expo-file-system/legacy';
 import { createBlob } from '../createBlob';
 import { Upload, File, UseUploadOptions } from '../types';
 
