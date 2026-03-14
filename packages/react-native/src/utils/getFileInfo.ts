@@ -1,4 +1,4 @@
-import * as FileSystem from 'expo-file-system';
+import { File } from 'expo-file-system';
 
 interface FileInfo {
   md5: string;
@@ -9,14 +9,15 @@ export const getFileInfo = async (
   filePath: string
 ): Promise<FileInfo | null> => {
   try {
-    const result = await FileSystem.getInfoAsync(filePath, {
+    const file = new File(filePath);
+    const result = file.info({
       md5: true,
-      size: true,
     });
 
     if (!result) return null;
     if (!result.exists) return null;
     if (!result.md5) return null;
+    if (!result.size) return null;
 
     return {
       md5: result.md5,
