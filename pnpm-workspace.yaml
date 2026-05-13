@@ -2,6 +2,15 @@ packages:
   - packages/*
   - examples/*
 
+allowBuilds:
+  '@prisma/client': false
+  '@prisma/engines': false
+  esbuild: false
+  nx: false
+  prisma: false
+  sharp: false
+  workerd: false
+
 onlyBuiltDependencies:
   - '@prisma/client'
   - '@prisma/engines'
