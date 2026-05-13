@@ -1,0 +1,7 @@
+allowBuilds:
+  sharp: false
+
+
+# Bug on new zod/nextra versions. Workaround.
+overrides:
+  zod: "4.3.6"

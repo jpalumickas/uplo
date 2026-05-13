@@ -1,7 +1,16 @@
 node_modules
 dist
 yarn-error.log
+
 docs/out
+
 packages/adapter-prisma/.env
 
+# macOS
 .DS_Store
+
+# Claude Code
+.claude/settings.local.json
+CLAUDE.local.md
+.claude/.credentials.json
+.claude/worktrees/
