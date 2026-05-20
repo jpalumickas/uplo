@@ -1,4 +1,5 @@
 import type { PrismaClient } from '@prisma/client'
+
 import { BlobNotFoundError } from '@uplo/server'
 import {
   CreateBlobOptions,

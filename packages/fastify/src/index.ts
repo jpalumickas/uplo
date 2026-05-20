@@ -1,6 +1,7 @@
-import type { UploInstance, UploOptionsAttachments } from '@uplo/node'
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
+
+import type { UploInstance, UploOptionsAttachments } from '@uplo/node'
 
 export interface UploPluginOptions<AttachmentsList extends UploOptionsAttachments> {
   mountPath?: string

@@ -1,8 +1,9 @@
-import { BlobInput, UploError } from '@uplo/server'
-import mime from 'mime/lite.js'
+import mime from 'mime/lite'
 import crypto from 'node:crypto'
 import { ReadStream, createReadStream, lstatSync } from 'node:fs'
 import { basename } from 'node:path'
+
+import { BlobInput, UploError } from '@uplo/server'
 
 export interface BlobFileInput {
   path: string

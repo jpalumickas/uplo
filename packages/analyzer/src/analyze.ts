@@ -1,5 +1,6 @@
-import { Blob } from '@uplo/types'
 import merge from 'deepmerge'
+
+import { Blob } from '@uplo/types'
 
 import { downloadToTempfile } from './downloadToTempfile'
 import { AnalyzeError } from './errors'

@@ -1,6 +1,7 @@
-import type { ID, BlobData } from '@uplo/types'
 import DataLoader from 'dataloader'
 import { inArray } from 'drizzle-orm'
+
+import type { ID, BlobData } from '@uplo/types'
 
 import { DrizzleAdapterOptions } from '..'
 

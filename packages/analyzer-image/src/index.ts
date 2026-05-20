@@ -1,5 +1,6 @@
-import { Analyzer } from '@uplo/analyzer'
 import sharp from 'sharp'
+
+import { Analyzer } from '@uplo/analyzer'
 
 const ORIENTATIONS = [
   'Undefined',

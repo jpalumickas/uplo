@@ -1,6 +1,7 @@
-import type { Blob } from '@uplo/server'
 import { relations } from 'drizzle-orm'
 import { pgTable, bigint, jsonb, varchar, timestamp, integer, serial } from 'drizzle-orm/pg-core'
+
+import type { Blob } from '@uplo/server'
 
 const id = serial('id').primaryKey().$type<Blob['id']>()
 

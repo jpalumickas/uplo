@@ -1,6 +1,7 @@
-import { ContentDispositionType } from '@uplo/utils'
 import type { ReadStream as FsReadStream } from 'node:fs'
 import type { Readable } from 'node:stream'
+
+import { ContentDispositionType } from '@uplo/utils'
 
 import { BlobData } from './attachment'
 

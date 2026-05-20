@@ -1,6 +1,7 @@
+import camelCase from 'camelcase'
+
 import { Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types'
 import { generateKey } from '@uplo/utils'
-import camelCase from 'camelcase'
 
 import { Attachment } from '../Attachment'
 import { BlobInput } from '../blobInputs/types'

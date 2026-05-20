@@ -1,5 +1,6 @@
-import type { ID } from '@uplo/types'
 import { jwtVerify, JWTPayload, SignJWT } from 'jose'
+
+import type { ID } from '@uplo/types'
 
 import { SignerError } from './errors'
 import { UploConfig } from './types'

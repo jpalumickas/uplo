@@ -1,2 +1,2 @@
-export * from './blobBufferInput'
-export * from './blobFileInput'
+export * from './blobBufferInput.js'
+export * from './blobFileInput.js'

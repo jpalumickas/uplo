@@ -1,7 +1,8 @@
 // import GCSService from '@uplo/service-gcs'
 
-import { createUploRouteHandler } from '@uplo/server/route-handler'
 import { Hono } from 'hono'
+
+import { createUploRouteHandler } from '@uplo/server/route-handler'
 
 import { dbMiddleware } from './middleware/dbMiddleware.js'
 import { uploMiddleware } from './middleware/uploMiddleware.js'

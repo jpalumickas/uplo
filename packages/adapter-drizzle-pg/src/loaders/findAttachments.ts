@@ -1,6 +1,7 @@
-import type { ID, AttachmentData } from '@uplo/types'
 import DataLoader from 'dataloader'
 import { and, inArray, eq, or } from 'drizzle-orm'
+
+import type { ID, AttachmentData } from '@uplo/types'
 
 import { DrizzleAdapterOptions } from '..'
 

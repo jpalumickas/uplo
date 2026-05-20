@@ -1,7 +1,8 @@
 import { Storage, GetSignedUrlConfig } from '@google-cloud/storage'
+import fs from 'node:fs'
+
 import { Service, ServiceUploadParams, BlobData } from '@uplo/types'
 import { contentDisposition, ContentDispositionType } from '@uplo/utils'
-import fs from 'node:fs'
 
 interface Options {
   isPublic?: boolean

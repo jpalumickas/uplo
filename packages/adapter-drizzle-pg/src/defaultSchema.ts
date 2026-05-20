@@ -1,6 +1,7 @@
-import { Blob } from '@uplo/types'
 import { relations } from 'drizzle-orm'
 import { pgTable, bigint, jsonb, uuid, varchar, timestamp } from 'drizzle-orm/pg-core'
+
+import { Blob } from '@uplo/types'
 
 const id = uuid('id').defaultRandom().primaryKey().$type<Blob['id']>()
 

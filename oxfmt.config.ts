@@ -11,6 +11,7 @@ export default defineConfig({
       ['internal', 'subpath'],
       ['parent', 'sibling', 'index'],
     ],
+    internalPattern: ['@uplo/'],
     newlinesBetween: true,
   },
 })
