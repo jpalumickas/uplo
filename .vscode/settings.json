@@ -1,4 +1,20 @@
 {
   "cSpell.words": ["fastify", "jpalumickas", "unoptimized", "uplo"],
-  "cSpell.ignoreWords": ["Hono", "Nextra", "blurhash", "tsup"]
+  "cSpell.ignoreWords": ["Hono", "Nextra", "blurhash", "tsup"],
+
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
+
+  "[javascript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[javascriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[typescript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[json]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+  "[jsonc]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
+
+  "oxc.requireConfig": true,
+  "oxc.fmt.experimental": true
 }

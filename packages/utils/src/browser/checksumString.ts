@@ -1,18 +1,8 @@
 export const checksumString = async (content: string | Uint8Array) => {
-  let msgUint8: Uint8Array
+  const data =
+    typeof content === 'string' ? new TextEncoder().encode(content) : new Uint8Array(content)
 
-  if (typeof content === 'string') {
-    msgUint8 = new TextEncoder().encode(content) // encode as (utf-8) Uint8Array
-  } else {
-    msgUint8 = content
-  }
-
-  const hashBuffer = await crypto.subtle.digest('MD5', msgUint8) // hash the message
-  // const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
-  // // const hashHex = hashArray
-  //   .map((b) => b.toString(16).padStart(2, '0'))
-  //   .join('');
-
+  const hashBuffer = await crypto.subtle.digest('MD5', data)
   const digest = btoa(String.fromCharCode(...new Uint8Array(hashBuffer)))
 
   return digest

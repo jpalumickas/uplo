@@ -1,6 +1,5 @@
 import { UploAnalyzer } from '@uplo/analyzer'
 import ImageAnalyzer from '@uplo/analyzer-image'
-import { blobStringInput } from '@uplo/node'
 
 import { uplo } from '../src/uplo'
 

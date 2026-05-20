@@ -90,7 +90,9 @@ export const useDirectUpload = (
 
         upload.uploading = false
         upload.progress = 100
+
         updateUpload(id, { uploading: false, progress: 100 })
+
         if (onUploadSuccess) {
           onUploadSuccess(upload)
         }
