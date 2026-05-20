@@ -3,18 +3,23 @@
   "version": "0.23.0",
   "type": "module",
   "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "browser": {
     "crypto": false
   },
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "worker": "./dist/browser.js",
-      "browser": "./dist/browser.js",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "worker": "./dist/browser.mjs",
+      "browser": "./dist/browser.mjs",
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     }
   },
   "sideEffects": false,
@@ -30,9 +35,7 @@
   },
   "homepage": "https://uplo.js.org",
   "scripts": {
-    "build": "rimraf dist && pnpm build:node && pnpm build:browser",
-    "build:node": "tsup src/index.ts --format cjs,esm --dts",
-    "build:browser": "tsup --entry.browser src/browser/index.ts --format esm",
+    "build": "tsdown",
     "test": "vitest run",
     "test:dev": "vitest dev"
   },

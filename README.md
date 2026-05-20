@@ -16,19 +16,19 @@ or etc. It also supports various type of ORM adapters, like Prisma.
 Add `@uplo/node` to your package.json
 
 ```sh
-yarn add @uplo/node
+pnpm add @uplo/node
 ```
 
 Install Adapter (for example Prisma)
 
 ```sh
-yarn add @uplo/adapter-prisma dataloader
+pnpm add @uplo/adapter-prisma dataloader
 ```
 
 Install Service (for example S3)
 
 ```sh
-yarn add @uplo/service-s3
+pnpm add @uplo/service-s3
 ```
 
 Define uplo instance
