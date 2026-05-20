@@ -1,45 +1,21 @@
-import { ArrayBuffer as MD5ArrayBuffer } from 'spark-md5'
+import { md5 } from '@noble/hashes/legacy.js'
 
-const chunkSize = 2097152 // 2MB
+const CHUNK_SIZE = 2_097_152 // 2 MB
 
-export const checksumFromFile = async (file: File) => {
-  return new Promise((resolve, reject) => {
-    const chunkCount = Math.ceil(file.size / chunkSize)
-    let chunkIndex = 0
-    const md5buffer = new MD5ArrayBuffer()
-    const fileReader = new FileReader()
+export const checksumFromFile = async (file: File): Promise<string> => {
+  const hash = md5.create()
 
-    const readNextChunk = () => {
-      if (chunkIndex < chunkCount || (chunkIndex == 0 && chunkCount == 0)) {
-        const start = chunkIndex * chunkSize
-        const end = Math.min(start + chunkSize, file.size)
-        const bytes = file.slice(start, end)
-        fileReader.readAsArrayBuffer(bytes)
-        chunkIndex++
-        return true
-      } else {
-        return false
-      }
-    }
+  for (let start = 0; start < file.size; start += CHUNK_SIZE) {
+    const end = Math.min(start + CHUNK_SIZE, file.size)
+    const chunk = file.slice(start, end)
+    const buffer = await chunk.arrayBuffer()
+    hash.update(new Uint8Array(buffer))
+  }
 
-    fileReader.addEventListener('load', (event) => {
-      if (!event.target?.result) {
-        return
-      }
-
-      md5buffer.append(event.target.result as ArrayBuffer)
-
-      if (!readNextChunk()) {
-        const binaryDigest = md5buffer.end(true)
-        const base64digest = btoa(binaryDigest)
-        resolve(base64digest)
-      }
-    })
-
-    fileReader.addEventListener('error', (event) => {
-      reject(event)
-    })
-
-    readNextChunk()
-  })
+  const digest = hash.digest()
+  let binary = ''
+  for (let i = 0; i < digest.length; i++) {
+    binary += String.fromCharCode(digest[i])
+  }
+  return btoa(binary)
 }

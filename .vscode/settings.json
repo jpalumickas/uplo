@@ -3,6 +3,7 @@
   "cSpell.ignoreWords": ["Hono", "Nextra", "blurhash", "tsup"],
 
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit"
@@ -15,6 +16,5 @@
   "[json]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
   "[jsonc]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
 
-  "oxc.requireConfig": true,
-  "oxc.fmt.experimental": true
+  "oxc.requireConfig": true
 }

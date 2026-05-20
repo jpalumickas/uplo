@@ -19,7 +19,10 @@ importers:
         version: 0.51.0
       oxlint:
         specifier: ^1.66.0
-        version: 1.66.0
+        version: 1.66.0(oxlint-tsgolint@0.23.0)
+      oxlint-tsgolint:
+        specifier: ^0.23.0
+        version: 0.23.0
       tsdown:
         specifier: ^0.22.0
         version: 0.22.0(tsx@4.22.3)(typescript@5.9.3)
@@ -28,7 +31,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: ^4.1.6
-        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1)(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
+        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
 
   examples/cloudflare-worker:
     dependencies:
@@ -77,7 +80,7 @@ importers:
         version: 0.31.10
       vitest:
         specifier: ^4.1.6
-        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1)(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
+        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
 
   examples/node:
     dependencies:
@@ -129,7 +132,7 @@ importers:
         version: 4.22.3
       vitest:
         specifier: ^4.1.6
-        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1)(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
+        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
 
   packages/adapter-drizzle-pg:
     dependencies:
@@ -231,32 +234,29 @@ importers:
         version: 25.9.1
       vitest:
         specifier: ^4.1.6
-        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1)(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
+        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
 
   packages/react:
     dependencies:
+      '@noble/hashes':
+        specifier: ^2.2.0
+        version: 2.2.0
       mime:
         specifier: ^4.1.0
         version: 4.1.0
-      spark-md5:
-        specifier: ^3.0.2
-        version: 3.0.2
     devDependencies:
       '@types/react':
         specifier: ^19.2.15
         version: 19.2.15
-      '@types/spark-md5':
-        specifier: ^3.0.5
-        version: 3.0.5
       jsdom:
         specifier: ^29.1.1
-        version: 29.1.1
+        version: 29.1.1(@noble/hashes@2.2.0)
       react:
         specifier: ^19.2.6
         version: 19.2.6
       vitest:
         specifier: ^4.1.6
-        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1)(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
+        version: 4.1.6(@types/node@25.9.1)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
 
   packages/react-native:
     dependencies:
@@ -2366,6 +2366,10 @@ packages:
     resolution: {integrity: sha512-r3ZZhRjEcfEdKIZnoB1RusNgvHuaBRqfCzV4Gi+5A9yUX0S4HTws/ASWqt13wL4y4I+0rqsWGdA2w7EQXHi3+Q==}
     engines: {node: '>=19.0.0'}
 
+  '@noble/hashes@2.2.0':
+    resolution: {integrity: sha512-IYqDGiTXab6FniAgnSdZwgWbomxpy9FtYvLKs7wCUs2a8RkITG+DFGO1DM9cr+E3/RgADRpFjrKVaJ1z6sjtEg==}
+    engines: {node: '>= 20.19.0'}
+
   '@nodable/entities@2.1.0':
     resolution: {integrity: sha512-nyT7T3nbMyBI/lvr6L5TyWbFJAI9FTgVRakNoBqCD+PmID8DzFrrNdLLtHMwMszOtqZa8PAOV24ZqDnQrhQINA==}
 
@@ -2704,6 +2708,36 @@ packages:
   '@oxfmt/binding-win32-x64-msvc@0.51.0':
     resolution: {integrity: sha512-73RqdAuVKQTkjZIDw08JaDHUM4lav5Qu+CaPwg4QbbA7k8o7LEW0p3UsfZ/F8dsO/pwVYh3RzFcanwLRTTahbQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
+    cpu: [x64]
+    os: [win32]
+
+  '@oxlint-tsgolint/darwin-arm64@0.23.0':
+    resolution: {integrity: sha512-gOs9PVr2wEg4ox9z0aJo+RKhhImW86YL5N6yav8BK/rgPsIrwN/igSZ+pbRr723NFvUNKde9fgMhRA6JrXAOZw==}
+    cpu: [arm64]
+    os: [darwin]
+
+  '@oxlint-tsgolint/darwin-x64@0.23.0':
+    resolution: {integrity: sha512-kjJ8B+7n4tB9VJdxS5A9GdJt6/bYpzbu4lXp2uO1S3sRmCB5gDEABlGoiePNApRWaW+xqL4b4xgiE727jSLhuA==}
+    cpu: [x64]
+    os: [darwin]
+
+  '@oxlint-tsgolint/linux-arm64@0.23.0':
+    resolution: {integrity: sha512-6dCZuKNu135seMXilkRk9SpCx6i1XgmiipYGalLij5WVRX6ZYS8c4xI7preN/zv9fCXhsQclTIMDu2Y/cytTjw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@oxlint-tsgolint/linux-x64@0.23.0':
+    resolution: {integrity: sha512-3bdilnyA7kmSTjK27rvjIjSxL5SIg3wt7vwNiRkouWB83ytssyKnuGvxSYJxgMEmFpSutzaBzcCUM2jDtPGcgA==}
+    cpu: [x64]
+    os: [linux]
+
+  '@oxlint-tsgolint/win32-arm64@0.23.0':
+    resolution: {integrity: sha512-j+OEp44SVYiQ+ZD+uttsX7u6L9SvmbbQ77SO1pSFCcJlsVMeCk8qZsjhKfGKuT/jIA+ipOJMVs/+pqUfObBWNw==}
+    cpu: [arm64]
+    os: [win32]
+
+  '@oxlint-tsgolint/win32-x64@0.23.0':
+    resolution: {integrity: sha512-5MyjFuqf+g8OUPJBSGWHJtmoWnzFJYyOg4To9WMQshZYEWig/vtu7JtJ03VWnzHv9LJkAUeApY0gVCOywFR/iQ==}
     cpu: [x64]
     os: [win32]
 
@@ -3463,9 +3497,6 @@ packages:
 
   '@types/request@2.48.13':
     resolution: {integrity: sha512-FGJ6udDNUCjd19pp0Q3iTiDkwhYup7J8hpMW9c4k53NrccQFFWKRho6hvtPPEhnXWKvukfwAlB6DbDz4yhH5Gg==}
-
-  '@types/spark-md5@3.0.5':
-    resolution: {integrity: sha512-lWf05dnD42DLVKQJZrDHtWFidcLrHuip01CtnC2/S6AMhX4t9ZlEUj4iuRlAnts0PQk7KESOqKxeGE/b6sIPGg==}
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
@@ -6077,6 +6108,10 @@ packages:
       svelte:
         optional: true
 
+  oxlint-tsgolint@0.23.0:
+    resolution: {integrity: sha512-3mBv3CoPbh8dFbzfDGIWa2ytZjn2v+3EX4aKRXjIhsoGFzG8GCjfRirz3rwZf1wYbZzsNLTSgpw8VjQuWdp/jA==}
+    hasBin: true
+
   oxlint@1.66.0:
     resolution: {integrity: sha512-N4LLxYLd94KEBqXDMDM5f+2PUpItTjDLreXe2Gn5KhjhCK4Qp2YUXaBi8Yu325ryOgKwt22m45fpD7nPOn69Yw==}
     engines: {node: ^20.19.0 || >=22.12.0}
@@ -6910,9 +6945,6 @@ packages:
   source-map@0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
-
-  spark-md5@3.0.2:
-    resolution: {integrity: sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==}
 
   spawndamnit@3.0.1:
     resolution: {integrity: sha512-MmnduQUuHCoFckZoWnXsTg7JaiLBJrKFj9UI2MbRPGaJeVpsLcVBu6P/IGZovziM/YBsellCmsprgNA+w0CzVg==}
@@ -9226,7 +9258,9 @@ snapshots:
   '@esbuild/win32-x64@0.28.0':
     optional: true
 
-  '@exodus/bytes@1.15.0': {}
+  '@exodus/bytes@1.15.0(@noble/hashes@2.2.0)':
+    optionalDependencies:
+      '@noble/hashes': 2.2.0
 
   '@expo/cli@0.24.15':
     dependencies:
@@ -9932,6 +9966,8 @@ snapshots:
 
   '@neondatabase/serverless@1.1.0': {}
 
+  '@noble/hashes@2.2.0': {}
+
   '@nodable/entities@2.1.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
@@ -10257,6 +10293,24 @@ snapshots:
     optional: true
 
   '@oxfmt/binding-win32-x64-msvc@0.51.0':
+    optional: true
+
+  '@oxlint-tsgolint/darwin-arm64@0.23.0':
+    optional: true
+
+  '@oxlint-tsgolint/darwin-x64@0.23.0':
+    optional: true
+
+  '@oxlint-tsgolint/linux-arm64@0.23.0':
+    optional: true
+
+  '@oxlint-tsgolint/linux-x64@0.23.0':
+    optional: true
+
+  '@oxlint-tsgolint/win32-arm64@0.23.0':
+    optional: true
+
+  '@oxlint-tsgolint/win32-x64@0.23.0':
     optional: true
 
   '@oxlint/binding-android-arm-eabi@1.66.0':
@@ -10961,8 +11015,6 @@ snapshots:
       '@types/node': 25.9.1
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.5
-
-  '@types/spark-md5@3.0.5': {}
 
   '@types/stack-utils@2.0.3': {}
 
@@ -11734,10 +11786,10 @@ snapshots:
 
   dargs@7.0.0: {}
 
-  data-urls@7.0.0:
+  data-urls@7.0.0(@noble/hashes@2.2.0):
     dependencies:
       whatwg-mimetype: 5.0.0
-      whatwg-url: 16.0.1
+      whatwg-url: 16.0.1(@noble/hashes@2.2.0)
     transitivePeerDependencies:
       - '@noble/hashes'
 
@@ -12633,9 +12685,9 @@ snapshots:
     dependencies:
       lru-cache: 11.4.0
 
-  html-encoding-sniffer@6.0.0:
+  html-encoding-sniffer@6.0.0(@noble/hashes@2.2.0):
     dependencies:
-      '@exodus/bytes': 1.15.0
+      '@exodus/bytes': 1.15.0(@noble/hashes@2.2.0)
     transitivePeerDependencies:
       - '@noble/hashes'
 
@@ -12957,17 +13009,17 @@ snapshots:
 
   jsc-safe-url@0.2.4: {}
 
-  jsdom@29.1.1:
+  jsdom@29.1.1(@noble/hashes@2.2.0):
     dependencies:
       '@asamuzakjp/css-color': 5.1.11
       '@asamuzakjp/dom-selector': 7.1.1
       '@bramus/specificity': 2.4.2
       '@csstools/css-syntax-patches-for-csstree': 1.1.4(css-tree@3.2.1)
-      '@exodus/bytes': 1.15.0
+      '@exodus/bytes': 1.15.0(@noble/hashes@2.2.0)
       css-tree: 3.2.1
-      data-urls: 7.0.0
+      data-urls: 7.0.0(@noble/hashes@2.2.0)
       decimal.js: 10.6.0
-      html-encoding-sniffer: 6.0.0
+      html-encoding-sniffer: 6.0.0(@noble/hashes@2.2.0)
       is-potential-custom-element-name: 1.0.1
       lru-cache: 11.4.0
       parse5: 8.0.1
@@ -12978,7 +13030,7 @@ snapshots:
       w3c-xmlserializer: 5.0.0
       webidl-conversions: 8.0.1
       whatwg-mimetype: 5.0.0
-      whatwg-url: 16.0.1
+      whatwg-url: 16.0.1(@noble/hashes@2.2.0)
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - '@noble/hashes'
@@ -14014,7 +14066,16 @@ snapshots:
       '@oxfmt/binding-win32-ia32-msvc': 0.51.0
       '@oxfmt/binding-win32-x64-msvc': 0.51.0
 
-  oxlint@1.66.0:
+  oxlint-tsgolint@0.23.0:
+    optionalDependencies:
+      '@oxlint-tsgolint/darwin-arm64': 0.23.0
+      '@oxlint-tsgolint/darwin-x64': 0.23.0
+      '@oxlint-tsgolint/linux-arm64': 0.23.0
+      '@oxlint-tsgolint/linux-x64': 0.23.0
+      '@oxlint-tsgolint/win32-arm64': 0.23.0
+      '@oxlint-tsgolint/win32-x64': 0.23.0
+
+  oxlint@1.66.0(oxlint-tsgolint@0.23.0):
     optionalDependencies:
       '@oxlint/binding-android-arm-eabi': 1.66.0
       '@oxlint/binding-android-arm64': 1.66.0
@@ -14035,6 +14096,7 @@ snapshots:
       '@oxlint/binding-win32-arm64-msvc': 1.66.0
       '@oxlint/binding-win32-ia32-msvc': 1.66.0
       '@oxlint/binding-win32-x64-msvc': 1.66.0
+      oxlint-tsgolint: 0.23.0
 
   p-filter@2.1.0:
     dependencies:
@@ -14938,8 +15000,6 @@ snapshots:
 
   source-map@0.6.1: {}
 
-  spark-md5@3.0.2: {}
-
   spawndamnit@3.0.1:
     dependencies:
       cross-spawn: 7.0.6
@@ -15388,7 +15448,7 @@ snapshots:
       tsx: 4.22.3
       yaml: 2.8.0
 
-  vitest@4.1.6(@types/node@25.9.1)(jsdom@29.1.1)(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0)):
+  vitest@4.1.6(@types/node@25.9.1)(jsdom@29.1.1(@noble/hashes@2.2.0))(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0)):
     dependencies:
       '@vitest/expect': 4.1.6
       '@vitest/mocker': 4.1.6(vite@7.2.6(@types/node@25.9.1)(jiti@2.7.0)(lightningcss@1.27.0)(terser@5.47.1)(tsx@4.22.3)(yaml@2.8.0))
@@ -15412,7 +15472,7 @@ snapshots:
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 25.9.1
-      jsdom: 29.1.1
+      jsdom: 29.1.1(@noble/hashes@2.2.0)
     transitivePeerDependencies:
       - msw
 
@@ -15448,9 +15508,9 @@ snapshots:
       punycode: 2.3.1
       webidl-conversions: 5.0.0
 
-  whatwg-url@16.0.1:
+  whatwg-url@16.0.1(@noble/hashes@2.2.0):
     dependencies:
-      '@exodus/bytes': 1.15.0
+      '@exodus/bytes': 1.15.0(@noble/hashes@2.2.0)
       tr46: 6.0.0
       webidl-conversions: 8.0.1
     transitivePeerDependencies:
