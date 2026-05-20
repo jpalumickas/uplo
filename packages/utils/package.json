@@ -40,8 +40,10 @@
     "test:dev": "vitest dev",
     "typecheck": "tsc --noEmit"
   },
+  "dependencies": {
+    "@tinyhttp/content-disposition": "~2.2.4"
+  },
   "devDependencies": {
-    "@tinyhttp/content-disposition": "~2.2.4",
     "@types/node": "^25.9.1"
   },
   "engines": {

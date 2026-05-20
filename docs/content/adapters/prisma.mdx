@@ -14,10 +14,10 @@ npm i @uplo/adapter-prisma dataloader
 Add adapter to Uplo
 
 ```ts
-import PrismaAdapter from '@uplo/adapter-prisma'
+import { createPrismaAdapter } from '@uplo/adapter-prisma'
 
 const uplo = createUplo({
-  adapter: new PrismaAdapter({ prisma }),
+  adapter: createPrismaAdapter({ prisma }),
 })
 ```
 

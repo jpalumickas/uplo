@@ -77,4 +77,4 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, opt
   )
 }
 
-export default fp(fastifyPlugin)
+export const uploFastify = fp(fastifyPlugin)

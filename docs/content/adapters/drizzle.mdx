@@ -13,10 +13,10 @@ npm i @uplo/adapter-drizzle-pg dataloader
 Add Drizzle adapter to Uplo
 
 ```ts
-import { DrizzleAdapter } from '@uplo/adapter-drizzle-pg'
+import { createDrizzleAdapter } from '@uplo/adapter-drizzle-pg'
 
 const uplo = createUplo({
-  adapter: DrizzleAdapter({ db, schema }),
+  adapter: createDrizzleAdapter({ db, schema }),
 })
 ```
 

@@ -12,7 +12,10 @@ export interface DrizzleAdapterOptions {
   schema: any
 }
 
-export const DrizzleAdapter = ({ db, schema: plainSchema }: DrizzleAdapterOptions): Adapter => {
+export const createDrizzleAdapter = ({
+  db,
+  schema: plainSchema,
+}: DrizzleAdapterOptions): Adapter => {
   const schema = plainSchema as typeof defaultSchema
   const loaders = initLoaders({ db, schema })
 

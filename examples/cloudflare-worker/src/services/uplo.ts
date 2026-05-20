@@ -1,4 +1,4 @@
-import { DrizzleAdapter } from '@uplo/adapter-drizzle-pg'
+import { createDrizzleAdapter } from '@uplo/adapter-drizzle-pg'
 import { createUplo as createUploServer } from '@uplo/server'
 import { createS3Service } from '@uplo/service-s3'
 
@@ -25,7 +25,7 @@ export const createUplo = (c: HonoContext) => {
     config: {
       privateKey: c.env.UPLO_SECRET_TOKEN,
     },
-    adapter: DrizzleAdapter({
+    adapter: createDrizzleAdapter({
       db,
       schema,
     }),

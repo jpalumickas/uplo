@@ -1,4 +1,4 @@
-import type { GetSignedUrlConfig } from '@google-cloud/storage'
+import type { GetSignedUrlConfig, StorageOptions } from '@google-cloud/storage'
 import { Storage } from '@google-cloud/storage'
 import fs from 'node:fs'
 
@@ -9,7 +9,9 @@ import { contentDisposition } from '@uplo/utils'
 interface Options {
   isPublic?: boolean
   bucket: string
-  credentialsPath: string
+  credentialsPath?: string
+  credentials?: StorageOptions['credentials']
+  projectId?: string
 }
 
 const directUploadHeaders = async (
@@ -30,9 +32,13 @@ export const createGCSService = ({
   isPublic = false,
   bucket,
   credentialsPath,
+  credentials,
+  projectId,
 }: Options): Service => {
   const storage = new Storage({
     keyFilename: credentialsPath,
+    credentials,
+    projectId,
   })
 
   const directUploadUrl = async (blob: BlobData, { expiresIn = 5 * 60 * 1000 } = {}) => {

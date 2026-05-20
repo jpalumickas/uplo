@@ -35,7 +35,7 @@ Define uplo instance
 
 ```ts
 import { createUplo } from '@uplo/server'
-import PrismaAdapter from '@uplo/adapter-prisma'
+import { createPrismaAdapter } from '@uplo/adapter-prisma'
 import { createS3Service } from '@uplo/service-s3'
 
 const config = {
@@ -45,7 +45,7 @@ const config = {
 
 const uplo = createUplo({
   config,
-  adapter: new PrismaAdapter({ prisma }),
+  adapter: createPrismaAdapter({ prisma }),
   services: {
     s3: createS3Service({
       isPublic: false,

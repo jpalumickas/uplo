@@ -385,10 +385,11 @@ importers:
         version: 25.9.1
 
   packages/utils:
-    devDependencies:
+    dependencies:
       '@tinyhttp/content-disposition':
         specifier: ~2.2.4
         version: 2.2.4
+    devDependencies:
       '@types/node':
         specifier: ^25.9.1
         version: 25.9.1
@@ -11898,7 +11899,7 @@ snapshots:
 
   dotenv-expand@11.0.7:
     dependencies:
-      dotenv: 16.4.7
+      dotenv: 16.6.1
 
   dotenv-expand@12.0.3:
     dependencies:
