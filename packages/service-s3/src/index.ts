@@ -1,5 +1,5 @@
+import type { S3ClientConfig } from '@aws-sdk/client-s3'
 import {
-  S3ClientConfig,
   S3Client,
   GetObjectCommand,
   PutObjectCommand,
@@ -10,8 +10,9 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import type { Readable } from 'node:stream'
 
 import { UploError } from '@uplo/server'
-import { Service, BlobData, ServiceUploadParams } from '@uplo/types'
-import { contentDisposition, ContentDispositionType } from '@uplo/utils'
+import type { Service, BlobData, ServiceUploadParams } from '@uplo/types'
+import type { ContentDispositionType } from '@uplo/utils'
+import { contentDisposition } from '@uplo/utils'
 
 const DEFAULT_REGION = 'us-east-1'
 

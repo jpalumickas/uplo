@@ -29,7 +29,9 @@ export const Uplo = <AttachmentsList extends UploOptionsAttachments>({
 
   const findBlob = async (blobId: ID) => {
     const blobData = await adapter.findBlob(blobId)
-    if (!blobData) return null
+    if (!blobData) {
+      return null
+    }
 
     const service = services[blobData.serviceName]
     if (!service) {

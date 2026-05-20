@@ -1,7 +1,7 @@
 import type { Service, Adapter } from '@uplo/types'
 
-import { Signer } from '../Signer'
-import { FormattedAttachmentOptions } from './attachments'
+import type { Signer } from '../Signer'
+import type { FormattedAttachmentOptions } from './attachments'
 
 export interface CreateDirectUploadParamsMetadata {
   [key: string]: string | number | null

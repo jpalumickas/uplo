@@ -23,7 +23,9 @@ export const checksumFromFile = async (file: File) => {
     }
 
     fileReader.addEventListener('load', (event) => {
-      if (!event.target?.result) return
+      if (!event.target?.result) {
+        return
+      }
 
       md5buffer.append(event.target.result as ArrayBuffer)
 

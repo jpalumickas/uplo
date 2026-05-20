@@ -1,7 +1,7 @@
 import type { PrismaClient } from '@prisma/client'
 
 import { BlobNotFoundError } from '@uplo/server'
-import {
+import type {
   CreateBlobOptions,
   AttachBlobOptions,
   Adapter,

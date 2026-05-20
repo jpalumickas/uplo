@@ -1,4 +1,4 @@
-import { AttachmentValidateType } from './config'
+import type { AttachmentValidateType } from './config'
 
 export interface FormattedAttachmentOptions {
   multiple: boolean

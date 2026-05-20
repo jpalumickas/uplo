@@ -1,4 +1,4 @@
-import { Blob } from '@uplo/types'
+import type { Blob } from '@uplo/types'
 
 export interface AnalyzerOptions {
   blob: Blob

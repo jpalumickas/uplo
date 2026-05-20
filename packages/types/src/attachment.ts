@@ -1,7 +1,7 @@
 import type { ContentDispositionType } from '@uplo/utils'
 
-import { ID } from './general'
-import { Service } from './service'
+import type { ID } from './general'
+import type { Service } from './service'
 
 export interface BlobMetadata {
   [key: string]: string | number | null

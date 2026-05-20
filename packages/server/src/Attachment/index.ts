@@ -1,4 +1,4 @@
-import { Adapter, Service, Attachment as TAttachment, AttachmentData } from '@uplo/types'
+import type { Adapter, Service, Attachment as TAttachment, AttachmentData } from '@uplo/types'
 
 import { Blob } from '../Blob'
 import { UploError } from '../errors'

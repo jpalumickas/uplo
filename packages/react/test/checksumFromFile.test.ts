@@ -40,7 +40,9 @@ describe('checksumFromFile', () => {
 
   it('hashes a file just past the chunk boundary (two chunks)', async () => {
     const content = new Uint8Array(CHUNK_SIZE + 1)
-    for (let i = 0; i < content.length; i++) content[i] = i & 0xff
+    for (let i = 0; i < content.length; i++) {
+      content[i] = i & 0xff
+    }
     const file = new File([content], 'two-chunks.bin')
     const result = await checksumFromFile(file)
     expect(result).toBe('3NCu6sCJZIv/AuT/4Uk5PA==')
@@ -48,7 +50,9 @@ describe('checksumFromFile', () => {
 
   it('hashes a file spanning several chunks (5 MB pattern)', async () => {
     const content = new Uint8Array(5 * 1024 * 1024)
-    for (let i = 0; i < content.length; i++) content[i] = (i * 31) & 0xff
+    for (let i = 0; i < content.length; i++) {
+      content[i] = (i * 31) & 0xff
+    }
     const file = new File([content], 'large.bin')
     const result = await checksumFromFile(file)
     expect(result).toBe('H22EiF4zPj7U7O5QmI3PAg==')
@@ -58,7 +62,9 @@ describe('checksumFromFile', () => {
     // The same logical bytes split into one File built from many slices vs one slice
     // should still hash identically.
     const part = new Uint8Array(CHUNK_SIZE - 17)
-    for (let i = 0; i < part.length; i++) part[i] = (i + 7) & 0xff
+    for (let i = 0; i < part.length; i++) {
+      part[i] = (i + 7) & 0xff
+    }
     const oneBlob = new File([part, part, part], 'merged.bin')
     const result = await checksumFromFile(oneBlob)
     expect(result).toBe('1eeAl0PyVGESRnkzeF0XEg==')

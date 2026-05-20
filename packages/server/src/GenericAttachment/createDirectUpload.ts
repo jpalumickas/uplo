@@ -3,7 +3,7 @@ import { generateKey } from '@uplo/utils'
 
 import { UploError } from '../errors.js'
 import type { Signer } from '../Signer'
-import { FormattedAttachmentOptions } from '../types/attachments.js'
+import type { FormattedAttachmentOptions } from '../types/attachments.js'
 import type { CreateDirectUploadParams } from '../types/generic-attachment.js'
 import { validateBlobInputData } from '../utils/validateBobInputData.js'
 

@@ -1,10 +1,10 @@
 import merge from 'deepmerge'
 
-import { Blob } from '@uplo/types'
+import type { Blob } from '@uplo/types'
 
 import { downloadToTempfile } from './downloadToTempfile'
 import { AnalyzeError } from './errors'
-import { Analyzer } from './types'
+import type { Analyzer } from './types'
 
 export const analyze =
   (analyzers: Analyzer[] = []) =>

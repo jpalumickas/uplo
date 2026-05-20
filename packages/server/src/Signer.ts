@@ -1,9 +1,10 @@
-import { jwtVerify, JWTPayload, SignJWT } from 'jose'
+import type { JWTPayload } from 'jose'
+import { jwtVerify, SignJWT } from 'jose'
 
 import type { ID } from '@uplo/types'
 
 import { SignerError } from './errors'
-import { UploConfig } from './types'
+import type { UploConfig } from './types'
 
 const ISSUER = 'uplo'
 

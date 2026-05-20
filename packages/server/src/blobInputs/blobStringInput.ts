@@ -1,6 +1,6 @@
 import { checksumString } from '@uplo/utils'
 
-import { BlobInput } from './types.js'
+import type { BlobInput } from './types.js'
 
 export interface BlobStringInput {
   fileName: string

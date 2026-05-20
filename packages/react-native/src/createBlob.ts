@@ -1,6 +1,6 @@
 import mime from 'mime/lite'
 
-import { File } from './types'
+import type { File } from './types'
 import { checksumFromMD5 } from './utils/checksumFromMD5'
 import { getFileInfo } from './utils/getFileInfo'
 
@@ -21,9 +21,11 @@ export const createBlob = async (
   const filePath = file.localUri || file.uri
   const fileData = await getFileInfo(filePath)
 
-  if (!fileData) return { data: null, error: 'Cannot get data from file' }
+  if (!fileData) {
+    return { data: null, error: 'Cannot get data from file' }
+  }
 
-  const fileName = file.fileName || filePath.replace(/^.*[\\\/]/, '')
+  const fileName = file.fileName || filePath.replace(/^.*[\\/]/, '')
 
   const metadata = {
     ...file.metadata,

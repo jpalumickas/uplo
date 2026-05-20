@@ -12,10 +12,18 @@ export const getFileInfo = async (filePath: string): Promise<FileInfo | null> =>
       md5: true,
     })
 
-    if (!result) return null
-    if (!result.exists) return null
-    if (!result.md5) return null
-    if (!result.size) return null
+    if (!result) {
+      return null
+    }
+    if (!result.exists) {
+      return null
+    }
+    if (!result.md5) {
+      return null
+    }
+    if (!result.size) {
+      return null
+    }
 
     return {
       md5: result.md5,

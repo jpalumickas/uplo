@@ -1,6 +1,6 @@
 import sharp from 'sharp'
 
-import { Analyzer } from '@uplo/analyzer'
+import type { Analyzer } from '@uplo/analyzer'
 
 const ORIENTATIONS = [
   'Undefined',
@@ -17,10 +17,14 @@ const ORIENTATIONS = [
 const ImageAnalyzer =
   (): Analyzer =>
   async ({ blob: { contentType }, filePath }) => {
-    if (!contentType.startsWith('image/')) return
+    if (!contentType.startsWith('image/')) {
+      return
+    }
 
     const metadata = await sharp(filePath).metadata()
-    if (!metadata) return
+    if (!metadata) {
+      return
+    }
 
     const orientation = ORIENTATIONS[metadata.orientation || 0]
     const isRotated = ['Right-Top', 'Left-Bottom'].includes(orientation)

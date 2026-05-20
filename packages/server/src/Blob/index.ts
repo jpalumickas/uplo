@@ -1,4 +1,4 @@
-import { Service, Adapter, Blob as TBlob, BlobUrlOptions, BlobData } from '@uplo/types'
+import type { Service, Adapter, Blob as TBlob, BlobUrlOptions, BlobData } from '@uplo/types'
 
 type Params = {
   data: BlobData

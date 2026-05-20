@@ -18,7 +18,9 @@ export const encodeImageToBlurhash = ({
       .ensureAlpha()
       .resize(size, size, { fit: 'inside' })
       .toBuffer((err, buffer, { width, height }) => {
-        if (err) return reject(err)
+        if (err) {
+          return reject(err)
+        }
         resolve(encode(new Uint8ClampedArray(buffer), width, height, xComponents, yComponents))
       })
   })

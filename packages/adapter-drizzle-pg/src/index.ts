@@ -1,10 +1,10 @@
 import { eq, and } from 'drizzle-orm'
-import { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core'
+import type { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core'
 
 import { BlobNotFoundError } from '@uplo/server'
-import { Adapter, BlobData } from '@uplo/types'
+import type { Adapter, BlobData } from '@uplo/types'
 
-import * as defaultSchema from './defaultSchema'
+import type * as defaultSchema from './defaultSchema'
 import { loaders as initLoaders } from './loaders'
 
 export interface DrizzleAdapterOptions {

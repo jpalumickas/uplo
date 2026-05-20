@@ -3,7 +3,7 @@ import { and, inArray, eq, or } from 'drizzle-orm'
 
 import type { ID, AttachmentData } from '@uplo/types'
 
-import { DrizzleAdapterOptions } from '..'
+import type { DrizzleAdapterOptions } from '..'
 
 type FindAttachmentsRecordData = {
   recordId: ID

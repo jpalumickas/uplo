@@ -1,9 +1,9 @@
 import type { ReadStream as FsReadStream } from 'node:fs'
 import type { Readable } from 'node:stream'
 
-import { ContentDispositionType } from '@uplo/utils'
+import type { ContentDispositionType } from '@uplo/utils'
 
-import { BlobData } from './attachment'
+import type { BlobData } from './attachment'
 
 export interface ServiceUpdateMetadataOptions {
   contentType?: string

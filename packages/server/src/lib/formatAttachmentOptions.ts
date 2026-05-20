@@ -1,4 +1,4 @@
-import { Service } from '@uplo/types'
+import type { Service } from '@uplo/types'
 
 import { UploError } from '../errors.js'
 import type { UploOptionsAttachment } from '../types'

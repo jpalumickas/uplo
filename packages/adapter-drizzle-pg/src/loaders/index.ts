@@ -1,4 +1,4 @@
-import { DrizzleAdapterOptions } from '..'
+import type { DrizzleAdapterOptions } from '..'
 import { findAttachmentsLoader } from './findAttachments'
 import { findBlobLoader } from './findBlob'
 

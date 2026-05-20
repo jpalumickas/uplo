@@ -2,7 +2,7 @@ import { uploadAsync } from 'expo-file-system/legacy'
 import { useState, useMemo, useCallback } from 'react'
 
 import { createBlob } from '../createBlob'
-import { Upload, File, UseUploadOptions } from '../types'
+import type { Upload, File, UseUploadOptions } from '../types'
 import { useUploConfig } from './useUploConfig'
 
 const getRandomId = () => `${Date.now()}${Math.floor(Math.random() * 100000)}`
@@ -36,7 +36,9 @@ export const useDirectUpload = (
     (id: string, upload: Partial<Upload>) => {
       setUploads((prev) => {
         return prev.map((item) => {
-          if (item.id !== id) return item
+          if (item.id !== id) {
+            return item
+          }
           const updatedUpload = { ...item, ...upload }
 
           if (onUploadChange) {
@@ -105,7 +107,7 @@ export const useDirectUpload = (
 
       return upload
     },
-    [addUpload, onUploadSuccess, updateUpload],
+    [addUpload, onUploadSuccess, updateUpload, attachmentName, host, mountPath],
   )
 
   return {

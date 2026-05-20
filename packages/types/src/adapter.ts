@@ -1,5 +1,5 @@
-import { AttachmentData, BlobData } from './attachment'
-import { ID } from './general'
+import type { AttachmentData, BlobData } from './attachment'
+import type { ID } from './general'
 
 export interface CreateBlobParams {
   key: string

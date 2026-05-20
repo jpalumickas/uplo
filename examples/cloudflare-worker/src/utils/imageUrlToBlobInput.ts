@@ -1,4 +1,4 @@
-import { BlobInput } from '@uplo/server'
+import type { BlobInput } from '@uplo/server'
 import { checksumString } from '@uplo/utils'
 
 export const imageUrlToBlobInput = async (url: string): Promise<BlobInput> => {

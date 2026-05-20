@@ -2,7 +2,7 @@ import { useState, useMemo, useCallback } from 'react'
 
 import { createBlob } from '../services/createBlob'
 import { uploadAsync } from '../services/uploadAsync'
-import { UploadID, Upload, UploadFileOptions, UseDirectUploadOptions } from '../types'
+import type { UploadID, Upload, UploadFileOptions, UseDirectUploadOptions } from '../types'
 import { useUploConfig } from './useUploConfig'
 
 export const useDirectUpload = (
@@ -35,7 +35,9 @@ export const useDirectUpload = (
     (id: UploadID, upload: Partial<Upload>) => {
       setUploads((prev) => {
         return prev.map((item) => {
-          if (item.id !== id) return item
+          if (item.id !== id) {
+            return item
+          }
           const updatedUpload = { ...item, ...upload }
 
           if (onUploadChange) {
@@ -110,7 +112,7 @@ export const useDirectUpload = (
 
       return upload
     },
-    [addUpload, onUploadSuccess, updateUpload],
+    [addUpload, onUploadSuccess, updateUpload, attachmentName, host, mountPath],
   )
 
   return {

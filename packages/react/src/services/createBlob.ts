@@ -1,4 +1,4 @@
-import { Metadata } from '../types'
+import type { Metadata } from '../types'
 // import mime from 'mime/lite';
 import { checksumFromFile } from '../utils/checksumFromFile'
 

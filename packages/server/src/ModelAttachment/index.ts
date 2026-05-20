@@ -1,13 +1,13 @@
 import camelCase from 'camelcase'
 
-import { Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types'
+import type { Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types'
 import { generateKey } from '@uplo/utils'
 
 import { Attachment } from '../Attachment'
-import { BlobInput } from '../blobInputs/types'
+import type { BlobInput } from '../blobInputs/types'
 import { UploError, BlobNotFoundError } from '../errors'
-import { Signer } from '../Signer'
-import { AttachmentValidateType, Callbacks } from '../types'
+import type { Signer } from '../Signer'
+import type { AttachmentValidateType, Callbacks } from '../types'
 import { validateBlobInputData } from '../utils/validateBobInputData'
 
 export interface ModelAttachmentOptions {

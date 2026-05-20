@@ -3,7 +3,7 @@ import { inArray } from 'drizzle-orm'
 
 import type { ID, BlobData } from '@uplo/types'
 
-import { DrizzleAdapterOptions } from '..'
+import type { DrizzleAdapterOptions } from '..'
 
 export const findBlobLoader = ({ db, schema }: DrizzleAdapterOptions) =>
   new DataLoader(async (blobIds: Readonly<ID[]>) => {

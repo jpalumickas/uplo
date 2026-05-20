@@ -5,6 +5,12 @@ export default defineConfig({
   categories: {
     correctness: 'error',
   },
+  rules: {
+    curly: ['error', 'all'],
+    'typescript/consistent-type-imports': 'error',
+    'typescript/no-import-type-side-effects': 'error',
+    'unicorn/prefer-node-protocol': 'error',
+  },
   env: {
     builtin: true,
   },

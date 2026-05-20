@@ -1,6 +1,7 @@
 import mime from 'mime/lite'
 import crypto from 'node:crypto'
-import { ReadStream, createReadStream, lstatSync } from 'node:fs'
+import type { ReadStream } from 'node:fs'
+import { createReadStream, lstatSync } from 'node:fs'
 import { basename } from 'node:path'
 
 import { type BlobInput, UploError } from '@uplo/server'

@@ -1,5 +1,5 @@
 import { BlobValidationError } from '../errors'
-import { AttachmentValidateType } from '../types'
+import type { AttachmentValidateType } from '../types'
 
 type BlobInputData = {
   fileName: string

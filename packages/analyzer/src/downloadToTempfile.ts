@@ -2,7 +2,7 @@ import { createWriteStream } from 'node:fs'
 import { finished } from 'node:stream/promises'
 
 import { UploError } from '@uplo/node'
-import { Blob } from '@uplo/types'
+import type { Blob } from '@uplo/types'
 
 import { tempFile } from './utils/tempFile.js'
 
