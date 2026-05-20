@@ -20,7 +20,6 @@
     "@types/pg": "^8.20.0",
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
-    "prettier": "^3.8.3",
     "vitest": "^4.1.6"
   },
   "scripts": {

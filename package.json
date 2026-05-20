@@ -1,6 +1,7 @@
 {
   "name": "@uplo/monorepo",
   "version": "0.1.0",
+  "type": "module",
   "main": "index.js",
   "author": "Justas Palumickas",
   "license": "MIT",
@@ -18,7 +19,9 @@
     ]
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "pnpm -r run build",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
     "packages:publish": "pnpm publish -r --filter @uplo/*",
     "version:patch": "lerna version patch --force-publish",
     "version:minor": "lerna version minor --force-publish"
@@ -30,7 +33,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "lerna": "^9.0.7",
-    "prettier": "^3.8.3",
+    "oxfmt": "^0.51.0",
     "tsdown": "^0.22.0",
     "typescript": "^5.9.3",
     "vitest": "^4.1.6"
