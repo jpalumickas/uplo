@@ -38,7 +38,7 @@
     "generate": "prisma generate"
   },
   "peerDependencies": {
-    "@prisma/client": ">=2.19.0",
+    "@prisma/client": ">=7.0.0",
     "@uplo/server": "workspace:^",
     "dataloader": ">=2.0.0"
   },
@@ -46,10 +46,10 @@
     "@uplo/types": "workspace:^"
   },
   "devDependencies": {
-    "@prisma/client": "^6.19.3",
+    "@prisma/client": "^7.8.0",
     "@uplo/server": "workspace:^",
     "dataloader": "^2.2.3",
-    "prisma": "^5.22.0"
+    "prisma": "^7.8.0"
   },
   "engines": {
     "node": ">=20"

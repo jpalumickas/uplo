@@ -1,9 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
 import S3Service from '@uplo/service-s3';
 import Uplo from '@uplo/node';
 import PrismaAdapter from '@uplo/adapter-prisma';
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 export const uplo = Uplo({
   adapter: new PrismaAdapter({ prisma }),

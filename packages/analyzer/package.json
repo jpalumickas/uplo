@@ -37,7 +37,7 @@
     "deepmerge": "^4.3.1"
   },
   "devDependencies": {
-    "@types/node": "^25.9.0",
+    "@types/node": "^25.9.1",
     "@uplo/node": "workspace:^"
   },
   "peerDependencies": {

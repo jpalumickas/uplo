@@ -49,13 +49,13 @@
     "@uplo/utils": "workspace:^",
     "camelcase": "^9.0.0",
     "hono": "^4.12.21",
-    "jose": "^5.10.0",
+    "jose": "^6.2.3",
     "mime": "^4.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/mime": "^4.0.0",
-    "@types/node": "^25.9.0"
+    "@types/node": "^25.9.1"
   },
   "keywords": [
     "gcs",
