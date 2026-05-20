@@ -1,22 +1,15 @@
-import {
-  pgTable,
-  bigint,
-  jsonb,
-  uuid,
-  varchar,
-  timestamp,
-} from 'drizzle-orm/pg-core';
-import { relations } from 'drizzle-orm';
-import { Blob } from '@uplo/types';
+import { Blob } from '@uplo/types'
+import { relations } from 'drizzle-orm'
+import { pgTable, bigint, jsonb, uuid, varchar, timestamp } from 'drizzle-orm/pg-core'
 
-const id = uuid('id').defaultRandom().primaryKey().$type<Blob['id']>();
+const id = uuid('id').defaultRandom().primaryKey().$type<Blob['id']>()
 
 const createdAt = timestamp('created_at', {
   precision: 6,
   withTimezone: true,
 })
   .defaultNow()
-  .notNull();
+  .notNull()
 
 export const fileAttachments = pgTable('file_attachments', {
   id,
@@ -25,7 +18,7 @@ export const fileAttachments = pgTable('file_attachments', {
   recordType: varchar('record_type').notNull(),
   recordId: uuid('record_id').notNull(),
   createdAt,
-});
+})
 
 export const fileBlobs = pgTable('file_blobs', {
   id,
@@ -37,14 +30,11 @@ export const fileBlobs = pgTable('file_blobs', {
   checksum: varchar('checksum').notNull(),
   metadata: jsonb('metadata').default({}).$type<Blob['metadata']>().notNull(),
   createdAt,
-});
+})
 
-export const fileAttachmentsRelations = relations(
-  fileAttachments,
-  ({ one }) => ({
-    blob: one(fileBlobs, {
-      fields: [fileAttachments.blobId],
-      references: [fileBlobs.id],
-    }),
-  })
-);
+export const fileAttachmentsRelations = relations(fileAttachments, ({ one }) => ({
+  blob: one(fileBlobs, {
+    fields: [fileAttachments.blobId],
+    references: [fileBlobs.id],
+  }),
+}))

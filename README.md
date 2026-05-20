@@ -5,11 +5,11 @@ or etc. It also supports various type of ORM adapters, like Prisma.
 
 ## Features
 
-* TypeScript ready
-* Direct uploads
-* Supports multiple services
-* Multiple ORM adapters
-* File analyzers
+- TypeScript ready
+- Direct uploads
+- Supports multiple services
+- Multiple ORM adapters
+- File analyzers
 
 ## Getting started
 
@@ -34,14 +34,14 @@ pnpm add @uplo/service-s3
 Define uplo instance
 
 ```ts
-import Uplo from '@uplo/node';
-import PrismaAdapter from '@uplo/adapter-prisma';
-import GCSService from '@uplo/service-gcs';
+import Uplo from '@uplo/node'
+import PrismaAdapter from '@uplo/adapter-prisma'
+import GCSService from '@uplo/service-gcs'
 
 const config = {
   privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
   signedIdExpiresIn: 60 * 60, // Time how long a Signed ID is valid
-};
+}
 
 const uplo = Uplo({
   config,
@@ -59,19 +59,21 @@ const uplo = Uplo({
     user: {
       avatar: {
         validate: {
-          contentType: /image\/*/
-        }
-      }
+          contentType: /image\/*/,
+        },
+      },
     },
     post: {
-      images: { multiple: true }
-    }
+      images: { multiple: true },
+    },
   },
-});
+})
 
-const attachment = await uplo.attachments.user(123).avatar.attachFile(await blobFileInput({
-  path: '/home/images/image.png'
-}))
+const attachment = await uplo.attachments.user(123).avatar.attachFile(
+  await blobFileInput({
+    path: '/home/images/image.png',
+  }),
+)
 ```
 
 ## License

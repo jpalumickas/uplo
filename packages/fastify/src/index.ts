@@ -1,25 +1,17 @@
-import { FastifyPluginAsync } from 'fastify';
-import fp from 'fastify-plugin';
-import type { UploInstance, UploOptionsAttachments } from '@uplo/node';
+import type { UploInstance, UploOptionsAttachments } from '@uplo/node'
+import { FastifyPluginAsync } from 'fastify'
+import fp from 'fastify-plugin'
 
-export interface UploPluginOptions<
-  AttachmentsList extends UploOptionsAttachments,
-> {
-  mountPath?: string;
-  uplo: UploInstance<AttachmentsList>;
+export interface UploPluginOptions<AttachmentsList extends UploOptionsAttachments> {
+  mountPath?: string
+  uplo: UploInstance<AttachmentsList>
 }
 
 const createDirectUploadOptions = {
   schema: {
     body: {
       type: 'object',
-      required: [
-        'attachmentName',
-        'fileName',
-        'contentType',
-        'checksum',
-        'size',
-      ],
+      required: ['attachmentName', 'fileName', 'contentType', 'checksum', 'size'],
       properties: {
         attachmentName: { type: 'string' },
         fileName: { type: 'string' },
@@ -30,46 +22,43 @@ const createDirectUploadOptions = {
       },
     },
   },
-};
+}
 
 interface CreateDirectUploadBody {
-  attachmentName: `${string}.${string}`;
-  fileName: string;
-  contentType: string;
-  size: number;
-  checksum: string;
+  attachmentName: `${string}.${string}`
+  fileName: string
+  contentType: string
+  size: number
+  checksum: string
   metadata?: {
-    [key: string]: number | string;
-  };
+    [key: string]: number | string
+  }
 }
 
 // @ts-ignore
-const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (
-  fastify,
-  opts
-) => {
-  const options = typeof opts === 'function' ? await opts(fastify) : opts;
+const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, opts) => {
+  const options = typeof opts === 'function' ? await opts(fastify) : opts
 
-  const { uplo } = options;
+  const { uplo } = options
 
-  fastify.decorate('uplo', uplo);
+  fastify.decorate('uplo', uplo)
 
-  const mountPath = options.mountPath || '/uploads';
+  const mountPath = options.mountPath || '/uploads'
 
   fastify.post<{ Body: CreateDirectUploadBody }>(
     `${mountPath}/create-direct-upload`,
     createDirectUploadOptions,
     async (request, reply) => {
-      const attachmentName = request.body['attachmentName'];
-      const attachment = uplo.$findGenericAttachment(attachmentName);
+      const attachmentName = request.body['attachmentName']
+      const attachment = uplo.$findGenericAttachment(attachmentName)
 
       if (!attachment) {
         reply
           .send({
             error: { message: `Cannot find attachment ${attachmentName}` },
           })
-          .status(422);
-        return;
+          .status(422)
+        return
       }
 
       const params = {
@@ -78,13 +67,13 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (
         size: request.body['size'],
         checksum: request.body['checksum'],
         metadata: request.body['metadata'],
-      };
+      }
 
-      const data = await attachment.createDirectUpload({ params });
+      const data = await attachment.createDirectUpload({ params })
 
-      reply.send(data).status(201);
-    }
-  );
-};
+      reply.send(data).status(201)
+    },
+  )
+}
 
-export default fp(fastifyPlugin);
+export default fp(fastifyPlugin)

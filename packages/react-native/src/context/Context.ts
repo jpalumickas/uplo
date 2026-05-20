@@ -1,14 +1,14 @@
-import { createContext } from 'react';
+import { createContext } from 'react'
 
 export type UploContextType = {
-  host: string;
-  mountPath?: string;
-};
+  host: string
+  mountPath?: string
+}
 
 const defaultContext = {
   host: '',
   mountPath: '/uploads',
-};
+}
 
-export const UploContext = createContext<UploContextType>(defaultContext);
-export const { Consumer, Provider } = UploContext;
+export const UploContext = createContext<UploContextType>(defaultContext)
+export const { Consumer, Provider } = UploContext

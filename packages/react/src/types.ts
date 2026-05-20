@@ -10,28 +10,28 @@
 //   };
 // }
 
-export type UploadID = string | number;
+export type UploadID = string | number
 export type Metadata = {
-  [key: string]: string | number | boolean;
+  [key: string]: string | number | boolean
 }
 
 export interface Upload {
-  id: UploadID;
-  file: File;
-  signedId: null | string;
-  uploading: boolean;
+  id: UploadID
+  file: File
+  signedId: null | string
+  uploading: boolean
   progress: number
-  error?: string | any;
+  error?: string | any
 }
 
 export interface UploadFileOptions {
-  id?: UploadID;
-  file: File;
-  metadata?: Metadata;
+  id?: UploadID
+  file: File
+  metadata?: Metadata
 }
 
 export interface UseDirectUploadOptions {
-  multiple?: boolean;
+  multiple?: boolean
   onUploadAdd?: (upload: Upload) => void
   onUploadChange?: (upload: Upload) => void
   onUploadSuccess?: (upload: Upload) => void

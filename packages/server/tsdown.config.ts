@@ -1,4 +1,4 @@
-import { defineConfig } from 'tsdown';
+import { defineConfig } from 'tsdown'
 
 export default defineConfig({
   clean: true,
@@ -7,4 +7,4 @@ export default defineConfig({
   format: ['cjs', 'esm'],
   minify: true,
   sourcemap: true,
-});
+})

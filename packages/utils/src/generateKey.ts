@@ -1,4 +1,4 @@
-import { randomBytes } from 'node:crypto';
+import { randomBytes } from 'node:crypto'
 
 /**
  * Returns random key. This is used to generate Blob key.
@@ -8,5 +8,5 @@ import { randomBytes } from 'node:crypto';
  *
  */
 export const generateKey = async (size: number = 32) => {
-  return randomBytes(size).toString('hex');
-};
+  return randomBytes(size).toString('hex')
+}

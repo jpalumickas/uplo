@@ -17,10 +17,7 @@ const uplo = Uplo({
   services: {
     google: new GCSService({
       isPublic: false,
-      credentialsPath: path.resolve(
-        __dirname,
-        './config/gcp-credentials.json'
-      ),
+      credentialsPath: path.resolve(__dirname, './config/gcp-credentials.json'),
       bucket: process.env.GCS_BUCKET,
     }),
   },

@@ -1,11 +1,12 @@
-import Uplo from '@uplo/server';
-import S3Service from '@uplo/service-s3';
-import { DrizzleAdapter } from '@uplo/adapter-drizzle-pg';
-import type { HonoContext } from '../types/hono.js';
-import * as schema from '../db/schema.js';
+import { DrizzleAdapter } from '@uplo/adapter-drizzle-pg'
+import Uplo from '@uplo/server'
+import S3Service from '@uplo/service-s3'
+
+import * as schema from '../db/schema.js'
+import type { HonoContext } from '../types/hono.js'
 
 export const createUplo = (c: HonoContext) => {
-  const db = c.get('db');
+  const db = c.get('db')
 
   const s3Service = S3Service({
     isPublic: false,
@@ -15,10 +16,10 @@ export const createUplo = (c: HonoContext) => {
     endpoint: c.env.AWS_ENDPOINT,
     requestHandler: {
       requestInit(_httpRequest: Request) {
-        return { cache: undefined };
+        return { cache: undefined }
       },
     },
-  });
+  })
 
   const uplo = Uplo({
     config: {
@@ -45,9 +46,9 @@ export const createUplo = (c: HonoContext) => {
         },
       },
     },
-  });
+  })
 
-  uplo.attachments.user(123);
+  uplo.attachments.user(123)
 
-  return uplo;
-};
+  return uplo
+}

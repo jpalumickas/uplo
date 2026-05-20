@@ -1,88 +1,79 @@
-import { BlobValidationError } from '../errors';
-import { AttachmentValidateType } from '../types';
+import { BlobValidationError } from '../errors'
+import { AttachmentValidateType } from '../types'
 
 type BlobInputData = {
-  fileName: string;
-  contentType: string;
-  size: number;
-  checksum: string;
-};
+  fileName: string
+  contentType: string
+  size: number
+  checksum: string
+}
 
 const validateContentType = (
   contentType: string,
-  contentTypeValidator: AttachmentValidateType['contentType']
+  contentTypeValidator: AttachmentValidateType['contentType'],
 ) => {
   if (!contentType) {
-    throw new BlobValidationError('Missing content type');
+    throw new BlobValidationError('Missing content type')
   }
 
   if (!contentTypeValidator) {
-    return true;
+    return true
   }
-  const list = Array.isArray(contentTypeValidator)
-    ? contentTypeValidator
-    : [contentTypeValidator];
+  const list = Array.isArray(contentTypeValidator) ? contentTypeValidator : [contentTypeValidator]
 
   if (
     !list.some((input) =>
-      input instanceof RegExp ? input.test(contentType) : input === contentType
+      input instanceof RegExp ? input.test(contentType) : input === contentType,
     )
   ) {
-    throw new BlobValidationError('Invalid content type');
+    throw new BlobValidationError('Invalid content type')
   }
 
-  return true;
-};
+  return true
+}
 
-const validateSize = (
-  size: number,
-  sizeValidator: AttachmentValidateType['size']
-) => {
+const validateSize = (size: number, sizeValidator: AttachmentValidateType['size']) => {
   if (!sizeValidator) {
-    return true;
+    return true
   }
 
   if (sizeValidator.min !== undefined && size < sizeValidator.min) {
-    throw new BlobValidationError('File size is too small');
+    throw new BlobValidationError('File size is too small')
   }
 
   if (sizeValidator.max !== undefined && size > sizeValidator.max) {
-    throw new BlobValidationError('File size is too large');
+    throw new BlobValidationError('File size is too large')
   }
 
-  return true;
-};
+  return true
+}
 
 export const validateBlobInputData = (
   blobInputData: BlobInputData,
-  validator: AttachmentValidateType | null | undefined
+  validator: AttachmentValidateType | null | undefined,
 ) => {
   if (!blobInputData?.fileName?.trim()) {
-    throw new BlobValidationError('Missing file name');
+    throw new BlobValidationError('Missing file name')
   }
 
-  if (
-    !blobInputData?.size ||
-    !Number.isFinite(blobInputData.size) ||
-    blobInputData.size < 0
-  ) {
-    throw new BlobValidationError('Missing size');
+  if (!blobInputData?.size || !Number.isFinite(blobInputData.size) || blobInputData.size < 0) {
+    throw new BlobValidationError('Missing size')
   }
 
   if (!blobInputData?.checksum?.trim()) {
-    throw new BlobValidationError('Missing checksum');
+    throw new BlobValidationError('Missing checksum')
   }
 
   if (!blobInputData?.contentType?.trim()) {
-    throw new BlobValidationError('Missing content type');
+    throw new BlobValidationError('Missing content type')
   }
 
   if (!validator) {
-    return true;
+    return true
   }
 
-  validateContentType(blobInputData.contentType, validator.contentType);
-  validateSize(blobInputData.size, validator.size);
+  validateContentType(blobInputData.contentType, validator.contentType)
+  validateSize(blobInputData.size, validator.size)
 
-  return true;
-};
+  return true
+}

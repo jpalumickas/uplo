@@ -6,4 +6,4 @@ export default {
   server: 'Server',
   client: 'Client',
   analyzers: 'Analyzers',
-};
+}

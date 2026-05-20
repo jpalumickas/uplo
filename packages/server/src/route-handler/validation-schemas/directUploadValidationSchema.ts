@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from 'zod'
 
 export const directUploadValidationSchema = z.object({
   attachmentName: z
@@ -13,4 +13,4 @@ export const directUploadValidationSchema = z.object({
   checksum: z.string().trim(),
   size: z.number().gt(0).finite(),
   metadata: z.object({}).optional(),
-});
+})

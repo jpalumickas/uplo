@@ -1,21 +1,19 @@
-import { Adapter, BlobData } from '@uplo/types';
-import { BlobNotFoundError } from '@uplo/server';
-import { loaders as initLoaders } from './loaders';
-import * as defaultSchema from './defaultSchema';
-import { eq, and } from 'drizzle-orm';
-import { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core';
+import { BlobNotFoundError } from '@uplo/server'
+import { Adapter, BlobData } from '@uplo/types'
+import { eq, and } from 'drizzle-orm'
+import { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core'
+
+import * as defaultSchema from './defaultSchema'
+import { loaders as initLoaders } from './loaders'
 
 export interface DrizzleAdapterOptions {
-  db: PgDatabase<PgQueryResultHKT>;
-  schema: any;
+  db: PgDatabase<PgQueryResultHKT>
+  schema: any
 }
 
-export const DrizzleAdapter = ({
-  db,
-  schema: plainSchema,
-}: DrizzleAdapterOptions): Adapter => {
-  const schema = plainSchema as typeof defaultSchema;
-  const loaders = initLoaders({ db, schema });
+export const DrizzleAdapter = ({ db, schema: plainSchema }: DrizzleAdapterOptions): Adapter => {
+  const schema = plainSchema as typeof defaultSchema
+  const loaders = initLoaders({ db, schema })
 
   return {
     findAttachments: async ({
@@ -23,34 +21,34 @@ export const DrizzleAdapter = ({
       recordType,
       name,
     }: {
-      recordId: string | number;
-      recordType: string;
-      name: string;
+      recordId: string | number
+      recordType: string
+      name: string
     }) => {
       const attachments = await loaders.findAttachments.load({
         recordId,
         recordType,
         name,
-      });
+      })
 
-      const blobIds = attachments.map((attachment) => attachment.blobId);
-      const blobs = (await loaders.findBlob.loadMany(blobIds)) as BlobData[];
+      const blobIds = attachments.map((attachment) => attachment.blobId)
+      const blobs = (await loaders.findBlob.loadMany(blobIds)) as BlobData[]
 
       return attachments.map((attachment) => {
-        const blob = blobs.find((blob) => blob?.id === attachment.blobId)!;
+        const blob = blobs.find((blob) => blob?.id === attachment.blobId)!
         return {
           ...attachment,
           blob,
-        };
-      });
+        }
+      })
     },
     deleteAttachment: async (id) => {
       const [attachment] = await db
         .delete(schema.fileAttachments)
         .where(eq(schema.fileAttachments.id, id))
-        .returning();
+        .returning()
 
-      return attachment;
+      return attachment
     },
     deleteAttachments: async ({ recordId, recordType, name }) => {
       const attachments = await db
@@ -59,12 +57,12 @@ export const DrizzleAdapter = ({
           and(
             eq(schema.fileAttachments.recordId, recordId as string),
             eq(schema.fileAttachments.recordType, recordType),
-            eq(schema.fileAttachments.name, name)
-          )
+            eq(schema.fileAttachments.name, name),
+          ),
         )
-        .returning();
+        .returning()
 
-      return attachments;
+      return attachments
     },
     createBlob: async ({ params }) => {
       const [blob] = await db
@@ -79,22 +77,22 @@ export const DrizzleAdapter = ({
           checksum: params.checksum,
           serviceName: params.serviceName,
         })
-        .returning();
+        .returning()
 
-      return blob;
+      return blob
     },
     findBlob: async (id) => {
-      const blob = await loaders.findBlob.load(id);
-      return blob;
+      const blob = await loaders.findBlob.load(id)
+      return blob
     },
     findBlobByKey: async (key) => {
       const [blob] = await db
         .select()
         .from(schema.fileBlobs)
         .where(eq(schema.fileBlobs.key, key))
-        .limit(1);
+        .limit(1)
 
-      return blob || null;
+      return blob || null
     },
     updateBlobMetadata: async ({ key, metadata }) => {
       return await db.transaction(async (trx) => {
@@ -105,13 +103,13 @@ export const DrizzleAdapter = ({
           })
           .from(schema.fileBlobs)
           .where(eq(schema.fileBlobs.key, key))
-          .limit(1);
+          .limit(1)
 
         if (!blob) {
-          throw new BlobNotFoundError(`Blob not found with key ${key}`);
+          throw new BlobNotFoundError(`Blob not found with key ${key}`)
         }
 
-        const newMetadata = { ...blob.metadata, ...metadata };
+        const newMetadata = { ...blob.metadata, ...metadata }
 
         const [updatedBlob] = await trx
           .update(schema.fileBlobs)
@@ -119,18 +117,12 @@ export const DrizzleAdapter = ({
             metadata: newMetadata,
           })
           .where(eq(schema.fileBlobs.id, blob.id))
-          .returning();
+          .returning()
 
-        return updatedBlob;
-      });
+        return updatedBlob
+      })
     },
-    attachBlob: async ({
-      blob,
-      attachmentName,
-      recordId,
-      recordType,
-      append = false,
-    }) => {
+    attachBlob: async ({ blob, attachmentName, recordId, recordType, append = false }) => {
       if (!append) {
         await db
           .delete(schema.fileAttachments)
@@ -138,9 +130,9 @@ export const DrizzleAdapter = ({
             and(
               eq(schema.fileAttachments.recordId, recordId as string),
               eq(schema.fileAttachments.recordType, recordType),
-              eq(schema.fileAttachments.name, attachmentName)
-            )
-          );
+              eq(schema.fileAttachments.name, attachmentName),
+            ),
+          )
       }
 
       const [attachment] = await db
@@ -151,12 +143,12 @@ export const DrizzleAdapter = ({
           recordType,
           recordId: recordId as string,
         })
-        .returning();
+        .returning()
 
       return {
         ...attachment,
         blob,
-      };
+      }
     },
-  };
-};
+  }
+}

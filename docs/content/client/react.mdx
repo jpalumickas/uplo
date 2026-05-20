@@ -13,14 +13,10 @@ Add a provider
 ```jsx
 // App.js
 
-import { UploProvider } from '@uplo/react';
+import { UploProvider } from '@uplo/react'
 
 export const App = ({ children }) => {
-  return (
-    <UploProvider host={process.env.API_URL}>
-      {children}
-    </UploProvider>
-  )
+  return <UploProvider host={process.env.API_URL}>{children}</UploProvider>
 }
 ```
 
@@ -37,18 +33,18 @@ export const Page = () => {
     error,
     signedIds,
     clear: clearUploads,
-  } = useDirectUpload('user.avatar', { multiple: false });
+  } = useDirectUpload('user.avatar', { multiple: false })
 
   const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
+    if (!e.target.files) return
 
-    const file = e.target.files[0];
+    const file = e.target.files[0]
 
     try {
-      const uploadData = await uploadFile({ file });
+      const uploadData = await uploadFile({ file })
 
       if (uploadData.signedId) {
-        await updateCurrentUser({ avatarSignedId: uploadData.signedId });
+        await updateCurrentUser({ avatarSignedId: uploadData.signedId })
       }
     } catch (e) {
       // Capture exception
@@ -61,3 +57,4 @@ export const Page = () => {
     </div>
   )
 }
+```

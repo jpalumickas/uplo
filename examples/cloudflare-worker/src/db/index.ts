@@ -1,2 +1,2 @@
-export * as schema from './schema';
-export * from './initDB';
+export * as schema from './schema'
+export * from './initDB'

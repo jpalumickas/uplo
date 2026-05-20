@@ -5,11 +5,11 @@ or etc. It also supports various type of ORM adapters, like Prisma.
 
 ## Features
 
-* TypeScript ready
-* Direct uploads
-* Supports multiple services
-* Multiple ORM adapters
-* File analyzers
+- TypeScript ready
+- Direct uploads
+- Supports multiple services
+- Multiple ORM adapters
+- File analyzers
 
 ## Getting started
 
@@ -34,14 +34,14 @@ npm i @uplo/service-s3
 Define uplo instance
 
 ```ts
-import Uplo from '@uplo/server';
-import PrismaAdapter from '@uplo/adapter-prisma';
-import S3Service from '@uplo/service-s3';
+import Uplo from '@uplo/server'
+import PrismaAdapter from '@uplo/adapter-prisma'
+import S3Service from '@uplo/service-s3'
 
 const config = {
   privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
   signedIdExpiresIn: 60 * 60, // Time how long a Signed ID is valid
-};
+}
 
 const uplo = Uplo({
   config,
@@ -55,7 +55,6 @@ const uplo = Uplo({
       secretAccessKey: '*****',
     }),
   },
-  attachments: {
-  },
-});
+  attachments: {},
+})
 ```

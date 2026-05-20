@@ -13,7 +13,7 @@ npm i @uplo/adapter-drizzle-pg dataloader
 Add Drizzle adapter to Uplo
 
 ```ts
-import DrizzleAdapter from '@uplo/adapter-drizzle';
+import DrizzleAdapter from '@uplo/adapter-drizzle'
 
 const uplo = Uplo({
   adapter: Drizzle({ db, schema }),
@@ -23,14 +23,14 @@ const uplo = Uplo({
 ## Example schema
 
 ```ts
-const id = serial('id').primaryKey().$type<Blob['id']>();
+const id = serial('id').primaryKey().$type<Blob['id']>()
 
 const createdAt = timestamp('created_at', {
   precision: 6,
   withTimezone: true,
 })
   .defaultNow()
-  .notNull();
+  .notNull()
 
 export const fileAttachments = pgTable('file_attachments', {
   id,
@@ -39,7 +39,7 @@ export const fileAttachments = pgTable('file_attachments', {
   recordType: varchar('record_type').notNull(),
   recordId: integer('record_id').notNull(),
   createdAt,
-});
+})
 
 export const fileBlobs = pgTable('file_blobs', {
   id,
@@ -51,5 +51,5 @@ export const fileBlobs = pgTable('file_blobs', {
   checksum: varchar('checksum').notNull(),
   metadata: jsonb('metadata').default({}).$type<Blob['metadata']>().notNull(),
   createdAt,
-});
+})
 ```

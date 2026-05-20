@@ -1,7 +1,23 @@
 {
   "name": "@uplo/server",
   "version": "0.23.0",
+  "keywords": [
+    "bucket",
+    "direct upload",
+    "gcs",
+    "s3",
+    "upload",
+    "uploads"
+  ],
+  "homepage": "https://uplo.js.org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpalumickas/uplo.git",
+    "directory": "packages/server"
+  },
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
@@ -27,18 +43,10 @@
       }
     }
   },
-  "sideEffects": false,
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jpalumickas/uplo.git",
-    "directory": "packages/server"
-  },
-  "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "tsdown",
     "test": "vitest run",
@@ -55,13 +63,5 @@
   },
   "devDependencies": {
     "@types/node": "^25.9.1"
-  },
-  "keywords": [
-    "gcs",
-    "s3",
-    "bucket",
-    "upload",
-    "uploads",
-    "direct upload"
-  ]
+  }
 }

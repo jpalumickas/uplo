@@ -1,8 +1,9 @@
 {
   "name": "@examples/node",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
+  "scripts": {},
   "dependencies": {
     "@prisma/adapter-pg": "^7.8.0",
     "@prisma/client": "^7.8.0",
@@ -22,6 +23,5 @@
     "prisma": "^7.8.0",
     "tsx": "^4.22.3",
     "vitest": "^4.1.6"
-  },
-  "scripts": {}
+  }
 }

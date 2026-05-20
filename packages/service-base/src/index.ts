@@ -1,1 +1,1 @@
-export * from '@uplo/types';
+export * from '@uplo/types'

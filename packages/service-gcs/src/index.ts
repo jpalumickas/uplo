@@ -1,27 +1,27 @@
-import fs from 'node:fs';
-import { Storage, GetSignedUrlConfig } from '@google-cloud/storage';
-import { Service, ServiceUploadParams, BlobData } from '@uplo/types';
-import { contentDisposition, ContentDispositionType } from '@uplo/utils';
+import { Storage, GetSignedUrlConfig } from '@google-cloud/storage'
+import { Service, ServiceUploadParams, BlobData } from '@uplo/types'
+import { contentDisposition, ContentDispositionType } from '@uplo/utils'
+import fs from 'node:fs'
 
 interface Options {
-  isPublic?: boolean;
-  bucket: string;
-  credentialsPath: string;
+  isPublic?: boolean
+  bucket: string
+  credentialsPath: string
 }
 
 class GCSService implements Service {
-  isPublic: boolean;
-  bucket: string;
-  storage: Storage;
+  isPublic: boolean
+  bucket: string
+  storage: Storage
 
   constructor({ bucket, credentialsPath }: Options) {
-    this.isPublic = false;
-    this.bucket = bucket;
+    this.isPublic = false
+    this.bucket = bucket
     this.storage = new Storage({
       keyFilename: credentialsPath,
-    });
+    })
 
-    this.updateMetadata = this.updateMetadata.bind(this);
+    this.updateMetadata = this.updateMetadata.bind(this)
   }
 
   async directUploadUrl(blob: BlobData, { expiresIn = 5 * 60 * 1000 } = {}) {
@@ -31,20 +31,17 @@ class GCSService implements Service {
       expires: Date.now() + expiresIn,
       contentMd5: blob.checksum,
       contentType: blob.contentType, //'application/octet-stream',
-    };
+    }
 
     // Get a v4 signed URL for uploading file
-    const [url] = await this.storage
-      .bucket(this.bucket)
-      .file(blob.key)
-      .getSignedUrl(options);
+    const [url] = await this.storage.bucket(this.bucket).file(blob.key).getSignedUrl(options)
 
-    return url;
+    return url
   }
 
   async directUploadHeaders(
     blob: BlobData,
-    { disposition }: { disposition?: ContentDispositionType } = {}
+    { disposition }: { disposition?: ContentDispositionType } = {},
   ) {
     return {
       'Content-Type': blob.contentType,
@@ -53,7 +50,7 @@ class GCSService implements Service {
         type: disposition,
         fileName: blob.fileName,
       }),
-    };
+    }
   }
 
   async updateMetadata(
@@ -63,32 +60,29 @@ class GCSService implements Service {
       disposition,
       fileName,
     }: {
-      contentType: string;
-      disposition?: ContentDispositionType;
-      fileName?: string;
-    }
+      contentType: string
+      disposition?: ContentDispositionType
+      fileName?: string
+    },
   ) {
-    const metadata: { contentType?: string; contentDisposition?: string } = {};
+    const metadata: { contentType?: string; contentDisposition?: string } = {}
 
     if (contentType) {
-      metadata.contentType = contentType;
+      metadata.contentType = contentType
     }
 
     if (disposition && fileName) {
       metadata.contentDisposition = contentDisposition({
         type: disposition,
         fileName,
-      });
+      })
     }
 
-    return await this.storage
-      .bucket(this.bucket)
-      .file(key)
-      .setMetadata(metadata);
+    return await this.storage.bucket(this.bucket).file(key).setMetadata(metadata)
   }
 
   async publicUrl(blob: BlobData) {
-    return await this.storage.bucket(this.bucket).file(blob.key).publicUrl();
+    return await this.storage.bucket(this.bucket).file(blob.key).publicUrl()
   }
 
   async privateUrl(
@@ -96,7 +90,7 @@ class GCSService implements Service {
     {
       disposition,
       expiresIn = 300,
-    }: { disposition?: ContentDispositionType; expiresIn?: number } = {}
+    }: { disposition?: ContentDispositionType; expiresIn?: number } = {},
   ) {
     const options: GetSignedUrlConfig = {
       action: 'read',
@@ -109,19 +103,16 @@ class GCSService implements Service {
           type: disposition,
           fileName: blob.fileName,
         }),
-    };
+    }
 
     // Get a v4 signed URL for uploading file
-    const [url] = await this.storage
-      .bucket(this.bucket)
-      .file(blob.key)
-      .getSignedUrl(options);
+    const [url] = await this.storage.bucket(this.bucket).file(blob.key).getSignedUrl(options)
 
-    return url;
+    return url
   }
 
   async upload({ key, content, contentType }: ServiceUploadParams) {
-    const file = this.storage.bucket(this.bucket).file(key);
+    const file = this.storage.bucket(this.bucket).file(key)
 
     if (content instanceof fs.ReadStream) {
       return new Promise((resolve, reject) => {
@@ -130,40 +121,40 @@ class GCSService implements Service {
             file.createWriteStream({
               resumable: false,
               metadata: { contentType },
-            })
+            }),
           )
           .on('error', (err) => {
-            reject(err);
+            reject(err)
           })
           .on('finish', (e: any) => {
-            resolve(e);
-          });
-      });
+            resolve(e)
+          })
+      })
     } else if (content instanceof globalThis.Blob) {
-      throw new Error('Blob not implemented');
+      throw new Error('Blob not implemented')
     } else if (content instanceof ReadableStream) {
-      throw new Error('ReadableStream not implemented');
+      throw new Error('ReadableStream not implemented')
     }
 
-    return await file.save(content);
+    return await file.save(content)
   }
 
   async createReadStream({ key }: { key: BlobData['key'] }) {
-    return this.storage.bucket(this.bucket).file(key).createReadStream();
+    return this.storage.bucket(this.bucket).file(key).createReadStream()
   }
 
   async delete({ key }: { key: BlobData['key'] }) {
-    await this.storage.bucket(this.bucket).file(key).delete();
-    return true;
+    await this.storage.bucket(this.bucket).file(key).delete()
+    return true
   }
 
   async protocolUrl(blob: BlobData) {
-    return `gs://${this.bucket}/${blob.key}`;
+    return `gs://${this.bucket}/${blob.key}`
   }
 
   defaultName(): string {
-    return 'gcs';
+    return 'gcs'
   }
 }
 
-export default GCSService;
+export default GCSService

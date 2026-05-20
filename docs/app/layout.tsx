@@ -1,8 +1,8 @@
 /* eslint-env node */
-import { Footer, Layout, Navbar } from 'nextra-theme-docs';
-import { Head } from 'nextra/components';
-import { getPageMap } from 'nextra/page-map';
-import 'nextra-theme-docs/style.css';
+import { Footer, Layout, Navbar } from 'nextra-theme-docs'
+import { Head } from 'nextra/components'
+import { getPageMap } from 'nextra/page-map'
+import 'nextra-theme-docs/style.css'
 
 export const metadata = {
   metadataBase: new URL('https://uplo.js.org'),
@@ -17,7 +17,7 @@ export const metadata = {
     'msapplication-TileImage': '/ms-icon-144x144.png',
     'msapplication-TileColor': '#fff',
   },
-};
+}
 
 export default async function RootLayout({ children }) {
   const navbar = (
@@ -28,8 +28,8 @@ export default async function RootLayout({ children }) {
         </div>
       }
     />
-  );
-  const pageMap = await getPageMap();
+  )
+  const pageMap = await getPageMap()
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <Head faviconGlyph="✦" />
@@ -47,5 +47,5 @@ export default async function RootLayout({ children }) {
         </Layout>
       </body>
     </html>
-  );
+  )
 }

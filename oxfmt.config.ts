@@ -1,12 +1,10 @@
-import { defineConfig } from 'oxfmt';
+import { defineConfig } from 'oxfmt'
 
 export default defineConfig({
   tabWidth: 2,
-  printWidth: 80,
+  printWidth: 100,
   singleQuote: true,
-  jsxSingleQuote: false,
-  arrowParens: 'always',
-  trailingComma: 'es5',
+  semi: false,
   sortImports: {
     groups: [
       ['builtin', 'external'],
@@ -15,4 +13,4 @@ export default defineConfig({
     ],
     newlinesBetween: true,
   },
-});
+})

@@ -1,5 +1,5 @@
-import Uplo from '@uplo/server';
-import S3Service from '@uplo/service-s3';
+import Uplo from '@uplo/server'
+import S3Service from '@uplo/service-s3'
 
 const uplo = Uplo({
   config: {},
@@ -11,6 +11,6 @@ const uplo = Uplo({
       avatar: true,
     },
   },
-});
+})
 
-console.log(uplo.attachments.user(1).avatar);
+console.log(uplo.attachments.user(1).avatar)

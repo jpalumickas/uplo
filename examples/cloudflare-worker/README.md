@@ -4,7 +4,7 @@ Cloudflare Workers + Hono + Neon Postgres + Drizzle Adapter
 
 ## Requirements
 
-* [Neon database](https://neon.tech)
+- [Neon database](https://neon.tech)
 
 ## Usage
 

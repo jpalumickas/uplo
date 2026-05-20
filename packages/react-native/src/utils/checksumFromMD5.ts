@@ -4,9 +4,9 @@ export const checksumFromMD5 = async (md5: string) => {
     .replace(/([\da-fA-F]{2}) ?/g, '0x$1 ')
     .replace(/ +$/, '')
     .split(' ')
-    .map((str) => Number(str));
+    .map((str) => Number(str))
 
-  const byteString = String.fromCharCode.apply(null, hexArray);
+  const byteString = String.fromCharCode.apply(null, hexArray)
 
-  return btoa(byteString);
-};
+  return btoa(byteString)
+}

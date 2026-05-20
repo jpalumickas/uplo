@@ -1,43 +1,43 @@
-import { ArrayBuffer as MD5ArrayBuffer } from 'spark-md5';
+import { ArrayBuffer as MD5ArrayBuffer } from 'spark-md5'
 
-const chunkSize = 2097152; // 2MB
+const chunkSize = 2097152 // 2MB
 
 export const checksumFromFile = async (file: File) => {
   return new Promise((resolve, reject) => {
-    const chunkCount = Math.ceil(file.size / chunkSize);
-    let chunkIndex = 0;
-    const md5buffer = new MD5ArrayBuffer();
-    const fileReader = new FileReader();
+    const chunkCount = Math.ceil(file.size / chunkSize)
+    let chunkIndex = 0
+    const md5buffer = new MD5ArrayBuffer()
+    const fileReader = new FileReader()
 
     const readNextChunk = () => {
       if (chunkIndex < chunkCount || (chunkIndex == 0 && chunkCount == 0)) {
-        const start = chunkIndex * chunkSize;
-        const end = Math.min(start + chunkSize, file.size);
-        const bytes = file.slice(start, end);
-        fileReader.readAsArrayBuffer(bytes);
-        chunkIndex++;
-        return true;
+        const start = chunkIndex * chunkSize
+        const end = Math.min(start + chunkSize, file.size)
+        const bytes = file.slice(start, end)
+        fileReader.readAsArrayBuffer(bytes)
+        chunkIndex++
+        return true
       } else {
-        return false;
+        return false
       }
-    };
+    }
 
     fileReader.addEventListener('load', (event) => {
-      if (!event.target?.result) return;
+      if (!event.target?.result) return
 
-      md5buffer.append(event.target.result as ArrayBuffer);
+      md5buffer.append(event.target.result as ArrayBuffer)
 
       if (!readNextChunk()) {
-        const binaryDigest = md5buffer.end(true);
-        const base64digest = btoa(binaryDigest);
-        resolve(base64digest);
+        const binaryDigest = md5buffer.end(true)
+        const base64digest = btoa(binaryDigest)
+        resolve(base64digest)
       }
-    });
+    })
 
     fileReader.addEventListener('error', (event) => {
-      reject(event);
-    });
+      reject(event)
+    })
 
-    readNextChunk();
-  });
-};
+    readNextChunk()
+  })
+}

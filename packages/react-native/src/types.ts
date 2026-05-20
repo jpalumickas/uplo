@@ -1,30 +1,30 @@
-export type UploadID = string | number;
+export type UploadID = string | number
 export type Metadata = {
-  [key: string]: string | number | boolean;
-};
+  [key: string]: string | number | boolean
+}
 
 export interface File {
-  id?: string;
-  localUri?: string;
-  uri: string;
-  fileName?: string | null;
-  contentType?: string;
-  width?: number;
-  height?: number;
-  metadata?: Metadata;
+  id?: string
+  localUri?: string
+  uri: string
+  fileName?: string | null
+  contentType?: string
+  width?: number
+  height?: number
+  metadata?: Metadata
 }
 
 export interface Upload {
-  id: string;
-  file: File;
-  signedId: null | string;
-  uploading: boolean;
-  error?: string | any;
+  id: string
+  file: File
+  signedId: null | string
+  uploading: boolean
+  error?: string | any
 }
 
 export interface UseUploadOptions {
-  multiple?: boolean;
-  onUploadAdd?: (upload: Upload) => void;
-  onUploadChange?: (upload: Upload) => void;
-  onUploadSuccess?: (upload: Upload) => void;
+  multiple?: boolean
+  onUploadAdd?: (upload: Upload) => void
+  onUploadChange?: (upload: Upload) => void
+  onUploadSuccess?: (upload: Upload) => void
 }

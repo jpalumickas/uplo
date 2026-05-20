@@ -1,2 +1,2 @@
-export * from './useDirectUpload';
-export * from './useUploConfig';
+export * from './useDirectUpload'
+export * from './useUploConfig'

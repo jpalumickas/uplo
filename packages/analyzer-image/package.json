@@ -1,7 +1,22 @@
 {
   "name": "@uplo/analyzer-image",
   "version": "0.23.0",
+  "keywords": [
+    "analyze",
+    "image",
+    "sharp",
+    "upload",
+    "uploads"
+  ],
+  "homepage": "https://uplo.js.org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpalumickas/uplo.git",
+    "directory": "packages/analyzer-image"
+  },
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
@@ -17,20 +32,16 @@
       }
     }
   },
-  "sideEffects": false,
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jpalumickas/uplo.git",
-    "directory": "packages/analyzer-image"
-  },
-  "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "tsdown"
+  },
+  "devDependencies": {
+    "@uplo/analyzer": "workspace:^",
+    "sharp": "^0.34.5"
   },
   "peerDependencies": {
     "@uplo/analyzer": "workspace:^",
@@ -38,16 +49,5 @@
   },
   "engines": {
     "node": ">=20"
-  },
-  "devDependencies": {
-    "@uplo/analyzer": "workspace:^",
-    "sharp": "^0.34.5"
-  },
-  "keywords": [
-    "image",
-    "analyze",
-    "sharp",
-    "upload",
-    "uploads"
-  ]
+  }
 }

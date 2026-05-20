@@ -1,18 +1,18 @@
-import { downloadToTempfile } from './downloadToTempfile';
-import { analyze } from './analyze';
-import type { Analyzer } from './types';
+import { analyze } from './analyze'
+import { downloadToTempfile } from './downloadToTempfile'
+import type { Analyzer } from './types'
 
 export interface AnalyzerOptions {
-  analyzers: Analyzer[];
+  analyzers: Analyzer[]
 }
 
 export const UploAnalyzer = ({ analyzers = [] }: AnalyzerOptions) => {
   return {
     analyze: analyze(analyzers),
     downloadToTempfile,
-  };
-};
+  }
+}
 
-export type * from './types';
+export type * from './types'
 
-export default UploAnalyzer;
+export default UploAnalyzer

@@ -1,8 +1,11 @@
 {
   "name": "@examples/cloudflare-worker",
   "version": "0.0.0",
-  "type": "module",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev"
+  },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
     "@uplo/adapter-drizzle-pg": "workspace:*",
@@ -21,8 +24,5 @@
     "dotenv": "^17.4.2",
     "drizzle-kit": "^0.31.10",
     "vitest": "^4.1.6"
-  },
-  "scripts": {
-    "dev": "wrangler dev"
   }
 }

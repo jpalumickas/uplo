@@ -13,19 +13,18 @@ const uplo = Uplo({
       avatar: true, // pass true to use default options
     },
     post: {
-      images: { multiple: true }
-    }
-  }
+      images: { multiple: true },
+    },
+  },
 })
 ```
 
 ## Options
 
-* `multiple = false` (*optional*): Specify for multiple attachment support on a single record.
-* `serviceName` (*optional*): You can provide a custom service.
-* `directUpload = true` (*optional*): You can disable direct uploads for
-    specific attachments if needed.
-
+- `multiple = false` (_optional_): Specify for multiple attachment support on a single record.
+- `serviceName` (_optional_): You can provide a custom service.
+- `directUpload = true` (_optional_): You can disable direct uploads for
+  specific attachments if needed.
 
 ## Find attachment
 
@@ -36,7 +35,7 @@ Find an attachment by specifying `User` ID.
 ```ts
 const attachment = await uplo.attachments.user(123).avatar.findOne()
 
-console.log(attachment.blob.url());
+console.log(attachment.blob.url())
 ```
 
 ### Multiple
@@ -93,7 +92,7 @@ import { blobStringInput } from '@uplo/node'
 const fileInput = await blobStringInput({
   content: 'Hello',
   contentType: 'text/plain',
-  fileName: 'welcome.txt'
+  fileName: 'welcome.txt',
 })
 
 const attachment = await uplo.attachments.user(123).avatar.attachFile(fileInput)
@@ -107,7 +106,7 @@ import { blobBufferInput } from '@uplo/node'
 const fileInput = await blobBufferInput({
   buffer,
   contentType: 'text/plain',
-  fileName: 'welcome.txt'
+  fileName: 'welcome.txt',
 })
 
 const attachment = await uplo.attachments.user(123).avatar.attachFile(fileInput)

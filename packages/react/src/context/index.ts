@@ -1,2 +1,2 @@
-export { UploContext } from './UploContext';
-export * from './UploProvider';
+export { UploContext } from './UploContext'
+export * from './UploProvider'

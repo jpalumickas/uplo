@@ -1,23 +1,23 @@
-import { Hono } from 'hono';
-import { validator } from 'hono/validator';
+import { Hono } from 'hono'
+import { validator } from 'hono/validator'
 
-import type { UploInstance } from '../types';
-import { directUploadValidationSchema } from './validation-schemas/directUploadValidationSchema.js';
-import { formatZodErrors } from './utils/formatZodErrors.js';
-import { onErrorHandler } from './middleware/onErrorHandler.js';
+import type { UploInstance } from '../types'
+import { onErrorHandler } from './middleware/onErrorHandler.js'
+import { formatZodErrors } from './utils/formatZodErrors.js'
+import { directUploadValidationSchema } from './validation-schemas/directUploadValidationSchema.js'
 
 type Options<T> = {
-  uplo: T;
-  basePath?: string;
-};
+  uplo: T
+  basePath?: string
+}
 
 export const createUploRouteHandler = <T extends UploInstance<any>>({
   uplo,
   basePath = '/uplo',
 }: Options<T>) => {
-  const app = new Hono().basePath(basePath);
+  const app = new Hono().basePath(basePath)
 
-  app.onError(onErrorHandler);
+  app.onError(onErrorHandler)
 
   app.post(
     '/create-direct-upload',
@@ -28,26 +28,25 @@ export const createUploRouteHandler = <T extends UploInstance<any>>({
             success: false,
             error: { message: 'Request body is required' },
           },
-          { status: 422 }
-        );
+          { status: 422 },
+        )
       }
 
-      return value;
+      return value
     }),
     async (c) => {
-      const requestData = await c.req.valid('json');
+      const requestData = await c.req.valid('json')
       if (!requestData) {
         return c.json(
           {
             success: false,
             error: { message: 'Request body is required' },
           },
-          { status: 422 }
-        );
+          { status: 422 },
+        )
       }
 
-      const parsed =
-        await directUploadValidationSchema.safeParseAsync(requestData);
+      const parsed = await directUploadValidationSchema.safeParseAsync(requestData)
 
       if (!parsed.success) {
         return c.json(
@@ -58,20 +57,13 @@ export const createUploRouteHandler = <T extends UploInstance<any>>({
               fields: formatZodErrors(parsed.error),
             },
           },
-          { status: 422 }
-        );
+          { status: 422 },
+        )
       }
 
-      const {
-        attachmentName,
-        fileName,
-        contentType,
-        size,
-        checksum,
-        metadata,
-      } = parsed.data;
+      const { attachmentName, fileName, contentType, size, checksum, metadata } = parsed.data
 
-      const attachment = uplo.$findGenericAttachment(attachmentName);
+      const attachment = uplo.$findGenericAttachment(attachmentName)
       if (!attachment) {
         return c.json(
           {
@@ -80,8 +72,8 @@ export const createUploRouteHandler = <T extends UploInstance<any>>({
               message: `Attachment with name "${attachmentName}" was not found`,
             },
           },
-          { status: 422 }
-        );
+          { status: 422 },
+        )
       }
 
       const params = {
@@ -90,13 +82,13 @@ export const createUploRouteHandler = <T extends UploInstance<any>>({
         size,
         checksum,
         metadata,
-      };
+      }
 
-      const data = await attachment.createDirectUpload({ params });
+      const data = await attachment.createDirectUpload({ params })
 
-      return c.json(data, { status: 201 });
-    }
-  );
+      return c.json(data, { status: 201 })
+    },
+  )
 
-  return app.fetch;
-};
+  return app.fetch
+}

@@ -1,8 +1,8 @@
-import { createDirectUpload } from './createDirectUpload.js';
 import type {
   CreateDirectUploadParams,
   GenericAttachmentParams,
-} from '../types/generic-attachment.js';
+} from '../types/generic-attachment.js'
+import { createDirectUpload } from './createDirectUpload.js'
 
 export const GenericAttachment = ({
   adapter,
@@ -10,7 +10,7 @@ export const GenericAttachment = ({
   services,
   signer,
 }: GenericAttachmentParams) => {
-  const service = services[options.serviceName];
+  const service = services[options.serviceName]
 
   return {
     service,
@@ -22,5 +22,5 @@ export const GenericAttachment = ({
         adapter,
         signer,
       }),
-  };
-};
+  }
+}

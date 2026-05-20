@@ -1,7 +1,26 @@
 {
   "name": "@uplo/adapter-drizzle-pg",
   "version": "0.23.0",
+  "keywords": [
+    "drizzle",
+    "postgres",
+    "postgresql",
+    "upload",
+    "uploads"
+  ],
+  "homepage": "https://uplo.js.org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpalumickas/uplo.git",
+    "directory": "packages/adapter-drizzle-pg"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
@@ -17,29 +36,12 @@
       }
     }
   },
-  "sideEffects": false,
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "files": [
-    "dist",
-    "src"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jpalumickas/uplo.git",
-    "directory": "packages/adapter-drizzle-pg"
-  },
-  "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "tsdown"
-  },
-  "peerDependencies": {
-    "@uplo/server": "workspace:^",
-    "dataloader": ">=2.0.0",
-    "drizzle-orm": ">=0.28.6"
   },
   "dependencies": {
     "@uplo/types": "workspace:^"
@@ -49,14 +51,12 @@
     "dataloader": "^2.2.3",
     "drizzle-orm": "^0.45.2"
   },
+  "peerDependencies": {
+    "@uplo/server": "workspace:^",
+    "dataloader": ">=2.0.0",
+    "drizzle-orm": ">=0.28.6"
+  },
   "engines": {
     "node": ">=20"
-  },
-  "keywords": [
-    "drizzle",
-    "postgres",
-    "postgresql",
-    "upload",
-    "uploads"
-  ]
+  }
 }

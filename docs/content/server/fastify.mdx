@@ -7,14 +7,14 @@ npm i @uplo/fastify
 ```
 
 ```ts
-import fastify from 'fastify';
-import uploFastify from '@uplo/fastify';
+import fastify from 'fastify'
+import uploFastify from '@uplo/fastify'
 
-const app = fastify();
+const app = fastify()
 
 const uplo = {
   // Your uplo config
 }
 
-app.register(uploFastify, { uplo });
+app.register(uploFastify, { uplo })
 ```

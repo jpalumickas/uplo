@@ -1,14 +1,4 @@
 {
-  "cSpell.words": [
-    "fastify",
-    "jpalumickas",
-    "unoptimized",
-    "uplo"
-  ],
-  "cSpell.ignoreWords": [
-    "Hono",
-    "Nextra",
-    "blurhash",
-    "tsup"
-  ]
+  "cSpell.words": ["fastify", "jpalumickas", "unoptimized", "uplo"],
+  "cSpell.ignoreWords": ["Hono", "Nextra", "blurhash", "tsup"]
 }

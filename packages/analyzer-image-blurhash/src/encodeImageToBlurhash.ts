@@ -1,5 +1,5 @@
-import sharp from 'sharp';
-import { encode } from 'blurhash';
+import { encode } from 'blurhash'
+import sharp from 'sharp'
 
 export const encodeImageToBlurhash = ({
   filePath,
@@ -7,10 +7,10 @@ export const encodeImageToBlurhash = ({
   yComponents = 3,
   size = 32,
 }: {
-  filePath: string;
-  xComponents: number;
-  yComponents: number;
-  size: number;
+  filePath: string
+  xComponents: number
+  yComponents: number
+  size: number
 }) => {
   return new Promise((resolve, reject) => {
     sharp(filePath)
@@ -18,16 +18,8 @@ export const encodeImageToBlurhash = ({
       .ensureAlpha()
       .resize(size, size, { fit: 'inside' })
       .toBuffer((err, buffer, { width, height }) => {
-        if (err) return reject(err);
-        resolve(
-          encode(
-            new Uint8ClampedArray(buffer),
-            width,
-            height,
-            xComponents,
-            yComponents
-          )
-        );
-      });
-  });
-};
+        if (err) return reject(err)
+        resolve(encode(new Uint8ClampedArray(buffer), width, height, xComponents, yComponents))
+      })
+  })
+}

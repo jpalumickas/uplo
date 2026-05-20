@@ -1,38 +1,39 @@
-import mime from 'mime/lite';
-import { getFileInfo } from './utils/getFileInfo';
-import { checksumFromMD5 } from './utils/checksumFromMD5';
-import { File } from './types';
+import mime from 'mime/lite'
+
+import { File } from './types'
+import { checksumFromMD5 } from './utils/checksumFromMD5'
+import { getFileInfo } from './utils/getFileInfo'
 
 interface Options {
-  host: string;
-  mountPath?: string;
+  host: string
+  mountPath?: string
 }
 
 export const createBlob = async (
   attachmentName: string,
   file: File,
-  { host, mountPath = '/uploads' }: Options
+  { host, mountPath = '/uploads' }: Options,
 ) => {
   if (file.contentType && !file.contentType.match(/.+\/.+/)) {
-    return { data: null, error: 'Invalid content type' };
+    return { data: null, error: 'Invalid content type' }
   }
 
-  const filePath = file.localUri || file.uri;
-  const fileData = await getFileInfo(filePath);
+  const filePath = file.localUri || file.uri
+  const fileData = await getFileInfo(filePath)
 
-  if (!fileData) return { data: null, error: 'Cannot get data from file' };
+  if (!fileData) return { data: null, error: 'Cannot get data from file' }
 
-  const fileName = file.fileName || filePath.replace(/^.*[\\\/]/, '');
+  const fileName = file.fileName || filePath.replace(/^.*[\\\/]/, '')
 
   const metadata = {
     ...file.metadata,
-  };
+  }
 
   if (file.width) {
-    metadata.width = file.width;
+    metadata.width = file.width
   }
   if (file.height) {
-    metadata.height = file.height;
+    metadata.height = file.height
   }
 
   const requestData = {
@@ -42,33 +43,33 @@ export const createBlob = async (
     fileName,
     contentType: file.contentType || mime.getType(fileName),
     metadata,
-  };
+  }
 
   try {
     const response = await fetch(`${host}${mountPath}/create-direct-upload`, {
       method: 'POST',
       body: JSON.stringify(requestData),
       headers: { 'Content-Type': 'application/json' },
-    });
+    })
 
     if (response.ok) {
-      const data = await response.json();
+      const data = await response.json()
       return {
         data,
         error: null,
-      };
+      }
     } else {
-      return { data: null, error: 'Failed to create direct upload blob' };
+      return { data: null, error: 'Failed to create direct upload blob' }
     }
   } catch (err) {
-    let error = null;
+    let error = null
 
     if (typeof err === 'string') {
-      error = err;
+      error = err
     } else if (err instanceof Error) {
-      error = err.message;
+      error = err.message
     }
 
-    return { data: null, error };
+    return { data: null, error }
   }
-};
+}

@@ -28,14 +28,14 @@ const uplo = Uplo({
 
 ## Options
 
-* `bucket` (**required**): Your bucket name where to store objects.
-* `accessKeyId` (**required**): Provide Access Key ID from your service
-    credentials
-* `secretAccessKey` (**required**): Provide Secret Access Key from your service
-    credentials
-* `region = 'us-east-1`: Provide your service region
-* `isPublic = false`: Specify a bucket ACL
-* `endpoint`: You can provide a custom endpoint if you have a custom service
+- `bucket` (**required**): Your bucket name where to store objects.
+- `accessKeyId` (**required**): Provide Access Key ID from your service
+  credentials
+- `secretAccessKey` (**required**): Provide Secret Access Key from your service
+  credentials
+- `region = 'us-east-1`: Provide your service region
+- `isPublic = false`: Specify a bucket ACL
+- `endpoint`: You can provide a custom endpoint if you have a custom service
 
 ## Direct Upload
 
@@ -46,21 +46,10 @@ This is example CORS configuration for direct uploads.
 ```json
 [
   {
-    "AllowedHeaders": [
-      "*"
-    ],
-    "AllowedMethods": [
-      "PUT"
-    ],
-    "AllowedOrigins": [
-      "https://www.example.com"
-    ],
-    "ExposeHeaders": [
-      "Origin",
-      "Content-Type",
-      "Content-MD5",
-      "Content-Disposition"
-    ],
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["PUT"],
+    "AllowedOrigins": ["https://www.example.com"],
+    "ExposeHeaders": ["Origin", "Content-Type", "Content-MD5", "Content-Disposition"],
     "MaxAgeSeconds": 3600
   }
 ]

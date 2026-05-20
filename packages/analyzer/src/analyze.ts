@@ -1,42 +1,41 @@
-import merge from 'deepmerge';
-import { Blob } from '@uplo/types';
-import { AnalyzeError } from './errors';
-import { Analyzer } from './types';
-import { downloadToTempfile } from './downloadToTempfile';
+import { Blob } from '@uplo/types'
+import merge from 'deepmerge'
+
+import { downloadToTempfile } from './downloadToTempfile'
+import { AnalyzeError } from './errors'
+import { Analyzer } from './types'
 
 export const analyze =
   (analyzers: Analyzer[] = []) =>
   async ({ blob }: { blob: Blob }): Promise<Blob['data']['metadata']> => {
     if (!analyzers || analyzers.length === 0) {
-      console.warn(
-        `[Uplo] No analyzers provided. Skipping analyze for Blob ${blob.data.key}`
-      );
-      return {};
+      console.warn(`[Uplo] No analyzers provided. Skipping analyze for Blob ${blob.data.key}`)
+      return {}
     }
 
-    let newMetadata = {};
+    let newMetadata = {}
 
     await downloadToTempfile({ blob }, async (filePath) => {
       for (const analyzer of analyzers) {
         try {
-          const analyzerMetadata = await analyzer({ filePath, blob });
+          const analyzerMetadata = await analyzer({ filePath, blob })
 
           if (analyzerMetadata && Object.keys(analyzerMetadata).length > 0) {
-            newMetadata = merge(newMetadata, analyzerMetadata);
+            newMetadata = merge(newMetadata, analyzerMetadata)
           }
         } catch (err) {
           if (err instanceof Error) {
-            throw new AnalyzeError(err.message);
+            throw new AnalyzeError(err.message)
           } else {
-            throw err;
+            throw err
           }
         }
       }
 
-      newMetadata = merge(newMetadata, { analyzed: true });
-    });
+      newMetadata = merge(newMetadata, { analyzed: true })
+    })
 
-    await blob.updateMetadata(newMetadata);
+    await blob.updateMetadata(newMetadata)
 
-    return newMetadata;
-  };
+    return newMetadata
+  }

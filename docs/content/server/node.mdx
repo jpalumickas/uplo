@@ -5,14 +5,14 @@ npm i @uplo/node
 ```
 
 ```ts
-import Uplo from '@uplo/node';
-import PrismaAdapter from '@uplo/adapter-prisma';
-import GCSService from '@uplo/service-gcs';
+import Uplo from '@uplo/node'
+import PrismaAdapter from '@uplo/adapter-prisma'
+import GCSService from '@uplo/service-gcs'
 
 const config = {
   privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
   signedIdExpiresIn: 60 * 60, // Time how long a Signed ID is valid
-};
+}
 
 const uplo = Uplo({
   config,
@@ -26,7 +26,6 @@ const uplo = Uplo({
       secretAccessKey: '*****',
     }),
   },
-  attachments: {
-  },
-});
+  attachments: {},
+})
 ```

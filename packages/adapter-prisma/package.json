@@ -1,7 +1,27 @@
 {
   "name": "@uplo/adapter-prisma",
   "version": "0.23.0",
+  "keywords": [
+    "mysql",
+    "postgres",
+    "postgresql",
+    "prisma",
+    "upload",
+    "uploads"
+  ],
+  "homepage": "https://uplo.js.org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpalumickas/uplo.git",
+    "directory": "packages/adapter-prisma"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
@@ -17,30 +37,13 @@
       }
     }
   },
-  "sideEffects": false,
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "files": [
-    "dist",
-    "src"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jpalumickas/uplo.git",
-    "directory": "packages/adapter-prisma"
-  },
-  "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "tsdown",
     "generate": "prisma generate"
-  },
-  "peerDependencies": {
-    "@prisma/client": ">=7.0.0",
-    "@uplo/server": "workspace:^",
-    "dataloader": ">=2.0.0"
   },
   "dependencies": {
     "@uplo/types": "workspace:^"
@@ -51,15 +54,12 @@
     "dataloader": "^2.2.3",
     "prisma": "^7.8.0"
   },
+  "peerDependencies": {
+    "@prisma/client": ">=7.0.0",
+    "@uplo/server": "workspace:^",
+    "dataloader": ">=2.0.0"
+  },
   "engines": {
     "node": ">=20"
-  },
-  "keywords": [
-    "prisma",
-    "upload",
-    "uploads",
-    "postgres",
-    "postgresql",
-    "mysql"
-  ]
+  }
 }

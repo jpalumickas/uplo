@@ -1,10 +1,11 @@
-import { createMiddleware } from 'hono/factory';
-import { HonoEnv } from '../types/hono.js';
-import { createUplo } from '../services/uplo.js';
+import { createMiddleware } from 'hono/factory'
+
+import { createUplo } from '../services/uplo.js'
+import { HonoEnv } from '../types/hono.js'
 
 export const uploMiddleware = createMiddleware<HonoEnv>(async (c, next) => {
-  const uplo = createUplo(c);
+  const uplo = createUplo(c)
 
-  c.set('uplo', uplo);
-  await next();
-});
+  c.set('uplo', uplo)
+  await next()
+})

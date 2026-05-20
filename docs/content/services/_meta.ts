@@ -4,4 +4,4 @@ export default {
   minio: 'MinIO',
   digitalocean: 'Digital Ocean Spaces',
   'cloudflare-r2': 'Cloudflare R2',
-};
+}

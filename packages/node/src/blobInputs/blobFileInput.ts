@@ -1,44 +1,42 @@
-import { ReadStream, createReadStream, lstatSync } from 'node:fs';
-import { basename } from 'node:path';
-import crypto from 'node:crypto';
-import mime from 'mime/lite.js';
-import { BlobInput, UploError } from '@uplo/server';
+import { BlobInput, UploError } from '@uplo/server'
+import mime from 'mime/lite.js'
+import crypto from 'node:crypto'
+import { ReadStream, createReadStream, lstatSync } from 'node:fs'
+import { basename } from 'node:path'
 
 export interface BlobFileInput {
-  path: string;
-  fileName?: string;
-  contentType?: string;
+  path: string
+  fileName?: string
+  contentType?: string
 }
 
 const checksumFromReadStream = (input: ReadStream): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const output = crypto.createHash('md5');
+    const output = crypto.createHash('md5')
 
     input.on('error', (err) => {
-      reject(err);
-    });
+      reject(err)
+    })
 
     output.once('readable', () => {
-      resolve(output.digest('base64'));
-    });
+      resolve(output.digest('base64'))
+    })
 
-    input.pipe(output);
-  });
-};
+    input.pipe(output)
+  })
+}
 
-export const blobFileInput = async (
-  input: BlobFileInput
-): Promise<BlobInput> => {
-  const size = lstatSync(input.path).size;
-  const fileName = input.fileName || basename(input.path);
-  const contentType = input.contentType || mime.getType(fileName) || undefined;
+export const blobFileInput = async (input: BlobFileInput): Promise<BlobInput> => {
+  const size = lstatSync(input.path).size
+  const fileName = input.fileName || basename(input.path)
+  const contentType = input.contentType || mime.getType(fileName) || undefined
 
   if (!contentType) {
-    throw new UploError('Cannot get content type from this path');
+    throw new UploError('Cannot get content type from this path')
   }
 
-  const stream = createReadStream(input.path);
-  const checksum = await checksumFromReadStream(stream);
+  const stream = createReadStream(input.path)
+  const checksum = await checksumFromReadStream(stream)
 
   return {
     fileName,
@@ -46,5 +44,5 @@ export const blobFileInput = async (
     content: stream,
     contentType,
     checksum,
-  };
-};
+  }
+}

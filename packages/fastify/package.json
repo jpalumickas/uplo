@@ -1,7 +1,21 @@
 {
   "name": "@uplo/fastify",
   "version": "0.23.0",
+  "keywords": [
+    "direct upload",
+    "fastify",
+    "upload",
+    "uploads"
+  ],
+  "homepage": "https://uplo.js.org",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpalumickas/uplo.git",
+    "directory": "packages/fastify"
+  },
   "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
@@ -17,39 +31,25 @@
       }
     }
   },
-  "sideEffects": false,
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jpalumickas/uplo.git",
-    "directory": "packages/fastify"
-  },
-  "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "tsdown"
   },
-  "peerDependencies": {
-    "@uplo/node": "workspace:^",
-    "fastify": ">=5"
+  "dependencies": {
+    "fastify-plugin": "^5.1.0"
   },
   "devDependencies": {
     "@uplo/node": "workspace:^",
     "fastify": "^5.8.5"
   },
+  "peerDependencies": {
+    "@uplo/node": "workspace:^",
+    "fastify": ">=5"
+  },
   "engines": {
     "node": ">=20"
-  },
-  "keywords": [
-    "fastify",
-    "upload",
-    "uploads",
-    "direct upload"
-  ],
-  "dependencies": {
-    "fastify-plugin": "^5.1.0"
   }
 }

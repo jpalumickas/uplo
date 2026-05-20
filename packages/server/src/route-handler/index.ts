@@ -1,1 +1,1 @@
-export * from './createUploRouteHandler';
+export * from './createUploRouteHandler'

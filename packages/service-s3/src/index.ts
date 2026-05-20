@@ -1,28 +1,28 @@
-import { UploError } from '@uplo/server';
-import type { Readable } from 'node:stream';
-import { Upload } from '@aws-sdk/lib-storage';
-import { contentDisposition, ContentDispositionType } from '@uplo/utils';
 import {
   S3ClientConfig,
   S3Client,
   GetObjectCommand,
   PutObjectCommand,
   DeleteObjectCommand,
-} from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Service, BlobData, ServiceUploadParams } from '@uplo/types';
+} from '@aws-sdk/client-s3'
+import { Upload } from '@aws-sdk/lib-storage'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { UploError } from '@uplo/server'
+import { Service, BlobData, ServiceUploadParams } from '@uplo/types'
+import { contentDisposition, ContentDispositionType } from '@uplo/utils'
+import type { Readable } from 'node:stream'
 
-const DEFAULT_REGION = 'us-east-1';
+const DEFAULT_REGION = 'us-east-1'
 
 interface Options {
-  isPublic?: boolean;
-  bucket: string;
-  region?: S3ClientConfig['region'];
-  accessKeyId: string;
-  secretAccessKey: string;
-  endpoint?: S3ClientConfig['endpoint'];
-  forcePathStyle?: S3ClientConfig['forcePathStyle'];
-  requestHandler?: S3ClientConfig['requestHandler'];
+  isPublic?: boolean
+  bucket: string
+  region?: S3ClientConfig['region']
+  accessKeyId: string
+  secretAccessKey: string
+  endpoint?: S3ClientConfig['endpoint']
+  forcePathStyle?: S3ClientConfig['forcePathStyle']
+  requestHandler?: S3ClientConfig['requestHandler']
 }
 
 const S3Service = ({
@@ -44,9 +44,9 @@ const S3Service = ({
     endpoint,
     forcePathStyle,
     requestHandler,
-  };
+  }
 
-  const client = new S3Client(s3Config);
+  const client = new S3Client(s3Config)
 
   return {
     isPublic,
@@ -59,18 +59,12 @@ const S3Service = ({
         ContentMD5: blob.checksum,
         ACL: isPublic ? 'public-read' : 'private',
         Key: blob.key,
-      });
+      })
 
-      return await getSignedUrl(client, command, { expiresIn: 300 });
+      return await getSignedUrl(client, command, { expiresIn: 300 })
     },
 
-    async upload({
-      key,
-      content,
-      size,
-      contentType,
-      checksum,
-    }: ServiceUploadParams) {
+    async upload({ key, content, size, contentType, checksum }: ServiceUploadParams) {
       const parallelUploads3 = new Upload({
         client,
         partSize: 5242880, // 5MB
@@ -84,25 +78,25 @@ const S3Service = ({
           ContentMD5: checksum,
           ACL: isPublic ? 'public-read' : 'private',
         },
-      });
+      })
 
-      await parallelUploads3.done();
+      await parallelUploads3.done()
     },
 
     async delete({ key }: Pick<BlobData, 'key'>) {
-      const cmd = new DeleteObjectCommand({ Bucket: bucket, Key: key });
-      await client.send(cmd);
+      const cmd = new DeleteObjectCommand({ Bucket: bucket, Key: key })
+      await client.send(cmd)
 
-      return true;
+      return true
     },
 
     async createReadStream({ key }: { key: BlobData['key'] }) {
-      const command = new GetObjectCommand({ Bucket: bucket, Key: key });
-      const s3Item = await client.send(command);
+      const command = new GetObjectCommand({ Bucket: bucket, Key: key })
+      const s3Item = await client.send(command)
       if (s3Item.Body) {
-        return s3Item.Body as Readable;
+        return s3Item.Body as Readable
       } else {
-        throw new UploError('No body found when creating read stream');
+        throw new UploError('No body found when creating read stream')
       }
     },
 
@@ -110,20 +104,20 @@ const S3Service = ({
       const headers: HeadersInit = {
         'Content-Type': blob.contentType,
         'Content-MD5': blob.checksum,
-      };
-
-      if (isPublic) {
-        headers['x-amz-acl'] = 'public-read';
       }
 
-      return headers;
+      if (isPublic) {
+        headers['x-amz-acl'] = 'public-read'
+      }
+
+      return headers
     },
 
     async publicUrl({ key }: Pick<BlobData, 'key'>) {
       if (endpoint) {
-        return `${endpoint}/${bucket}/${key}`;
+        return `${endpoint}/${bucket}/${key}`
       } else {
-        return `https://${bucket}.s3${region === DEFAULT_REGION ? '' : `.${region}`}.amazonaws.com/${key}`;
+        return `https://${bucket}.s3${region === DEFAULT_REGION ? '' : `.${region}`}.amazonaws.com/${key}`
       }
     },
 
@@ -132,7 +126,7 @@ const S3Service = ({
       {
         disposition,
         expiresIn = 300,
-      }: { disposition?: ContentDispositionType; expiresIn?: number } = {}
+      }: { disposition?: ContentDispositionType; expiresIn?: number } = {},
     ) {
       const command = new GetObjectCommand({
         Bucket: bucket,
@@ -144,15 +138,15 @@ const S3Service = ({
             type: disposition,
             fileName: blob.fileName,
           }),
-      });
+      })
 
-      return await getSignedUrl(client, command, { expiresIn });
+      return await getSignedUrl(client, command, { expiresIn })
     },
 
     async protocolUrl(blob: BlobData) {
-      return `s3://${bucket}/${blob.key}`;
+      return `s3://${bucket}/${blob.key}`
     },
-  };
-};
+  }
+}
 
-export default S3Service;
+export default S3Service

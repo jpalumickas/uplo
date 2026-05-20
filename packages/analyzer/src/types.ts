@@ -1,11 +1,8 @@
-import { Blob } from '@uplo/types';
+import { Blob } from '@uplo/types'
 
 export interface AnalyzerOptions {
-  blob: Blob;
-  filePath: string;
+  blob: Blob
+  filePath: string
 }
 
-export type Analyzer = ({
-  blob,
-  filePath,
-}: AnalyzerOptions) => Promise<object | undefined>;
+export type Analyzer = ({ blob, filePath }: AnalyzerOptions) => Promise<object | undefined>
