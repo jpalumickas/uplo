@@ -47,14 +47,14 @@
   "dependencies": {
     "@uplo/types": "workspace:^",
     "@uplo/utils": "workspace:^",
-    "camelcase": "^6.3.0",
+    "camelcase": "^9.0.0",
     "hono": "^4.12.21",
     "jose": "^5.10.0",
-    "mime": "^3.0.0",
+    "mime": "^4.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/mime": "^3.0.4",
+    "@types/mime": "^4.0.0",
     "@types/node": "^25.9.0"
   },
   "keywords": [

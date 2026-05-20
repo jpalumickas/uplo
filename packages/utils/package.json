@@ -40,7 +40,7 @@
     "test:dev": "vitest dev"
   },
   "devDependencies": {
-    "@tinyhttp/content-disposition": "~2.2.2",
+    "@tinyhttp/content-disposition": "~2.2.4",
     "@types/node": "^25.9.0"
   },
   "engines": {
