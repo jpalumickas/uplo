@@ -35,7 +35,8 @@
     "provenance": true
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@uplo/types": "workspace:^",

@@ -37,7 +37,8 @@
     "provenance": true
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@google-cloud/storage": "^7.19.0",

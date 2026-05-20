@@ -3,7 +3,7 @@ import crypto from 'node:crypto'
 import { ReadStream, createReadStream, lstatSync } from 'node:fs'
 import { basename } from 'node:path'
 
-import { BlobInput, UploError } from '@uplo/server'
+import { type BlobInput, UploError } from '@uplo/server'
 
 export interface BlobFileInput {
   path: string

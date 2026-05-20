@@ -37,7 +37,8 @@
   "scripts": {
     "build": "tsdown",
     "test": "vitest run",
-    "test:dev": "vitest dev"
+    "test:dev": "vitest dev",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "mime": "^4.1.0",

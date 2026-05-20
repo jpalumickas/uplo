@@ -37,7 +37,8 @@
     "provenance": true
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "blurhash": "^2.0.5"

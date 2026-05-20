@@ -50,7 +50,8 @@
   "scripts": {
     "build": "tsdown",
     "test": "vitest run",
-    "test:dev": "vitest dev"
+    "test:dev": "vitest dev",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@uplo/types": "workspace:^",

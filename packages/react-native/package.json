@@ -40,7 +40,8 @@
     "provenance": true
   },
   "scripts": {
-    "build": "tsdown"
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "mime": "^4.1.0"
