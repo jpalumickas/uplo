@@ -103,7 +103,7 @@ const S3Service = ({
     },
 
     async directUploadHeaders(blob: BlobData) {
-      const headers: HeadersInit = {
+      const headers: Record<string, string> = {
         'Content-Type': blob.contentType,
         'Content-MD5': blob.checksum,
       }
