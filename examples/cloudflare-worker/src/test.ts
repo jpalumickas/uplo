@@ -1,10 +1,10 @@
-import Uplo from '@uplo/server'
-import S3Service from '@uplo/service-s3'
+import { createUplo } from '@uplo/server'
+import { createS3Service } from '@uplo/service-s3'
 
-const uplo = Uplo({
+const uplo = createUplo({
   config: {},
   services: {
-    s3: S3Service({}),
+    s3: createS3Service({}),
   },
   attachments: {
     user: {

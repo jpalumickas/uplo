@@ -2,7 +2,7 @@ import type { Analyzer } from '@uplo/analyzer'
 
 import { encodeImageToBlurhash } from './encodeImageToBlurhash'
 
-const ImageBlurhashAnalyzer =
+export const imageBlurhashAnalyzer =
   ({ size = 32, xComponents = 4, yComponents = 3 } = {}): Analyzer =>
   async ({ blob: { contentType }, filePath }) => {
     if (!contentType.startsWith('image/')) {
@@ -17,5 +17,3 @@ const ImageBlurhashAnalyzer =
     })
     return { blurhash }
   }
-
-export default ImageBlurhashAnalyzer

@@ -1,6 +1,6 @@
 import { DrizzleAdapter } from '@uplo/adapter-drizzle-pg'
-import Uplo from '@uplo/server'
-import S3Service from '@uplo/service-s3'
+import { createUplo as createUploServer } from '@uplo/server'
+import { createS3Service } from '@uplo/service-s3'
 
 import * as schema from '../db/schema.js'
 import type { HonoContext } from '../types/hono.js'
@@ -8,7 +8,7 @@ import type { HonoContext } from '../types/hono.js'
 export const createUplo = (c: HonoContext) => {
   const db = c.get('db')
 
-  const s3Service = S3Service({
+  const s3Service = createS3Service({
     isPublic: false,
     bucket: c.env.AWS_BUCKET,
     accessKeyId: c.env.AWS_ACCESS_KEY_ID,
@@ -21,7 +21,7 @@ export const createUplo = (c: HonoContext) => {
     },
   })
 
-  const uplo = Uplo({
+  const uplo = createUploServer({
     config: {
       privateKey: c.env.UPLO_SECRET_TOKEN,
     },

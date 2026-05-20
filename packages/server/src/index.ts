@@ -16,7 +16,7 @@ import type {
   UploInstance,
 } from './types'
 
-export const Uplo = <AttachmentsList extends UploOptionsAttachments>({
+export const createUplo = <AttachmentsList extends UploOptionsAttachments>({
   services = {},
   defaultServiceName,
   adapter,
@@ -99,5 +99,3 @@ export type * from './types'
 export * from './errors'
 export * from './blobInputs'
 export type * from './blobInputs/types.js'
-
-export default Uplo

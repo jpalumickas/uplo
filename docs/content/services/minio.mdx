@@ -11,11 +11,11 @@ npm i @uplo/service-s3
 Add service to Uplo
 
 ```ts
-import S3Service from '@uplo/service-s3'
+import { createS3Service } from '@uplo/service-s3'
 
-const uplo = Uplo({
+const uplo = createUplo({
   services: {
-    minio: S3Service({
+    minio: createS3Service({
       isPublic: false,
       endpoint: 'https://minio.example.com',
       forcePathStyle: true,

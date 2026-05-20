@@ -27,7 +27,7 @@ interface Options {
   requestHandler?: S3ClientConfig['requestHandler']
 }
 
-const S3Service = ({
+export const createS3Service = ({
   isPublic = false,
   bucket,
   accessKeyId,
@@ -150,5 +150,3 @@ const S3Service = ({
     },
   }
 }
-
-export default S3Service

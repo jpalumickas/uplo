@@ -10,7 +10,7 @@ example, you can add `afterAttach` callback to Uplo and schedule a blob analyze
 job.
 
 ```ts
-const uplo = Uplo({
+const uplo = createUplo({
   callbacks: {
     afterAttach: async ({ blob }) => {
       await DelayedJob.performLater('uplo-analyze-blob', { id: blob.id })
@@ -22,12 +22,12 @@ const uplo = Uplo({
 Then, in the delayed job you can find blob and call analyze like this:
 
 ```ts
-import { UploAnalyzer } from '@uplo/analyzer'
-import ImageAnalyzer from '@uplo/analyzer-image'
+import { createAnalyzer } from '@uplo/analyzer'
+import { imageAnalyzer } from '@uplo/analyzer-image'
 import { uplo } from './lib/uplo'
 
-const analyzer = UploAnalyzer({
-  analyzers: [ImageAnalyzer()],
+const analyzer = createAnalyzer({
+  analyzers: [imageAnalyzer()],
 })
 
 export const uploAnalyzeBlobWorker = async ({ id }: { id: ID }) => {

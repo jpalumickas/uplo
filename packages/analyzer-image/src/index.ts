@@ -14,7 +14,7 @@ const ORIENTATIONS = [
   'Left-Bottom',
 ]
 
-const ImageAnalyzer =
+export const imageAnalyzer =
   (): Analyzer =>
   async ({ blob: { contentType }, filePath }) => {
     if (!contentType.startsWith('image/')) {
@@ -36,5 +36,3 @@ const ImageAnalyzer =
 
     return result
   }
-
-export default ImageAnalyzer

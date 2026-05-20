@@ -1,10 +1,10 @@
-import { UploAnalyzer } from '@uplo/analyzer'
-import ImageAnalyzer from '@uplo/analyzer-image'
+import { createAnalyzer } from '@uplo/analyzer'
+import { imageAnalyzer } from '@uplo/analyzer-image'
 
 import { uplo } from '../src/uplo'
 
-const analyzer = UploAnalyzer({
-  analyzers: [ImageAnalyzer()],
+const analyzer = createAnalyzer({
+  analyzers: [imageAnalyzer()],
 })
 
 const user1ID = 1

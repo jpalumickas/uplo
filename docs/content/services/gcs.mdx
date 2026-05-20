@@ -13,7 +13,7 @@ Add service to Uplo
 ```ts
 import GCSService from '@uplo/service-gcs'
 
-const uplo = Uplo({
+const uplo = createUplo({
   services: {
     google: new GCSService({
       isPublic: false,

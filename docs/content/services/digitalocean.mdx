@@ -11,11 +11,11 @@ npm i @uplo/service-s3
 Add service to Uplo
 
 ```ts
-import S3Service from '@uplo/service-s3'
+import { createS3Service } from '@uplo/service-s3'
 
-const uplo = Uplo({
+const uplo = createUplo({
   services: {
-    digitalocean: S3Service({
+    digitalocean: createS3Service({
       isPublic: false,
       endpoint: 'https://nyc3.digitaloceanspaces.com',
       forcePathStyle: true,

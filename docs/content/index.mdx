@@ -34,20 +34,20 @@ npm i @uplo/service-s3
 Define uplo instance
 
 ```ts
-import Uplo from '@uplo/server'
+import { createUplo } from '@uplo/server'
 import PrismaAdapter from '@uplo/adapter-prisma'
-import S3Service from '@uplo/service-s3'
+import { createS3Service } from '@uplo/service-s3'
 
 const config = {
   privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
   signedIdExpiresIn: 60 * 60, // Time how long a Signed ID is valid
 }
 
-const uplo = Uplo({
+const uplo = createUplo({
   config,
   adapter: new PrismaAdapter({ prisma }),
   services: {
-    s3: S3Service({
+    s3: createS3Service({
       isPublic: false,
       region: process.env.AWS_REGION,
       bucket: process.env.AWS_BUCKET,

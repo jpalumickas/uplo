@@ -11,11 +11,11 @@ npm i @uplo/service-s3
 Add service to Uplo
 
 ```ts
-import S3Service from '@uplo/service-s3'
+import { createS3Service } from '@uplo/service-s3'
 
-const uplo = Uplo({
+const uplo = createUplo({
   services: {
-    s3: S3Service({
+    s3: createS3Service({
       isPublic: false,
       region: process.env.AWS_REGION,
       bucket: process.env.AWS_BUCKET,

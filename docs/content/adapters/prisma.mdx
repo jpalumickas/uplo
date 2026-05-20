@@ -16,7 +16,7 @@ Add adapter to Uplo
 ```ts
 import PrismaAdapter from '@uplo/adapter-prisma'
 
-const uplo = Uplo({
+const uplo = createUplo({
   adapter: new PrismaAdapter({ prisma }),
 })
 ```
