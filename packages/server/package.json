@@ -29,10 +29,15 @@
   },
   "sideEffects": false,
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "license": "MIT",
-  "repository": "jpalumickas/uplo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpalumickas/uplo.git",
+    "directory": "packages/server"
+  },
   "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "tsup",
@@ -53,7 +58,7 @@
     "@types/node": "^25.9.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "keywords": [
     "express",

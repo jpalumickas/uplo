@@ -1,7 +1,9 @@
 {
   "name": "@uplo/utils",
   "version": "0.23.0",
-  "main": "./dist/index.js",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "browser": {
     "crypto": false
   },
@@ -11,21 +13,26 @@
       "types": "./dist/index.d.ts",
       "worker": "./dist/browser.js",
       "browser": "./dist/browser.js",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     }
   },
   "sideEffects": false,
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "license": "MIT",
-  "repository": "jpalumickas/uplo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpalumickas/uplo.git",
+    "directory": "packages/utils"
+  },
   "homepage": "https://uplo.js.org",
   "scripts": {
     "build": "rimraf dist && pnpm build:node && pnpm build:browser",
     "build:node": "tsup src/index.ts --format cjs,esm --dts",
-    "build:browser": "tsup --entry.browser src/browser/index.ts --format esm && mv dist/browser.mjs dist/browser.js",
+    "build:browser": "tsup --entry.browser src/browser/index.ts --format esm",
     "test": "vitest run",
     "test:dev": "vitest dev"
   },
@@ -34,6 +41,6 @@
     "@types/node": "^25.9.0"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   }
 }
