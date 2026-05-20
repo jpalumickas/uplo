@@ -61,7 +61,9 @@ export const Screen = () => {
   return (
     <View>
       <Pressable onPress={onAvatarSelect}>
-        <View><Text>Select avatar</Text></View>
+        <View>
+          <Text>Select avatar</Text>
+        </View>
       </Pressable>
     </View>
   )

@@ -15,8 +15,7 @@
     "directory": "packages/react-native"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "type": "module",
   "sideEffects": false,

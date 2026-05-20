@@ -16,8 +16,7 @@
     "directory": "packages/adapter-drizzle-pg"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "type": "module",
   "sideEffects": false,

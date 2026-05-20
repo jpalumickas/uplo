@@ -17,8 +17,7 @@
     "directory": "packages/adapter-prisma"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "type": "module",
   "sideEffects": false,
