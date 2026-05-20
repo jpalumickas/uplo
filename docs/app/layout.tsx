@@ -28,6 +28,7 @@ export default async function RootLayout({ children }) {
           <b>Uplo</b>
         </div>
       }
+      projectLink="https://github.com/jpalumickas/uplo"
     />
   )
   const pageMap = await getPageMap()

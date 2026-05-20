@@ -8,11 +8,11 @@
     "url": "git+https://github.com/jpalumickas/uplo.git",
     "directory": "packages/service-base"
   },
-  "type": "module",
-  "sideEffects": false,
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.mts",
