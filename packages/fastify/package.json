@@ -34,11 +34,11 @@
   },
   "peerDependencies": {
     "@uplo/node": "workspace:^",
-    "fastify": ">=3"
+    "fastify": ">=5"
   },
   "devDependencies": {
     "@uplo/node": "workspace:^",
-    "fastify": "^4.29.1"
+    "fastify": "^5.8.5"
   },
   "engines": {
     "node": ">=20"
@@ -50,6 +50,6 @@
     "direct upload"
   ],
   "dependencies": {
-    "fastify-plugin": "^4.5.1"
+    "fastify-plugin": "^5.1.0"
   }
 }
