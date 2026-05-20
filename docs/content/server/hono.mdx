@@ -1,0 +1,48 @@
+# Hono
+
+Uplo ships with a framework-agnostic route handler that returns a standard `fetch` handler — perfect for [Hono](https://hono.dev) on any runtime (Node, Bun, Cloudflare Workers, Deno).
+
+```sh npm2yarn
+npm i @uplo/node hono
+```
+
+```ts
+import { Hono } from 'hono'
+import { createUplo } from '@uplo/node'
+import { createUploRouteHandler } from '@uplo/server/route-handler'
+import { createPrismaAdapter } from '@uplo/adapter-prisma'
+import { createS3Service } from '@uplo/service-s3'
+
+const uplo = createUplo({
+  config: {
+    privateKey: process.env.APPLICATION_SECRET,
+    signedIdExpiresIn: 60 * 60,
+  },
+  adapter: createPrismaAdapter({ prisma }),
+  services: {
+    s3: createS3Service({
+      isPublic: false,
+      region: process.env.AWS_REGION,
+      bucket: process.env.AWS_BUCKET,
+      accessKeyId: '*****',
+      secretAccessKey: '*****',
+    }),
+  },
+  attachments: {},
+})
+
+const app = new Hono()
+
+app.all('/uplo/*', (c) => {
+  const handler = createUploRouteHandler({ uplo })
+  return handler(c.req.raw)
+})
+
+export default app
+```
+
+You can change the mount path with the `basePath` option:
+
+```ts
+const handler = createUploRouteHandler({ uplo, basePath: '/api/uplo' })
+```

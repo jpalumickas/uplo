@@ -1,0 +1,73 @@
+# @uplo/react-native
+
+React Native hooks and provider for [Uplo](https://uplo.js.org) direct uploads.
+
+## Installation
+
+For Expo:
+
+```sh
+npm i @uplo/react-native expo-file-system
+```
+
+## Usage
+
+Add a provider:
+
+```jsx
+// App.js
+import { UploProvider } from '@uplo/react-native'
+
+export const App = ({ children }) => {
+  return <UploProvider host={process.env.API_URL}>{children}</UploProvider>
+}
+```
+
+Use direct upload:
+
+```jsx
+import { useDirectUpload } from '@uplo/react-native'
+
+export const Screen = () => {
+  const {
+    uploads,
+    uploadFile,
+    uploading,
+    error,
+    signedIds,
+    clear: clearUploads,
+  } = useDirectUpload('post.images', { multiple: true })
+
+  const onAvatarSelect = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    })
+
+    if (!result.cancelled) {
+      try {
+        const uploadData = await uploadFile(result)
+
+        if (uploadData.signedId) {
+          await updateCurrentUser({ avatarSignedId: uploadData.signedId })
+        }
+      } catch (e) {
+        // Capture exception
+      }
+    }
+  }
+
+  return (
+    <View>
+      <Pressable onPress={onAvatarSelect}>
+        <View><Text>Select avatar</Text></View>
+      </Pressable>
+    </View>
+  )
+}
+```
+
+## Documentation
+
+See the full docs at [uplo.js.org](https://uplo.js.org/client/react-native).

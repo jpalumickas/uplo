@@ -1,0 +1,65 @@
+# @uplo/react
+
+React hooks and provider for [Uplo](https://uplo.js.org) direct uploads.
+
+## Installation
+
+```sh
+npm i @uplo/react
+```
+
+## Usage
+
+Add a provider:
+
+```jsx
+// App.js
+import { UploProvider } from '@uplo/react'
+
+export const App = ({ children }) => {
+  return <UploProvider host={process.env.API_URL}>{children}</UploProvider>
+}
+```
+
+Use direct upload:
+
+```tsx
+import { useDirectUpload } from '@uplo/react'
+
+export const Page = () => {
+  const {
+    uploads,
+    uploadFile,
+    uploading,
+    error,
+    signedIds,
+    clear: clearUploads,
+  } = useDirectUpload('user.avatar', { multiple: false })
+
+  const onFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return
+
+    const file = e.target.files[0]
+
+    try {
+      const uploadData = await uploadFile({ file })
+
+      if (uploadData.signedId) {
+        await updateCurrentUser({ avatarSignedId: uploadData.signedId })
+      }
+    } catch (e) {
+      // Capture exception
+    }
+  }
+
+  return (
+    <div>
+      <input type="file" onChange={onFileChange} />
+    </div>
+  )
+}
+```
+
+## Documentation
+
+See the full docs at [uplo.js.org](https://uplo.js.org/client/react).
