@@ -36,15 +36,15 @@ interface CreateDirectUploadBody {
   }
 }
 
-// @ts-ignore
-const fastifyPlugin: FastifyPluginAsync<UploPluginOptions> = async (fastify, opts) => {
-  const options = typeof opts === 'function' ? await opts(fastify) : opts
-
-  const { uplo } = options
+const fastifyPlugin: FastifyPluginAsync<UploPluginOptions<UploOptionsAttachments>> = async (
+  fastify,
+  opts,
+) => {
+  const { uplo } = opts
 
   fastify.decorate('uplo', uplo)
 
-  const mountPath = options.mountPath || '/uploads'
+  const mountPath = opts.mountPath || '/uploads'
 
   fastify.post<{ Body: CreateDirectUploadBody }>(
     `${mountPath}/create-direct-upload`,
