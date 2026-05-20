@@ -67,7 +67,7 @@ class GCSService implements Service {
       disposition?: ContentDispositionType
       fileName?: string
     },
-  ) {
+  ): Promise<void> {
     const metadata: { contentType?: string; contentDisposition?: string } = {}
 
     if (contentType) {
@@ -81,7 +81,7 @@ class GCSService implements Service {
       })
     }
 
-    return await this.storage.bucket(this.bucket).file(key).setMetadata(metadata)
+    await this.storage.bucket(this.bucket).file(key).setMetadata(metadata)
   }
 
   async publicUrl(blob: BlobData) {

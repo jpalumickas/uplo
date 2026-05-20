@@ -48,6 +48,7 @@
     "@uplo/types": "workspace:^"
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "@uplo/server": "workspace:^",
     "dataloader": "^2.2.3",
     "drizzle-orm": "^0.45.2"

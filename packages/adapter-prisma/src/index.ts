@@ -1,5 +1,3 @@
-import type { PrismaClient } from '@prisma/client'
-
 import { BlobNotFoundError } from '@uplo/server'
 import type {
   CreateBlobOptions,
@@ -12,6 +10,7 @@ import type {
 } from '@uplo/types'
 
 import { initFindAttachmentsLoader } from './loaders/findAttachments'
+import type { PrismaClient } from './types'
 
 class PrismaAdapter implements Adapter {
   prisma: PrismaClient

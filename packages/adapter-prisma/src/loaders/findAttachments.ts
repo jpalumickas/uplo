@@ -1,7 +1,8 @@
-import type { PrismaClient } from '@prisma/client'
 import DataLoader from 'dataloader'
 
 import type { ID, AttachmentData } from '@uplo/types'
+
+import type { PrismaClient } from '../types'
 
 type FindAttachmentsRecordData = {
   recordId: ID

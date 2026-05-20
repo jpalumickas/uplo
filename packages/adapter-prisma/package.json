@@ -51,6 +51,7 @@
   },
   "devDependencies": {
     "@prisma/client": "^7.8.0",
+    "@types/node": "^25.9.1",
     "@uplo/server": "workspace:^",
     "dataloader": "^2.2.3",
     "prisma": "^7.8.0"

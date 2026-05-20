@@ -36,6 +36,9 @@
   "dependencies": {
     "@uplo/types": "workspace:^"
   },
+  "devDependencies": {
+    "@types/node": "^25.9.1"
+  },
   "engines": {
     "node": ">=20"
   }
