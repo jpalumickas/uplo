@@ -1,4 +1,4 @@
-// import GCSService from '@uplo/service-gcs'
+// import { createGCSService } from '@uplo/service-gcs'
 
 import { Hono } from 'hono'
 
