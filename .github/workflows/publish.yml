@@ -15,7 +15,7 @@ jobs:
     name: Publish to npm
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write # Required to create GitHub releases
       id-token: write # Required for npm Trusted Publishing (OIDC)
     steps:
       - name: Checkout
@@ -45,3 +45,8 @@ jobs:
 
       - name: Publish to npm
         run: pnpm publish -r --filter "@uplo/*" --no-git-checks
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${GITHUB_REF_NAME}" --generate-notes
