@@ -45,7 +45,7 @@ export function getDeepValue<TData, TPath extends string, TDefault = GetFieldTyp
   const value = path
     .split(/[.[\]]/)
     .filter(Boolean)
-    .reduce<GetFieldType<TData, TPath>>((value, key) => (value as any)?.[key], data as any)
+    .reduce<GetFieldType<TData, TPath>>((val, key) => (val as any)?.[key], data as any)
 
   return value !== undefined ? value : (defaultValue as TDefault)
 }

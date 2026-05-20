@@ -2,6 +2,7 @@
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Head } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
+// oxlint-disable-next-line no-unassigned-import
 import 'nextra-theme-docs/style.css'
 
 export const metadata = {

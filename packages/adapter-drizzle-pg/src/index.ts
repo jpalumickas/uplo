@@ -36,7 +36,7 @@ export const DrizzleAdapter = ({ db, schema: plainSchema }: DrizzleAdapterOption
       const blobs = (await loaders.findBlob.loadMany(blobIds)) as BlobData[]
 
       return attachments.map((attachment) => {
-        const blob = blobs.find((blob) => blob?.id === attachment.blobId)!
+        const blob = blobs.find((it) => it?.id === attachment.blobId)!
         return {
           ...attachment,
           blob,

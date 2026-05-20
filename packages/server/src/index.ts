@@ -41,7 +41,7 @@ export const Uplo = <AttachmentsList extends UploOptionsAttachments>({
     return Blob({ data: blobData, adapter: adapter, service })
   }
 
-  const modelAttachments = Object.keys(attachments).reduce((result, modelName) => {
+  const formattedModelAttachments = Object.keys(attachments).reduce((result, modelName) => {
     const modelAttachments = attachments[modelName]
 
     // @ts-ignore
@@ -90,7 +90,7 @@ export const Uplo = <AttachmentsList extends UploOptionsAttachments>({
       })
     },
     // @ts-ignore
-    attachments: modelAttachments,
+    attachments: formattedModelAttachments,
   }
 }
 
