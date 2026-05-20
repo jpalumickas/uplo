@@ -5,6 +5,5 @@ export default defineConfig({
   dts: true,
   entry: ['src/index.ts', 'src/route-handler/index.ts'],
   format: ['cjs', 'esm'],
-  minify: true,
   sourcemap: true,
 })
