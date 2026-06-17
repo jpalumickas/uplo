@@ -60,12 +60,12 @@
     "@uplo/types": "workspace:^",
     "@uplo/utils": "workspace:^",
     "camelcase": "^9.0.0",
-    "hono": "^4.12.21",
+    "hono": "^4.12.25",
     "jose": "^6.2.3",
     "mime": "^4.1.0",
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1"
+    "@types/node": "^25.9.3"
   }
 }
