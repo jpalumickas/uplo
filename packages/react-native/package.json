@@ -46,9 +46,9 @@
     "mime": "^4.1.0"
   },
   "devDependencies": {
-    "@types/react": "^19.2.17",
-    "expo-file-system": "^56.0.8",
-    "react": "^19.2.7"
+    "@types/react": "^19.2.18",
+    "expo-file-system": "^57.0.2",
+    "react": "^19.2.8"
   },
   "peerDependencies": {
     "expo-file-system": ">= 16",

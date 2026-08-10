@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {},
   "dependencies": {
-    "@prisma/adapter-pg": "^7.8.0",
-    "@prisma/client": "^7.8.0",
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
     "@uplo/adapter-drizzle-pg": "workspace:*",
     "@uplo/adapter-prisma": "workspace:*",
     "@uplo/analyzer": "workspace:*",
@@ -15,13 +15,13 @@
     "@uplo/service-gcs": "workspace:*",
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
-    "sharp": "^0.34.5"
+    "sharp": "^0.35.3"
   },
   "devDependencies": {
     "dotenv": "^17.4.2",
     "dotenv-cli": "^11.0.0",
-    "prisma": "^7.8.0",
-    "tsx": "^4.22.4",
-    "vitest": "^4.1.9"
+    "prisma": "^7.9.1",
+    "tsx": "^4.23.11",
+    "vitest": "^4.1.10"
   }
 }
