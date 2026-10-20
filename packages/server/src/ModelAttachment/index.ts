@@ -6,6 +6,7 @@ import { Attachment } from '../Attachment'
 import type { BlobInput } from '../blobInputs/types'
 import {
   UploError,
+  AttachmentNotFoundError,
   BlobNotFoundError,
   DirectUploadDisabledError,
   InvalidSignedIdError,
@@ -91,7 +92,19 @@ export class ModelAttachment {
       if (!attachmentId) {
         throw new UploError('Provide attachment ID when detaching attachment in multiple')
       }
-      await this.adapter.deleteAttachment(attachmentId)
+      const deleted = await this.adapter.deleteAttachment({
+        id: attachmentId,
+        recordId: this.modelId,
+        recordType: this.recordType,
+        name: this.attachmentName,
+      })
+
+      if (!deleted) {
+        throw new AttachmentNotFoundError(
+          `Cannot find attachment with ID ${attachmentId} for ${this.recordType} ${this.modelId} ${this.attachmentName}`,
+        )
+      }
+
       return true
     }
 

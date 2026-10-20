@@ -5,7 +5,6 @@ import type {
   Adapter,
   Blob,
   BlobData,
-  ID,
   AttachmentData,
 } from '@uplo/types'
 
@@ -35,14 +34,30 @@ export const createPrismaAdapter = ({ prisma }: Options): Adapter => {
     })
   }
 
-  const deleteAttachment = async (id: ID): Promise<AttachmentData | null> => {
-    const result = await prisma.fileAttachment.delete({
-      where: {
-        id: id as any,
-      },
-    })
+  const deleteAttachment: Adapter['deleteAttachment'] = async ({
+    id,
+    recordId,
+    recordType,
+    name,
+  }) => {
+    try {
+      const result = await prisma.fileAttachment.delete({
+        where: {
+          id: id as any,
+          recordId: recordId as any,
+          recordType,
+          name,
+        },
+      })
 
-    return result as AttachmentData
+      return result as AttachmentData
+    } catch (err) {
+      // P2025: no attachment matched all fields
+      if ((err as { code?: string })?.code === 'P2025') {
+        return null
+      }
+      throw err
+    }
   }
 
   const deleteAttachments = async ({

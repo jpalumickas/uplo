@@ -94,6 +94,9 @@ Detach one attachment.
 const attachments = await uplo.attachments.post(456).images.detach(attachmentId)
 ```
 
+Only an attachment of this record and attachment name is detached. If
+`attachmentId` belongs to another record, it throws `AttachmentNotFoundError`.
+
 Detach all attachments.
 
 ```ts

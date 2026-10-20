@@ -43,7 +43,8 @@
   "scripts": {
     "build": "tsdown",
     "generate": "prisma generate",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@uplo/types": "workspace:^"

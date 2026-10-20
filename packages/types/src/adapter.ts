@@ -43,7 +43,16 @@ export interface Adapter {
     recordType: AttachmentData['recordType']
     name: AttachmentData['name']
   }): Promise<AttachmentData[]>
-  deleteAttachment(id: ID): Promise<Omit<AttachmentData, 'blob'> | null>
+  /**
+   * Deletes attachment only when all fields match, so an ID from another
+   * record or attachment is not deleted. Returns null when nothing matched.
+   */
+  deleteAttachment(options: {
+    id: ID
+    recordId: AttachmentData['recordId']
+    recordType: AttachmentData['recordType']
+    name: AttachmentData['name']
+  }): Promise<Omit<AttachmentData, 'blob'> | null>
   deleteAttachments(options: {
     recordId: AttachmentData['recordId']
     recordType: AttachmentData['recordType']

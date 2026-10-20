@@ -46,13 +46,20 @@ export const createDrizzleAdapter = ({
         }
       })
     },
-    deleteAttachment: async (id) => {
+    deleteAttachment: async ({ id, recordId, recordType, name }) => {
       const [attachment] = await db
         .delete(schema.fileAttachments)
-        .where(eq(schema.fileAttachments.id, id))
+        .where(
+          and(
+            eq(schema.fileAttachments.id, id),
+            eq(schema.fileAttachments.recordId, recordId as string),
+            eq(schema.fileAttachments.recordType, recordType),
+            eq(schema.fileAttachments.name, name),
+          ),
+        )
         .returning()
 
-      return attachment
+      return attachment ?? null
     },
     deleteAttachments: async ({ recordId, recordType, name }) => {
       const attachments = await db
