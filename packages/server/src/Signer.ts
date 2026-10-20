@@ -33,7 +33,8 @@ export const Signer = (config: UploConfig) => {
       .setIssuedAt()
       .setIssuer(ISSUER)
       .setAudience(purpose)
-      .setExpirationTime(Date.now() + (config.signedIdExpiresIn || 3600))
+      // Relative time in seconds, jose adds it to the current time
+      .setExpirationTime(`${config.signedIdExpiresIn || 3600}s`)
       .sign(secret)
 
     if (!token) {
