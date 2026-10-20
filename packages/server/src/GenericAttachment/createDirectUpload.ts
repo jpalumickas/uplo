@@ -1,6 +1,6 @@
 import type { Adapter, Service } from '@uplo/types'
 
-import { UploError } from '../errors.js'
+import { DirectUploadDisabledError, UploError } from '../errors.js'
 import { buildBlobKey } from '../lib/buildBlobKey.js'
 import type { Signer } from '../Signer'
 import type { FormattedAttachmentOptions } from '../types/attachments.js'
@@ -26,6 +26,12 @@ export const createDirectUpload = async ({
   modelName,
   attachmentName,
 }: Options) => {
+  if (!attachmentOptions.directUpload) {
+    throw new DirectUploadDisabledError(
+      `Direct upload is disabled for attachment "${modelName}.${attachmentName}"`,
+    )
+  }
+
   const blobParams = {
     key: await buildBlobKey({
       service,

@@ -1,7 +1,11 @@
 import type { ErrorHandler } from 'hono'
 import { HTTPException } from 'hono/http-exception'
 
-import { AttachmentNotFoundError, BlobValidationError } from '../../errors'
+import {
+  AttachmentNotFoundError,
+  BlobValidationError,
+  DirectUploadDisabledError,
+} from '../../errors'
 
 export const onErrorHandler: ErrorHandler = async (err, c) => {
   if (err instanceof HTTPException) {
@@ -9,7 +13,11 @@ export const onErrorHandler: ErrorHandler = async (err, c) => {
     return err.getResponse()
   }
 
-  if (err instanceof AttachmentNotFoundError || err instanceof BlobValidationError) {
+  if (
+    err instanceof AttachmentNotFoundError ||
+    err instanceof BlobValidationError ||
+    err instanceof DirectUploadDisabledError
+  ) {
     return c.json(
       {
         success: false,
