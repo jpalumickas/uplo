@@ -14,20 +14,19 @@ interface Options {
   projectId?: string
   /** Default path in the bucket for new files. Attachment `storagePath` takes priority. */
   storagePath?: BlobStoragePath
+  /**
+   * Refuse direct uploads with a different size than declared.
+   * Requires `x-goog-content-length-range` in bucket CORS `responseHeader`.
+   * @default false
+   */
+  enforceContentLength?: boolean
 }
 
-const directUploadHeaders = async (
-  blob: BlobData,
-  { disposition }: { disposition?: ContentDispositionType } = {},
-) => {
-  return {
-    'Content-Type': blob.contentType,
-    'Content-MD5': blob.checksum,
-    'Content-Disposition': contentDisposition({
-      type: disposition,
-      fileName: blob.fileName,
-    }),
-  }
+// GCS refuses PUT uploads with a different size (400 Bad Request).
+// Min and max are the same, so the uploaded file must match the declared size.
+const contentLengthRangeHeader = (blob: BlobData) => {
+  const size = Number(blob.size)
+  return { 'x-goog-content-length-range': `${size},${size}` }
 }
 
 export const createGCSService = ({
@@ -37,12 +36,31 @@ export const createGCSService = ({
   credentials,
   projectId,
   storagePath,
+  enforceContentLength = false,
 }: Options): Service => {
   const storage = new Storage({
     keyFilename: credentialsPath,
     credentials,
     projectId,
   })
+
+  const sizeHeaders = (blob: BlobData) =>
+    enforceContentLength ? contentLengthRangeHeader(blob) : {}
+
+  const directUploadHeaders = async (
+    blob: BlobData,
+    { disposition }: { disposition?: ContentDispositionType } = {},
+  ) => {
+    return {
+      'Content-Type': blob.contentType,
+      'Content-MD5': blob.checksum,
+      ...sizeHeaders(blob),
+      'Content-Disposition': contentDisposition({
+        type: disposition,
+        fileName: blob.fileName,
+      }),
+    }
+  }
 
   const directUploadUrl = async (blob: BlobData, { expiresIn = 5 * 60 * 1000 } = {}) => {
     const options: GetSignedUrlConfig = {
@@ -51,6 +69,8 @@ export const createGCSService = ({
       expires: Date.now() + expiresIn,
       contentMd5: blob.checksum,
       contentType: blob.contentType, //'application/octet-stream',
+      // Signed, so the client must send the same headers
+      extensionHeaders: sizeHeaders(blob),
     }
 
     // Get a v4 signed URL for uploading file

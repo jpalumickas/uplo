@@ -29,6 +29,7 @@ const uplo = createUplo({
 - `bucket` (**required**): Your bucket name where to store objects.
 - `isPublic = false`: Make uploaded files public
 - `credentialsPath`, `credentials`, `projectId`: Auth options. See [Authentication](#authentication)
+- `enforceContentLength = false`: Refuse direct uploads with a different file size than declared. See [Enforce file size](#enforce-file-size)
 - `storagePath`: Default file path in the bucket for attachments without their own `storagePath`. See [Storage path](/attachments#storage-path)
 
 ## Authentication
@@ -81,8 +82,40 @@ a guide in [Google Cloud Docs](https://cloud.google.com/storage/docs/configuring
   {
     "origin": ["https://www.example.com"],
     "method": ["PUT"],
-    "responseHeader": ["Origin", "Content-Type", "Content-MD5", "Content-Disposition"],
+    "responseHeader": [
+      "Origin",
+      "Content-Type",
+      "Content-MD5",
+      "Content-Disposition",
+      "x-goog-content-length-range"
+    ],
     "maxAgeSeconds": 3600
   }
 ]
+```
+
+`x-goog-content-length-range` is only needed with `enforceContentLength`.
+
+### Enforce file size
+
+By default GCS accepts a direct upload of any size, even if `validate.size`
+checked the declared size. Set `enforceContentLength: true` to sign the
+declared size into the upload URL. GCS then refuses files with a different
+size (400 Bad Request).
+
+```ts
+createGCSService({
+  bucket: process.env.GCS_BUCKET,
+  enforceContentLength: true,
+})
+```
+
+Browsers send it as `x-goog-content-length-range` header, so add it to bucket
+CORS `responseHeader` first (see the example above), otherwise browser uploads
+fail. To update CORS of an existing bucket, get the current config, add the
+header, and set it again:
+
+```sh
+gcloud storage buckets describe gs://YOUR_BUCKET --format="default(cors_config)"
+gcloud storage buckets update gs://YOUR_BUCKET --cors-file=cors.json
 ```

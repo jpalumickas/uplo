@@ -41,7 +41,8 @@
   },
   "scripts": {
     "build": "tsdown",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@google-cloud/storage": "^8.4.0",
