@@ -55,5 +55,15 @@ export const buildBlobKey = async ({ service, storagePath, ...params }: Params) 
     throw new UploError('Attachment or service `storagePath` must return a non-empty string')
   }
 
+  // `.` and `..` segments make URLs point to another object, empty segments
+  // usually mean a missing value (e.g. `avatars//key`)
+  if (
+    formattedKey.split('/').some((segment) => segment === '' || segment === '.' || segment === '..')
+  ) {
+    throw new UploError(
+      `\`storagePath\` returned "${formattedKey}". Path segments cannot be empty, "." or "..".`,
+    )
+  }
+
   return formattedKey
 }

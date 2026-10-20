@@ -1,33 +1,13 @@
-import type { GetSignedUrlConfig, StorageOptions } from '@google-cloud/storage'
+import type { GetSignedUrlConfig } from '@google-cloud/storage'
 import { Storage } from '@google-cloud/storage'
 import fs from 'node:fs'
 
-import type { Service, ServiceUploadParams, BlobData, BlobStoragePath } from '@uplo/types'
+import type { Service, ServiceUploadParams, BlobData } from '@uplo/types'
 import type { ContentDispositionType } from '@uplo/utils'
 import { contentDisposition } from '@uplo/utils'
 
-interface Options {
-  isPublic?: boolean
-  bucket: string
-  credentialsPath?: string
-  credentials?: StorageOptions['credentials']
-  projectId?: string
-  /** Default path in the bucket for new files. Attachment `storagePath` takes priority. */
-  storagePath?: BlobStoragePath
-  /**
-   * Refuse direct uploads with a different size than declared.
-   * Requires `x-goog-content-length-range` in bucket CORS `responseHeader`.
-   * @default false
-   */
-  enforceContentLength?: boolean
-}
-
-// GCS refuses PUT uploads with a different size (400 Bad Request).
-// Min and max are the same, so the uploaded file must match the declared size.
-const contentLengthRangeHeader = (blob: BlobData) => {
-  const size = Number(blob.size)
-  return { 'x-goog-content-length-range': `${size},${size}` }
-}
+import type { Options } from './types'
+import { contentLengthRangeHeader } from './utils/contentLengthRangeHeader'
 
 export const createGCSService = ({
   isPublic = false,

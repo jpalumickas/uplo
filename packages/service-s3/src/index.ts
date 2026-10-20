@@ -10,36 +10,13 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import type { Readable } from 'node:stream'
 
 import { UploError } from '@uplo/server'
-import type { Service, BlobData, ServiceUploadParams, BlobStoragePath } from '@uplo/types'
+import type { Service, BlobData, ServiceUploadParams } from '@uplo/types'
 import type { ContentDispositionType } from '@uplo/utils'
 import { contentDisposition } from '@uplo/utils'
 
-const DEFAULT_REGION = 'us-east-1'
-
-interface Options {
-  isPublic?: boolean
-  bucket: string
-  region?: S3ClientConfig['region']
-  accessKeyId: string
-  secretAccessKey: string
-  endpoint?: S3ClientConfig['endpoint']
-  forcePathStyle?: S3ClientConfig['forcePathStyle']
-  requestHandler?: S3ClientConfig['requestHandler']
-  /**
-   * AWS SDK default (`WHEN_SUPPORTED`) signs a CRC32 of an empty body into
-   * direct upload URLs, so uploads with a real body fail.
-   * @default 'WHEN_REQUIRED'
-   */
-  requestChecksumCalculation?: S3ClientConfig['requestChecksumCalculation']
-  /** @default 'WHEN_REQUIRED' */
-  responseChecksumValidation?: S3ClientConfig['responseChecksumValidation']
-  /** Send object ACL on uploads. Set `false` for providers without ACL support (e.g. Cloudflare R2). */
-  acl?: boolean
-  /** Base URL for public objects (e.g. CDN or custom domain). Used by `publicUrl()` as `${publicUrl}/${key}`. */
-  publicUrl?: string
-  /** Default path in the bucket for new files. Attachment `storagePath` takes priority. */
-  storagePath?: BlobStoragePath
-}
+import { DEFAULT_REGION } from './constants'
+import type { Options } from './types'
+import { buildPublicUrl } from './utils/buildPublicUrl'
 
 export const createS3Service = ({
   isPublic = false,
@@ -145,13 +122,7 @@ export const createS3Service = ({
     },
 
     async publicUrl({ key }: Pick<BlobData, 'key'>) {
-      if (publicBaseUrl) {
-        return `${publicBaseUrl.replace(/\/+$/, '')}/${key}`
-      } else if (endpoint) {
-        return `${endpoint}/${bucket}/${key}`
-      } else {
-        return `https://${bucket}.s3${region === DEFAULT_REGION ? '' : `.${region}`}.amazonaws.com/${key}`
-      }
+      return buildPublicUrl({ key, bucket, region, endpoint, publicBaseUrl })
     },
 
     async privateUrl(

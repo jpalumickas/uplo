@@ -67,4 +67,22 @@ describe('buildBlobKey', () => {
       UploError,
     )
   })
+
+  it.each(['avatars/../other/file', './file', 'avatars/./file', 'avatars//file', 'avatars/', '..'])(
+    'throws when storagePath returns unsafe path "%s"',
+    async (storagePath) => {
+      await expect(
+        buildBlobKey({ service: serviceWith(() => storagePath), ...params }),
+      ).rejects.toThrow(UploError)
+    },
+  )
+
+  it('allows dots inside segments', async () => {
+    const key = await buildBlobKey({
+      service: serviceWith(() => 'avatars/v1.2/file..name.png'),
+      ...params,
+    })
+
+    expect(key).toEqual('avatars/v1.2/file..name.png')
+  })
 })

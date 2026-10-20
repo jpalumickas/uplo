@@ -102,6 +102,10 @@ service that has no `storagePath` of its own.
 The returned path is saved as the blob key, so changing `storagePath` later only
 affects new uploads.
 
+Path segments cannot be empty, `.` or `..`, otherwise it throws. Do not use
+`fileName` as-is: it comes from the client and can contain `/`, `..`, `?` or
+`#`. Use `key` and `extension` instead, or clean `fileName` first.
+
 ## Find attachment
 
 Find an attachment by specifying `User` ID.

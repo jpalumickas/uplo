@@ -23,6 +23,9 @@ const blob = {
   serviceName: 's3',
 } as BlobData
 
+const urlFor = async (key: string, options = {}) =>
+  new URL(await createService(options).publicUrl({ ...blob, key })).href
+
 describe('S3 service options', () => {
   describe('acl', () => {
     it('sends public-read ACL by default for public service', async () => {
@@ -65,5 +68,34 @@ describe('S3 service options', () => {
         'https://test-bucket.s3.amazonaws.com/avatars/file.png',
       )
     })
+  })
+
+  describe('publicUrl key encoding', () => {
+    it('keeps plain keys unchanged', async () => {
+      expect(await urlFor('avatars/abc123.png')).toBe(
+        'https://test-bucket.s3.amazonaws.com/avatars/abc123.png',
+      )
+    })
+
+    it.each([
+      {},
+      { endpoint: 'https://minio.example.com' },
+      { publicUrl: 'https://cdn.example.com' },
+    ])('encodes ? # and spaces so the URL points to the same key (%j)', async (options) => {
+      const url = new URL(await urlFor('avatars/a b?x=1#y.png', options))
+
+      expect(url.search).toBe('')
+      expect(url.hash).toBe('')
+      expect(decodeURIComponent(url.pathname)).toMatch(/\/avatars\/a b\?x=1#y\.png$/)
+    })
+
+    it.each(['../other-bucket/evil.html', 'avatars/./file.png'])(
+      'throws for key with dot segment "%s"',
+      async (key) => {
+        await expect(
+          createService({ endpoint: 'https://minio.example.com' }).publicUrl({ ...blob, key }),
+        ).rejects.toThrow(/Cannot build public URL/)
+      },
+    )
   })
 })
