@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "index",
+    "attachments",
+    "adapters",
+    "services",
+    "server",
+    "client",
+    "analyzers"
+  ]
+}

@@ -1,13 +1,14 @@
 import type { NextConfig } from 'next'
-import nextra from 'nextra'
+import { createMDX } from 'fumadocs-mdx/next'
 
-const withNextra = nextra({})
+const withMDX = createMDX()
 
 const nextConfig: NextConfig = {
   output: 'export',
+  reactStrictMode: true,
   images: {
     unoptimized: true,
   },
 }
 
-export default withNextra(nextConfig)
+export default withMDX(nextConfig)

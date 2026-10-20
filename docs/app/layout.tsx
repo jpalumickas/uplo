@@ -1,12 +1,16 @@
-/* eslint-env node */
-import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Head } from 'nextra/components'
-import { getPageMap } from 'nextra/page-map'
-// oxlint-disable-next-line no-unassigned-import
-import 'nextra-theme-docs/style.css'
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+import { DocsLayout } from 'fumadocs-ui/layouts/docs'
+import { RootProvider } from 'fumadocs-ui/provider/next'
+import { source } from '@/lib/source'
+import './global.css'
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL('https://uplo.js.org'),
+  title: {
+    template: '%s - Uplo',
+    default: 'Uplo',
+  },
   description:
     'Uplo can Handle file uploads to different storage services like Amazon S3, Google Cloud or etc. It also supports different type of ORM adapters, like Prisma or Drizzle.',
   applicationName: 'Uplo',
@@ -22,33 +26,25 @@ export const metadata = {
 
 const currentYear = new Date().getFullYear()
 
-export default async function RootLayout({ children }) {
-  const navbar = (
-    <Navbar
-      logo={
-        <div>
-          <b>Uplo</b>
-        </div>
-      }
-      projectLink="https://github.com/jpalumickas/uplo"
-    />
-  )
-  const pageMap = await getPageMap()
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
-      <Head faviconGlyph="✦" />
-      <body>
-        <Layout
-          navbar={navbar}
-          footer={<Footer>MIT {currentYear} © Uplo.</Footer>}
-          editLink="Edit this page on GitHub"
-          docsRepositoryBase="https://github.com/jpalumickas/uplo/blob/main/docs"
-          sidebar={{ defaultMenuCollapseLevel: 1 }}
-          pageMap={pageMap}
-          search={false}
-        >
-          {children}
-        </Layout>
+      <body className="flex flex-col min-h-screen">
+        <RootProvider search={{ enabled: false }}>
+          <DocsLayout
+            tree={source.getPageTree()}
+            nav={{ title: <b>Uplo</b> }}
+            githubUrl="https://github.com/jpalumickas/uplo"
+            sidebar={{
+              defaultOpenLevel: 0,
+              footer: (
+                <p className="text-xs text-fd-muted-foreground">MIT {currentYear} © Uplo.</p>
+              ),
+            }}
+          >
+            {children}
+          </DocsLayout>
+        </RootProvider>
       </body>
     </html>
   )

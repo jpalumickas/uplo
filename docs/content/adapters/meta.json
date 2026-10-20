@@ -1,0 +1,8 @@
+{
+  "title": "Adapters",
+  "pages": [
+    "about",
+    "prisma",
+    "drizzle"
+  ]
+}

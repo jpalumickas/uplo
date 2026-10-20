@@ -1,0 +1,10 @@
+{
+  "title": "Services",
+  "pages": [
+    "s3",
+    "gcs",
+    "minio",
+    "digitalocean",
+    "cloudflare-r2"
+  ]
+}

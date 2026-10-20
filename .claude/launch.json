@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "docs",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd docs && exec node_modules/.bin/next dev --port ${PORT:-3456}"],
+      "port": 3456
+    }
+  ]
+}

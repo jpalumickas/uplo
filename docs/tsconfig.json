@@ -12,6 +12,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "target": "ES2017",
     "plugins": [
       {
