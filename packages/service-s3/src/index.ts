@@ -81,7 +81,12 @@ export const createS3Service = ({
         Key: blob.key,
       })
 
-      return await getSignedUrl(client, command, { expiresIn: 300 })
+      return await getSignedUrl(client, command, {
+        expiresIn: 300,
+        // SDK leaves Content-Type unsigned by default, so a client could upload
+        // with a different type than the validated one
+        signableHeaders: new Set(['content-type']),
+      })
     },
 
     async upload({ key, content, size, contentType, checksum }: ServiceUploadParams) {
