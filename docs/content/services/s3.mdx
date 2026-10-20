@@ -38,6 +38,7 @@ const uplo = createUplo({
 - `endpoint`: You can provide a custom endpoint if you have a custom service
 - `publicUrl`: Base URL for public files (e.g. CDN or custom domain). Defaults to the bucket URL
 - `acl = true`: Send object ACL on uploads. Set `false` for providers without ACL support
+- `requestChecksumCalculation = 'WHEN_REQUIRED'`, `responseChecksumValidation = 'WHEN_REQUIRED'`: AWS SDK checksum behavior. The SDK default (`WHEN_SUPPORTED`) signs a checksum of an empty body into direct upload URLs, so uploads fail
 - `storagePath`: Default file path in the bucket for attachments without their own `storagePath`. See [Storage path](/attachments#storage-path)
 
 ## Direct Upload

@@ -38,4 +38,23 @@ describe('S3 direct upload', () => {
       'Content-Type': 'image/png',
     })
   })
+
+  it('does not sign a checksum of an empty body by default', async () => {
+    const url = new URL(await service.directUploadUrl(blob))
+
+    expect(url.searchParams.has('x-amz-checksum-crc32')).toBe(false)
+    expect(url.searchParams.has('x-amz-sdk-checksum-algorithm')).toBe(false)
+  })
+
+  it('allows SDK checksum behavior to be set', async () => {
+    const withChecksum = createS3Service({
+      bucket: 'test-bucket',
+      accessKeyId: 'test-key',
+      secretAccessKey: 'test-secret',
+      requestChecksumCalculation: 'WHEN_SUPPORTED',
+    })
+    const url = new URL(await withChecksum.directUploadUrl(blob))
+
+    expect(url.searchParams.has('x-amz-checksum-crc32')).toBe(true)
+  })
 })

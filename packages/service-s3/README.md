@@ -37,7 +37,7 @@ const uplo = createUplo({
 - `forcePathStyle`: Use path-style URLs (required for MinIO, DigitalOcean Spaces).
 - `publicUrl`: Base URL for public files (e.g. CDN or custom domain). Defaults to the bucket URL.
 - `acl = true`: Send object ACL on uploads. Set `false` for providers without ACL support.
-- `requestChecksumCalculation`, `responseChecksumValidation`: Passed to the AWS SDK client.
+- `requestChecksumCalculation = 'WHEN_REQUIRED'`, `responseChecksumValidation = 'WHEN_REQUIRED'`: Passed to the AWS SDK client. The SDK default (`WHEN_SUPPORTED`) breaks direct uploads.
 
 ## Documentation
 
