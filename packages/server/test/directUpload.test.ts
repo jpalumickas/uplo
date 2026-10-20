@@ -97,6 +97,13 @@ describe('create direct upload', () => {
     })
     expect(createBlob).not.toHaveBeenCalled()
   })
+
+  it('refuses attachment names not defined in config', async () => {
+    const response = await createDirectUpload('user.constructor')
+
+    expect(response.status).toEqual(422)
+    expect(createBlob).not.toHaveBeenCalled()
+  })
 })
 
 describe('attach signed file', () => {

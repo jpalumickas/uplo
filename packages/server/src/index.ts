@@ -1,10 +1,10 @@
 import type { ID } from '@uplo/types'
-import { getDeepValue } from '@uplo/utils'
 
 import { Blob } from './Blob'
 import { UploError, AttachmentNotFoundError } from './errors'
 import { GenericAttachment } from './GenericAttachment'
 import { defaultConfig } from './lib/defaultConfig'
+import { findAttachmentOptions } from './lib/findAttachmentOptions'
 import { formatAttachmentOptions } from './lib/formatAttachmentOptions'
 import { ModelAttachment } from './ModelAttachment'
 import { Signer } from './Signer'
@@ -74,11 +74,11 @@ export const createUplo = <AttachmentsList extends UploOptionsAttachments>({
     $services: services,
     $findBlob: findBlob,
     $findGenericAttachment: (name: `${string}.${string}`) => {
-      const attachmentOptions = getDeepValue(attachments, name, null)
-      if (!attachmentOptions) {
+      const found = findAttachmentOptions(attachments, name)
+      if (!found) {
         throw new AttachmentNotFoundError(`Attachment with name ${name} not found`)
       }
-      const [modelName, attachmentName] = name.split('.') as [string, string]
+      const { modelName, attachmentName, options: attachmentOptions } = found
 
       return GenericAttachment({
         signer,
