@@ -1,3 +1,5 @@
+import type { BlobStoragePath } from '@uplo/types'
+
 import type { AttachmentValidateType } from './config'
 
 export interface FormattedAttachmentOptions {
@@ -5,4 +7,5 @@ export interface FormattedAttachmentOptions {
   serviceName: string
   directUpload: boolean
   validate?: AttachmentValidateType
+  storagePath?: BlobStoragePath
 }

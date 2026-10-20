@@ -9,6 +9,8 @@ export const GenericAttachment = ({
   options,
   services,
   signer,
+  modelName,
+  attachmentName,
 }: GenericAttachmentParams) => {
   const service = services[options.serviceName]
 
@@ -21,6 +23,8 @@ export const GenericAttachment = ({
         attachmentOptions: options,
         adapter,
         signer,
+        modelName,
+        attachmentName,
       }),
   }
 }

@@ -25,6 +25,38 @@ const uplo = createUplo({
 - `serviceName` (_optional_): You can provide a custom service.
 - `directUpload = true` (_optional_): You can disable direct uploads for
   specific attachments if needed.
+- `storagePath` (_optional_): Function that returns the file path in the bucket. See
+  [Storage path](#storage-path).
+
+## Storage path
+
+By default every file is stored in the bucket root with a random key. Pass
+`storagePath` to choose where files go. It receives:
+
+- `key`: random generated key
+- `extension`: lowercase extension without the dot (e.g. `png`), `undefined` if unknown
+- `fileName`, `contentType`
+- `serviceName`, `modelName`, `attachmentName`
+
+```ts
+const uplo = createUplo({
+  attachments: {
+    user: {
+      avatar: {
+        storagePath: ({ key, extension }) => `avatars/${key}${extension ? `.${extension}` : ''}`,
+      },
+    },
+  },
+})
+// => avatars/3f9a...c1.png
+```
+
+It can also be async. You can set a default `storagePath` on a service too (e.g.
+`createS3Service({ storagePath })`). It is used for every attachment stored in that
+service that has no `storagePath` of its own.
+
+The returned path is saved as the blob key, so changing `storagePath` later only
+affects new uploads.
 
 ## Find attachment
 

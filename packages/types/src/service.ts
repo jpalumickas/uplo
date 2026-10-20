@@ -3,7 +3,7 @@ import type { Readable } from 'node:stream'
 
 import type { ContentDispositionType } from '@uplo/utils'
 
-import type { BlobData } from './attachment'
+import type { BlobData, BlobStoragePath } from './attachment'
 
 export interface ServiceUpdateMetadataOptions {
   contentType?: string
@@ -32,6 +32,8 @@ export interface ServiceUploadParams {
 }
 
 export interface Service {
+  /** Default path for files stored in this service. Attachment `storagePath` takes priority. */
+  storagePath?: BlobStoragePath
   updateMetadata?(key: BlobData['key'], options: ServiceUpdateMetadataOptions): Promise<any>
   createReadStream(options: { key: BlobData['key'] }): Promise<Readable>
   directUploadHeaders?(blob: BlobData): Promise<Record<string, any>> | undefined

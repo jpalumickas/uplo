@@ -1,4 +1,4 @@
-import type { Service, Adapter } from '@uplo/types'
+import type { Service, Adapter, BlobStoragePath } from '@uplo/types'
 
 import type { Callbacks } from './callbacks'
 
@@ -27,6 +27,8 @@ export interface UploOptionsAttachment {
   /** Support direct upload to service with Signed URL */
   directUpload?: boolean
   validate?: AttachmentValidateType
+  /** Path in the bucket for new files. Overrides service `storagePath`. */
+  storagePath?: BlobStoragePath
 }
 
 export type UploOptionsAttachments = Partial<

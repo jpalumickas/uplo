@@ -1,11 +1,11 @@
 import camelCase from 'camelcase'
 
-import type { Service, AttachmentData, BlobData, Adapter, ID } from '@uplo/types'
-import { generateKey } from '@uplo/utils'
+import type { Service, AttachmentData, BlobData, Adapter, ID, BlobStoragePath } from '@uplo/types'
 
 import { Attachment } from '../Attachment'
 import type { BlobInput } from '../blobInputs/types'
 import { UploError, BlobNotFoundError } from '../errors'
+import { buildBlobKey } from '../lib/buildBlobKey'
 import type { Signer } from '../Signer'
 import type { AttachmentValidateType, Callbacks } from '../types'
 import { validateBlobInputData } from '../utils/validateBobInputData'
@@ -15,6 +15,7 @@ export interface ModelAttachmentOptions {
   serviceName: string
   directUpload?: boolean
   validate?: AttachmentValidateType
+  storagePath?: BlobStoragePath
 }
 
 interface ModelAttachmentParams {
@@ -106,7 +107,15 @@ export class ModelAttachment {
 
   async attachFile(input: BlobInput) {
     const blobParams = {
-      key: await generateKey(),
+      key: await buildBlobKey({
+        service: this.getService(this.options.serviceName),
+        storagePath: this.options.storagePath,
+        serviceName: this.options.serviceName,
+        modelName: this.modelName,
+        attachmentName: this.attachmentName,
+        fileName: input.fileName,
+        contentType: input.contentType,
+      }),
       fileName: input.fileName,
       contentType: input.contentType,
       size: input.size,

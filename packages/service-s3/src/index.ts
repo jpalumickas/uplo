@@ -10,7 +10,7 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
 import type { Readable } from 'node:stream'
 
 import { UploError } from '@uplo/server'
-import type { Service, BlobData, ServiceUploadParams } from '@uplo/types'
+import type { Service, BlobData, ServiceUploadParams, BlobStoragePath } from '@uplo/types'
 import type { ContentDispositionType } from '@uplo/utils'
 import { contentDisposition } from '@uplo/utils'
 
@@ -25,6 +25,8 @@ interface Options {
   endpoint?: S3ClientConfig['endpoint']
   forcePathStyle?: S3ClientConfig['forcePathStyle']
   requestHandler?: S3ClientConfig['requestHandler']
+  /** Default path in the bucket for new files. Attachment `storagePath` takes priority. */
+  storagePath?: BlobStoragePath
 }
 
 export const createS3Service = ({
@@ -36,6 +38,7 @@ export const createS3Service = ({
   region = DEFAULT_REGION,
   forcePathStyle,
   requestHandler,
+  storagePath,
 }: Options): Service => {
   const s3Config: S3ClientConfig = {
     credentials: {
@@ -52,6 +55,7 @@ export const createS3Service = ({
 
   return {
     isPublic,
+    storagePath,
     async directUploadUrl(blob: BlobData) {
       const command = new PutObjectCommand({
         Bucket: bucket,

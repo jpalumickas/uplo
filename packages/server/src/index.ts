@@ -78,8 +78,12 @@ export const createUplo = <AttachmentsList extends UploOptionsAttachments>({
       if (!attachmentOptions) {
         throw new AttachmentNotFoundError(`Attachment with name ${name} not found`)
       }
+      const [modelName, attachmentName] = name.split('.') as [string, string]
+
       return GenericAttachment({
         signer,
+        modelName,
+        attachmentName,
         adapter,
         services,
         options: formatAttachmentOptions({

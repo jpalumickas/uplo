@@ -1,7 +1,7 @@
 import type { Adapter, Service } from '@uplo/types'
-import { generateKey } from '@uplo/utils'
 
 import { UploError } from '../errors.js'
+import { buildBlobKey } from '../lib/buildBlobKey.js'
 import type { Signer } from '../Signer'
 import type { FormattedAttachmentOptions } from '../types/attachments.js'
 import type { CreateDirectUploadParams } from '../types/generic-attachment.js'
@@ -13,6 +13,8 @@ type Options = {
   adapter: Adapter
   service: Service
   attachmentOptions: FormattedAttachmentOptions
+  modelName: string
+  attachmentName: string
 }
 
 export const createDirectUpload = async ({
@@ -21,9 +23,19 @@ export const createDirectUpload = async ({
   adapter,
   service,
   attachmentOptions,
+  modelName,
+  attachmentName,
 }: Options) => {
   const blobParams = {
-    key: await generateKey(),
+    key: await buildBlobKey({
+      service,
+      storagePath: attachmentOptions.storagePath,
+      serviceName: attachmentOptions.serviceName,
+      modelName,
+      attachmentName,
+      fileName: params.fileName,
+      contentType: params.contentType,
+    }),
     fileName: params.fileName,
     contentType: params.contentType,
     size: params.size,

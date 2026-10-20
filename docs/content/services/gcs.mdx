@@ -24,6 +24,13 @@ const uplo = createUplo({
 })
 ```
 
+## Options
+
+- `bucket` (**required**): Your bucket name where to store objects.
+- `isPublic = false`: Make uploaded files public
+- `credentialsPath`, `credentials`, `projectId`: Auth options. See [Authentication](#authentication)
+- `storagePath`: Default file path in the bucket for attachments without their own `storagePath`. See [Storage path](/attachments#storage-path)
+
 ## Authentication
 
 The service forwards auth options to `@google-cloud/storage`. Pick one:

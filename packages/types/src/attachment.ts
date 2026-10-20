@@ -7,6 +7,30 @@ export interface BlobMetadata {
   [key: string]: string | number | null
 }
 
+export interface BlobStoragePathParams {
+  /** Random generated key (hex string) */
+  key: string
+  /** Lowercase file extension without the dot (e.g. `png`), if it could be detected */
+  extension?: string
+  /** Original file name */
+  fileName: string
+  /** File content type */
+  contentType: string
+  /** Name of the service the file is stored in */
+  serviceName: string
+  /** Model name from attachments config (e.g. `user`) */
+  modelName: string
+  /** Attachment name from attachments config (e.g. `avatar`) */
+  attachmentName: string
+}
+
+/**
+ * Returns the object key (path in the bucket) for a new blob.
+ * The returned value is saved as the blob key, so changing this function
+ * later does not affect files that were already uploaded.
+ */
+export type BlobStoragePath = (params: BlobStoragePathParams) => string | Promise<string>
+
 export interface BlobData {
   id: ID
   fileName: string

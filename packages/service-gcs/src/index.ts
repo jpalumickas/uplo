@@ -2,7 +2,7 @@ import type { GetSignedUrlConfig, StorageOptions } from '@google-cloud/storage'
 import { Storage } from '@google-cloud/storage'
 import fs from 'node:fs'
 
-import type { Service, ServiceUploadParams, BlobData } from '@uplo/types'
+import type { Service, ServiceUploadParams, BlobData, BlobStoragePath } from '@uplo/types'
 import type { ContentDispositionType } from '@uplo/utils'
 import { contentDisposition } from '@uplo/utils'
 
@@ -12,6 +12,8 @@ interface Options {
   credentialsPath?: string
   credentials?: StorageOptions['credentials']
   projectId?: string
+  /** Default path in the bucket for new files. Attachment `storagePath` takes priority. */
+  storagePath?: BlobStoragePath
 }
 
 const directUploadHeaders = async (
@@ -34,6 +36,7 @@ export const createGCSService = ({
   credentialsPath,
   credentials,
   projectId,
+  storagePath,
 }: Options): Service => {
   const storage = new Storage({
     keyFilename: credentialsPath,
@@ -157,6 +160,7 @@ export const createGCSService = ({
 
   return {
     isPublic,
+    storagePath,
     directUploadUrl,
     directUploadHeaders,
     updateMetadata,

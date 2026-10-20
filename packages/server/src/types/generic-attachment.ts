@@ -20,4 +20,6 @@ export interface GenericAttachmentParams {
   options: FormattedAttachmentOptions
   services: Record<string, Service>
   signer: ReturnType<typeof Signer>
+  modelName: string
+  attachmentName: string
 }

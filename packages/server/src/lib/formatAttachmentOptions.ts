@@ -30,6 +30,7 @@ export const formatAttachmentOptions = ({
     multiple: options.multiple ?? false,
     directUpload: options.directUpload ?? true,
     validate: options.validate,
+    storagePath: options.storagePath,
     serviceName,
   }
 }
