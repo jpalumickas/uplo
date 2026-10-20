@@ -27,6 +27,50 @@ const uplo = createUplo({
   specific attachments if needed.
 - `storagePath` (_optional_): Function that returns the file path in the bucket. See
   [Storage path](#storage-path).
+- `validate` (_optional_): Allowed content types and file size. See
+  [Validation](#validation).
+
+## Validation
+
+```ts
+const uplo = createUplo({
+  attachments: {
+    user: {
+      avatar: {
+        validate: {
+          contentType: ['image/png', 'image/jpeg', 'image/webp'],
+          size: { max: 5 * 1024 * 1024 }, // 5 MB
+        },
+      },
+    },
+  },
+})
+```
+
+- `contentType`: allowed content type, as a string, RegExp, or an array of them.
+  Strings must match exactly.
+- `size.min`, `size.max`: file size limits in bytes.
+
+Validation runs when a direct upload is created and in `attachFile`. Failed
+validation throws `BlobValidationError` (`422` from the upload routes).
+
+For direct uploads the client declares content type and size, and the upload URL
+is signed with them, so the storage refuses a different file:
+
+- S3 and R2 sign both content type and size.
+- GCS signs content type, and size only with
+  [`enforceContentLength`](/services/gcs#enforce-file-size).
+
+### Always limit content types
+
+Without `contentType`, a client can upload any type, including `text/html` or
+`image/svg+xml`. A public bucket serves them as-is, so a browser runs their
+scripts on the bucket domain, or on your domain if the bucket is behind it (e.g.
+`files.example.com`). Set `contentType` for every attachment, and do not allow
+HTML or SVG on public buckets.
+
+Anchor regular expressions. `/image\//` also matches `text/html; x=image/`, use
+`/^image\/(png|jpeg|webp)$/` instead.
 
 ## Storage path
 

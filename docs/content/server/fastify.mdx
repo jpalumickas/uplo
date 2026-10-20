@@ -24,5 +24,23 @@ It returns `201` with the Signed ID and upload data, or `422` with
 `{ success: false, error: { message } }` for invalid requests, unknown
 attachments, failed attachment validation or disabled direct uploads.
 
-The route has no authentication. Register the plugin in a scope with your own
-auth hook if only signed-in users should upload.
+## Authentication
+
+The route has no authentication, so anyone who can reach it can upload files to
+your bucket. Register the plugin in a scope with your own auth hook:
+
+```ts
+app.register(async (scope) => {
+  scope.addHook('onRequest', async (request, reply) => {
+    const user = await getCurrentUser(request) // your auth
+    if (!user) {
+      return reply.status(401).send({ success: false, error: { message: 'Unauthorized' } })
+    }
+  })
+
+  scope.register(uploFastify, { uplo })
+})
+```
+
+Uploading alone does not attach a file to a record. Check that the user can
+change the record before calling `attachSignedFile`.

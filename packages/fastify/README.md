@@ -12,6 +12,7 @@ npm i @uplo/fastify
 
 ```ts
 import fastify from 'fastify'
+
 import { uploFastify } from '@uplo/fastify'
 import { createUplo } from '@uplo/node'
 

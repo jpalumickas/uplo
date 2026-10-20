@@ -5,6 +5,7 @@ export default defineConfig({
   printWidth: 100,
   singleQuote: true,
   semi: false,
+  ignorePatterns: ['lerna.json', 'docs/next-env.d.ts'],
   sortImports: {
     groups: [
       ['builtin', 'external'],

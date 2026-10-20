@@ -1,7 +1,7 @@
 import mime from 'mime/lite'
 import crypto from 'node:crypto'
-import type { ReadStream } from 'node:fs'
-import { createReadStream, lstatSync } from 'node:fs'
+import { createReadStream } from 'node:fs'
+import { stat } from 'node:fs/promises'
 import { basename } from 'node:path'
 
 import { type BlobInput, UploError } from '@uplo/server'
@@ -12,24 +12,17 @@ export interface BlobFileInput {
   contentType?: string
 }
 
-const checksumFromReadStream = (input: ReadStream): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const output = crypto.createHash('md5')
-
-    input.on('error', (err) => {
-      reject(err)
-    })
-
-    output.once('readable', () => {
-      resolve(output.digest('base64'))
-    })
-
-    input.pipe(output)
-  })
+const checksumFromFile = async (path: string) => {
+  const hash = crypto.createHash('md5')
+  for await (const chunk of createReadStream(path)) {
+    hash.update(chunk)
+  }
+  return hash.digest('base64')
 }
 
 export const blobFileInput = async (input: BlobFileInput): Promise<BlobInput> => {
-  const size = lstatSync(input.path).size
+  // stat follows symlinks, so size is the size of the target file
+  const { size } = await stat(input.path)
   const fileName = input.fileName || basename(input.path)
   const contentType = input.contentType || mime.getType(fileName) || undefined
 
@@ -37,13 +30,13 @@ export const blobFileInput = async (input: BlobFileInput): Promise<BlobInput> =>
     throw new UploError('Cannot get content type from this path')
   }
 
-  const stream = createReadStream(input.path)
-  const checksum = await checksumFromReadStream(stream)
+  const checksum = await checksumFromFile(input.path)
 
   return {
     fileName,
     size,
-    content: stream,
+    // New stream, the checksum stream is already read to the end
+    content: createReadStream(input.path),
     contentType,
     checksum,
   }

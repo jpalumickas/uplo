@@ -11,8 +11,8 @@ npm i @uplo/node
 ## Usage
 
 ```ts
-import { createUplo } from '@uplo/node'
 import { createPrismaAdapter } from '@uplo/adapter-prisma'
+import { createUplo } from '@uplo/node'
 import { createS3Service } from '@uplo/service-s3'
 
 const config = {

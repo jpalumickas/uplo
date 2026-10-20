@@ -32,11 +32,9 @@ const uplo = createUplo({
 })
 
 const app = new Hono()
+const uploHandler = createUploRouteHandler({ uplo })
 
-app.all('/uplo/*', (c) => {
-  const handler = createUploRouteHandler({ uplo })
-  return handler(c.req.raw)
-})
+app.all('/uplo/*', (c) => uploHandler(c.req.raw))
 
 export default app
 ```
@@ -44,5 +42,33 @@ export default app
 You can change the mount path with the `basePath` option:
 
 ```ts
-const handler = createUploRouteHandler({ uplo, basePath: '/api/uplo' })
+const uploHandler = createUploRouteHandler({ uplo, basePath: '/api/uplo' })
 ```
+
+## Routes
+
+- `POST /uplo/create-direct-upload`: creates a blob and returns a Signed ID with
+  upload URL and headers. Returns `201`, or `422` with
+  `{ success: false, error: { message } }` for invalid requests, unknown
+  attachments, failed [validation](/attachments#validation) or disabled direct
+  uploads.
+
+## Authentication
+
+The route handler has no authentication, so anyone who can reach it can upload
+files to your bucket. Add your own middleware before it:
+
+```ts
+app.use('/uplo/*', async (c, next) => {
+  const user = await getCurrentUser(c) // your auth
+  if (!user) {
+    return c.json({ success: false, error: { message: 'Unauthorized' } }, 401)
+  }
+  await next()
+})
+
+app.all('/uplo/*', (c) => uploHandler(c.req.raw))
+```
+
+Uploading alone does not attach a file to a record. Check that the user can
+change the record before calling `attachSignedFile`.
