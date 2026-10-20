@@ -1,6 +1,8 @@
 export class UploError extends Error {}
 export class NotImplementedError extends UploError {}
 export class SignerError extends UploError {}
+export class PurgeNotSupportedError extends NotImplementedError {}
+export class BlobPurgeConflictError extends UploError {}
 
 // Validation Errors
 export class ValidationError extends UploError {}

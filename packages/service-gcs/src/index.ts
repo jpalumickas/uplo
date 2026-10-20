@@ -162,7 +162,8 @@ export const createGCSService = ({
   }
 
   const del = async ({ key }: { key: BlobData['key'] }) => {
-    await storage.bucket(bucket).file(key).delete()
+    // A missing file counts as deleted, so purge can be retried
+    await storage.bucket(bucket).file(key).delete({ ignoreNotFound: true })
     return true
   }
 

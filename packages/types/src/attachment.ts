@@ -72,6 +72,11 @@ export interface Blob {
   url: (opts?: BlobUrlOptions) => Promise<string>
   protocolUrl: () => Promise<string>
   updateMetadata: (metadata: BlobData['metadata']) => Promise<void>
+  /**
+   * Deletes the file and the blob when nothing is attached to it. Returns
+   * `false` when the blob is attached or already deleted.
+   */
+  purge: () => Promise<boolean>
 }
 
 export interface AttachmentData {

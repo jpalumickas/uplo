@@ -13,10 +13,16 @@ import {
   InvalidSignedIdError,
 } from '../errors'
 import { buildBlobKey } from '../lib/buildBlobKey'
+import { assertPurgeSupported, purgeBlob } from '../lib/purgeBlob'
 import type { Signer } from '../Signer'
 import type { AttachmentValidateType, Callbacks } from '../types'
 import { validateBlobInputData } from '../utils/validateBobInputData'
 import { verifyUploadedObject } from '../utils/verifyUploadedObject'
+
+export interface DetachOptions {
+  /** Also delete the detached blobs and their files. Default `false`. */
+  purge?: boolean
+}
 
 export interface ModelAttachmentOptions {
   multiple: boolean
@@ -89,40 +95,77 @@ export class ModelAttachment {
     return results.map((result) => this.buildAttachment(result))
   }
 
-  async detach(attachmentId?: ID) {
-    if (this.options.multiple) {
-      if (!attachmentId) {
-        throw new UploError('Provide attachment ID when detaching attachment in multiple')
-      }
-      const deleted = await this.adapter.deleteAttachment({
-        id: attachmentId,
-        recordId: this.modelId,
-        recordType: this.recordType,
-        name: this.attachmentName,
-      })
+  /**
+   * Single attachment: `detach()` or `detach({ purge: true })`.
+   * Multiple attachments: `detach(id)` or `detach(id, { purge: true })`.
+   */
+  async detach(attachmentIdOrOptions?: ID | DetachOptions, options: DetachOptions = {}) {
+    const attachmentId =
+      typeof attachmentIdOrOptions === 'object' ? undefined : attachmentIdOrOptions
+    const { purge = false } =
+      typeof attachmentIdOrOptions === 'object' ? attachmentIdOrOptions : options
 
-      if (!deleted) {
-        throw new AttachmentNotFoundError(
-          `Cannot find attachment with ID ${attachmentId} for ${this.recordType} ${this.modelId} ${this.attachmentName}`,
-        )
-      }
-
-      return true
+    if (!this.options.multiple) {
+      return this.detachMany({ purge })
     }
 
-    await this.detachMany()
+    if (attachmentId === undefined || attachmentId === null) {
+      throw new UploError('Provide attachment ID when detaching attachment in multiple')
+    }
 
-    return true
-  }
+    if (purge) {
+      // Check before detaching, so an unsupported adapter does not detach without purging
+      assertPurgeSupported(this.adapter)
+    }
 
-  async detachMany() {
-    await this.adapter.deleteAttachments({
+    const deleted = await this.adapter.deleteAttachment({
+      id: attachmentId,
       recordId: this.modelId,
       recordType: this.recordType,
       name: this.attachmentName,
     })
 
+    if (!deleted) {
+      throw new AttachmentNotFoundError(
+        `Cannot find attachment with ID ${attachmentId} for ${this.recordType} ${this.modelId} ${this.attachmentName}`,
+      )
+    }
+
+    if (purge) {
+      await this.purgeBlobs([deleted.blobId])
+    }
+
     return true
+  }
+
+  async detachMany({ purge = false }: DetachOptions = {}) {
+    if (purge) {
+      assertPurgeSupported(this.adapter)
+    }
+
+    const deleted = await this.adapter.deleteAttachments({
+      recordId: this.modelId,
+      recordType: this.recordType,
+      name: this.attachmentName,
+    })
+
+    if (purge) {
+      await this.purgeBlobs(deleted.map((attachment) => attachment.blobId))
+    }
+
+    return true
+  }
+
+  /** Purges blobs one by one. Blobs that are gone or attached elsewhere are skipped. */
+  private async purgeBlobs(blobIds: ID[]) {
+    for (const blobId of new Set(blobIds)) {
+      const blob = await this.adapter.findBlob(blobId)
+      if (!blob) {
+        continue
+      }
+
+      await purgeBlob({ blob, adapter: this.adapter, service: this.getService(blob.serviceName) })
+    }
   }
 
   async attachFile(input: BlobInput) {

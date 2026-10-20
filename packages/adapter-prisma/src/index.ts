@@ -74,16 +74,57 @@ export const createPrismaAdapter = ({ prisma }: Options): Adapter => {
     recordId: string | number
     recordType: string
     name: string
-  }): Promise<AttachmentData[]> => {
-    const result = await prisma.fileAttachment.deleteMany({
-      where: {
-        recordId: recordId as any,
-        recordType,
-        name,
-      },
+  }): Promise<Omit<AttachmentData, 'blob'>[]> => {
+    const where = { recordId: recordId as any, recordType, name }
+    const attachments = (await prisma.fileAttachment.findMany({ where })) as Omit<
+      AttachmentData,
+      'blob'
+    >[]
+
+    if (attachments.length === 0) {
+      return []
+    }
+
+    // deleteMany only returns a count, so delete the found rows by ID and
+    // return them
+    await prisma.fileAttachment.deleteMany({
+      where: { ...where, id: { in: attachments.map((attachment) => attachment.id as any) } },
     })
 
-    return result as unknown as AttachmentData[]
+    return attachments
+  }
+
+  const findUnattachedBlobs: NonNullable<Adapter['findUnattachedBlobs']> = async ({
+    olderThan,
+    limit,
+    afterId,
+  }) => {
+    return (await prisma.fileBlob.findMany({
+      where: {
+        createdAt: { lt: olderThan },
+        attachments: { none: {} },
+        ...(afterId === undefined ? {} : { id: { gt: afterId as any } }),
+      },
+      orderBy: { id: 'asc' },
+      take: limit,
+    })) as BlobData[]
+  }
+
+  const deleteUnattachedBlob: NonNullable<Adapter['deleteUnattachedBlob']> = async (id) => {
+    const blob = (await prisma.fileBlob.findUnique({
+      where: { id: id as any },
+    })) as BlobData | null
+
+    if (!blob) {
+      return null
+    }
+
+    // One statement that deletes only when no attachment points to the blob
+    const { count } = await prisma.fileBlob.deleteMany({
+      where: { id: id as any, attachments: { none: {} } },
+    })
+
+    return count > 0 ? blob : null
   }
 
   const createBlob = async ({ params }: CreateBlobOptions): Promise<BlobData> => {
@@ -176,6 +217,8 @@ export const createPrismaAdapter = ({ prisma }: Options): Adapter => {
     deleteAttachment,
     findBlobAttachments,
     deleteAttachments,
+    findUnattachedBlobs,
+    deleteUnattachedBlob,
     createBlob,
     findBlob,
     findBlobByKey,

@@ -6,6 +6,7 @@ import { GenericAttachment } from './GenericAttachment'
 import { defaultConfig } from './lib/defaultConfig'
 import { findAttachmentOptions } from './lib/findAttachmentOptions'
 import { formatAttachmentOptions } from './lib/formatAttachmentOptions'
+import { purgeUnattached } from './lib/purgeUnattached'
 import { ModelAttachment } from './ModelAttachment'
 import { Signer } from './Signer'
 import type {
@@ -93,6 +94,13 @@ export const createUplo = <AttachmentsList extends UploOptionsAttachments>({
         }),
       })
     },
+    purgeUnattached: (options) =>
+      purgeUnattached({
+        options,
+        adapter,
+        services,
+        signedIdExpiresIn: config.signedIdExpiresIn || defaultConfig.signedIdExpiresIn,
+      }),
     // @ts-ignore
     attachments: formattedModelAttachments,
   }
@@ -103,3 +111,5 @@ export type * from './types'
 export * from './errors'
 export * from './blobInputs'
 export type * from './blobInputs/types.js'
+export type { Duration } from './lib/parseDuration'
+export type { PurgeUnattachedOptions, PurgeUnattachedResult } from './lib/purgeUnattached'

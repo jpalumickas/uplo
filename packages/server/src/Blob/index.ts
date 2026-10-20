@@ -1,5 +1,7 @@
 import type { Service, Adapter, Blob as TBlob, BlobUrlOptions, BlobData } from '@uplo/types'
 
+import { purgeBlob } from '../lib/purgeBlob'
+
 type Params = {
   data: BlobData
   service: Service
@@ -25,5 +27,6 @@ export const Blob = ({ data: blobData, service, adapter }: Params): TBlob => {
     updateMetadata: async (metadata: BlobData['metadata']) => {
       await adapter.updateBlobMetadata({ key: blobData.key, metadata })
     },
+    purge: () => purgeBlob({ blob: blobData, adapter, service }),
   }
 }

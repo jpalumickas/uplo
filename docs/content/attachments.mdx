@@ -217,6 +217,73 @@ Detach all attachments.
 const attachments = await uplo.attachments.post(456).images.detachMany()
 ```
 
+Detach keeps the blob and its file. Pass `purge: true` to delete them too:
+
+```ts
+await uplo.attachments.user(123).avatar.detach({ purge: true })
+await uplo.attachments.post(456).images.detach(attachmentId, { purge: true })
+await uplo.attachments.post(456).images.detachMany({ purge: true })
+```
+
+## Delete files
+
+Files stay in storage until they are purged. Purge deletes the file first and
+the blob row last, so a failed purge can always be run again.
+
+### Purge a blob
+
+```ts
+const blob = await uplo.$findBlob(blobId)
+await blob?.purge() // true when deleted
+```
+
+`purge()` returns `false` when the blob is still attached or already deleted,
+so it is safe to run twice, e.g. from a job queue. When the storage fails, it
+throws and keeps the blob row.
+
+Replacing a single attachment detaches the old blob. Purge it after the new one
+is attached:
+
+```ts
+const avatar = uplo.attachments.user(123).avatar
+
+const old = await avatar.findOne()
+const attachment = await avatar.attachSignedFile(signedId)
+
+if (old && old.blob.id !== attachment.blob.id) {
+  await old.blob.purge()
+}
+```
+
+### Purge unattached blobs
+
+Direct uploads that were never attached, and blobs that were detached or
+replaced, stay in storage. Delete them from a cron job:
+
+```ts
+const result = await uplo.purgeUnattached({ olderThan: '1d' })
+// { blobs: [...purged], errors: [{ blob, error }], hasMore: false }
+```
+
+- `olderThan = '1d'`: only blobs created before this. Seconds, a string like
+  `'12h'` or `'7d'`, or a `Date`. It must be at least `signedIdExpiresIn`, so
+  uploads that can still be attached are never deleted.
+- `batchSize = 100`: blobs loaded per query. Blobs are deleted one by one.
+- `maxDuration`: stop after this time and return `hasMore: true`, e.g. `'50s'`
+  on serverless.
+- `dryRun = false`: only return the blobs that would be deleted.
+
+Failed blobs are returned in `errors` and tried again on the next run.
+
+<Callout type="warn">
+  Purge deletes every blob that has no attachment. If your app keeps blob IDs in its own tables,
+  attach those files instead, or they will be deleted. Run with `dryRun: true` first.
+</Callout>
+
+Purge needs adapter methods `findUnattachedBlobs` and `deleteUnattachedBlob`.
+The Prisma and Drizzle adapters have them. Custom adapters without them throw
+`PurgeNotSupportedError`.
+
 ## Attach file
 
 Attach a file from a file path.

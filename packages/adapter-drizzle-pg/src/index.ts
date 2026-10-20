@@ -1,4 +1,4 @@
-import { eq, and } from 'drizzle-orm'
+import { eq, and, asc, gt, lt, notExists, sql } from 'drizzle-orm'
 import type { PgDatabase, PgQueryResultHKT } from 'drizzle-orm/pg-core'
 
 import { BlobNotFoundError } from '@uplo/server'
@@ -80,6 +80,45 @@ export const createDrizzleAdapter = ({
         .returning()
 
       return attachments
+    },
+    findUnattachedBlobs: async ({ olderThan, limit, afterId }) => {
+      const blobs = await db
+        .select()
+        .from(schema.fileBlobs)
+        .where(
+          and(
+            lt(schema.fileBlobs.createdAt, olderThan),
+            afterId === undefined ? undefined : gt(schema.fileBlobs.id, afterId),
+            notExists(
+              db
+                .select({ one: sql`1` })
+                .from(schema.fileAttachments)
+                .where(eq(schema.fileAttachments.blobId, schema.fileBlobs.id)),
+            ),
+          ),
+        )
+        .orderBy(asc(schema.fileBlobs.id))
+        .limit(limit)
+
+      return blobs as BlobData[]
+    },
+    deleteUnattachedBlob: async (id) => {
+      const [blob] = await db
+        .delete(schema.fileBlobs)
+        .where(
+          and(
+            eq(schema.fileBlobs.id, id),
+            notExists(
+              db
+                .select({ one: sql`1` })
+                .from(schema.fileAttachments)
+                .where(eq(schema.fileAttachments.blobId, schema.fileBlobs.id)),
+            ),
+          ),
+        )
+        .returning()
+
+      return (blob as BlobData | undefined) ?? null
     },
     createBlob: async ({ params }) => {
       const [blob] = await db

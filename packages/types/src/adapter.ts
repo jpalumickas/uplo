@@ -60,4 +60,19 @@ export interface Adapter {
     recordType: AttachmentData['recordType']
     name: AttachmentData['name']
   }): Promise<Omit<AttachmentData, 'blob'>[]>
+  /**
+   * Optional, needed for `purgeUnattached`. Returns blobs with no attachments,
+   * created before `olderThan`, ordered by `id`. With `afterId`, returns only
+   * blobs with a greater `id`.
+   */
+  findUnattachedBlobs?(options: {
+    olderThan: Date
+    limit: number
+    afterId?: ID
+  }): Promise<BlobData[]>
+  /**
+   * Optional, needed to purge blobs. Deletes the blob row in one statement, only
+   * when no attachment points to it. Returns null when nothing was deleted.
+   */
+  deleteUnattachedBlob?(id: ID): Promise<BlobData | null>
 }
