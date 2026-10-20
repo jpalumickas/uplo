@@ -54,7 +54,7 @@ describe('$findGenericAttachment', () => {
   const uplo = createUplo({
     services: { test: {} as Service },
     adapter: {} as Adapter,
-    config: { privateKey: 'test' },
+    config: { privateKey: 'test-private-key-that-is-32-bytes' },
     attachments,
   })
 

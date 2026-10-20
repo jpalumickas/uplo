@@ -19,7 +19,7 @@ const createBlob = vi.fn<Adapter['createBlob']>(
 const uplo = createUplo({
   services: { test: service },
   adapter: { createBlob } as Partial<Adapter> as Adapter,
-  config: { privateKey: 'test' },
+  config: { privateKey: 'test-private-key-that-is-32-bytes' },
   attachments: {
     user: {
       avatar: { validate: { contentType: 'image/png' } },

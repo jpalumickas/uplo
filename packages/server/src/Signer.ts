@@ -19,13 +19,25 @@ export type SignerData = SignerBlobData
 
 export type SignerPurpose = 'blob'
 
+// HS256 keys shorter than the hash can be guessed offline from any signed ID
+export const MIN_PRIVATE_KEY_BYTES = 32
+
+const MISSING_KEY_MESSAGE =
+  'Missing `privateKey` in Uplo config. It is required for direct uploads.'
+
 export const Signer = (config: UploConfig) => {
-  const secret = config.privateKey && new TextEncoder().encode(config.privateKey)
+  const secret = config.privateKey ? new TextEncoder().encode(config.privateKey) : undefined
+
+  if (secret && secret.byteLength < MIN_PRIVATE_KEY_BYTES) {
+    throw new SignerError(
+      `\`privateKey\` must be at least ${MIN_PRIVATE_KEY_BYTES} bytes, got ${secret.byteLength}. Generate one with \`openssl rand -base64 32\`.`,
+    )
+  }
 
   async function generate(data: SignerBlobData, purpose: 'blob'): Promise<string>
   async function generate(data: SignerData, purpose: SignerPurpose): Promise<string> {
     if (!secret) {
-      throw new SignerError('Missing private key')
+      throw new SignerError(MISSING_KEY_MESSAGE)
     }
 
     const token = await new SignJWT(data as JWTPayload)
@@ -46,7 +58,7 @@ export const Signer = (config: UploConfig) => {
 
   const verify = async (token: string, purpose: SignerPurpose) => {
     if (!secret) {
-      throw new SignerError('Missing private key')
+      throw new SignerError(MISSING_KEY_MESSAGE)
     }
 
     // Fields can be missing in tokens signed by older versions

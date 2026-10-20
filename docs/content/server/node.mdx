@@ -10,7 +10,7 @@ import { createPrismaAdapter } from '@uplo/adapter-prisma'
 import { createS3Service } from '@uplo/service-s3'
 
 const config = {
-  privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
+  privateKey: process.env.APPLICATION_SECRET, // Signs direct upload IDs, at least 32 bytes
   signedIdExpiresIn: 60 * 60, // Time how long a Signed ID is valid
 }
 
@@ -29,3 +29,13 @@ const uplo = createUplo({
   attachments: {},
 })
 ```
+
+`privateKey` signs the Signed IDs that clients receive, so it must be a random
+secret of at least 32 bytes. Shorter keys throw when Uplo is created. Generate
+one with:
+
+```sh
+openssl rand -base64 32
+```
+
+Without `privateKey`, `attachFile` still works, but direct uploads fail.

@@ -3,6 +3,10 @@ import type { Service, Adapter, BlobStoragePath } from '@uplo/types'
 import type { Callbacks } from './callbacks'
 
 export interface UploConfig {
+  /**
+   * Secret used to sign direct upload IDs. At least 32 bytes, e.g. from
+   * `openssl rand -base64 32`. Required for direct uploads.
+   */
   privateKey?: string
   signedIdExpiresIn?: number
 }

@@ -39,7 +39,7 @@ import { createUplo } from '@uplo/node'
 import { createS3Service } from '@uplo/service-s3'
 
 const config = {
-  privateKey: process.env.APPLICATION_SECRET, // Used to sign direct upload keys
+  privateKey: process.env.APPLICATION_SECRET, // Signs direct upload IDs, at least 32 bytes
   signedIdExpiresIn: 60 * 60, // Time how long a Signed ID is valid
 }
 

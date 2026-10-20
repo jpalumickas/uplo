@@ -9,7 +9,7 @@ const deleteAttachment = vi.fn<Adapter['deleteAttachment']>()
 const uplo = createUplo({
   services: { test: {} as Service },
   adapter: { deleteAttachment } as Partial<Adapter> as Adapter,
-  config: { privateKey: 'test' },
+  config: { privateKey: 'test-private-key-that-is-32-bytes' },
   attachments: { post: { images: { multiple: true } } },
 })
 

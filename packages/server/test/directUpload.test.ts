@@ -53,7 +53,7 @@ const adapter: Partial<Adapter> = {
 const uplo = createUplo({
   services: { test: service },
   adapter: adapter as Adapter,
-  config: { privateKey: 'test' },
+  config: { privateKey: 'test-private-key-that-is-32-bytes' },
   attachments: {
     user: {
       avatar: true,
