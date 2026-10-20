@@ -12,12 +12,19 @@ type Params = {
   publicBaseUrl?: string
 }
 
+/** Drops trailing slashes. A loop instead of /\/+$/, which is quadratic on many slashes. */
+const trimTrailingSlashes = (value: string) => {
+  let end = value.length
+  while (end > 0 && value[end - 1] === '/') end--
+  return value.slice(0, end)
+}
+
 /** Public URL of an object: CDN or custom domain, custom endpoint, or AWS bucket URL. */
 export const buildPublicUrl = ({ key, bucket, region, endpoint, publicBaseUrl }: Params) => {
   const path = encodeKey(key)
 
   if (publicBaseUrl) {
-    return `${publicBaseUrl.replace(/\/+$/, '')}/${path}`
+    return `${trimTrailingSlashes(publicBaseUrl)}/${path}`
   } else if (endpoint) {
     return `${endpoint}/${bucket}/${path}`
   } else {

@@ -55,6 +55,23 @@ describe('S3 service options', () => {
       expect(await service.publicUrl(blob)).toBe('https://cdn.example.com/avatars/file.png')
     })
 
+    it('trims repeated trailing slashes from public base URL', async () => {
+      const service = createService({ publicUrl: 'https://cdn.example.com///' })
+
+      expect(await service.publicUrl(blob)).toBe('https://cdn.example.com/avatars/file.png')
+    })
+
+    it('handles public base URL with many slashes quickly', async () => {
+      const publicUrl = `https://cdn.example.com${'/'.repeat(100_000)}x`
+      const service = createService({ publicUrl })
+
+      const started = performance.now()
+      const url = await service.publicUrl(blob)
+
+      expect(performance.now() - started).toBeLessThan(100)
+      expect(url).toBe(`${publicUrl}/avatars/file.png`)
+    })
+
     it('falls back to endpoint URL', async () => {
       const service = createService({ endpoint: 'https://minio.example.com' })
 
