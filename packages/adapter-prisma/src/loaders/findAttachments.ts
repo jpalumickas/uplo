@@ -28,36 +28,41 @@ const groupByTypeAndName = (data: Readonly<FindAttachmentsRecordData[]>) => {
 }
 
 export const initFindAttachmentsLoader = (prisma: PrismaClient) =>
-  new DataLoader(async (recordData: Readonly<FindAttachmentsRecordData[]>) => {
-    const grouped = groupByTypeAndName(recordData)
-    const OR = Object.keys(grouped).map((groupName) => {
-      const [recordType, name] = groupName.split(SEPARATOR)
-      return {
-        recordType,
-        name,
-        recordId: {
-          in: grouped[groupName].map((item) => item.recordId as any),
+  new DataLoader(
+    async (recordData: Readonly<FindAttachmentsRecordData[]>) => {
+      const grouped = groupByTypeAndName(recordData)
+      const OR = Object.keys(grouped).map((groupName) => {
+        const [recordType, name] = groupName.split(SEPARATOR)
+        return {
+          recordType,
+          name,
+          recordId: {
+            in: grouped[groupName].map((item) => item.recordId as any),
+          },
+        }
+      })
+
+      const fileAttachments = (await prisma.fileAttachment.findMany({
+        where: {
+          OR,
         },
-      }
-    })
+        include: {
+          blob: true,
+        },
+      })) as AttachmentData[]
 
-    const fileAttachments = (await prisma.fileAttachment.findMany({
-      where: {
-        OR,
-      },
-      include: {
-        blob: true,
-      },
-    })) as AttachmentData[]
+      const result = recordData.map((recordItem) => {
+        return fileAttachments.filter(
+          (fileAttachment) =>
+            fileAttachment.recordId === recordItem.recordId &&
+            fileAttachment.recordType === recordItem.recordType &&
+            fileAttachment.name === recordItem.name,
+        )
+      })
 
-    const result = recordData.map((recordItem) => {
-      return fileAttachments.filter(
-        (fileAttachment) =>
-          fileAttachment.recordId === recordItem.recordId &&
-          fileAttachment.recordType === recordItem.recordType &&
-          fileAttachment.name === recordItem.name,
-      )
-    })
-
-    return Promise.resolve(result)
-  })
+      return Promise.resolve(result)
+    },
+    // Loader lives as long as the adapter, so a cache would grow forever and
+    // return stale data. Batching of loads in the same tick still works.
+    { cache: false },
+  )

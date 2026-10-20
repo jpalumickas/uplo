@@ -29,33 +29,38 @@ const groupByTypeAndName = (data: Readonly<FindAttachmentsRecordData[]>) => {
 }
 
 export const findAttachmentsLoader = ({ db, schema }: DrizzleAdapterOptions) =>
-  new DataLoader(async (recordData: Readonly<FindAttachmentsRecordData[]>) => {
-    const grouped = groupByTypeAndName(recordData)
-    const OR = Object.keys(grouped).map((groupName) => {
-      const [recordType, name] = groupName.split(SEPARATOR)
-      return and(
-        eq(schema.fileAttachments.recordType, recordType),
-        eq(schema.fileAttachments.name, name),
-        inArray(
-          schema.fileAttachments.recordId,
-          grouped[groupName].map((item) => item.recordId as string),
-        ),
-      )
-    })
+  new DataLoader(
+    async (recordData: Readonly<FindAttachmentsRecordData[]>) => {
+      const grouped = groupByTypeAndName(recordData)
+      const OR = Object.keys(grouped).map((groupName) => {
+        const [recordType, name] = groupName.split(SEPARATOR)
+        return and(
+          eq(schema.fileAttachments.recordType, recordType),
+          eq(schema.fileAttachments.name, name),
+          inArray(
+            schema.fileAttachments.recordId,
+            grouped[groupName].map((item) => item.recordId as string),
+          ),
+        )
+      })
 
-    const fileAttachments = await db
-      .select()
-      .from(schema.fileAttachments)
-      .where(or(...OR))
+      const fileAttachments = await db
+        .select()
+        .from(schema.fileAttachments)
+        .where(or(...OR))
 
-    const result = recordData.map((recordItem) => {
-      return fileAttachments.filter(
-        (fileAttachment) =>
-          fileAttachment.recordId === recordItem.recordId &&
-          fileAttachment.recordType === recordItem.recordType &&
-          fileAttachment.name === recordItem.name,
-      ) as AttachmentData[]
-    })
+      const result = recordData.map((recordItem) => {
+        return fileAttachments.filter(
+          (fileAttachment) =>
+            fileAttachment.recordId === recordItem.recordId &&
+            fileAttachment.recordType === recordItem.recordType &&
+            fileAttachment.name === recordItem.name,
+        ) as AttachmentData[]
+      })
 
-    return Promise.resolve(result)
-  })
+      return Promise.resolve(result)
+    },
+    // Loader lives as long as the adapter, so a cache would grow forever and
+    // return stale data. Batching of loads in the same tick still works.
+    { cache: false },
+  )

@@ -6,19 +6,24 @@ import type { ID, BlobData } from '@uplo/types'
 import type { DrizzleAdapterOptions } from '..'
 
 export const findBlobLoader = ({ db, schema }: DrizzleAdapterOptions) =>
-  new DataLoader(async (blobIds: Readonly<ID[]>) => {
-    if (blobIds.length === 0) {
-      return Promise.resolve([])
-    }
+  new DataLoader(
+    async (blobIds: Readonly<ID[]>) => {
+      if (blobIds.length === 0) {
+        return Promise.resolve([])
+      }
 
-    const blobs = await db
-      .select()
-      .from(schema.fileBlobs)
-      .where(inArray(schema.fileBlobs.id, [...blobIds]))
+      const blobs = await db
+        .select()
+        .from(schema.fileBlobs)
+        .where(inArray(schema.fileBlobs.id, [...blobIds]))
 
-    const result = blobIds.map((blobId) => {
-      return (blobs.find((blob) => blob.id === blobId) || null) as BlobData | null
-    })
+      const result = blobIds.map((blobId) => {
+        return (blobs.find((blob) => blob.id === blobId) || null) as BlobData | null
+      })
 
-    return Promise.resolve(result)
-  })
+      return Promise.resolve(result)
+    },
+    // Loader lives as long as the adapter, so a cache would grow forever and
+    // return stale data. Batching of loads in the same tick still works.
+    { cache: false },
+  )
