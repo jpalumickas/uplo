@@ -5,30 +5,30 @@ interface FileInfo {
   size: number
 }
 
+// `digest()` exists from expo-file-system 58. Older versions only expose MD5 through `info()`.
+const getMD5 = async (file: ExpoFile): Promise<string | undefined> => {
+  if (typeof file.digest === 'function') {
+    return await file.digest('MD5')
+  }
+
+  return file.info({ md5: true }).md5
+}
+
 export const getFileInfo = async (filePath: string): Promise<FileInfo | null> => {
   try {
     const file = new ExpoFile(filePath)
-    const result = file.info({
-      md5: true,
-    })
+    const { exists, size } = file.info()
 
-    if (!result) {
-      return null
-    }
-    if (!result.exists) {
-      return null
-    }
-    if (!result.md5) {
-      return null
-    }
-    if (!result.size) {
+    if (!exists || !size) {
       return null
     }
 
-    return {
-      md5: result.md5,
-      size: result.size,
+    const md5 = await getMD5(file)
+    if (!md5) {
+      return null
     }
+
+    return { md5, size }
   } catch (err) {
     console.error('[Uplo] Error getting file info:', err)
     return null

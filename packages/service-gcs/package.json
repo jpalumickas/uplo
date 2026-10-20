@@ -44,7 +44,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@google-cloud/storage": "^7.21.0",
+    "@google-cloud/storage": "^8.4.0",
     "@uplo/service-base": "workspace:^",
     "@uplo/types": "workspace:^",
     "@uplo/utils": "workspace:^"
@@ -53,6 +53,6 @@
     "@types/node": "^26.6.5"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }

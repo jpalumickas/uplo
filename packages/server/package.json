@@ -59,7 +59,7 @@
   "dependencies": {
     "@uplo/types": "workspace:^",
     "@uplo/utils": "workspace:^",
-    "camelcase": "^9.0.0",
+    "camelcase": "^10.0.0",
     "hono": "^4.13.13",
     "jose": "^6.2.12",
     "mime": "^4.1.1",
@@ -67,5 +67,8 @@
   },
   "devDependencies": {
     "@types/node": "^26.6.5"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

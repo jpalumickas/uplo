@@ -23,7 +23,7 @@
     "version:minor": "lerna version minor --force-publish"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.1",
+    "@changesets/cli": "^3.0.3",
     "lerna": "^10.1.1",
     "oxfmt": "^0.73.0",
     "oxlint": "^1.88.0",

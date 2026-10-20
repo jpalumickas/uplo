@@ -1,4 +1,4 @@
-import { uploadAsync } from 'expo-file-system/legacy'
+import { File as ExpoFile } from 'expo-file-system'
 import { useState, useMemo, useCallback } from 'react'
 
 import { createBlob } from '../createBlob'
@@ -75,7 +75,8 @@ export const useDirectUpload = (
           return upload
         }
 
-        const { status } = await uploadAsync(result.data.upload.url, file.localUri || file.uri, {
+        const expoFile = new ExpoFile(file.localUri || file.uri)
+        const { status } = await expoFile.upload(result.data.upload.url, {
           headers: result.data.upload.headers,
           httpMethod: 'PUT',
         })
