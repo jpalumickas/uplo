@@ -40,7 +40,7 @@
     "@uplo/types": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^26.6.2"
+    "@types/node": "^26.6.5"
   },
   "engines": {
     "node": ">=20"

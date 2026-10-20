@@ -47,10 +47,10 @@
     "@uplo/types": "workspace:^"
   },
   "devDependencies": {
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.5",
     "@uplo/server": "workspace:^",
     "dataloader": "^2.2.3",
-    "drizzle-orm": "^0.45.2"
+    "drizzle-orm": "^0.45.4"
   },
   "peerDependencies": {
     "@uplo/server": "workspace:^",

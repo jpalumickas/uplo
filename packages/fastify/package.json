@@ -46,9 +46,9 @@
     "fastify-plugin": "^5.1.0"
   },
   "devDependencies": {
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.5",
     "@uplo/node": "workspace:^",
-    "fastify": "^5.12.5"
+    "fastify": "^5.12.7"
   },
   "peerDependencies": {
     "@uplo/node": "workspace:^",

@@ -43,12 +43,12 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "mime": "^4.1.0"
+    "mime": "^4.1.1"
   },
   "devDependencies": {
     "@types/react": "^19.3.0",
     "expo-file-system": "^57.0.7",
-    "react": "^19.3.0"
+    "react": "^19.3.1"
   },
   "peerDependencies": {
     "expo-file-system": ">= 16",
