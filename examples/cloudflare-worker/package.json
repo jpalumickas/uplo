@@ -11,6 +11,7 @@
     "@uplo/adapter-drizzle-pg": "workspace:*",
     "@uplo/server": "workspace:*",
     "@uplo/service-gcs": "workspace:*",
+    "@uplo/service-r2": "workspace:*",
     "@uplo/service-s3": "workspace:*",
     "@uplo/utils": "workspace:*",
     "drizzle-orm": "^0.45.4",

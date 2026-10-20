@@ -205,6 +205,9 @@ importers:
       '@uplo/service-gcs':
         specifier: workspace:*
         version: link:../../packages/service-gcs
+      '@uplo/service-r2':
+        specifier: workspace:*
+        version: link:../../packages/service-r2
       '@uplo/service-s3':
         specifier: workspace:*
         version: link:../../packages/service-s3
@@ -503,6 +506,25 @@ importers:
       '@types/node':
         specifier: ^26.6.5
         version: 26.6.5
+
+  packages/service-r2:
+    dependencies:
+      '@uplo/service-s3':
+        specifier: workspace:^
+        version: link:../service-s3
+      '@uplo/types':
+        specifier: workspace:^
+        version: link:../types
+      '@uplo/utils':
+        specifier: workspace:^
+        version: link:../utils
+    devDependencies:
+      '@types/node':
+        specifier: ^26.6.5
+        version: 26.6.5
+      '@uplo/server':
+        specifier: workspace:^
+        version: link:../server
 
   packages/service-s3:
     dependencies:

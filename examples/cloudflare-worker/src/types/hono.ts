@@ -7,10 +7,10 @@ export type HonoBindings = {
   DATABASE_URL: string
   UPLO_SECRET_TOKEN: string
 
-  AWS_BUCKET: string
-  AWS_ACCESS_KEY_ID: string
-  AWS_SECRET_ACCESS_KEY: string
-  AWS_ENDPOINT: string
+  R2_ACCOUNT_ID: string
+  R2_BUCKET: string
+  R2_ACCESS_KEY_ID: string
+  R2_SECRET_ACCESS_KEY: string
 }
 
 export type HonoVariables = {

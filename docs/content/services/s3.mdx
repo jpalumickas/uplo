@@ -36,6 +36,8 @@ const uplo = createUplo({
 - `region = 'us-east-1`: Provide your service region
 - `isPublic = false`: Specify a bucket ACL
 - `endpoint`: You can provide a custom endpoint if you have a custom service
+- `publicUrl`: Base URL for public files (e.g. CDN or custom domain). Defaults to the bucket URL
+- `acl = true`: Send object ACL on uploads. Set `false` for providers without ACL support
 - `storagePath`: Default file path in the bucket for attachments without their own `storagePath`. See [Storage path](/attachments#storage-path)
 
 ## Direct Upload

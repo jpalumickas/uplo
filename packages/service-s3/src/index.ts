@@ -25,6 +25,12 @@ interface Options {
   endpoint?: S3ClientConfig['endpoint']
   forcePathStyle?: S3ClientConfig['forcePathStyle']
   requestHandler?: S3ClientConfig['requestHandler']
+  requestChecksumCalculation?: S3ClientConfig['requestChecksumCalculation']
+  responseChecksumValidation?: S3ClientConfig['responseChecksumValidation']
+  /** Send object ACL on uploads. Set `false` for providers without ACL support (e.g. Cloudflare R2). */
+  acl?: boolean
+  /** Base URL for public objects (e.g. CDN or custom domain). Used by `publicUrl()` as `${publicUrl}/${key}`. */
+  publicUrl?: string
   /** Default path in the bucket for new files. Attachment `storagePath` takes priority. */
   storagePath?: BlobStoragePath
 }
@@ -38,6 +44,10 @@ export const createS3Service = ({
   region = DEFAULT_REGION,
   forcePathStyle,
   requestHandler,
+  requestChecksumCalculation,
+  responseChecksumValidation,
+  acl = true,
+  publicUrl: publicBaseUrl,
   storagePath,
 }: Options): Service => {
   const s3Config: S3ClientConfig = {
@@ -49,7 +59,11 @@ export const createS3Service = ({
     endpoint,
     forcePathStyle,
     requestHandler,
+    requestChecksumCalculation,
+    responseChecksumValidation,
   }
+
+  const objectAcl = acl ? (isPublic ? 'public-read' : 'private') : undefined
 
   const client = new S3Client(s3Config)
 
@@ -63,7 +77,7 @@ export const createS3Service = ({
         ContentLength: Number(blob.size),
         ContentType: blob.contentType,
         ContentMD5: blob.checksum,
-        ACL: isPublic ? 'public-read' : 'private',
+        ACL: objectAcl,
         Key: blob.key,
       })
 
@@ -82,7 +96,7 @@ export const createS3Service = ({
           ContentLength: Number(size),
           ContentType: contentType,
           ContentMD5: checksum,
-          ACL: isPublic ? 'public-read' : 'private',
+          ACL: objectAcl,
         },
       })
 
@@ -112,7 +126,7 @@ export const createS3Service = ({
         'Content-MD5': blob.checksum,
       }
 
-      if (isPublic) {
+      if (acl && isPublic) {
         headers['x-amz-acl'] = 'public-read'
       }
 
@@ -120,7 +134,9 @@ export const createS3Service = ({
     },
 
     async publicUrl({ key }: Pick<BlobData, 'key'>) {
-      if (endpoint) {
+      if (publicBaseUrl) {
+        return `${publicBaseUrl.replace(/\/+$/, '')}/${key}`
+      } else if (endpoint) {
         return `${endpoint}/${bucket}/${key}`
       } else {
         return `https://${bucket}.s3${region === DEFAULT_REGION ? '' : `.${region}`}.amazonaws.com/${key}`

@@ -1,6 +1,6 @@
 # @uplo/service-s3
 
-S3-compatible storage service for [Uplo](https://uplo.js.org). Works with AWS S3, Cloudflare R2, DigitalOcean Spaces, MinIO, and other S3-compatible providers.
+S3-compatible storage service for [Uplo](https://uplo.js.org). Works with AWS S3, DigitalOcean Spaces, MinIO, and other S3-compatible providers. For Cloudflare R2 use [`@uplo/service-r2`](https://uplo.js.org/services/cloudflare-r2).
 
 ## Installation
 
@@ -35,6 +35,9 @@ const uplo = createUplo({
 - `isPublic = false`: Specify a bucket ACL.
 - `endpoint`: Custom endpoint for non-AWS S3-compatible providers.
 - `forcePathStyle`: Use path-style URLs (required for MinIO, DigitalOcean Spaces).
+- `publicUrl`: Base URL for public files (e.g. CDN or custom domain). Defaults to the bucket URL.
+- `acl = true`: Send object ACL on uploads. Set `false` for providers without ACL support.
+- `requestChecksumCalculation`, `responseChecksumValidation`: Passed to the AWS SDK client.
 
 ## Documentation
 

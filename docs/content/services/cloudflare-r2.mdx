@@ -2,33 +2,73 @@
 
 ## Installation
 
-Install S3 service
+Install package
 
 ```sh npm2yarn
-npm i @uplo/service-s3
+npm i @uplo/service-r2
 ```
 
 Add service to Uplo
 
 ```ts
-import { createS3Service } from '@uplo/service-s3'
+import { createR2Service } from '@uplo/service-r2'
 
 const uplo = createUplo({
   services: {
-    r2: createS3Service({
-      isPublic: false,
-      endpoint: 'Your endpoint from R2',
-      bucket: 'your-bucket',
+    r2: createR2Service({
+      accountId: process.env.R2_ACCOUNT_ID,
+      bucket: process.env.R2_BUCKET,
       accessKeyId: '*****',
       secretAccessKey: '*****',
-
-      // If you are using Cloudflare Workers, add this:
-      // requestHandler: {
-      //  requestInit(_httpRequest) {
-      //    return { cache: undefined };
-      //  },
-      // },
     }),
   },
 })
+```
+
+The service works in Node.js and Cloudflare Workers. No extra Workers config is needed.
+
+## Options
+
+- `accountId` (**required**): Your Cloudflare account ID. Used to build the endpoint `https://<accountId>.r2.cloudflarestorage.com`.
+- `bucket` (**required**): Your bucket name where to store objects.
+- `accessKeyId` (**required**): Access Key ID from your R2 API token.
+- `secretAccessKey` (**required**): Secret Access Key from your R2 API token.
+- `jurisdiction`: `'eu'` or `'fedramp'`, if the bucket was created with a jurisdiction.
+- `endpoint`: Full S3 API endpoint. Overrides `accountId` and `jurisdiction`.
+- `isPublic = false`: Serve files from a public bucket URL. Requires `publicUrl`. See [Public bucket](#public-bucket)
+- `publicUrl`: Public bucket URL (r2.dev subdomain or custom domain).
+- `storagePath`: Default file path in the bucket for attachments without their own `storagePath`. See [Storage path](/attachments#storage-path)
+
+## Public bucket
+
+R2 has no per-file ACLs. To serve files publicly, enable public access on the bucket (r2.dev subdomain or custom domain) in the Cloudflare dashboard and pass its URL:
+
+```ts
+createR2Service({
+  accountId: process.env.R2_ACCOUNT_ID,
+  bucket: process.env.R2_BUCKET,
+  accessKeyId: '*****',
+  secretAccessKey: '*****',
+  isPublic: true,
+  publicUrl: 'https://files.example.com',
+})
+```
+
+Private buckets use signed URLs instead.
+
+## Direct Upload
+
+### CORS
+
+This is example CORS configuration for direct uploads. Add it in the bucket **Settings → CORS Policy**.
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://www.example.com"],
+    "AllowedMethods": ["PUT"],
+    "AllowedHeaders": ["Content-Type", "Content-MD5"],
+    "MaxAgeSeconds": 3600
+  }
+]
 ```
