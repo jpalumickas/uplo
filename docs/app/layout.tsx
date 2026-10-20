@@ -20,6 +20,8 @@ export const metadata = {
   },
 }
 
+const currentYear = new Date().getFullYear()
+
 export default async function RootLayout({ children }) {
   const navbar = (
     <Navbar
@@ -38,7 +40,7 @@ export default async function RootLayout({ children }) {
       <body>
         <Layout
           navbar={navbar}
-          footer={<Footer>MIT {new Date().getFullYear()} © Uplo.</Footer>}
+          footer={<Footer>MIT {currentYear} © Uplo.</Footer>}
           editLink="Edit this page on GitHub"
           docsRepositoryBase="https://github.com/jpalumickas/uplo/blob/main/docs"
           sidebar={{ defaultMenuCollapseLevel: 1 }}
