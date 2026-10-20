@@ -19,7 +19,9 @@ const sidebarTitlePlugin: LoaderPlugin = {
   name: 'uplo:sidebar-title',
   transformPageTree: {
     file(node, filePath) {
-      if (!filePath) return node
+      if (!filePath) {
+        return node
+      }
       const file = this.storage.read(filePath)
       if (
         file?.format === 'page' &&

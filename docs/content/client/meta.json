@@ -1,7 +1,4 @@
 {
   "title": "Client",
-  "pages": [
-    "react",
-    "react-native"
-  ]
+  "pages": ["react", "react-native"]
 }

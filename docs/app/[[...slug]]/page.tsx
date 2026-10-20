@@ -1,9 +1,9 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page'
-import { createRelativeLink } from 'fumadocs-ui/mdx'
 import { getMDXComponents } from '@/components/mdx'
 import { source } from '@/lib/source'
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page'
+import { createRelativeLink } from 'fumadocs-ui/mdx'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: Promise<{ slug?: string[] }>
@@ -12,7 +12,9 @@ type Props = {
 export default async function Page(props: Props) {
   const params = await props.params
   const page = source.getPage(params.slug)
-  if (!page) notFound()
+  if (!page) {
+    notFound()
+  }
 
   const MDX = page.data.body
 
@@ -38,7 +40,9 @@ export function generateStaticParams() {
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
   const page = source.getPage(params.slug)
-  if (!page) notFound()
+  if (!page) {
+    notFound()
+  }
 
   const isRootPage = !params.slug || params.slug.length === 0
 

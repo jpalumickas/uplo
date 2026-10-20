@@ -15,7 +15,9 @@ type Params = {
 /** Drops trailing slashes. A loop instead of /\/+$/, which is quadratic on many slashes. */
 const trimTrailingSlashes = (value: string) => {
   let end = value.length
-  while (end > 0 && value[end - 1] === '/') end--
+  while (end > 0 && value[end - 1] === '/') {
+    end--
+  }
   return value.slice(0, end)
 }
 

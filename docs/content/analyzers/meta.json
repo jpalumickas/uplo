@@ -1,8 +1,4 @@
 {
   "title": "Analyzers",
-  "pages": [
-    "about",
-    "image",
-    "image-blurhash"
-  ]
+  "pages": ["about", "image", "image-blurhash"]
 }

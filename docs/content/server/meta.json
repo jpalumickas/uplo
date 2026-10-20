@@ -1,8 +1,4 @@
 {
   "title": "Server",
-  "pages": [
-    "node",
-    "hono",
-    "fastify"
-  ]
+  "pages": ["node", "hono", "fastify"]
 }

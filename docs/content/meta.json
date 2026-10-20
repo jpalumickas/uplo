@@ -1,11 +1,3 @@
 {
-  "pages": [
-    "index",
-    "attachments",
-    "adapters",
-    "services",
-    "server",
-    "client",
-    "analyzers"
-  ]
+  "pages": ["index", "attachments", "adapters", "services", "server", "client", "analyzers"]
 }

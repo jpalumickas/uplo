@@ -1,8 +1,9 @@
-import type { Metadata } from 'next'
-import type { ReactNode } from 'react'
+import { source } from '@/lib/source'
 import { DocsLayout } from 'fumadocs-ui/layouts/docs'
 import { RootProvider } from 'fumadocs-ui/provider/next'
-import { source } from '@/lib/source'
+import type { Metadata } from 'next'
+import type { ReactNode } from 'react'
+
 import './global.css'
 
 export const metadata: Metadata = {
@@ -37,9 +38,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             githubUrl="https://github.com/jpalumickas/uplo"
             sidebar={{
               defaultOpenLevel: 0,
-              footer: (
-                <p className="text-xs text-fd-muted-foreground">MIT {currentYear} © Uplo.</p>
-              ),
+              footer: <p className="text-xs text-fd-muted-foreground">MIT {currentYear} © Uplo.</p>,
             }}
           >
             {children}
