@@ -1,5 +1,5 @@
 import { BlobValidationError } from '../errors'
-import type { AttachmentValidateType } from '../types'
+import type { AttachmentValidateCustomParams, AttachmentValidateType } from '../types'
 
 type BlobInputData = {
   fileName: string
@@ -48,9 +48,15 @@ const validateSize = (size: number, sizeValidator: AttachmentValidateType['size'
   return true
 }
 
-export const validateBlobInputData = (
+type ValidationContext = Pick<
+  AttachmentValidateCustomParams,
+  'modelName' | 'attachmentName' | 'recordId' | 'metadata'
+>
+
+export const validateBlobInputData = async (
   blobInputData: BlobInputData,
   validator: AttachmentValidateType | null | undefined,
+  context: ValidationContext,
 ) => {
   if (!blobInputData?.fileName?.trim()) {
     throw new BlobValidationError('Missing file name')
@@ -74,6 +80,20 @@ export const validateBlobInputData = (
 
   validateContentType(blobInputData.contentType, validator.contentType)
   validateSize(blobInputData.size, validator.size)
+
+  if (validator.custom) {
+    const error = await validator.custom({
+      fileName: blobInputData.fileName,
+      contentType: blobInputData.contentType,
+      size: blobInputData.size,
+      checksum: blobInputData.checksum,
+      ...context,
+    })
+
+    if (typeof error === 'string' && error) {
+      throw new BlobValidationError(error)
+    }
+  }
 
   return true
 }

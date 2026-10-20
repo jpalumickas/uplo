@@ -126,6 +126,13 @@ export class ModelAttachment {
   }
 
   async attachFile(input: BlobInput) {
+    // Validate before building the key, so `storagePath` only runs for valid files
+    await validateBlobInputData(input, this.options.validate, {
+      modelName: this.modelName,
+      attachmentName: this.attachmentName,
+      recordId: this.modelId,
+    })
+
     const blobParams = {
       key: await buildBlobKey({
         service: this.getService(this.options.serviceName),
@@ -142,8 +149,6 @@ export class ModelAttachment {
       checksum: input.checksum,
       metadata: {},
     }
-
-    validateBlobInputData(blobParams, this.options.validate)
 
     const blob = await this.adapter.createBlob({
       params: {

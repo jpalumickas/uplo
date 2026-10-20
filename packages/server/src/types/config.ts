@@ -1,4 +1,4 @@
-import type { Service, Adapter, BlobStoragePath } from '@uplo/types'
+import type { Service, Adapter, BlobStoragePath, ClientMetadata, ID } from '@uplo/types'
 
 import type { Callbacks } from './callbacks'
 
@@ -11,6 +11,28 @@ export interface UploConfig {
   signedIdExpiresIn?: number
 }
 
+export interface AttachmentValidateCustomParams {
+  fileName: string
+  contentType: string
+  /** File size in bytes */
+  size: number
+  checksum: string
+  /** Client metadata, only for direct uploads */
+  metadata?: ClientMetadata
+  modelName: string
+  attachmentName: string
+  /** Record ID, only in `attachFile`. Direct uploads are created before the record is known. */
+  recordId?: ID
+}
+
+/**
+ * Custom validation. Return an error message to refuse the file
+ * (`BlobValidationError`), or nothing to accept it. Thrown errors are passed on.
+ */
+export type AttachmentValidateCustom = (
+  params: AttachmentValidateCustomParams,
+) => string | void | Promise<string | void>
+
 type AttachmentValidateObjectType = {
   /** File content type */
   contentType?: string | string[] | RegExp | RegExp[]
@@ -21,6 +43,8 @@ type AttachmentValidateObjectType = {
     /** Maximum file size in bytes */
     max?: number
   }
+  /** Runs after `contentType` and `size` checks */
+  custom?: AttachmentValidateCustom
 }
 
 export type AttachmentValidateType = AttachmentValidateObjectType

@@ -52,6 +52,7 @@ const uplo = createUplo({
 - `contentType`: allowed content type, as a string, RegExp, or an array of them.
   Strings must match exactly.
 - `size.min`, `size.max`: file size limits in bytes.
+- `custom`: your own check, see [Custom validation](#custom-validation).
 
 Validation runs when a direct upload is created and in `attachFile`. Failed
 validation throws `BlobValidationError` (`422` from the upload routes).
@@ -65,6 +66,45 @@ is signed with them, so the storage refuses a different file:
 
 `attachSignedFile` also checks the stored file before attaching it, see
 [Attach signed file](#attach-signed-file).
+
+### Custom validation
+
+`custom` runs after the `contentType` and `size` checks, in the same places.
+Return an error message to refuse the file, or nothing to accept it. It can be
+async.
+
+```ts
+const uplo = createUplo({
+  attachments: {
+    post: {
+      images: {
+        multiple: true,
+        validate: {
+          contentType: /^image\/(png|jpeg|webp)$/,
+          custom: async ({ fileName, size, metadata, recordId }) => {
+            if (fileName.length > 255) {
+              return 'File name is too long'
+            }
+            if (recordId && (await countPostImages(recordId)) >= 10) {
+              return 'A post can have up to 10 images'
+            }
+          },
+        },
+      },
+    },
+  },
+})
+```
+
+It receives `fileName`, `contentType`, `size`, `checksum`, `modelName` and
+`attachmentName`, plus:
+
+- `metadata`: client metadata, only for direct uploads.
+- `recordId`: only in `attachFile`. Direct uploads are created before the record
+  is known, so check record-based rules again when you attach the Signed ID.
+
+A returned message throws `BlobValidationError` (`422` from the upload routes).
+Errors you throw are passed on as they are.
 
 ### Always limit content types
 

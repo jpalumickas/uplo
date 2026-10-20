@@ -36,6 +36,13 @@ export const createDirectUpload = async ({
   // Client metadata is kept under `client`, so it cannot override server fields
   const clientMetadata = validateClientMetadata(params.metadata)
 
+  // Validate before building the key, so `storagePath` only runs for valid files
+  await validateBlobInputData(params, attachmentOptions.validate, {
+    modelName,
+    attachmentName,
+    metadata: clientMetadata,
+  })
+
   const blobParams = {
     key: await buildBlobKey({
       service,
@@ -52,8 +59,6 @@ export const createDirectUpload = async ({
     checksum: params.checksum,
     metadata: clientMetadata ? { client: clientMetadata } : {},
   }
-
-  validateBlobInputData(blobParams, attachmentOptions.validate)
 
   const blob = await adapter.createBlob({
     params: {
