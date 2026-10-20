@@ -1,9 +1,11 @@
 import { createContext } from 'react'
 
+import type { UploRequestOptions } from '../types'
+
 type ContextType = {
   host: string
   mountPath?: string
-}
+} & UploRequestOptions
 
 const defaultContext = {
   host: '',

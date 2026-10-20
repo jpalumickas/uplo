@@ -9,7 +9,7 @@ export const useDirectUpload = (
   attachmentName: string,
   { multiple = false, onUploadAdd, onUploadChange, onUploadSuccess }: UseDirectUploadOptions = {},
 ) => {
-  const { host, mountPath } = useUploConfig()
+  const { host, mountPath, headers, credentials } = useUploConfig()
 
   const [uploads, setUploads] = useState<Upload[]>([])
 
@@ -65,7 +65,11 @@ export const useDirectUpload = (
       addUpload(upload)
 
       try {
-        const result = await createBlob(attachmentName, { file, metadata }, { host, mountPath })
+        const result = await createBlob(
+          attachmentName,
+          { file, metadata },
+          { host, mountPath, headers, credentials },
+        )
         if (result.error) {
           upload.error = result.error
           updateUpload(id, { error: upload.error })
@@ -112,7 +116,16 @@ export const useDirectUpload = (
 
       return upload
     },
-    [addUpload, onUploadSuccess, updateUpload, attachmentName, host, mountPath],
+    [
+      addUpload,
+      onUploadSuccess,
+      updateUpload,
+      attachmentName,
+      host,
+      mountPath,
+      headers,
+      credentials,
+    ],
   )
 
   return {

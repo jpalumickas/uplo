@@ -1,10 +1,11 @@
 import mime from 'mime/lite'
 
-import type { File } from './types'
+import type { File, UploRequestOptions } from './types'
 import { checksumFromMD5 } from './utils/checksumFromMD5'
 import { getFileInfo } from './utils/getFileInfo'
+import { resolveRequestOptions } from './utils/resolveRequestOptions'
 
-interface Options {
+interface Options extends UploRequestOptions {
   host: string
   mountPath?: string
 }
@@ -12,7 +13,7 @@ interface Options {
 export const createBlob = async (
   attachmentName: string,
   file: File,
-  { host, mountPath = '/uploads' }: Options,
+  { host, mountPath = '/uploads', ...requestOptions }: Options,
 ) => {
   if (file.contentType && !file.contentType.match(/.+\/.+/)) {
     return { data: null, error: 'Invalid content type' }
@@ -51,7 +52,7 @@ export const createBlob = async (
     const response = await fetch(`${host}${mountPath}/create-direct-upload`, {
       method: 'POST',
       body: JSON.stringify(requestData),
-      headers: { 'Content-Type': 'application/json' },
+      ...(await resolveRequestOptions(requestOptions)),
     })
 
     if (response.ok) {

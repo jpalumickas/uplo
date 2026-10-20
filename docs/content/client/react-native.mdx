@@ -22,6 +22,32 @@ export const App = ({ children }) => {
 }
 ```
 
+### Provider options
+
+- `host` (**required**): URL of your API.
+- `mountPath = '/uploads'`: Path where the Uplo routes are mounted.
+- `headers`: Extra headers for requests to your API, as an object or a function
+  (can be async) that runs before each request.
+- `credentials`: `fetch` credentials for requests to your API.
+
+If your upload route needs authentication (see [Hono](/server/hono#authentication)
+or [Fastify](/server/fastify#authentication)), pass the token with `headers`:
+
+```jsx
+<UploProvider
+  host={process.env.API_URL}
+  headers={async () => ({ Authorization: `Bearer ${await SecureStore.getItemAsync('token')}` })}
+>
+  {children}
+</UploProvider>
+```
+
+`credentials` is passed to `fetch` as well.
+
+These options are only used for requests to your API. Files are uploaded to
+storage with the headers your API returns, so tokens are not sent to the storage
+provider.
+
 Use direct upload
 
 ```jsx

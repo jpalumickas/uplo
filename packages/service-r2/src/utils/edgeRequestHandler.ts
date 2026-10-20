@@ -1,4 +1,4 @@
-import type { S3ServiceOptions } from '../types'
+import type { S3ServiceOptions } from '@uplo/service-s3'
 
 // Workers' fetch rejects the `cache` option the AWS SDK sets
 export const edgeRequestHandler = {

@@ -1,7 +1,5 @@
-import type { createS3Service } from '@uplo/service-s3'
+import type { S3ServiceOptions } from '@uplo/service-s3'
 import type { BlobStoragePath } from '@uplo/types'
-
-export type S3ServiceOptions = Parameters<typeof createS3Service>[0]
 
 export type R2Jurisdiction = 'eu' | 'fedramp'
 

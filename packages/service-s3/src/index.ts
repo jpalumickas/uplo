@@ -18,6 +18,8 @@ import { DEFAULT_REGION } from './constants'
 import type { Options } from './types'
 import { buildPublicUrl } from './utils/buildPublicUrl'
 
+export type { Options as S3ServiceOptions } from './types'
+
 export const createS3Service = ({
   isPublic = false,
   bucket,
