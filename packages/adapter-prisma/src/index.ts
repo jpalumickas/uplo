@@ -60,6 +60,12 @@ export const createPrismaAdapter = ({ prisma }: Options): Adapter => {
     }
   }
 
+  const findBlobAttachments: Adapter['findBlobAttachments'] = async (blobId) => {
+    return (await prisma.fileAttachment.findMany({
+      where: { blobId: blobId as any },
+    })) as AttachmentData[]
+  }
+
   const deleteAttachments = async ({
     recordId,
     recordType,
@@ -168,6 +174,7 @@ export const createPrismaAdapter = ({ prisma }: Options): Adapter => {
   return {
     findAttachments,
     deleteAttachment,
+    findBlobAttachments,
     deleteAttachments,
     createBlob,
     findBlob,

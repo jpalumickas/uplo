@@ -160,3 +160,7 @@ const attachment = await uplo.attachments.user(123).avatar.attachSignedFile(sign
 A Signed ID can only be attached to the attachment it was created for. For
 example, a Signed ID from a `user.avatar` direct upload cannot be attached to
 `user.document`. Attachments with `directUpload: false` refuse Signed IDs.
+
+A Signed ID is attached once. Attaching it again to the same record and
+attachment returns the existing attachment (e.g. when a form is saved twice).
+Attaching it to another record throws `BlobAlreadyAttachedError`.

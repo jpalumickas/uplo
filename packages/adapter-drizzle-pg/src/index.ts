@@ -61,6 +61,12 @@ export const createDrizzleAdapter = ({
 
       return attachment ?? null
     },
+    findBlobAttachments: async (blobId) => {
+      return await db
+        .select()
+        .from(schema.fileAttachments)
+        .where(eq(schema.fileAttachments.blobId, blobId))
+    },
     deleteAttachments: async ({ recordId, recordType, name }) => {
       const attachments = await db
         .delete(schema.fileAttachments)

@@ -35,3 +35,15 @@ describe('deleteAttachment', () => {
     await expect(adapter.deleteAttachment(options)).resolves.toBeNull()
   })
 })
+
+describe('findBlobAttachments', () => {
+  it('selects attachments by blob ID', async () => {
+    const { adapter, queries } = createAdapter([])
+
+    await expect(adapter.findBlobAttachments('b1')).resolves.toEqual([])
+    expect(queries[0].sql).toMatch(
+      /^select .* from "file_attachments" where "file_attachments"."blob_id" = \$1$/,
+    )
+    expect(queries[0].params).toEqual(['b1'])
+  })
+})

@@ -53,6 +53,8 @@ export interface Adapter {
     recordType: AttachmentData['recordType']
     name: AttachmentData['name']
   }): Promise<Omit<AttachmentData, 'blob'> | null>
+  /** Returns all attachments of a blob, used to refuse attaching one blob to many records */
+  findBlobAttachments(blobId: ID): Promise<Omit<AttachmentData, 'blob'>[]>
   deleteAttachments(options: {
     recordId: AttachmentData['recordId']
     recordType: AttachmentData['recordType']

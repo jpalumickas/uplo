@@ -7,6 +7,7 @@ import type { BlobInput } from '../blobInputs/types'
 import {
   UploError,
   AttachmentNotFoundError,
+  BlobAlreadyAttachedError,
   BlobNotFoundError,
   DirectUploadDisabledError,
   InvalidSignedIdError,
@@ -200,6 +201,25 @@ export class ModelAttachment {
 
     if (!blob) {
       throw new BlobNotFoundError(`Cannot find blob with ID ${blobId}`)
+    }
+
+    // A signed ID is attached once. Sending it again for the same record and
+    // attachment (e.g. form saved twice) returns the existing attachment, any
+    // other record is refused, so a leaked signed ID cannot be reused
+    const existing = await this.adapter.findBlobAttachments(blob.id)
+    if (existing.length > 0) {
+      const sameRecord = existing.find(
+        (attachment) =>
+          attachment.recordType === this.recordType &&
+          String(attachment.recordId) === String(this.modelId) &&
+          attachment.name === this.attachmentName,
+      )
+
+      if (!sameRecord) {
+        throw new BlobAlreadyAttachedError(`Signed ID was already attached to another record`)
+      }
+
+      return this.buildAttachment({ ...sameRecord, blob })
     }
 
     const updateMetadataFn = this.getService(blob.serviceName).updateMetadata

@@ -2,7 +2,12 @@ import { describe, it, expect, vi, beforeEach } from 'vitest'
 
 import type { Adapter, AttachmentData, BlobData, Service } from '@uplo/types'
 
-import { createUplo, DirectUploadDisabledError, InvalidSignedIdError } from '../src'
+import {
+  BlobAlreadyAttachedError,
+  createUplo,
+  DirectUploadDisabledError,
+  InvalidSignedIdError,
+} from '../src'
 import { createUploRouteHandler } from '../src/route-handler'
 import type { SignerBlobData } from '../src/Signer'
 
@@ -20,19 +25,29 @@ const createBlob = vi.fn<Adapter['createBlob']>(async ({ params }) => {
   return blob
 })
 
-const adapter: Partial<Adapter> = {
-  createBlob,
-  findBlob: async (id) => blobs.get(id) ?? null,
-  attachBlob: async ({ blob, attachmentName, recordId, recordType }) =>
-    ({
-      id: 1,
+const attachments: AttachmentData[] = []
+
+const attachBlob = vi.fn<Adapter['attachBlob']>(
+  async ({ blob, attachmentName, recordId, recordType }) => {
+    const attachment = {
+      id: attachments.length + 1,
       name: attachmentName,
       blobId: blob.id,
       recordId,
       recordType,
       createdAt: new Date(),
       blob,
-    }) as AttachmentData,
+    }
+    attachments.push(attachment)
+    return attachment
+  },
+)
+
+const adapter: Partial<Adapter> = {
+  createBlob,
+  findBlob: async (id) => blobs.get(id) ?? null,
+  findBlobAttachments: async (blobId) => attachments.filter((row) => row.blobId === blobId),
+  attachBlob,
 }
 
 const uplo = createUplo({
@@ -76,7 +91,9 @@ const getSignedId = async (attachmentName: string) => {
 
 beforeEach(() => {
   blobs.clear()
+  attachments.length = 0
   createBlob.mockClear()
+  attachBlob.mockClear()
 })
 
 describe('create direct upload', () => {
@@ -146,5 +163,33 @@ describe('attach signed file', () => {
     await expect(uplo.attachments.user(1).document.attachSignedFile(signedId)).rejects.toThrow(
       DirectUploadDisabledError,
     )
+  })
+
+  it('refuses signed ID already attached to another record', async () => {
+    const signedId = await getSignedId('user.avatar')
+    await uplo.attachments.user(1).avatar.attachSignedFile(signedId)
+
+    await expect(uplo.attachments.user(2).avatar.attachSignedFile(signedId)).rejects.toThrow(
+      BlobAlreadyAttachedError,
+    )
+    expect(attachBlob).toHaveBeenCalledOnce()
+  })
+
+  it('returns existing attachment when same record attaches signed ID again', async () => {
+    const signedId = await getSignedId('user.avatar')
+    const first = await uplo.attachments.user(1).avatar.attachSignedFile(signedId)
+    const second = await uplo.attachments.user(1).avatar.attachSignedFile(signedId)
+
+    expect(second.id).toEqual(first.id)
+    expect(second.blob.id).toEqual(first.blob.id)
+    expect(attachBlob).toHaveBeenCalledOnce()
+  })
+
+  it('matches record ID as string', async () => {
+    const signedId = await getSignedId('user.avatar')
+    await uplo.attachments.user(1).avatar.attachSignedFile(signedId)
+
+    await expect(uplo.attachments.user('1').avatar.attachSignedFile(signedId)).resolves.toBeTruthy()
+    expect(attachBlob).toHaveBeenCalledOnce()
   })
 })

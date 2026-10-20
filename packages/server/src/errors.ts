@@ -7,6 +7,7 @@ export class ValidationError extends UploError {}
 export class BlobValidationError extends ValidationError {}
 export class DirectUploadDisabledError extends ValidationError {}
 export class InvalidSignedIdError extends ValidationError {}
+export class BlobAlreadyAttachedError extends ValidationError {}
 
 // Not Found Errors
 export class NotFoundError extends UploError {}

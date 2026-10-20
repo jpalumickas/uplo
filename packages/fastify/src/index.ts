@@ -1,7 +1,8 @@
-import type { FastifyPluginAsync } from 'fastify'
+import type { FastifyPluginAsync, FastifyReply } from 'fastify'
 import fp from 'fastify-plugin'
 
 import type { UploInstance, UploOptionsAttachments } from '@uplo/node'
+import { NotFoundError, ValidationError } from '@uplo/node'
 
 export interface UploPluginOptions<AttachmentsList extends UploOptionsAttachments> {
   mountPath?: string
@@ -9,17 +10,21 @@ export interface UploPluginOptions<AttachmentsList extends UploOptionsAttachment
 }
 
 const createDirectUploadOptions = {
+  // Validation errors are returned as 422 by the handler, same as the Hono route
+  attachValidation: true,
   schema: {
     body: {
       type: 'object',
       required: ['attachmentName', 'fileName', 'contentType', 'checksum', 'size'],
       properties: {
-        attachmentName: { type: 'string' },
-        fileName: { type: 'string' },
-        contentType: { type: 'string' },
-        checksum: { type: 'string' },
-        size: { type: 'number' },
-        metadata: { type: 'object' },
+        attachmentName: {
+          type: 'string',
+          pattern: '^[a-z0-9-]+\\.[a-z0-9-]+$',
+        },
+        fileName: { type: 'string', minLength: 1 },
+        contentType: { type: 'string', minLength: 1 },
+        checksum: { type: 'string', minLength: 1 },
+        size: { type: 'number', exclusiveMinimum: 0 },
       },
     },
   },
@@ -31,10 +36,10 @@ interface CreateDirectUploadBody {
   contentType: string
   size: number
   checksum: string
-  metadata?: {
-    [key: string]: number | string
-  }
 }
+
+const sendError = (reply: FastifyReply, message: string) =>
+  reply.status(422).send({ success: false, error: { message } })
 
 const fastifyPlugin: FastifyPluginAsync<UploPluginOptions<UploOptionsAttachments>> = async (
   fastify,
@@ -50,29 +55,28 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions<UploOptionsAttachments
     `${mountPath}/create-direct-upload`,
     createDirectUploadOptions,
     async (request, reply) => {
-      const attachmentName = request.body['attachmentName']
-      const attachment = uplo.$findGenericAttachment(attachmentName)
-
-      if (!attachment) {
-        reply
-          .send({
-            error: { message: `Cannot find attachment ${attachmentName}` },
-          })
-          .status(422)
-        return
+      if (request.validationError) {
+        return sendError(reply, request.validationError.message)
       }
 
-      const params = {
-        fileName: request.body['fileName'],
-        contentType: request.body['contentType'],
-        size: request.body['size'],
-        checksum: request.body['checksum'],
-        metadata: request.body['metadata'],
+      const { attachmentName, fileName, contentType, size, checksum } = request.body
+
+      try {
+        const attachment = uplo.$findGenericAttachment(attachmentName)
+
+        // Client metadata is not passed on, so clients cannot set fields
+        // like `analyzed` that analyzers write
+        const data = await attachment.createDirectUpload({
+          params: { fileName, contentType, size, checksum },
+        })
+
+        return reply.status(201).send(data)
+      } catch (err) {
+        if (err instanceof ValidationError || err instanceof NotFoundError) {
+          return sendError(reply, err.message)
+        }
+        throw err
       }
-
-      const data = await attachment.createDirectUpload({ params })
-
-      reply.send(data).status(201)
     },
   )
 }
