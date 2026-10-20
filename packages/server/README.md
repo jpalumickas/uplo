@@ -13,8 +13,8 @@ npm i @uplo/server
 ## Usage
 
 ```ts
-import { createUplo } from '@uplo/server'
 import { createPrismaAdapter } from '@uplo/adapter-prisma'
+import { createUplo } from '@uplo/server'
 import { createS3Service } from '@uplo/service-s3'
 
 const uplo = createUplo({

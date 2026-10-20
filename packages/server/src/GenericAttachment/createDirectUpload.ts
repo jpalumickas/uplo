@@ -63,7 +63,7 @@ export const createDirectUpload = async ({
     headers: service.directUploadHeaders ? await service.directUploadHeaders(blob) : {},
   }
 
-  const signedId = await signer.generate({ blobId: blob.id }, 'blob')
+  const signedId = await signer.generate({ blobId: blob.id, modelName, attachmentName }, 'blob')
 
   if (!signedId) {
     throw new UploError(`Failed to create Signed ID for direct upload`)

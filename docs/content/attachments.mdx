@@ -153,3 +153,7 @@ Signed ID to your records. How to get a Signed ID, please view Client documentat
 const signedId = req.params['signedId']
 const attachment = await uplo.attachments.user(123).avatar.attachSignedFile(signedId)
 ```
+
+A Signed ID can only be attached to the attachment it was created for. For
+example, a Signed ID from a `user.avatar` direct upload cannot be attached to
+`user.document`. Attachments with `directUpload: false` refuse Signed IDs.

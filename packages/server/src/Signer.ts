@@ -9,7 +9,11 @@ import type { UploConfig } from './types'
 const ISSUER = 'uplo'
 
 export type SignerBlobData = {
-  blobId?: ID
+  blobId: ID
+  /** Model name from attachments config (e.g. `user`) */
+  modelName: string
+  /** Attachment name from attachments config (e.g. `avatar`) */
+  attachmentName: string
 }
 export type SignerData = SignerBlobData
 
@@ -44,7 +48,8 @@ export const Signer = (config: UploConfig) => {
       throw new SignerError('Missing private key')
     }
 
-    const { payload } = await jwtVerify<SignerData>(token, secret, {
+    // Fields can be missing in tokens signed by older versions
+    const { payload } = await jwtVerify<Partial<SignerData>>(token, secret, {
       issuer: ISSUER,
       audience: purpose,
     })

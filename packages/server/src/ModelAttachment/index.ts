@@ -4,7 +4,12 @@ import type { Service, AttachmentData, BlobData, Adapter, ID, BlobStoragePath } 
 
 import { Attachment } from '../Attachment'
 import type { BlobInput } from '../blobInputs/types'
-import { UploError, BlobNotFoundError } from '../errors'
+import {
+  UploError,
+  BlobNotFoundError,
+  DirectUploadDisabledError,
+  InvalidSignedIdError,
+} from '../errors'
 import { buildBlobKey } from '../lib/buildBlobKey'
 import type { Signer } from '../Signer'
 import type { AttachmentValidateType, Callbacks } from '../types'
@@ -156,11 +161,23 @@ export class ModelAttachment {
   }
 
   async attachSignedFile(signedId: string) {
+    const name = `${this.modelName}.${this.attachmentName}`
+
+    if (this.options.directUpload === false) {
+      throw new DirectUploadDisabledError(`Direct upload is disabled for attachment "${name}"`)
+    }
+
     const data = await this.signer.verify(signedId, 'blob')
     if (!data || !data.blobId) {
       throw new UploError(`Cannot verify signed ID for blob: ${signedId}`)
     }
     const { blobId } = data
+
+    // Signed ID must be created for this attachment, otherwise a file uploaded
+    // for one attachment could skip validation of another
+    if (data.modelName !== this.modelName || data.attachmentName !== this.attachmentName) {
+      throw new InvalidSignedIdError(`Signed ID was not created for attachment "${name}"`)
+    }
 
     if (this.callbacks.beforeAttach) {
       await this.callbacks.beforeAttach({ blobId })

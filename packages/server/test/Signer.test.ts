@@ -10,11 +10,18 @@ const signer = Signer({
 describe('Signer', () => {
   describe('generate', () => {
     it('returns generates token', async () => {
-      const token = await signer.generate({ blobId: '123' }, 'blob')
+      const token = await signer.generate(
+        { blobId: '123', modelName: 'user', attachmentName: 'avatar' },
+        'blob',
+      )
 
       expect(token).not.toBeNull()
       const verified = await signer.verify(token, 'blob')
-      expect(verified?.blobId).toEqual('123')
+      expect(verified).toMatchObject({
+        blobId: '123',
+        modelName: 'user',
+        attachmentName: 'avatar',
+      })
     })
   })
 })
