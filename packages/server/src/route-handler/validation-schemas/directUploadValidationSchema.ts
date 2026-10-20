@@ -12,5 +12,6 @@ export const directUploadValidationSchema = z.object({
   contentType: z.string().trim(),
   checksum: z.string().trim(),
   size: z.number().gt(0).finite(),
-  metadata: z.object({}).optional(),
+  // Checked by createDirectUpload, so all routes share the same rules
+  metadata: z.unknown().optional(),
 })

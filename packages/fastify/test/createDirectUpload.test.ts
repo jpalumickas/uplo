@@ -57,11 +57,20 @@ describe('create direct upload', () => {
     })
   })
 
-  it('does not pass client metadata to the blob', async () => {
+  it('stores client metadata under client', async () => {
     await createDirectUpload({ ...body, metadata: { analyzed: true, width: 1 } })
 
     expect(createBlob).toHaveBeenCalledOnce()
-    expect(createBlob.mock.calls[0][0].params.metadata).toBeUndefined()
+    expect(createBlob.mock.calls[0][0].params.metadata).toEqual({
+      client: { analyzed: true, width: 1 },
+    })
+  })
+
+  it('returns 422 for invalid client metadata', async () => {
+    const response = await createDirectUpload({ ...body, metadata: { tags: ['a'] } })
+
+    expect(response.statusCode).toEqual(422)
+    expect(createBlob).not.toHaveBeenCalled()
   })
 
   it.each(['user.avatar.validate', 'user', 'User.Avatar', 'user.avatar/x'])(

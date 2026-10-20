@@ -1,17 +1,16 @@
-import type { Service, Adapter } from '@uplo/types'
+import type { Service, Adapter, ClientMetadata } from '@uplo/types'
 
 import type { Signer } from '../Signer'
 import type { FormattedAttachmentOptions } from './attachments'
 
-export interface CreateDirectUploadParamsMetadata {
-  [key: string]: string | number | null
-}
+export type CreateDirectUploadParamsMetadata = ClientMetadata
 
 export interface CreateDirectUploadParams {
   fileName: string
   contentType: string
   size: number
   checksum: string
+  /** Client metadata, stored as `blob.metadata.client` */
   metadata?: CreateDirectUploadParamsMetadata
 }
 

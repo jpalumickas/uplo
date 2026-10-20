@@ -6,6 +6,7 @@ import type { Signer } from '../Signer'
 import type { FormattedAttachmentOptions } from '../types/attachments.js'
 import type { CreateDirectUploadParams } from '../types/generic-attachment.js'
 import { validateBlobInputData } from '../utils/validateBobInputData.js'
+import { validateClientMetadata } from '../utils/validateClientMetadata.js'
 
 type Options = {
   params: CreateDirectUploadParams
@@ -32,6 +33,9 @@ export const createDirectUpload = async ({
     )
   }
 
+  // Client metadata is kept under `client`, so it cannot override server fields
+  const clientMetadata = validateClientMetadata(params.metadata)
+
   const blobParams = {
     key: await buildBlobKey({
       service,
@@ -46,7 +50,7 @@ export const createDirectUpload = async ({
     contentType: params.contentType,
     size: params.size,
     checksum: params.checksum,
-    metadata: params.metadata,
+    metadata: clientMetadata ? { client: clientMetadata } : {},
   }
 
   validateBlobInputData(blobParams, attachmentOptions.validate)

@@ -3,8 +3,18 @@ import type { ContentDispositionType } from '@uplo/utils'
 import type { ID } from './general'
 import type { Service } from './service'
 
+/** Metadata sent by the client with a direct upload. It is not trusted. */
+export interface ClientMetadata {
+  [key: string]: string | number | boolean
+}
+
 export interface BlobMetadata {
-  [key: string]: string | number | null
+  /**
+   * Client metadata from the direct upload. Stored apart from other fields, so
+   * it cannot override server fields like `analyzed`, `width` or `blurhash`.
+   */
+  client?: ClientMetadata
+  [key: string]: string | number | boolean | null | ClientMetadata | undefined
 }
 
 export interface BlobStoragePathParams {

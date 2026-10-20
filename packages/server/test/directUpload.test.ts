@@ -68,7 +68,7 @@ const uplo = createUplo({
 
 const handler = createUploRouteHandler({ uplo })
 
-const createDirectUpload = (attachmentName: string) =>
+const createDirectUpload = (attachmentName: string, extra: Record<string, unknown> = {}) =>
   handler(
     new Request('http://localhost/uplo/create-direct-upload', {
       method: 'POST',
@@ -79,6 +79,7 @@ const createDirectUpload = (attachmentName: string) =>
         contentType: 'application/pdf',
         checksum: 'abc',
         size: 100,
+        ...extra,
       }),
     }),
   )
@@ -111,6 +112,34 @@ describe('create direct upload', () => {
     expect(await response.json()).toEqual({
       success: false,
       error: { message: 'Direct upload is disabled for attachment "user.document"' },
+    })
+    expect(createBlob).not.toHaveBeenCalled()
+  })
+
+  it('stores client metadata under client', async () => {
+    const response = await createDirectUpload('user.avatar', {
+      metadata: { analyzed: true, width: 9999, caption: 'Hi' },
+    })
+
+    expect(response.status).toEqual(201)
+    expect(createBlob.mock.calls[0][0].params.metadata).toEqual({
+      client: { analyzed: true, width: 9999, caption: 'Hi' },
+    })
+  })
+
+  it('stores empty metadata without client metadata', async () => {
+    await createDirectUpload('user.avatar')
+
+    expect(createBlob.mock.calls[0][0].params.metadata).toEqual({})
+  })
+
+  it('refuses invalid client metadata', async () => {
+    const response = await createDirectUpload('user.avatar', { metadata: { nested: { a: 1 } } })
+
+    expect(response.status).toEqual(422)
+    expect(await response.json()).toMatchObject({
+      success: false,
+      error: { message: expect.stringContaining('Metadata "nested"') },
     })
     expect(createBlob).not.toHaveBeenCalled()
   })

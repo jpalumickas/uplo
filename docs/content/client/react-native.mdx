@@ -92,3 +92,16 @@ export const Screen = () => {
   )
 }
 ```
+
+## Metadata
+
+Pass metadata with the file to store it with the blob:
+
+```js
+await uploadFile({ ...result, metadata: { caption: 'Profile photo' } })
+```
+
+It is stored as `blob.metadata.client`, apart from metadata written on the
+server, and is not trusted. See [Metadata](/attachments#metadata) for limits.
+
+`width` and `height` of the picked file are added to it automatically.

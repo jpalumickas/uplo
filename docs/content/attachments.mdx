@@ -106,6 +106,27 @@ Path segments cannot be empty, `.` or `..`, otherwise it throws. Do not use
 `fileName` as-is: it comes from the client and can contain `/`, `..`, `?` or
 `#`. Use `key` and `extension` instead, or clean `fileName` first.
 
+## Metadata
+
+`blob.metadata` holds fields written on the server, e.g. `width`, `height` and
+`blurhash` from [analyzers](/analyzers/about), and `analyzed: true` once they ran.
+
+Metadata sent by the client with a direct upload (see
+[React](/client/react#metadata) or [React Native](/client/react-native#metadata))
+is stored apart, as `blob.metadata.client`, so it cannot override server fields:
+
+```ts
+const attachment = await uplo.attachments.user(123).avatar.findOne()
+
+attachment.blob.metadata.width // from the image analyzer
+attachment.blob.metadata.client?.caption // from the client, not trusted
+```
+
+Client metadata must be a flat object of up to 20 keys. Keys start with a letter
+and have up to 64 letters, digits, `_` or `-`. Values are strings (up to 1000
+characters), numbers or booleans. Other metadata is refused with
+`BlobValidationError` (`422` from the upload routes).
+
 ## Find attachment
 
 Find an attachment by specifying `User` ID.

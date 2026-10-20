@@ -1,7 +1,7 @@
 import type { FastifyPluginAsync, FastifyReply } from 'fastify'
 import fp from 'fastify-plugin'
 
-import type { UploInstance, UploOptionsAttachments } from '@uplo/node'
+import type { ClientMetadata, UploInstance, UploOptionsAttachments } from '@uplo/node'
 import { NotFoundError, ValidationError } from '@uplo/node'
 
 export interface UploPluginOptions<AttachmentsList extends UploOptionsAttachments> {
@@ -36,6 +36,8 @@ interface CreateDirectUploadBody {
   contentType: string
   size: number
   checksum: string
+  /** Checked by createDirectUpload and stored as `blob.metadata.client` */
+  metadata?: ClientMetadata
 }
 
 const sendError = (reply: FastifyReply, message: string) =>
@@ -59,15 +61,15 @@ const fastifyPlugin: FastifyPluginAsync<UploPluginOptions<UploOptionsAttachments
         return sendError(reply, request.validationError.message)
       }
 
-      const { attachmentName, fileName, contentType, size, checksum } = request.body
+      const { attachmentName, fileName, contentType, size, checksum, metadata } = request.body
 
       try {
         const attachment = uplo.$findGenericAttachment(attachmentName)
 
-        // Client metadata is not passed on, so clients cannot set fields
-        // like `analyzed` that analyzers write
+        // Client metadata is stored as `blob.metadata.client`, so clients
+        // cannot set fields like `analyzed` that analyzers write
         const data = await attachment.createDirectUpload({
-          params: { fileName, contentType, size, checksum },
+          params: { fileName, contentType, size, checksum, metadata },
         })
 
         return reply.status(201).send(data)

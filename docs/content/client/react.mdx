@@ -84,3 +84,14 @@ export const Page = () => {
   )
 }
 ```
+
+## Metadata
+
+Pass metadata with the file to store it with the blob:
+
+```js
+await uploadFile({ file, metadata: { caption: 'Profile photo' } })
+```
+
+It is stored as `blob.metadata.client`, apart from metadata written on the
+server, and is not trusted. See [Metadata](/attachments#metadata) for limits.

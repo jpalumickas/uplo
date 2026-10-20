@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { validator } from 'hono/validator'
 
 import type { UploInstance } from '../types'
+import type { CreateDirectUploadParams } from '../types/generic-attachment.js'
 import { onErrorHandler } from './middleware/onErrorHandler.js'
 import { formatZodErrors } from './utils/formatZodErrors.js'
 import { directUploadValidationSchema } from './validation-schemas/directUploadValidationSchema.js'
@@ -81,7 +82,7 @@ export const createUploRouteHandler = <T extends UploInstance<any>>({
         contentType,
         size,
         checksum,
-        metadata,
+        metadata: metadata as CreateDirectUploadParams['metadata'],
       }
 
       const data = await attachment.createDirectUpload({ params })
