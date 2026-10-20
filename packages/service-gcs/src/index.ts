@@ -145,6 +145,18 @@ export const createGCSService = ({
     return await file.save(content)
   }
 
+  const getObjectInfo = async ({ key }: Pick<BlobData, 'key'>) => {
+    try {
+      const [metadata] = await storage.bucket(bucket).file(key).getMetadata()
+      return { size: Number(metadata.size ?? 0), contentType: metadata.contentType }
+    } catch (err) {
+      if ((err as { code?: number })?.code === 404) {
+        return null
+      }
+      throw err
+    }
+  }
+
   const createReadStream = async ({ key }: { key: BlobData['key'] }) => {
     return storage.bucket(bucket).file(key).createReadStream()
   }
@@ -168,6 +180,7 @@ export const createGCSService = ({
     privateUrl,
     upload,
     createReadStream,
+    getObjectInfo,
     delete: del,
     protocolUrl,
   }

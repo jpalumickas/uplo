@@ -2,6 +2,7 @@ import type { S3ClientConfig } from '@aws-sdk/client-s3'
 import {
   S3Client,
   GetObjectCommand,
+  HeadObjectCommand,
   PutObjectCommand,
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3'
@@ -17,6 +18,7 @@ import { contentDisposition } from '@uplo/utils'
 import { DEFAULT_REGION } from './constants'
 import type { Options } from './types'
 import { buildPublicUrl } from './utils/buildPublicUrl'
+import { isNotFoundError } from './utils/isNotFoundError'
 
 export type { Options as S3ServiceOptions } from './types'
 
@@ -98,6 +100,18 @@ export const createS3Service = ({
       await client.send(cmd)
 
       return true
+    },
+
+    async getObjectInfo({ key }: Pick<BlobData, 'key'>) {
+      try {
+        const head = await client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }))
+        return { size: Number(head.ContentLength ?? 0), contentType: head.ContentType }
+      } catch (err) {
+        if (isNotFoundError(err)) {
+          return null
+        }
+        throw err
+      }
     },
 
     async createReadStream({ key }: { key: BlobData['key'] }) {

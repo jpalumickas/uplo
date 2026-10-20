@@ -98,6 +98,11 @@ a guide in [Google Cloud Docs](https://cloud.google.com/storage/docs/configuring
 
 `x-goog-content-length-range` is only needed with `enforceContentLength`.
 
+### Permissions
+
+Before attaching a direct upload, Uplo reads the file metadata, which needs
+`storage.objects.get`.
+
 ### Enforce file size
 
 By default GCS accepts a direct upload of any size, even if `validate.size`

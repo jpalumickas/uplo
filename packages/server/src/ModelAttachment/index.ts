@@ -16,6 +16,7 @@ import { buildBlobKey } from '../lib/buildBlobKey'
 import type { Signer } from '../Signer'
 import type { AttachmentValidateType, Callbacks } from '../types'
 import { validateBlobInputData } from '../utils/validateBobInputData'
+import { verifyUploadedObject } from '../utils/verifyUploadedObject'
 
 export interface ModelAttachmentOptions {
   multiple: boolean
@@ -222,7 +223,13 @@ export class ModelAttachment {
       return this.buildAttachment({ ...sameRecord, blob })
     }
 
-    const updateMetadataFn = this.getService(blob.serviceName).updateMetadata
+    const service = this.getService(blob.serviceName)
+
+    // The client uploads straight to storage, so check the file is there with
+    // the declared size and content type before attaching it
+    await verifyUploadedObject(service, blob)
+
+    const updateMetadataFn = service.updateMetadata
 
     if (updateMetadataFn) {
       await updateMetadataFn(blob.key, {

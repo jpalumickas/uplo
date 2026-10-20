@@ -63,6 +63,9 @@ is signed with them, so the storage refuses a different file:
 - GCS signs content type, and size only with
   [`enforceContentLength`](/services/gcs#enforce-file-size).
 
+`attachSignedFile` also checks the stored file before attaching it, see
+[Attach signed file](#attach-signed-file).
+
 ### Always limit content types
 
 Without `contentType`, a client can upload any type, including `text/html` or
@@ -235,3 +238,14 @@ example, a Signed ID from a `user.avatar` direct upload cannot be attached to
 A Signed ID is attached once. Attaching it again to the same record and
 attachment returns the existing attachment (e.g. when a form is saved twice).
 Attaching it to another record throws `BlobAlreadyAttachedError`.
+
+Before attaching, Uplo checks the file in storage, because the client uploads it
+straight there:
+
+- `BlobNotUploadedError` when the file does not exist (the upload failed or never
+  happened).
+- `BlobValidationError` when its size or content type differs from what was
+  declared.
+
+The S3, R2 and GCS services support this check. A custom service supports it by
+implementing `getObjectInfo({ key })`, otherwise the check is skipped.

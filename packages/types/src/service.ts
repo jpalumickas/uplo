@@ -31,7 +31,20 @@ export interface ServiceUploadParams {
   checksum: string
 }
 
+export interface ServiceObjectInfo {
+  /** Stored file size in bytes */
+  size: number
+  /** Stored content type, if the storage returns one */
+  contentType?: string
+}
+
 export interface Service {
+  /**
+   * Returns size and content type of a stored file, or `null` when it does not
+   * exist. Used to check direct uploads before attaching them. Services without
+   * it skip the check.
+   */
+  getObjectInfo?(options: { key: BlobData['key'] }): Promise<ServiceObjectInfo | null>
   /** Default path for files stored in this service. Attachment `storagePath` takes priority. */
   storagePath?: BlobStoragePath
   updateMetadata?(key: BlobData['key'], options: ServiceUpdateMetadataOptions): Promise<any>

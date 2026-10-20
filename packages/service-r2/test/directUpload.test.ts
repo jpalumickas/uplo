@@ -28,3 +28,16 @@ describe('R2 direct upload', () => {
     expect(url.searchParams.get('X-Amz-SignedHeaders')?.split(';')).toContain('content-type')
   })
 })
+
+describe('R2 getObjectInfo', () => {
+  it('is provided by the S3 service', () => {
+    const service = createR2Service({
+      accountId: 'test-account',
+      bucket: 'test-bucket',
+      accessKeyId: 'test-key',
+      secretAccessKey: 'test-secret',
+    })
+
+    expect(service.getObjectInfo).toBeTypeOf('function')
+  })
+})

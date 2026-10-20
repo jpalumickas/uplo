@@ -60,3 +60,10 @@ This is example CORS configuration for direct uploads.
   }
 ]
 ```
+
+### Permissions
+
+Before attaching a direct upload, Uplo reads the file with a `HEAD` request,
+which needs `s3:GetObject`. Without `s3:ListBucket`, S3 answers `403` instead of
+`404` for a missing file, so the attach fails with an access error instead of
+`BlobNotUploadedError`.
